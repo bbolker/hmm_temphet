@@ -7,5 +7,5 @@ Cat%.RData: ArchivePantherData.csv pantherDataFrame.R
 %.pdf: %.tex paper.bib
 	texi2dvi -p $*.tex
 
-
-
+clean:
+	rm -f *.bbl *.blg *.log *.aux *~
