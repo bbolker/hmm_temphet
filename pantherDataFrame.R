@@ -33,9 +33,9 @@ dat <- (dat %>%
 
 cats <- unique(dat$cat)
 
-for(cat in cats){
-    temp <- subset(dat,dat$cat == cat)
-    save(temp, file = paste0("cat",cat,".RData",sep=""))
+for(catnum in cats){
+    cat <- subset(dat,dat$cat == catnum)
+    save(cat, file = paste0("cat",catnum,".RData",sep=""))
 }
 
 

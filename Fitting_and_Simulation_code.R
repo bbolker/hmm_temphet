@@ -184,26 +184,4 @@ simmixsin <- function(state,cat,fit){
   return(df)
 }
 
-
-hmmfits36 <- function(dat){
-  for(numstates in 3:6){
-    assign(paste("cat",dat$cat[1],"fithomo",numstates,sep=''),fithomo(numstates,dat))
-    assign(paste("cat",dat$cat[1],"fitsin",numstates,sep=''),fitsin(numstates,dat))
-    assign(paste("cat",dat$cat[1],"fitquad",numstates,sep=''),fitquad(numstates,dat))
-    assign(paste("cat",dat$cat[1],"fitblock",numstates,sep=''),fitblock(numstates,dat))
-    assign(paste("cat",dat$cat[1],"fitmix",numstates,sep=''),fitmix(numstates,dat))
-    assign(paste("cat",dat$cat[1],"fitmixsin",numstates,sep=''),fitblock(numstates,dat))
-  }
-}
-  
-hourly <- function(dat){
-  for(numstates in 3:4){
-    assign(paste("cat",dat$cat[1],"fithourly",numstates,sep=''),fithourly(numstates,dat))
-  }
-}
- 
-## simulate function
-
-    
-    
     
