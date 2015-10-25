@@ -110,7 +110,7 @@ fitblock <- function(state,cat,seed=2830){
   model <- depmix(LogDist~1,
                   data=cat,
                   nstate=state,
-                  transition=~factor(period),
+                  transition=~factor(Block),
                   family=gaussian())
   set.seed(seed)
   fitmodel <- fit(model)
@@ -121,7 +121,7 @@ simblock <- function(state,cat,fit){
   model <- depmix(LogDist~1,
                   data=cat,
                   nstate=state,
-                  transition=~factor(period),
+                  transition=~factor(Block),
                   family=gaussian())
   model<-setpars(model,getpars(fit))
   sim <- simhmm(model)
