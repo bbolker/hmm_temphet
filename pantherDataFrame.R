@@ -1,6 +1,7 @@
 library(depmixS4)
 library(dplyr)
 
+
 dat <- read.csv('ArchivePantherData.csv')
 
 block <- function(t){
@@ -30,8 +31,17 @@ dat <- (dat %>%
           filter(cat %in% tempdat$cat)
 )
 
-for(i in unique(dat$cat)){
-  assign(paste("cat",i,sep=''),subset(dat,dat$cat==i))
+cats <- unique(dat$cat)
+
+for(cat in cats){
+    temp <- subset(dat,dat$cat == cat)
+    save(temp, file = paste0("cat",cat,".RData",sep=""))
 }
 
+
+
+
+
+
+    
 ### output the catdfs
