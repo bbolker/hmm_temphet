@@ -11,7 +11,7 @@ block <- function(t){
 }
 
 ## creating suitable dataframe for depmixS4
-dat <- (dat %>% transmute(
+dat <- (dat %>% rowwise() %>% transmute(
     cat = animal_id,
     Sex = Sex,
     Time = as.numeric(Time) - 1, ##as.numeric conversion
