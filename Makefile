@@ -12,4 +12,4 @@ Cat%.RData: ArchivePantherData.csv pantherDataFrame.R
 	texi2dvi -p $*.tex
 
 clean:
-	rm -f *.bbl *.blg *.log *.aux *~
+	rm -f *.bbl *.blg *.log *.aux *.loc *~
