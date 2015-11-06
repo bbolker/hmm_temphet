@@ -59,7 +59,7 @@ by which of a discrete set of unobserved movement states
 (e.g. ``foraging'', ``traveling'', ``resting'') they currently occupy.
 Conditional on the state occupied by an individual, HMMs typically
 assume that animals follow a standard correlated walk model
-\citep{okubo_diffusion_1980,turchin_quantitative_1998}.
+\citep{okubo_diffusion_1980,turchin1998quantitative}.
 
 Ever-increasing capabilities of remote
 sensors are making movement data available over an
@@ -107,14 +107,14 @@ Our primary goal in this paper is to introduce the use of
 HMMs with temporally varying switching probabilities -- in particular,
 switching probabilities that follow a diurnal cycle -- for modeling
 animal movement recorded over long time scales.  We take data from 
-\cite{van_de_kerk_hidden_2014}, who used temporally homogeneous hidden semi-Markov
+\cite{kerk2015hidden}, who used temporally homogeneous hidden semi-Markov
 models, HSMMs (an extension of HMMs that allows flexible modelling of dwell time) 
 
 %%\todo{we will clarify below that they actually used HSMMs} 
 %%to analyze hourly movement data
 %%from 18 Florida panthers (\emph{Puma concolor coryi}).
 
-\cite{van_de_kerk_hidden_2014} found that the best-fitting HSMMs
+\cite{kerk2015hidden} found that the best-fitting HSMMs
 according to BIC incorporated a surprisingly large number of hidden
 behavioural states (as many as 6 for individuals with a large amount
 of available data); for practical reasons, they restricted their
@@ -124,14 +124,14 @@ number of underlying states, typically using either two
 \citep{schliehe-diecks_application_2012,mckellar_using_2014,langrock_flexible_2012,
   fryxell_multiple_2008}, or three states
 \citep{dean2012behavioural,morales_extracting_2004,franke_prediction_2006,
-van_de_kerk_hidden_2014}.As \citeauthor{van_de_kerk_hidden_2014} comment, behavioural
+kerk2015hidden}.As \citeauthor{kerk2015hidden} comment, behavioural
 repertoires with more than three distinct states are difficult to
 interpret, one possible reason that other authors have not used
-\citeauthor{van_de_kerk_hidden_2014}'s model-based approach to
+\citeauthor{kerk2015hidden}'s model-based approach to
 identifying the number of behavioural modes.
 
 Our second goal, therefore, is to explore whether
-\citeauthor{van_de_kerk_hidden_2014}'s results might be driven at
+\citeauthor{kerk2015hidden}'s results might be driven at
 least in part by structural problems with the HMM, i.e.  the
 assumption of temporal homogeneity in behaviour.  When large data sets
 are available, information-theoretic model selection methods will
@@ -161,7 +161,7 @@ Hidden semi-Markov models (HSMM), an extension of HMM that permits
 explicit modelling of dwell times (ie. Time spent in a specific state)
 using alternative distributions \citep{langrock_flexible_2012} were
 used to reveal multiphasic movement of Florida panthers
-\citep{van_de_kerk_hidden_2014}. Of 18 Florida panthers GPS-tracked in
+\citep{kerk2015hidden}. Of 18 Florida panthers GPS-tracked in
 hourly intervals, 13 panthers were modelled independently with 2 to 6
 states time homogeneous HSMM model with alternative distributions for
 step lengths (log-Normal, gamma, and Weibull), turning angle (von
@@ -204,7 +204,7 @@ HMM, we need to sum over all possible hidden sequences. This direct method is co
 nally inefficient, but there exist more efficient ways to computation the likelihood and
 estimate parameters numerically \citep{zucchini_hidden_2009}.
 
-We considered 3 (biologically interpretable number of states identified: (1) resting mode, characterized by short step length; (2) Moderately active mode characterized by intermediate step lengths, and (3) Traveling mode, characterized by long step lengths) to 6 (maximum number of states by BIC selection from time homogeneous transition HSMM) underlying movement states in \citet{van_de_kerk_hidden_2014} for HMM fitting. BIC was used for model selection because we were interested in explaining the data generation process by identifying the 'true' number of underlying movement states.  
+We considered 3 (biologically interpretable number of states identified: (1) resting mode, characterized by short step length; (2) Moderately active mode characterized by intermediate step lengths, and (3) Traveling mode, characterized by long step lengths) to 6 (maximum number of states by BIC selection from time homogeneous transition HSMM) underlying movement states in \citet{kerk2015hidden} for HMM fitting. BIC was used for model selection because we were interested in explaining the data generation process by identifying the 'true' number of underlying movement states.  
 
 We modeled three types of transition complexity instead of time homogeneous transition; extension of "Switch with covariates" by Morales et al. (2004). For $n$ possible movement states, we have a $n \times n$ matrix that defines the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$ at time $t$ as the following multinomial logistic:
 
@@ -235,7 +235,7 @@ $\eta_{ij}(t)= b_{ij1}+b_{ij2}\mathrm{cos}(\frac{2\pi t}{24})+b_{ij3}\mathrm{sin
 
 We assessed the fit of the time homogeneous and inhomogeneous transition HMMs to 4 of the 13 Florida panthers with the most data using three approaches. First, goodness of fit of different number of states by scaled BIC within each type of transition complexity ($\bigtriangleup$B = BIC - min(BIC)). Secondly, the average distance by time of day comparison of observed and simulated data from each type of transition complexity. Lastly, autocorrelation comparison between the observed and simulated data.
 
-The package depmixS4 \citep{visser2012package} for R
+The package depmixS4 \citep{visser2010depmixs4} for R
 (R Development Core Team 2011) was used for fitting covariate dependent transition HMM
 models, simulating states and step lengths using the
 estimated parameters, and for estimating states with the Viterbi
@@ -308,7 +308,7 @@ The biggest issue with multiple states is identifying them biologically. The sta
 \section{Discussion}
 
 
-Identifying behavioural states based on some set of observations is a common methodological problem in behavioural ecology; finding solutions that are both biologically and statistically interpretable and defensible is challenging. Models that suggest a higher number of states fit the data well but are hard to interpret biologically; models that are biologically interpretable are not statistically supported. While the HMM framework has been applied in many research areas, very few studies have considered modeling with more than 3 states. HMM is a simple straight forward framework, but HMM extensions of adding a small amount of complexity can complicate the model greatly and reveal deeper understanding. For example, \citet{van_de_kerk_hidden_2014} used 2 to 6 movement states HSMM to model Florida panthers,   \citet{morales_extracting_2004} used habitat distance dependent transition HMM to model elk, and outside of ecology, \citet{raffa_multivariate_2015} used mixed effect transition and emission HMM in a smoking study.
+Identifying behavioural states based on some set of observations is a common methodological problem in behavioural ecology; finding solutions that are both biologically and statistically interpretable and defensible is challenging. Models that suggest a higher number of states fit the data well but are hard to interpret biologically; models that are biologically interpretable are not statistically supported. While the HMM framework has been applied in many research areas, very few studies have considered modeling with more than 3 states. HMM is a simple straight forward framework, but HMM extensions of adding a small amount of complexity can complicate the model greatly and reveal deeper understanding. For example, \citet{kerk2015hidden} used 2 to 6 movement states HSMM to model Florida panthers,   \citet{morales_extracting_2004} used habitat distance dependent transition HMM to model elk, and outside of ecology, \citet{raffa_multivariate_2015} used mixed effect transition and emission HMM in a smoking study.
 
 We have presented a relatively simple concept yet little-studied extension by covariate dependent HMM can overestimate the number of true states in covariate dependent HMM (in our case, time-dependent transitions). HMM with more than three states are not biologically interpretable and often discarded, but we cannot ignore that increasing complexity (number of states) states can increase goodness of fit statistically. Our analyses revealed modeling temporal heterogeneity in HMM transition can reduce the number of states estimated in time homogeneous transitions HMM movement of Florida panthers and reduce the overall model complexity.
 

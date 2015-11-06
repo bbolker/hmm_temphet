@@ -21,17 +21,12 @@ dat <- (dat %>% rowwise() %>% transmute(
   )
 )
 
-tempdat <- (dat %>% 
-    group_by(cat) %>% 
-      count(cat) %>% 
-        filter(n>9000)
-)
+cats <- c(1,2,14,15)
+
 
 dat <- (dat %>% 
-          filter(cat %in% tempdat$cat)
+          filter(cat %in% cats)
 )
-
-cats <- unique(dat$cat)
 
 for(catnum in cats){
     cat <- subset(dat,dat$cat == catnum)

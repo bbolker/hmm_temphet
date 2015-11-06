@@ -4,12 +4,13 @@ library(dplyr)
 source("mikesim.R")
 
 ###Fit and simulate time-homogeneous HMMs
-fithomo <- function(state,cat){
+fithomo <- function(state,cat,seed=2830){
   model <- depmix(LogDist~1,
                   data=cat,
                   nstate=state,
                   transition=~1,
                   family=gaussian())
+  set.seed(seed)
   fitmodel <- fit(model)
   return(fitmodel)
 }

@@ -5,7 +5,12 @@ cat%.Rout: ArchivePantherData.csv pantherDataFrame.R
 cat%.RData: ArchivePantherData.csv pantherDataFrame.R
 	    R CMD BATCH pantherDataFrame.R
 
-###2 Fitting HMMs
+seedtest%.Rout: cat%.RData seedtest.R
+	   R CMD BATCH seedtest.R
+
+
+
+### Fitting HMMs
 
 fithomocat%.RData: cat%.RData fithomo.R
 		   R CMD BATCH fithomo.R
