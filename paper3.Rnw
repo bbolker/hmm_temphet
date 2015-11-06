@@ -2,7 +2,7 @@
 \usepackage{natbib}
 \usepackage[utf8]{inputenc} % for accented characters
 %% stuff for editing
-\usepackage[markup=nocolor,addedmarkup=bf,deletedmarkup=sout]{changes}
+\usepackage[markup=nocolor,addedmarkup=bf,deletedmarkup=sout] %{changes}
 %% to suppress notes & comments: \usepackage[final]{changes}
 \usepackage[backgroundcolor=lightgray,textsize=tiny]{todonotes}
 \bibliographystyle{chicago}
@@ -34,7 +34,7 @@ rarely explored model extension, resolves previous HMM modeling issues
 and clarifies the behavioural patterns of panthers.
 ...\end{abstract}
 
-\keywords{abc}
+\keywords{Hidden Markov, temporal heterogeneity}
 
 \section{Introduction}
 
@@ -47,7 +47,8 @@ that can be used to understand past movements as well as predict
 future movements. Ecologists have long considered the effects of
 individual-level covariates (sex, age, nutritional status) and
 environmental covariates (habitat type, location of predators or prey)
-on movement \todo{citations}. More recently, modelers have developed
+on movement \citep{patterson2008state, mckenzie2009first, pal1998dispersal}. 
+More recently, modelers have developed
 \emph{hidden Markov models} (HMMs)
 \citep{firle_influence_1998,nathan_movement_2008,langrock_flexible_2012}
 -- formalized in ecological terms as the ``multiphasic movement
@@ -81,17 +82,19 @@ conditions \citep{fryxell_multiple_2008}. \todo{I \emph{think} Fryxell
   et al use ad hoc rather than formal methods for their environment
   comparison? check this ...}  \cite{schliehe-diecks_application_2012}
 consider changes in switching behaviour over time scales of six-hour
-observation periods\todo{check?}, but
+observation periods, but
 in general ecologists have used other tools to describe behavioural
 changes over longer (diurnal, seasonal, or ontogenetic) time scales.
-\todo{Fleming et al Am Nat 2014?  Gurarie?}
+\todo{Fleming et al Am Nat 2014?  Gurarie?} 
 
 For movement behaviours that change on a very fast time scale, such
 that movement behaviours at successive observations are independent,
 \emph{finite mixture models} (FMM) -- a special case of HMMs where the
 probability of state occupancy is independent of the previous state --
 can adequately describe movement. \todo{are there animal movement
-  studies that use FMMs?}  When movement varies over long time scales
+  studies that use FMMs?} 
+%% \citep{tracey_mapping_2012}  
+When movement varies over long time scales
 (relative to the time between observations) with little short-term
 persistence or correlation, movement could be well represented by FMMs
 where the occupancy probabilities changed systematically
@@ -104,12 +107,14 @@ Our primary goal in this paper is to introduce the use of
 HMMs with temporally varying switching probabilities -- in particular,
 switching probabilities that follow a diurnal cycle -- for modeling
 animal movement recorded over long time scales.  We take data from 
-\cite{van_de_kerk_hidden_2014}, who used temporally homogeneous
-HMMs \todo{we will clarify below that they actually used HSMMs} 
-to analyze hourly movement data
-from 18 Florida panthers (\emph{Puma concolor coryi}).
+\cite{van_de_kerk_hidden_2014}, who used temporally homogeneous hidden semi-Markov
+models, HSMMs (an extension of HMMs that allows flexible modelling of dwell time) 
 
-\cite{van_de_kerk_hidden_2014} found that the best-fitting HMMs
+%%\todo{we will clarify below that they actually used HSMMs} 
+%%to analyze hourly movement data
+%%from 18 Florida panthers (\emph{Puma concolor coryi}).
+
+\cite{van_de_kerk_hidden_2014} found that the best-fitting HSMMs
 according to BIC incorporated a surprisingly large number of hidden
 behavioural states (as many as 6 for individuals with a large amount
 of available data); for practical reasons, they restricted their
@@ -118,8 +123,8 @@ contrast, most studies using HMM have decided \emph{a priori} on a
 number of underlying states, typically using either two
 \citep{schliehe-diecks_application_2012,mckellar_using_2014,langrock_flexible_2012,
   fryxell_multiple_2008}, or three states
-\citep{dean2012behavioural,morales_extracting_2004,franke_prediction_2006,van_de_kerk_hidden_2014}.
-As \citeauthor{van_de_kerk_hidden_2014} comment, behavioural
+\citep{dean2012behavioural,morales_extracting_2004,franke_prediction_2006,
+van_de_kerk_hidden_2014}.As \citeauthor{van_de_kerk_hidden_2014} comment, behavioural
 repertoires with more than three distinct states are difficult to
 interpret, one possible reason that other authors have not used
 \citeauthor{van_de_kerk_hidden_2014}'s model-based approach to
@@ -193,7 +198,11 @@ where we have the following three distinct components:
 
 \item Emission Probability: $P($\boldmath{$y_{k}$}\unboldmath $\mid z_{k},$\boldmath{$x_{k}$}\unboldmath$)$, a vector of observation density \boldmath{$y_{k}$} \unboldmath condition on covariates \boldmath{$x_{k}$} \unboldmath at state $z_{k}$ at time $t=k$.  
 \end{enumerate}
-The likelihood above is the likelihood of the observed sequence given a particular hidden sequence. In order to calculate the likelihood of the observed sequence given the HMM, we need to sum over all possible hidden sequences. This direct method is computationally inefficient, but there exist more efficient ways to computation the likelihood and estimate parameters numerically \citep{zucchini_hidden_2009}.
+The likelihood above is the likelihood of the observed sequence given a particular
+hidden sequence. In order to calculate the likelihood of the observed sequence given the
+HMM, we need to sum over all possible hidden sequences. This direct method is computati
+nally inefficient, but there exist more efficient ways to computation the likelihood and
+estimate parameters numerically \citep{zucchini_hidden_2009}.
 
 We considered 3 (biologically interpretable number of states identified: (1) resting mode, characterized by short step length; (2) Moderately active mode characterized by intermediate step lengths, and (3) Traveling mode, characterized by long step lengths) to 6 (maximum number of states by BIC selection from time homogeneous transition HSMM) underlying movement states in \citet{van_de_kerk_hidden_2014} for HMM fitting. BIC was used for model selection because we were interested in explaining the data generation process by identifying the 'true' number of underlying movement states.  
 
