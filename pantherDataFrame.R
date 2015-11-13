@@ -30,6 +30,7 @@ dat <- (dat %>%
           filter(cat %in% cats)
 )
 
+save(dat, file = "allcats.RData")
 
 for(catnum in cats){
     cat <- subset(dat,dat$cat == catnum)
