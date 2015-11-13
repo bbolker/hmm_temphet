@@ -15,11 +15,13 @@ dat <- (dat %>% rowwise() %>% transmute(
     cat = animal_id,
     Sex = Sex,
     Time = as.numeric(Time) - 1, ##as.numeric conversion
-    Distance = Steplength.m. + 0.01, # log hack
+    Distance = Steplength.m.,
     LogDist = log10(Distance),
     Block = block(Time)
   )
 )
+
+dat$LogDist[is.infinite(dat$LogDist)] <- NA
 
 cats <- c(1,2,14,15)
 
@@ -27,6 +29,7 @@ cats <- c(1,2,14,15)
 dat <- (dat %>% 
           filter(cat %in% cats)
 )
+
 
 for(catnum in cats){
     cat <- subset(dat,dat$cat == catnum)

@@ -2,7 +2,8 @@
 
 library(depmixS4)
 
-fitblock <- function(state,cat,seed=2830){
+fitblock <- function(state,cat,seed=NULL){
+  if(!is.null(seed))set.seed(seed)
     model <- depmix(LogDist~1,
                     data=cat,
                     nstate=state,

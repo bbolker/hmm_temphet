@@ -1,6 +1,7 @@
 library(depmixS4)
 
-fitmix <- function(state,cat,seed=2830){
+fitmix <- function(state,cat,seed=NULL){
+  if(!is.null(seed))set.seed(seed)
     model <- mix(LogDist~1,
                  data=cat,
                  prior=~1,

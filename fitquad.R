@@ -1,7 +1,8 @@
 ##fit time dependent hmm (quad)
 library(depmixS4)
 
-fitquad <- function(state,cat,seed=2830){
+fitquad <- function(state,cat,seed=NULL){
+  if(!is.null(seed))set.seed(seed)
     model <- depmix(LogDist~1,
                     data=cat,
                     nstate=state,

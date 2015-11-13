@@ -9,7 +9,7 @@ fithomo <- function(state,cat,seed=2830){
                   transition=~1,
                   family=gaussian())
   set.seed(seed)
-  fitmodel <- fit(model)
+  fitmodel <- fit(model,verbose=TRUE,emcontrol=em.control(maxit=500))
   return(fitmodel)
 }
 
@@ -102,14 +102,18 @@ fitmixsin <- function(state,cat,seed=2830){
   return(fitmodel)
 }
 
-
+##########################################################
 cat1 <- subset(dat,dat$cat == 1 )
 cat2 <- subset(dat,dat$cat == 2 )
 cat14 <- subset(dat,dat$cat == 14 )
 cat15 <- subset(dat,dat$cat == 15 )
 
 
-hh <- fithomo(3,cat1,seed=3)
-hh <- fithomo(3,cat2,seed=3)
-hh <- fithomo(3,cat14,seed=220)
-hh <- fithomo(3,cat15,seed=3)
+###########################
+
+
+
+hh <- fitsin(5,cat1,seed=2)
+hh <- fitsin(5,cat2,seed=2)
+hh <- fitsin(5,cat14,seed=4)
+hh <- fitsin(5,cat15,seed=4)

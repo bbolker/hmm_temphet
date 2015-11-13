@@ -1,6 +1,7 @@
 library(depmixS4)
 
-fitmixsin <- function(state,cat,seed=2830){
+fitmixsin <- function(state,cat,seed=NULL){
+  if(!is.null(seed))set.seed(seed)
     model <- mix(LogDist~1,
                  data=cat,
                  prior=~cos(2*pi*Time/24)+ sin(2*pi*Time/24),
