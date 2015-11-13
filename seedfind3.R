@@ -1,7 +1,49 @@
 ##fit and sim functions
 library(depmixS4)
 library(dplyr)
-###Fit and simulate time-homogeneous HMMs
+
+# setup -----------------
+
+dat <- read.csv('ArchivePantherData.csv')
+
+block <- function(t){
+  if(t %in% 7:16)return("block2")
+  if(t %in% 17:20)return("block3")
+  return("block1")
+}
+
+## creating suitable dataframe for depmixS4
+dat <- (dat %>% rowwise() %>% transmute(
+  cat = animal_id,
+  Sex = Sex,
+  Time = as.numeric(Time) - 1, ##as.numeric conversion
+  Distance = Steplength.m.,
+  LogDist = log10(Distance),
+  Block = block(Time)
+)
+)
+
+dat$LogDist[is.infinite(dat$LogDist)] <- NA
+
+cats <- c(1,2,14,15)
+
+
+dat <- (dat %>% 
+          filter(cat %in% cats)
+)
+
+# subsetting ---------------
+cat1 <- subset(dat,dat$cat == 1 )
+cat2 <- subset(dat,dat$cat == 2 )
+cat14 <- subset(dat,dat$cat == 14 )
+cat15 <- subset(dat,dat$cat == 15 )
+
+#######################
+
+
+
+
+#Fit time-homogeneous HMMs --------------
 fithomo <- function(state,cat,seed=2830){
   model <- depmix(LogDist~1,
                   data=cat,
@@ -13,9 +55,7 @@ fithomo <- function(state,cat,seed=2830){
   return(fitmodel)
 }
 
-#########################################################################
-
-## Fit and Sim of Hourly-transition HMMs
+## Fit and Sim of Hourly-transition HMMs ------
 
 fithourly <- function(state,cat,seed=2830){
   model <- depmix(LogDist~1,
@@ -28,9 +68,8 @@ fithourly <- function(state,cat,seed=2830){
   return(fitmodel)
 }
 
-########################################################################
 
-##fit and simulate time-dependent transition HMMs (sin)
+##fit and simulate time-dependent transition HMMs (sin) -----
 
 fitsin <- function(state,cat,seed=2830){
   model <- depmix(LogDist~1,
@@ -42,9 +81,8 @@ fitsin <- function(state,cat,seed=2830){
   fitmodel <- fit(model)
   return(fitmodel)
 }
-#######################################################################
 
-##fit and simulate time-dependent transition HMMs (quadratic)
+##fit and simulate time-dependent transition HMMs (quadratic) ------
 
 fitquad <- function(state,cat,seed=2830){
   model <- depmix(LogDist~1,
@@ -57,9 +95,8 @@ fitquad <- function(state,cat,seed=2830){
   return(fitmodel)
 }
 
-###########################################
 
-##fit and simulate time-dependent transition HMMs (block)
+##fit and simulate time-dependent transition HMMs (block) ------
 
 fitblock <- function(state,cat,seed=2830){
   model <- depmix(LogDist~1,
@@ -72,9 +109,8 @@ fitblock <- function(state,cat,seed=2830){
   return(fitmodel)
 }
 
-###########################################################
 
-##fit and simulate FMMs
+##fit and simulate FMMs -----
 
 fitmix <- function(state,cat,seed=2830){
   model <- mix(LogDist~1,
@@ -88,7 +124,7 @@ fitmix <- function(state,cat,seed=2830){
   return(fitmodel)
 }
 
-##fit and simulate time-dependent FMM (Sin)
+##fit and simulate time-dependent FMM (Sin) ------
 
 fitmixsin <- function(state,cat,seed=2830){
   model <- mix(LogDist~1,
@@ -102,18 +138,20 @@ fitmixsin <- function(state,cat,seed=2830){
   return(fitmodel)
 }
 
-##########################################################
-cat1 <- subset(dat,dat$cat == 1 )
-cat2 <- subset(dat,dat$cat == 2 )
-cat14 <- subset(dat,dat$cat == 14 )
-cat15 <- subset(dat,dat$cat == 15 )
 
 
 ###########################
-
-
-
-hh <- fitsin(5,cat1,seed=2)
-hh <- fitsin(5,cat2,seed=2)
-hh <- fitsin(5,cat14,seed=4)
-hh <- fitsin(5,cat15,seed=4)
+cc <- 0
+seed = 1
+while(cc < 1){
+  hh <- fitmix(3,cat2,seed=seed)
+  if (logLik(hh) > -7200){
+    cc = 1
+  }
+  print(seed)
+  seed = seed + 1
+}
+hh <- fitmix(3,cat14,seed=64)
+hh <- fitmix(3,cat15,seed=3)
+hh <- fitmix(3,cat1,seed=43)
+hh <- fitmix(3,cat2,seed=64)

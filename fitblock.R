@@ -15,9 +15,9 @@ fitblock <- function(state,cat,seed=NULL){
 }
 
 
-fitblock3s <- fitblock(3,cat)
-fitblock4s <- fitblock(4,cat)
-fitblock5s <- fitblock(5,cat)
-fitblock6s <- fitblock(6,cat)
+fitblock3s <- fitblock(3,cat,seed=3)
+fitblock4s <- fitblock(4,cat,seed=3)
+fitblock5s <- fitblock(5,cat,seed=3)
+fitblock6s <- fitblock(6,cat,seed=3)
 
 save(fitblock3s,fitblock4s,fitblock5s,fitblock6s,file="hmmblock.RData")

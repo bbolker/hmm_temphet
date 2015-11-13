@@ -12,7 +12,7 @@ fithourly <- function(state,cat,seed=NULL){
     return(fitmodel)
 }
 
-fithourly3 <- fithourly(3,cat)
-fithourly4 <- fithourly(4,cat)
+fithourly3 <- fithourly(3,cat,seed=1)
+fithourly4 <- fithourly(4,cat,seed=1)
 
 save(fithourly3,fithourly4,file="fithourly.RData")
