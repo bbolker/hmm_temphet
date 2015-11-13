@@ -78,9 +78,7 @@ relatively constant; changes in behavioural mode switching based on
 the local environment can be accounted for incorporating environmental
 covariates in the HMM \citep{patterson_classifying_2009}, or by more
 \emph{ad hoc} comparisons between inferred state and environmental
-conditions \citep{fryxell_multiple_2008}. \todo{I \emph{think} Fryxell
-  et al use ad hoc rather than formal methods for their environment
-  comparison? check this ...}  \cite{schliehe-diecks_application_2012}
+conditions \citep{fryxell_multiple_2008}.\cite{schliehe-diecks_application_2012}
 consider changes in switching behaviour over time scales of six-hour
 observation periods, but
 in general ecologists have used other tools to describe behavioural
