@@ -1,12 +1,10 @@
 ###1 Take PantherDF, hack it and store it independently by cats :
-cat%.Rout: ArchivePantherData.csv pantherDataFrame.R
-	R CMD BATCH pantherDataFrame.R
 
-cat%.RData: ArchivePantherData.csv pantherDataFrame.R
+catsdat: ArchivePantherData.csv pantherDataFrame.R
 	    R CMD BATCH pantherDataFrame.R
 
-seedtest%.Rout: cat%.RData seedtest.R
-	   R CMD BATCH seedtest.R
+fitfmm: catsdat allcats.RData  fitfmm.R
+	R CMD BATCH fitfmm.R
 
 
 
