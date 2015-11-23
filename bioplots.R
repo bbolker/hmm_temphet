@@ -39,9 +39,10 @@ sumdf <- function(lst){
 bicplot <- function(df){
     temp <- ggplot(df, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ type,ncol=4)+
         scale_y_continuous()+
-            scale_size_continuous( name="Num of Para") +
+            scale_size_continuous( name="Num of Parameters") +
                 geom_point(aes(size=parameters))+
-                    labs(y=expression("$\\Delta$ BIC")) +
+                    labs(y=expression("$\\Delta$ BIC"),
+                         x="Number of States") +
                         geom_line(aes(colour=model),size=0.5) +theme_bw()
     return(temp)
 }
