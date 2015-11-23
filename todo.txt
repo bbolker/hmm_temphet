@@ -1,0 +1,1 @@
+need to produce all the plots and see if we have a multiple optim problem. 
