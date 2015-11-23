@@ -2,13 +2,13 @@ library(dplyr)
 library(plyr)
 library(ggplot2)
 
-fitlist <- list(fitfmm3,fitfmm4,fitfmm5,fitfmm6,
+fitlist <- list(fitfmm3s,fitfmm4s,fitfmm5s,fitfmm6s,
                fitfmmsin3,fitfmmsin4,fitfmmsin5,fitfmmsin6,
                fithomo3s,fithomo4s,fithomo5s,fithomo6s,
                fithourly3,fithourly4,
                fitblock3s,fitblock4s,fitblock5s,fitblock6s,
-               fitquad3s,fit130quad4s,fitquad5s,fitquad6s,
-                fitsin3s,fit130sin4s,fitsin5s,fitsin6s)
+               fitquad3s,fitquad4s,fitquad5s,fitquad6s,
+               fitsin3s,fitsin4s,fitsin5s,fitsin6s)
 
 sumdf <- function(lst){
     BIC <- ldply(lst,BIC)

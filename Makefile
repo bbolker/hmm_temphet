@@ -22,9 +22,6 @@ fitquadcat%.RData: cat%.RData fitquad.R
 fitblockcat%.RData: cat%.RData fitblock.R
 		   R CMD BATCH fitblock.R
 
-fitfmmcat%.RData: cat%.RData fitfmm.R
-		  R CMD BATCH fitfmm.R
-
 fitfmmsincat%.RData: cat%.RData fitfmmsin.R
 		     R CMD BATCH fitfmmsin.R
 
