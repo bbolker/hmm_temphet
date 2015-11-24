@@ -15,9 +15,9 @@ fitsin <- function(state,cat,seed=NULL){
 }
 
 
-fitsin3s <- fitsin(3,cat,seed=4)
-fitsin4s <- fitsin(4,cat,seed=4)
-fitsin5s <- fitsin(5,cat,seed=4)
-fitsin6s <- fitsin(6,cat,seed=4)
+fitsin3s <- fitsin(3,cat,seed=2830)
+fitsin4s <- fitsin(4,cat,seed=2830)
+fitsin5s <- fitsin(5,cat,seed=2830)
+fitsin6s <- fitsin(6,cat,seed=2830)
 
 save(fitsin3s,fitsin4s,fitsin5s,fitsin6s,file="hmmsin.RData")
