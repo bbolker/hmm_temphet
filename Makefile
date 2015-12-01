@@ -3,13 +3,13 @@
 catsdat: ArchivePantherData.csv pantherDataFrame.R
 	    R CMD BATCH pantherDataFrame.R
 
-fitcat1.Rdata: catsdat cat1.RData fitfunctions.R cat1seeds.R
+fitcat1.RData: catsdat cat1.RData fitfunctions.R cat1seeds.R
 	       R CMD BATCH cat1seeds.R
 
-fitcat2.Rdata: catsdat cat2.RData fitfunctions.R cat2seeds.R
+fitcat2.RData: catsdat cat2.RData fitfunctions.R cat2seeds.R
 	       R CMD BATCH cat2seeds.R
 
-fitcat14.Rdata: catsdat cat14.RData fitfunctions.R cat14seeds.R
+fitcat14.RData: catsdat cat14.RData fitfunctions.R cat14seeds.R
 	       R CMD BATCH cat14seeds.R
 
 ### Fitting HMMs
