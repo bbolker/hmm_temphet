@@ -1,5 +1,7 @@
 ##cat1 fit seeds 
 
+source("fitfunctions.R")
+
 #FMM ----
 fitfmm3s <- fitmix(3,cat1,seed=43)
 fitfmm4s <- fitmix(4,cat1,seed=9)
@@ -39,3 +41,5 @@ fitblock6s <- fitblock(6,cat,seed=2830)
 #HMM hourly ----
 fithourly3 <- fithourly(3,cat,seed=1)
 fithourly4 <- fithourly(4,cat,seed=1)
+
+save.image(file="fitcat1.RData")

@@ -3,30 +3,16 @@
 catsdat: ArchivePantherData.csv pantherDataFrame.R
 	    R CMD BATCH pantherDataFrame.R
 
-fitfmm: catsdat allcats.RData  fitfmm.R
-	R CMD BATCH fitfmm.R
+fitcat1.Rdata: catsdat cat1.RData fitfunctions.R cat1seeds.R
+	       R CMD BATCH cat1seeds.R
 
+fitcat2.Rdata: catsdat cat2.RData fitfunctions.R cat2seeds.R
+	       R CMD BATCH cat2seeds.R
 
+fitcat14.Rdata: catsdat cat14.RData fitfunctions.R cat14seeds.R
+	       R CMD BATCH cat14seeds.R
 
 ### Fitting HMMs
-
-fithomocat%.RData: cat%.RData fithomo.R
-		   R CMD BATCH fithomo.R
-
-fitsincat%.RData: cat%.RData fitsin.R
-		   R CMD BATCH fitsin.R
-
-fitquadcat%.RData: cat%.RData fitquad.R
-		   R CMD BATCH fitquad.R
-
-fitblockcat%.RData: cat%.RData fitblock.R
-		   R CMD BATCH fitblock.R
-
-fitfmmsincat%.RData: cat%.RData fitfmmsin.R
-		     R CMD BATCH fitfmmsin.R
-
-fithourlycat%.RData: cat%.RData fithourly.R
-		     R CMD BATCH fithourly.R
 
 ###3.1 Combining all fit depmix objects into dataset
 
