@@ -1,6 +1,7 @@
 library(dplyr)
 library(plyr)
 library(ggplot2)
+library(depmixS4)
 
 fitlist <- list(fitfmm3s,fitfmm4s,fitfmm5s,fitfmm6s,
                 fitfmmsin3,fitfmmsin4,fitfmmsin5,fitfmmsin6,
