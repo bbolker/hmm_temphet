@@ -12,6 +12,9 @@ fitcat2.RData: catsdat cat2.RData fitfunctions.R cat2seeds.R
 fitcat14.RData: catsdat cat14.RData fitfunctions.R cat14seeds.R
 	       R CMD BATCH cat14seeds.R
 
+fitcat15.RData: catsdat cat14.RData fitfunctions.R cat15seeds.R
+		R CMD BATCH cat15seeds.R
+
 ### Fitting HMMs
 
 ###3.1 Combining all fit depmix objects into dataset
