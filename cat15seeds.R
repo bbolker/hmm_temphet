@@ -20,9 +20,9 @@ fithomo5s <- fithomo(5,cat,1)
 fithomo6s <- fithomo(6,cat,1)
 
 #HMM sin ----
-fitsin3s <- fitsin(3,cat,seed=2830)
+fitsin3s <- fitsin(3,cat,seed=3030)
 fitsin4s <- fitsin(4,cat,seed=2830)
-fitsin5s <- fitsin(5,cat,seed=2830)
+fitsin5s <- fitsin(5,cat,seed=3030)
 fitsin6s <- fitsin(6,cat,seed=2830)
 
 #HMM quad ----
