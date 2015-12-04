@@ -36,7 +36,6 @@ sumdf <- function(lst){
   return(temp)
 }
 
-
 bicplot <- function(df){
   temp <- ggplot(df, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ type,ncol=4)+
     scale_y_continuous()+
@@ -47,7 +46,6 @@ bicplot <- function(df){
     geom_line(aes(colour=model),size=0.5) +theme_bw()
   return(temp)
 }
-
 
 sumdat <- sumdf(fitlist)
 bicplot(sumdat)
