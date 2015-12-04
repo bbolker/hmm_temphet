@@ -1,4 +1,6 @@
-itmix <- function(state,cat,seed=2830){
+library(depmixS4)
+
+fitmix <- function(state,cat,seed=2830){
   model <- mix(LogDist~1,
                data=cat,
                prior=~1,

@@ -3,10 +3,10 @@
 source("fitfunctions.R")
 
 #FMM ----
-fitfmm3s <- fitmix(3,cat2,seed=562)
-fitfmm4s <- fitmix(4,cat2,seed=265)
-fitfmm5s <- fitmix(5,cat2,seed=11)
-fitfmm6s <- fitmix(6,cat2,seed=48)
+fitfmm3s <- fitmix(3,cat,seed=562)
+fitfmm4s <- fitmix(4,cat,seed=265)
+fitfmm5s <- fitmix(5,cat,seed=11)
+fitfmm6s <- fitmix(6,cat,seed=48)
 
 #FMM sin ----
 fitfmmsin3 <- fitmixsin(3,cat,seed=3)
