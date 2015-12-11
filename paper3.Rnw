@@ -2,7 +2,7 @@
 \usepackage{natbib}
 \usepackage[utf8]{inputenc} % for accented characters
 %% stuff for editing
-\usepackage[markup=nocolor,addedmarkup=bf,deletedmarkup=sout] %{changes}
+%\usepackage[markup=nocolor,addedmarkup=bf,deletedmarkup=sout]{changes}
 %% to suppress notes & comments: \usepackage[final]{changes}
 \usepackage[backgroundcolor=lightgray,textsize=tiny]{todonotes}
 \bibliographystyle{chicago}
