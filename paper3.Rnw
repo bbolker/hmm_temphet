@@ -5,6 +5,7 @@
 %\usepackage[markup=nocolor,addedmarkup=bf,deletedmarkup=sout]{changes}
 %% to suppress notes & comments: \usepackage[final]{changes}
 \usepackage[backgroundcolor=lightgray,textsize=tiny]{todonotes}
+\usepackage{setspace}
 \bibliographystyle{chicago}
 \title{ HMM}
 \author{Michael Li and Benjamin M. Bolker }
@@ -17,6 +18,7 @@
 %\SweaveOpts{concordance=TRUE}
 \maketitle
 
+\doublespacing
 <<pkgs,message=FALSE,warning=FALSE,echo=FALSE>>=
 library("ggplot2")
 @
