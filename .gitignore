@@ -3,3 +3,12 @@ cache/
 *.Rout
 *.RData
 .Rhistory
+*.aux
+*.bbl
+*.blg
+*.html
+*.log
+*.pdf
+*.tex
+texput.log
+
