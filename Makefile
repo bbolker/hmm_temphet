@@ -28,5 +28,8 @@ bicplotcat%.RData: fithomocat%.RData fitsincat%.RData fitquadcat%.RData fitblock
 %.pdf: %.tex paper.bib
 	texi2dvi -p $*.tex
 
+%: %.pdf
+	evince paper3.pdf 
+
 clean:
 	rm -f *.bbl *.blg *.log *.aux *.loc *~
