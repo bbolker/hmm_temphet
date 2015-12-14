@@ -17,6 +17,7 @@ dat <- (dat %>% rowwise() %>% transmute(
     Time = as.numeric(Time) - 1, ##as.numeric conversion
     Distance = Steplength.m.,
     LogDist = log10(Distance),
+    Turningangle = Turningangle.rad.,
     Block = block(Time)
   )
 )

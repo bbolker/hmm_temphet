@@ -1,1 +1,7 @@
 need to produce all the plots and see if we have a multiple optim problem. 
+
+weibull vs LN
+
+LNVM vs LN uni 
+
+ 
