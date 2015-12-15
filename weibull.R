@@ -84,7 +84,7 @@ setMethod("fit", "weibull",
             }
             opt <- optim(fn=objfun,par=start,method="Nelder-Mead")
             pars <- unname(c(opt$par[1],opt$par[2]))
-            print(pars)
+#            print(pars)
             object <- setpars(object,pars)
             object
           }
@@ -93,16 +93,20 @@ setMethod("fit", "weibull",
 
 # testing weibull ----
 
-dist<- rweibull(1000,1,2)
+aa <- rweibull(1000,1,1.5)
+bb <- rweibull(1000,3,3) 
+dist <- sample(c(aa,bb),1000,replace = FALSE)
 cat <- data.frame(dist=dist)
-
+#load("cat1.RData")
+#cat <- head(cat,3000)
+#dist <- cat$LogDist
 rModels <- list()
 rModels[[1]] <- list()
-rModels[[1]][[1]] <- weibull(dist, pstart = c(1,1),data=cat)
+rModels[[1]][[1]] <- weibull(dist, pstart = c(0.5,0.5),data=cat)
 rModels[[2]] <- list()
-rModels[[2]][[1]] <- weibull(dist, pstart = c(1,2),data=cat)
+rModels[[2]][[1]] <- weibull(dist, pstart = c(1.5,1.5),data=cat)
 rModels[[3]] <- list()
-rModels[[3]][[1]] <- weibull(dist, pstart = c(1,3),data=cat)
+rModels[[3]][[1]] <- weibull(dist, pstart = c(1,4),data=cat)
 
 trstart <- rep(1/3,9)
 transition <- list()
