@@ -26,12 +26,13 @@ setMethod("weibull",
             mod
           }
 )
+
 setMethod("dens","weibull",
-          function(object) {
+          function(object, log=FALSE) {
             dweibull(object@y, 
                     shape = object@parameters$shape, 
                     scale = object@parameters$scale, 
-                    log = FALSE)
+                    log = log)
           }
 )
 
@@ -74,17 +75,17 @@ setMethod("setpars","weibull",
 setMethod("fit", "weibull",
           function(object, w) {
             y <- object@y
-            nas <- is.na(rowSums(object@y))
+            nas <- is.na(rowSums(y))
             start <- with(object@parameters,
-                          c(shape=shape,scale=scale))
+                          c(logshape=log(shape),logscale=log(scale)))
             objfun <- function(pars) {
-#              y.fudge <- ifelse(y==0,1e-3,y)
-              L <- -dweibull(as.matrix(object@y[!nas]),pars[1],pars[2],log=TRUE)
+              L <- -dweibull(c(na.omit(y)),
+                             exp(pars[1]),exp(pars[2]),log=TRUE)
               sum(w[!nas]*L)/sum(w[!nas])
             }
             opt <- optim(fn=objfun,par=start,method="Nelder-Mead")
-            pars <- unname(c(opt$par[1],opt$par[2]))
-#            print(pars)
+            pars <- unname(exp(opt$par))
+            print(pars)
             object <- setpars(object,pars)
             object
           }
@@ -97,9 +98,9 @@ aa <- rweibull(1000,1,1.5)
 bb <- rweibull(1000,3,3) 
 dist <- sample(c(aa,bb),1000,replace = FALSE)
 cat <- data.frame(dist=dist)
-#load("cat1.RData")
-#cat <- head(cat,3000)
-#dist <- cat$LogDist
+load("cat1.RData")
+cat <- head(cat,3000)
+dist <- pmax(cat$Distance,1e-3)
 rModels <- list()
 rModels[[1]] <- list()
 rModels[[1]][[1]] <- weibull(dist, pstart = c(0.5,0.5),data=cat)
@@ -124,6 +125,7 @@ mod <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
 
 fmmod <- fit(mod, verbose = TRUE, emc=em.control(rand=TRUE))
+
 summary(fmmod)
 
 
