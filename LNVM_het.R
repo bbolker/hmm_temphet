@@ -122,18 +122,18 @@ rModels[[3]][[2]] <- vonMises(cat$Turningangle, pstart = c(3, 1))
 
 trstart <- rep(1/3,9)
 transition <- list()
-transition[[1]] <- transInit(~ 1, nst = 3, data=cat,
-                             pstart = rep(1/3, 3))
-transition[[2]] <- transInit(~ 1, nst = 3,data=cat,
-                             pstart = rep(1/3, 3))
-transition[[3]] <- transInit(~ 1, nst = 3,data=cat,
-                             pstart = rep(1/3, 3))
+transition[[1]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 3, data=cat,
+                             pstart = c(1/3,1/3,1/3,0,1/3,1/3,0,1/3,1/3))
+transition[[2]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 3,data=cat,
+                             pstart = c(1/3,1/3,1/3,0,1/3,1/3,0,1/3,1/3))
+transition[[3]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 3,data=cat,
+                             pstart = c(1/3,1/3,1/3,0,1/3,1/3,0,1/3,1/3))
 inMod <- transInit(~ 1, ns = 3, pstart = rep(1/3, 3),
                    data = data.frame(1))
 mod3 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-LNVM3s <- fit(mod3, verbose = TRUE, emc=em.control(rand=FALSE))
-summary(LNVM3s)
+LNVMsin3 <- fit(mod3, verbose = TRUE, emc=em.control(rand=FALSE))
+summary(LNVMsin3)
 
 # HMM LNVM 4 states ----
 rModels <- list()
@@ -159,20 +159,28 @@ rModels[[4]][[2]] <- vonMises(cat$Turningangle, pstart = c(3, 1))
 
 trstart <- rep(1/4,16)
 transition <- list()
-transition[[1]] <- transInit(~ 1, nst = 4, data=cat,
-                             pstart = rep(1/4, 4))
-transition[[2]] <- transInit(~ 1, nst = 4,data=cat,
-                             pstart = rep(1/4, 4))
-transition[[3]] <- transInit(~ 1, nst = 4,data=cat,
-                             pstart = rep(1/4, 4))
-transition[[4]] <- transInit(~ 1, nst = 4,data=cat,
-                             pstart = rep(1/4, 4))
+transition[[1]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 4, data=cat,
+                             pstart = c(1/4,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4))
+transition[[2]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 4, data=cat,
+                             pstart = c(1/4,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4))
+transition[[3]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 4, data=cat,
+                             pstart = c(1/4,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4))
+transition[[4]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 4, data=cat,
+                             pstart = c(1/4,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4))
 inMod <- transInit(~ 1, ns = 4, pstart = rep(1/4, 4),
                    data = data.frame(1))
 mod4 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-LNVM4s <- fit(mod4, verbose = TRUE, emc=em.control(rand=FALSE))
-summary(LNVM4s)
+LNVMsin4 <- fit(mod4, verbose = TRUE, emc=em.control(rand=FALSE))
+summary(LNVMsin4)
 
 # HMM LNVM 5 states ----
 
@@ -204,22 +212,32 @@ rModels[[5]][[2]] <- vonMises(cat$Turningangle, pstart = c(4, 1))
 
 trstart <- rep(1/5,25)
 transition <- list()
-transition[[1]] <- transInit(~ 1, nst = 5, data=cat,
-                             pstart = rep(1/5, 5))
-transition[[2]] <- transInit(~ 1, nst = 5,data=cat,
-                             pstart = rep(1/5, 5))
-transition[[3]] <- transInit(~ 1, nst = 5,data=cat,
-                             pstart = rep(1/5, 5))
-transition[[4]] <- transInit(~ 1, nst = 5,data=cat,
-                             pstart = rep(1/5, 5))
-transition[[5]] <- transInit(~ 1, nst = 5,data=cat,
-                             pstart = rep(1/5, 5))
+transition[[1]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, data=cat,
+                             pstart = c(1/5,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5))
+transition[[2]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, data=cat,
+                             pstart = c(1/5,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5))
+transition[[3]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, data=cat,
+                             pstart = c(1/5,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5))
+transition[[4]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, data=cat,
+                             pstart = c(1/5,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5))
+transition[[5]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, data=cat,
+                             pstart = c(1/5,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5))
 inMod <- transInit(~ 1, ns = 5, pstart = rep(1/5, 5),
                    data = data.frame(1))
 mod5 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-LNVM5s <- fit(mod5, verbose = TRUE, emc=em.control(rand=FALSE))
-summary(LNVM5s)
+LNVMsin5 <- fit(mod5, verbose = TRUE, emc=em.control(rand=FALSE))
+summary(LNVMsin5)
 
 # HMM LNVM 6 states ----
 
@@ -256,24 +274,34 @@ rModels[[6]][[2]] <- vonMises(cat$Turningangle, pstart = c(5, 1))
 
 trstart <- rep(1/6,36)
 transition <- list()
-transition[[1]] <- transInit(~ 1, nst = 6, data=cat,
-                             pstart = rep(1/6, 6))
-transition[[2]] <- transInit(~ 1, nst = 6,data=cat,
-                             pstart = rep(1/6, 6))
-transition[[3]] <- transInit(~ 1, nst = 6,data=cat,
-                             pstart = rep(1/6, 6))
-transition[[4]] <- transInit(~ 1, nst = 6,data=cat,
-                             pstart = rep(1/6, 6))
-transition[[5]] <- transInit(~ 1, nst = 6,data=cat,
-                             pstart = rep(1/6, 6))
-transition[[6]] <- transInit(~ 1, nst = 6,data=cat,
-                             pstart = rep(1/6, 6))
+transition[[1]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=cat,
+                             pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6))
+transition[[2]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=cat,
+                             pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6))
+transition[[3]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=cat,
+                             pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6))
+transition[[4]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=cat,
+                             pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6))
+transition[[5]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=cat,
+                             pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6))
+transition[[6]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=cat,
+                             pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6))
 inMod <- transInit(~ 1, ns = 6, pstart = rep(1/6, 6),
                    data = data.frame(1))
 mod6 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-LNVM6s <- fit(mod6, verbose = TRUE, emc=em.control(rand=FALSE))
-summary(LNVM6s)
-
-
+LNVMsin6 <- fit(mod6, verbose = TRUE, emc=em.control(rand=FALSE))
+summary(LNVMsin6)
 

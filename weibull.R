@@ -99,7 +99,6 @@ bb <- rweibull(1000,3,3)
 dist <- sample(c(aa,bb),1000,replace = FALSE)
 cat <- data.frame(dist=dist)
 load("cat1.RData")
-cat <- head(cat,3000)
 dist <- pmax(cat$Distance,1e-3)
 rModels <- list()
 rModels[[1]] <- list()
@@ -121,14 +120,125 @@ transition[[3]] <- transInit(~ 1, nst = 3,data=cat,
 inMod <- transInit(~ 1, ns = 3, pstart = rep(1/3, 3),
                    data = data.frame(1))
 
-mod <- makeDepmix(response = rModels, transition = transition,
+w3 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
 
-fmmod <- fit(mod, verbose = TRUE, emc=em.control(rand=TRUE))
+weibull3s <- fit(w3, verbose = TRUE, emc=em.control(rand=TRUE))
 
-summary(fmmod)
-
-
+summary(weibull3s)
 
 
+# HMM Weibull 4 states ----
+rModels <- list()
+rModels[[1]] <- list()
+rModels[[1]][[1]] <- weibull(dist, pstart = c(0.5,1),data=cat)
 
+rModels[[2]] <- list()
+rModels[[2]][[1]] <- weibull(dist, pstart = c(1,2),data=cat)
+
+rModels[[3]] <- list()
+rModels[[3]][[1]] <- weibull(dist, pstart = c(3,3),data=cat)
+
+rModels[[4]] <- list()
+rModels[[4]][[1]] <- weibull(dist, pstart = c(0.6,5),data=cat)
+
+trstart <- rep(1/4,16)
+transition <- list()
+transition[[1]] <- transInit(~ 1, nst = 4, data=cat,
+                             pstart = rep(1/4, 4))
+transition[[2]] <- transInit(~ 1, nst = 4,data=cat,
+                             pstart = rep(1/4, 4))
+transition[[3]] <- transInit(~ 1, nst = 4,data=cat,
+                             pstart = rep(1/4, 4))
+transition[[4]] <- transInit(~ 1, nst = 4,data=cat,
+                             pstart = rep(1/4, 4))
+inMod <- transInit(~ 1, ns = 4, pstart = rep(1/4, 4),
+                   data = data.frame(1))
+w4 <- makeDepmix(response = rModels, transition = transition,
+                   prior=inMod,homogeneous = FALSE)
+weibull4s <- fit(w4, verbose = TRUE, emc=em.control(rand=FALSE))
+summary(weibull4s)
+
+# HMM Weibull 5 states ----
+
+rModels <- list()
+rModels[[1]] <- list()
+rModels[[1]][[1]] <- weibull(dist, pstart = c(0.5,1),data=cat)
+
+rModels[[2]] <- list()
+rModels[[2]][[1]] <- weibull(dist, pstart = c(1,1),data=cat)
+
+rModels[[3]] <- list()
+rModels[[3]][[1]] <- weibull(dist, pstart = c(1,2),data=cat)
+
+rModels[[4]] <- list()
+rModels[[4]][[1]] <- weibull(dist, pstart = c(2,3),data=cat)
+
+rModels[[5]] <- list()
+rModels[[5]][[1]] <- weibull(dist, pstart = c(2,5),data=cat)
+
+trstart <- rep(1/5,25)
+transition <- list()
+transition[[1]] <- transInit(~ 1, nst = 5, data=cat,
+                             pstart = rep(1/5, 5))
+transition[[2]] <- transInit(~ 1, nst = 5,data=cat,
+                             pstart = rep(1/5, 5))
+transition[[3]] <- transInit(~ 1, nst = 5,data=cat,
+                             pstart = rep(1/5, 5))
+transition[[4]] <- transInit(~ 1, nst = 5,data=cat,
+                             pstart = rep(1/5, 5))
+transition[[5]] <- transInit(~ 1, nst = 5,data=cat,
+                             pstart = rep(1/5, 5))
+inMod <- transInit(~ 1, ns = 5, pstart = rep(1/5, 5),
+                   data = data.frame(1))
+w5 <- makeDepmix(response = rModels, transition = transition,
+                   prior=inMod,homogeneous = FALSE)
+weibull5s <- fit(w5, verbose = TRUE, emc=em.control(rand=FALSE))
+summary(weibull5s)
+
+# HMM Weibull 6 states ----
+
+rModels <- list()
+rModels[[1]] <- list()
+rModels[[1]][[1]] <- weibull(dist, pstart = c(0.5,1),data=cat)
+
+rModels[[2]] <- list()
+rModels[[2]][[1]] <- weibull(dist, pstart = c(1,1),data=cat)
+
+rModels[[3]] <- list()
+rModels[[3]][[1]] <- weibull(dist, pstart = c(2,5),data=cat)
+
+rModels[[4]] <- list()
+rModels[[4]][[1]] <- weibull(dist, pstart = c(3,1),data=cat)
+
+rModels[[5]] <- list()
+rModels[[5]][[1]] <- weibull(dist, pstart = c(5,5),data=cat)
+
+rModels[[6]] <- list()
+rModels[[6]][[1]] <- weibull(dist, pstart = c(4,2),data=cat)
+
+trstart <- rep(1/6,36)
+transition <- list()
+transition[[1]] <- transInit(~ 1, nst = 6, data=cat,
+                             pstart = rep(1/6, 6))
+transition[[2]] <- transInit(~ 1, nst = 6,data=cat,
+                             pstart = rep(1/6, 6))
+transition[[3]] <- transInit(~ 1, nst = 6,data=cat,
+                             pstart = rep(1/6, 6))
+transition[[4]] <- transInit(~ 1, nst = 6,data=cat,
+                             pstart = rep(1/6, 6))
+transition[[5]] <- transInit(~ 1, nst = 6,data=cat,
+                             pstart = rep(1/6, 6))
+transition[[6]] <- transInit(~ 1, nst = 6,data=cat,
+                             pstart = rep(1/6, 6))
+inMod <- transInit(~ 1, ns = 6, pstart = rep(1/6, 6),
+                   data = data.frame(1))
+w6 <- makeDepmix(response = rModels, transition = transition,
+                   prior=inMod,homogeneous = FALSE)
+weibull6s <- fit(w6, verbose = TRUE, emc=em.control(rand=FALSE))
+summary(weibull6s)
+
+
+save(list=c("weibull3s","weibull4s","weibull5s","weibull6s"),file="Weibullcat1.RData")
+
+save(list=c("weibull3s","weibull4s","weibull5s","weibull6s"),file="Weibullcat1.RData")

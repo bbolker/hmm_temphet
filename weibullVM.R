@@ -195,8 +195,7 @@ setMethod("fit", "weibull",
           
 )
 
-
-# depmix model setup ----
+# depmix model setup 3 states ----
 load("cat1.RData")
 dist <- pmax(cat$Distance,1e-3)
 rModels <- list()
@@ -226,3 +225,316 @@ mod3 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
 fm3 <- fit(mod3, verbose = TRUE, emc=em.control(rand=FALSE))
 summary(fm3)
+
+# HMM WVM 4 states ----
+rModels <- list()
+rModels[[1]] <- list()
+rModels[[1]][[1]] <- weibull(dist, pstart = c(0.5,1),data=cat)
+rModels[[1]][[2]] <- vonMises(cat$Turningangle, pstart = c(0, 1),data=cat)
+
+rModels[[2]] <- list()
+rModels[[2]][[1]] <- weibull(dist, pstart = c(1,2),data=cat)
+rModels[[2]][[2]] <- vonMises(cat$Turningangle, pstart = c(1, 1),data=cat)
+
+rModels[[3]] <- list()
+rModels[[3]][[1]] <- weibull(dist, pstart = c(3,3),data=cat)
+rModels[[3]][[2]] <- vonMises(cat$Turningangle, pstart = c(2, 1))
+
+rModels[[4]] <- list()
+rModels[[4]][[1]] <- weibull(dist, pstart = c(0.6,5),data=cat)
+rModels[[4]][[2]] <- vonMises(cat$Turningangle, pstart = c(3, 1))
+
+trstart <- rep(1/4,16)
+transition <- list()
+transition[[1]] <- transInit(~ 1, nst = 4, data=cat,
+                             pstart = rep(1/4, 4))
+transition[[2]] <- transInit(~ 1, nst = 4,data=cat,
+                             pstart = rep(1/4, 4))
+transition[[3]] <- transInit(~ 1, nst = 4,data=cat,
+                             pstart = rep(1/4, 4))
+transition[[4]] <- transInit(~ 1, nst = 4,data=cat,
+                             pstart = rep(1/4, 4))
+inMod <- transInit(~ 1, ns = 4, pstart = rep(1/4, 4),
+                   data = data.frame(1))
+mod4 <- makeDepmix(response = rModels, transition = transition,
+                   prior=inMod,homogeneous = FALSE)
+fm4 <- fit(mod4, verbose = TRUE, emc=em.control(rand=FALSE))
+summary(fm4)
+
+# HMM WVM 5 states ----
+
+rModels <- list()
+rModels[[1]] <- list()
+rModels[[1]][[1]] <- weibull(dist, pstart = c(0.5,1),data=cat)
+rModels[[1]][[2]] <- vonMises(cat$Turningangle, pstart = c(0, 1),data=cat)
+
+rModels[[2]] <- list()
+rModels[[2]][[1]] <- weibull(dist, pstart = c(1,1),data=cat)
+rModels[[2]][[2]] <- vonMises(cat$Turningangle, pstart = c(1, 1),data=cat)
+
+rModels[[3]] <- list()
+rModels[[3]][[1]] <- weibull(dist, pstart = c(1,2),data=cat)
+rModels[[3]][[2]] <- vonMises(cat$Turningangle, pstart = c(2, 1))
+
+rModels[[4]] <- list()
+rModels[[4]][[1]] <- weibull(dist, pstart = c(2,3),data=cat)
+rModels[[4]][[2]] <- vonMises(cat$Turningangle, pstart = c(3, 1))
+
+rModels[[5]] <- list()
+rModels[[5]][[1]] <- weibull(dist, pstart = c(2,5),data=cat)
+rModels[[5]][[2]] <- vonMises(cat$Turningangle, pstart = c(4, 1))
+
+trstart <- rep(1/5,25)
+transition <- list()
+transition[[1]] <- transInit(~ 1, nst = 5, data=cat,
+                             pstart = rep(1/5, 5))
+transition[[2]] <- transInit(~ 1, nst = 5,data=cat,
+                             pstart = rep(1/5, 5))
+transition[[3]] <- transInit(~ 1, nst = 5,data=cat,
+                             pstart = rep(1/5, 5))
+transition[[4]] <- transInit(~ 1, nst = 5,data=cat,
+                             pstart = rep(1/5, 5))
+transition[[5]] <- transInit(~ 1, nst = 5,data=cat,
+                             pstart = rep(1/5, 5))
+inMod <- transInit(~ 1, ns = 5, pstart = rep(1/5, 5),
+                   data = data.frame(1))
+mod5 <- makeDepmix(response = rModels, transition = transition,
+                   prior=inMod,homogeneous = FALSE)
+fm5 <- fit(mod5, verbose = TRUE, emc=em.control(rand=FALSE))
+summary(fm5)
+
+# HMM WVM 6 states ----
+
+rModels <- list()
+rModels[[1]] <- list()
+rModels[[1]][[1]] <- weibull(dist, pstart = c(0.5,1),data=cat)
+rModels[[1]][[2]] <- vonMises(cat$Turningangle, pstart = c(0, 1),data=cat)
+
+rModels[[2]] <- list()
+rModels[[2]][[1]] <- weibull(dist, pstart = c(1,1),data=cat)
+rModels[[2]][[2]] <- vonMises(cat$Turningangle, pstart = c(1, 1),data=cat)
+
+rModels[[3]] <- list()
+rModels[[3]][[1]] <- weibull(dist, pstart = c(2,5),data=cat)
+rModels[[3]][[2]] <- vonMises(cat$Turningangle, pstart = c(2, 1))
+
+rModels[[4]] <- list()
+rModels[[4]][[1]] <- weibull(dist, pstart = c(3,1),data=cat)
+rModels[[4]][[2]] <- vonMises(cat$Turningangle, pstart = c(3, 1))
+
+rModels[[5]] <- list()
+rModels[[5]][[1]] <- weibull(dist, pstart = c(5,5),data=cat)
+rModels[[5]][[2]] <- vonMises(cat$Turningangle, pstart = c(4, 1))
+
+rModels[[6]] <- list()
+rModels[[6]][[1]] <- weibull(dist, pstart = c(4,2),data=cat)
+rModels[[6]][[2]] <- vonMises(cat$Turningangle, pstart = c(5, 1))
+
+trstart <- rep(1/6,36)
+transition <- list()
+transition[[1]] <- transInit(~ 1, nst = 6, data=cat,
+                             pstart = rep(1/6, 6))
+transition[[2]] <- transInit(~ 1, nst = 6,data=cat,
+                             pstart = rep(1/6, 6))
+transition[[3]] <- transInit(~ 1, nst = 6,data=cat,
+                             pstart = rep(1/6, 6))
+transition[[4]] <- transInit(~ 1, nst = 6,data=cat,
+                             pstart = rep(1/6, 6))
+transition[[5]] <- transInit(~ 1, nst = 6,data=cat,
+                             pstart = rep(1/6, 6))
+transition[[6]] <- transInit(~ 1, nst = 6,data=cat,
+                             pstart = rep(1/6, 6))
+inMod <- transInit(~ 1, ns = 6, pstart = rep(1/6, 6),
+                   data = data.frame(1))
+mod6 <- makeDepmix(response = rModels, transition = transition,
+                   prior=inMod,homogeneous = FALSE)
+WVMHMM6s <- fit(mod6, verbose = TRUE, emc=em.control(rand=FALSE))
+summary(WVMHMM6s)
+
+
+
+# depmix model setup 3 states time het ----
+load("cat1.RData")
+dist <- pmax(cat$Distance,1e-3)
+rModels <- list()
+rModels[[1]] <- list()
+rModels[[1]][[1]] <- weibull(dist, pstart = c(0.5,0.5),data=cat)
+rModels[[1]][[2]] <- vonMises(cat$Turningangle, pstart = c(0, 1),data=cat)
+
+rModels[[2]] <- list()
+rModels[[2]][[1]] <- weibull(dist, pstart = c(1.5,1.5),data=cat)
+rModels[[2]][[2]] <- vonMises(cat$Turningangle, pstart = c(1, 1),data=cat)
+
+rModels[[3]] <- list()
+rModels[[3]][[1]] <- weibull(dist, pstart = c(1,4),data=cat)
+rModels[[3]][[2]] <- vonMises(cat$Turningangle, pstart = c(3, 1))
+
+trstart <- rep(1/3,9)
+transition <- list()
+transition[[1]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 3, data=cat,
+                             pstart = c(1/3,1/3,1/3,0,1/3,1/3,0,1/3,1/3))
+transition[[2]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 3,data=cat,
+                             pstart = c(1/3,1/3,1/3,0,1/3,1/3,0,1/3,1/3))
+transition[[3]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 3,data=cat,
+                             pstart = c(1/3,1/3,1/3,0,1/3,1/3,0,1/3,1/3))
+inMod <- transInit(~ 1, ns = 3, pstart = rep(1/3, 3),
+                   data = data.frame(1))
+sin3 <- makeDepmix(response = rModels, transition = transition,
+                   prior=inMod,homogeneous = FALSE)
+WVMsin3 <- fit(sin3, verbose = TRUE, emc=em.control(rand=FALSE))
+summary(WVMsin3)
+
+# HMM WVM 4 states time het ----
+rModels <- list()
+rModels[[1]] <- list()
+rModels[[1]][[1]] <- weibull(dist, pstart = c(0.5,1),data=cat)
+rModels[[1]][[2]] <- vonMises(cat$Turningangle, pstart = c(0, 1),data=cat)
+
+rModels[[2]] <- list()
+rModels[[2]][[1]] <- weibull(dist, pstart = c(1,2),data=cat)
+rModels[[2]][[2]] <- vonMises(cat$Turningangle, pstart = c(1, 1),data=cat)
+
+rModels[[3]] <- list()
+rModels[[3]][[1]] <- weibull(dist, pstart = c(3,3),data=cat)
+rModels[[3]][[2]] <- vonMises(cat$Turningangle, pstart = c(2, 1))
+
+rModels[[4]] <- list()
+rModels[[4]][[1]] <- weibull(dist, pstart = c(0.6,5),data=cat)
+rModels[[4]][[2]] <- vonMises(cat$Turningangle, pstart = c(3, 1))
+
+trstart <- rep(1/4,16)
+transition <- list()
+transition[[1]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 4, data=cat,
+                             pstart = c(1/4,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4))
+transition[[2]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 4, data=cat,
+                             pstart = c(1/4,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4))
+transition[[3]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 4, data=cat,
+                             pstart = c(1/4,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4))
+transition[[4]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 4, data=cat,
+                             pstart = c(1/4,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4,
+                                        0,1/4,1/4,1/4))
+inMod <- transInit(~ 1, ns = 4, pstart = rep(1/4, 4),
+                   data = data.frame(1))
+sin4 <- makeDepmix(response = rModels, transition = transition,
+                   prior=inMod,homogeneous = FALSE)
+WVMsin4 <- fit(sin4, verbose = TRUE, emc=em.control(rand=FALSE))
+summary(WVMsin4)
+
+# HMM WVM 5 states time het ----
+
+rModels <- list()
+rModels[[1]] <- list()
+rModels[[1]][[1]] <- weibull(dist, pstart = c(0.5,1),data=cat)
+rModels[[1]][[2]] <- vonMises(cat$Turningangle, pstart = c(0, 1),data=cat)
+
+rModels[[2]] <- list()
+rModels[[2]][[1]] <- weibull(dist, pstart = c(1,1),data=cat)
+rModels[[2]][[2]] <- vonMises(cat$Turningangle, pstart = c(1, 1),data=cat)
+
+rModels[[3]] <- list()
+rModels[[3]][[1]] <- weibull(dist, pstart = c(1,2),data=cat)
+rModels[[3]][[2]] <- vonMises(cat$Turningangle, pstart = c(2, 1))
+
+rModels[[4]] <- list()
+rModels[[4]][[1]] <- weibull(dist, pstart = c(2,3),data=cat)
+rModels[[4]][[2]] <- vonMises(cat$Turningangle, pstart = c(3, 1))
+
+rModels[[5]] <- list()
+rModels[[5]][[1]] <- weibull(dist, pstart = c(2,5),data=cat)
+rModels[[5]][[2]] <- vonMises(cat$Turningangle, pstart = c(4, 1))
+
+trstart <- rep(1/5,25)
+transition <- list()
+transition[[1]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, data=cat,
+                             pstart = c(1/5,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5))
+transition[[2]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, data=cat,
+                             pstart = c(1/5,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5))
+transition[[3]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, data=cat,
+                             pstart = c(1/5,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5))
+transition[[4]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, data=cat,
+                             pstart = c(1/5,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5))
+transition[[5]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, data=cat,
+                             pstart = c(1/5,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5,
+                                        0,1/5,1/5,1/5,1/5))
+inMod <- transInit(~ 1, ns = 5, pstart = rep(1/5, 5),
+                   data = data.frame(1))
+sin5 <- makeDepmix(response = rModels, transition = transition,
+                   prior=inMod,homogeneous = FALSE)
+WVMsin5 <- fit(sin5, verbose = TRUE, emc=em.control(rand=FALSE))
+summary(WVMsin5)
+
+# HMM WVM 6 states time het ----
+
+rModels <- list()
+rModels[[1]] <- list()
+rModels[[1]][[1]] <- weibull(dist, pstart = c(0.5,1),data=cat)
+rModels[[1]][[2]] <- vonMises(cat$Turningangle, pstart = c(0, 1),data=cat)
+
+rModels[[2]] <- list()
+rModels[[2]][[1]] <- weibull(dist, pstart = c(1,1),data=cat)
+rModels[[2]][[2]] <- vonMises(cat$Turningangle, pstart = c(1, 1),data=cat)
+
+rModels[[3]] <- list()
+rModels[[3]][[1]] <- weibull(dist, pstart = c(2,5),data=cat)
+rModels[[3]][[2]] <- vonMises(cat$Turningangle, pstart = c(2, 1))
+
+rModels[[4]] <- list()
+rModels[[4]][[1]] <- weibull(dist, pstart = c(3,1),data=cat)
+rModels[[4]][[2]] <- vonMises(cat$Turningangle, pstart = c(3, 1))
+
+rModels[[5]] <- list()
+rModels[[5]][[1]] <- weibull(dist, pstart = c(5,5),data=cat)
+rModels[[5]][[2]] <- vonMises(cat$Turningangle, pstart = c(4, 1))
+
+rModels[[6]] <- list()
+rModels[[6]][[1]] <- weibull(dist, pstart = c(4,2),data=cat)
+rModels[[6]][[2]] <- vonMises(cat$Turningangle, pstart = c(5, 1))
+
+trstart <- rep(1/6,36)
+transition <- list()
+transition[[1]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=cat,
+                             pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6))
+transition[[2]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=cat,
+                             pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6))
+transition[[3]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=cat,
+                             pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6))
+transition[[4]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=cat,
+                             pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6))
+transition[[5]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=cat,
+                             pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6))
+transition[[6]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=cat,
+                             pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6,
+                                        0,1/6,1/6,1/6,1/6,1/6))
+inMod <- transInit(~ 1, ns = 6, pstart = rep(1/6, 6),
+                   data = data.frame(1))
+sin6 <- makeDepmix(response = rModels, transition = transition,
+                   prior=inMod,homogeneous = FALSE)
+WVMsin6 <- fit(sin6, verbose = TRUE, emc=em.control(rand=FALSE))
+summary(WVMsin6)
