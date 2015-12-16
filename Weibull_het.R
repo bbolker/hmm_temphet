@@ -258,4 +258,8 @@ inMod <- transInit(~ 1, ns = 6, pstart = rep(1/6, 6),
 sin6 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
 Wsin6 <- fit(sin6, verbose = TRUE, emc=em.control(rand=FALSE))
-summary(WVMsin6)
+summary(Wsin6)
+
+save(list=c("Wsin3","Wsin4","Wsin5","Wsin6"),file="W_het_cat1.RData")
+
+

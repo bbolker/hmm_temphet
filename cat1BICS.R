@@ -5,6 +5,8 @@ library(depmixS4)
 library(circular)
 
 load("Weibullcat1.RData")
+load("W_het_cat1.RData")
+load("LNVM_het_cat1.RData")
 load("WVMcat1.RData")
 load("LNHMMcat1.RData")
 load("LNVMcat1.RData")
@@ -208,23 +210,22 @@ fitlist <- list(WVMHMM3s,WVMHMM4s,WVMHMM5s,WVMHMM6s,
                 LNVM3s,LNVM4s,LNVM5s,LNVM6s,
                 weibull3s,weibull4s,weibull5s,weibull6s,
                 fithomo3s,fithomo4s,fithomo5s,fithomo6s,
-                fitsin3s,fitsin4s,fitsin5s,fitsin6s,
+                WVMsin3,WVMsin4,WVMsin5,WVMsin6,
+                LNVMsin3,LNVMsin4,LNVMsin5,LNVMsin6,
                 Wsin3,Wsin4,Wsin5,Wsin6,
-                WVMsin3,WVMsin4,WVMsin5,WVMsin6
-                )
+                fitsin3s,fitsin4s,fitsin5s,fitsin6s)
 
 sumdf <- function(lst){
   BIC2 <- ldply(lst,BIC)
   nstates <-ldply(lst,nstates)
   model <- c('A WVM-HMM','A WVM-HMM','A WVM-HMM','A WVM-HMM',
-             'B LNVM-HMM','B LNVM-HMM','B LNVM-HMM','B LNVM-HMM',
-             'C Weibull-HMM','C Weibull-HMM','C Weibull-HMM','C Weibull-HMM',
-             'D LN-HMM','D LN-HMM', 'D LN-HMM', 'D LN-HMM',
-             'E LN-Time_het_sin','E LN-Time_het_sin','E LN-Time_het_sin','E LN-Time_het_sin',
-             'F W-Time_het_sin','F W-Time_het_sin','F W-Time_het_sin','F W-Time_het_sin',
-             'G LNVM-Time_het_sin','G LNVM-Time_het_sin','G LNVM-Time_het_sin','G LNVM-Time_het_sin',
-             'H WVM-Time_het_sin','H WVM-Time_het_sin','H WVM-Time_het_sin','H WVM-Time_het_sin')
-
+             'A LNVM-HMM','A LNVM-HMM','A LNVM-HMM','A LNVM-HMM',
+             'B Weibull-HMM','B Weibull-HMM','B Weibull-HMM','B Weibull-HMM',
+             'B LN-HMM','B LN-HMM', 'B LN-HMM', 'B LN-HMM',
+             'C WVM-Time_het_sin','C WVM-Time_het_sin','C WVM-Time_het_sin','C WVM-Time_het_sin',
+             'C LNVM-Time_het_sin','C LNVM-Time_het_sin','C LNVM-Time_het_sin','C LNVM-Time_het_sin',
+             'D W-Time_het_sin','D W-Time_het_sin','D W-Time_het_sin','D W-Time_het_sin',
+             'D LN-Time_het_sin','D LN-Time_het_sin','D LN-Time_het_sin','D LN-Time_het_sin')
   temp <- data.frame(BICS=BIC2$V1,nstates=nstates$V1,model=model)
   return(temp)
 }

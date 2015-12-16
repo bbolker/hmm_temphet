@@ -305,3 +305,5 @@ mod6 <- makeDepmix(response = rModels, transition = transition,
 LNVMsin6 <- fit(mod6, verbose = TRUE, emc=em.control(rand=FALSE))
 summary(LNVMsin6)
 
+save(list=c('LNVMsin3','LNVMsin4','LNVMsin5','LNVMsin6'),file="LNVM_het_cat1.RData")
+
