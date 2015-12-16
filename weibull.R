@@ -85,7 +85,7 @@ setMethod("fit", "weibull",
             }
             opt <- optim(fn=objfun,par=start,method="Nelder-Mead")
             pars <- unname(exp(opt$par))
-            print(pars)
+#            print(pars)
             object <- setpars(object,pars)
             object
           }
