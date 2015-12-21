@@ -2,6 +2,7 @@ library(dplyr)
 library(plyr)
 library(ggplot2)
 library(depmixS4)
+library(tikzDevice)
 
 fitlist <- list(fitfmm3s,fitfmm4s,fitfmm5s,fitfmm6s,
                 fitfmmsin3,fitfmmsin4,fitfmmsin5,fitfmmsin6,
@@ -41,9 +42,10 @@ bicplot <- function(df){
     scale_y_continuous()+
     scale_size_continuous( name="Num of Parameters") +
     geom_point(aes(size=parameters))+
-    labs(y=expression("$\\Delta$ BIC"),
+    labs(y=expression(paste(Delta, "BIC")),
          x="Number of States") +
-    geom_line(aes(colour=model),size=0.5) +theme_bw()
+    geom_line(aes(colour=model),size=0.5) +theme_bw() +
+    ggtitle("Adjusted BIC Model Comparisons")
   return(temp)
 }
 

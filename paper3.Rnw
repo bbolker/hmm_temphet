@@ -146,7 +146,7 @@ fit models to simulated data with varying numbers of behavioural modes
 and degrees of temporal heterogeneity to test our conjecture that
 heterogeneity can be misidentified as behavioural complexity.
 
-\section{Motivation of Hidden Markov Extensions}
+\section{Methods}
 
 GPS collars were fitted to 18 Florida panthers in 2005-2012 by Florida
 Fish and Wildlife and Conservation Commission (FWC) staff using
@@ -244,27 +244,25 @@ algorithm.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figures/BICred_plot-1} \caption[this is the first figure]{this is the first figure}\label{fig:BICred_plot}
+\includegraphics[width=\maxwidth]{figures/cat1BICPLOT} \caption{Model Reduction Process via Individual based Model Adjusted BIC }\label{fig:BICred_plot}
 \end{figure}
 
 
 \end{knitrout}
 
 
-Adding temporal heterogeneity complexity in the transitions for 3 to 6 state HSMM was a challenge and the number of parameters increase dramatically, creating overfitting problems. Model reduction was used to balance out the increase in parameters and see if there are evidence suggesting adding temporal heterogeneity complexity can reduce the number of states to a statistically and biologically interpretable level. Without loss of generality, we assessed time homogeneous transition HMM models instead of HSMM and made sure each model reduction does not change the BIC selection of number of states, which HMM heavily depends on. Goodness of fit will decrease, but the information on the number of states remains the same.
+Adding temporal heterogeneity in the transitions for 3 to 6 state HSMM was a challenge because the number of parameters and model complexity increase dramatically, thus creating overfitting problems. Model reduction was used to balance out the increase in parameters and see if there are evidence suggesting adding temporal heterogeneity complexity can reduce the number of states to a statistically and biologically interpretable level. Without loss of generality, we assessed time homogeneous transition HMM models instead of HSMM and made sure each model reduction does not change the BIC selection of number of states, which HMM heavily depends on. Goodness of fit will decrease, but the information on the number of states remains the same. 
 
 
 \begin{knitrout}
 \begin{figure}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figures/130all} \caption{this is second figure}
+\includegraphics[width=\maxwidth]{figures/cat1BIC} \caption{Overall Adjusted BIC Comparisons between different HMM models}
 \end{figure}
 
 \end{knitrout}
 
-As a compliment, we also added FMM, FMM with sinusoidal temporal heterogeneities, and HMM with hourly transitions to compare the temporal effects in goodness of fit. Looking at figure 2 time inhomogenous transition HMMs (vertically) and 5 states yield the lowest $\bigtriangleup$ BIC. The time inhomogeneous transition HMMs reduced the number of states from the HMM by 1 state consistently across all panthers via $\bigtriangleup$ BIC. Two of the four panthers dropped to 4 states from 5 states after adding time inhomogeneity transition moving closer to a biologically and statistically interpretable level. Although adding the time inhomogeneous only reduce the number of states by 1, it does support that adding temporal heterogeneity reduce the number of states and at the same time, increase goodness of fit by BIC.
-
-Among the different types of time inhomogeneous transition HMMs, sinusoidal time dependent transition HMMs yields the lowest BIC. The multiple block transitions was a good fit for the male panthers, using a combination of three transition matrix ($b_{1}$ for $t={1,2,3,4,5,6,21,22,23,24}$, $b_{2}$ for $ t={7,8,9,10,11,12,13,14,15,16}$, and $b_{3}$ for $t={17,18,19,20}$) and it reduced the number of states by 1 but had no effect on the females. The quadratic and sinusoidal time covariate transitions was motivated by the multiple block switching pattern attempting to capture the cyclic diurnal cycle and same complex level in terms of number of parameters. We concluded that sinusoidal time dependent transition HMM was suitable for modeling these panthers. 
+As a compliment, we also added FMM, FMM with sinusoidal temporal heterogeneities, and HMM with hourly transitions to compare the temporal effects in goodness of fit. Looking at figure 2, time inhomogenous transition HMMs (vertically) and 5 states yield the lowest $\bigtriangleup$ BIC. The time inhomogeneous transition HMMs reduced the number of states from the HMM by 1 state consistently across all panthers via $\bigtriangleup$ BIC. Two of the four panthers dropped to 4 states from 5 states after adding time inhomogeneity transition moving closer to a biologically and statistically interpretable level. Although adding the time inhomogeneous only reduce the number of states by 1, it does support that adding temporal heterogeneity reduce the number of states and at the same time, increase goodness of fit by BIC.
 
 Among the different types of time inhomogeneous transition HMMs, sinusoidal time dependent transition HMMs yields the lowest BIC. The multiple block transitions was a good fit for the male panthers, using a combination of three transition matrix ($b_{1}$ for $t={1,2,3,4,5,6,21,22,23,24}$, $b_{2}$ for $ t={7,8,9,10,11,12,13,14,15,16}$, and $b_{3}$ for $t={17,18,19,20}$) and it reduced the number of states by 1 but had no effect on the females. The quadratic and sinusoidal time covariate transitions was motivated by the multiple block switching pattern attempting to capture the cyclic diurnal cycle and same complex level in terms of number of parameters. We concluded that sinusoidal time dependent transition HMM was suitable for modeling these panthers. 
 
@@ -288,7 +286,7 @@ Next, we used the fitted models and simulate the same number of observations as 
 \end{figure}
 \end{knitrout}
 
-Lastly,the observed data has strong 24 hour lag autocorrelation (correlation with itself) which suggest temporal heterogeneity. FMM has no autocorrelation at all. HMM without temporal heterogeneity can capture the first few lags of the ACF but is unable to capture lags beyond 7. FMM with temporal heterogeneity can capture lags beyond 12, but not short-term correlation. HMM with temporal heterogeneity can fully capture the autocorrelation pattern of the observed data. 
+Lastly, the observed data has strong 24 hour lag autocorrelation (correlation with itself) which suggest temporal heterogeneity. FMM has no autocorrelation at all. HMM without temporal heterogeneity can capture the first few lags of the ACF but is unable to capture lags beyond 7. FMM with temporal heterogeneity can capture lags beyond 12, but not short-term correlation. HMM with temporal heterogeneity can fully capture the autocorrelation pattern of the observed data. 
 
 \begin{knitrout}
 \begin{figure}
@@ -297,20 +295,20 @@ Lastly,the observed data has strong 24 hour lag autocorrelation (correlation wit
 \end{figure}
 \end{knitrout}
 
-The biggest issue with multiple states is identifying them biologically. The states itself have no fixed meaning, though it suggest distinct characteristics present in the data. We really do not know if there Florida panthers really moves according to hidden states, and even if they do, we don't know the true number nor able to observe them. Three distinct movement states are ideal and biologically interpretable for Florida panthers: Short step length suggests resting states, intermediate step length might suggest foraging state and long step length might suggest traveling state. Long step lengths are easy to capture in all models, where as short step lengths are hard to capture given the GPS errors and unstable movements patterns suggesting multiple states associate with short step lengths. Thus, lower number of short step length states with higher variance makes more biologically than multiple distinguishable short step length states with low variance.     
+The biggest issue with multiple states is identifying them biologically. We really do not know if there Florida panthers really moves according to hidden states, and even if they do, we don't know the true number nor able to observe them. Three distinct movement states seems biologically interpretable for Florida panthers: Short step length suggests resting states, intermediate step length might suggest foraging state and long step length might suggest traveling state. Long step lengths are easy to capture in all models, where as short step lengths are hard to capture given the GPS errors and unstable movements patterns suggesting multiple states associate with short step lengths. Thus, lower number of short step length states with higher variance can be equalivent or more realistic than multiple distinguishable short step length states with low variance.     
 
 \section{Discussion}
 
 
 Identifying behavioural states based on some set of observations is a common methodological problem in behavioural ecology; finding solutions that are both biologically and statistically interpretable and defensible is challenging. Models that suggest a higher number of states fit the data well but are hard to interpret biologically; models that are biologically interpretable are not statistically supported. While the HMM framework has been applied in many research areas, very few studies have considered modeling with more than 3 states. HMM is a simple straight forward framework, but HMM extensions of adding a small amount of complexity can complicate the model greatly and reveal deeper understanding. For example, \citet{kerk2015hidden} used 2 to 6 movement states HSMM to model Florida panthers,   \citet{morales_extracting_2004} used habitat distance dependent transition HMM to model elk, and outside of ecology, \citet{raffa_multivariate_2015} used mixed effect transition and emission HMM in a smoking study.
 
-We have presented a relatively simple concept yet little-studied extension by covariate dependent HMM can overestimate the number of true states in covariate dependent HMM (in our case, time-dependent transitions). HMM with more than three states are not biologically interpretable and often discarded, but we cannot ignore that increasing complexity (number of states) states can increase goodness of fit statistically. Our analyses revealed modeling temporal heterogeneity in HMM transition can reduce the number of states estimated in time homogeneous transitions HMM movement of Florida panthers and reduce the overall model complexity.
+We have presented a relatively simple concept yet little-studied extension by covariate dependent HMM can overfit the number of true states in covariate dependent HMM (in our case, time-dependent transitions). HMM with more than three states are not biologically interpretable and often discarded, but we cannot ignore that increasing complexity (number of states) states can increase goodness of fit statistically. Our analyses revealed modeling temporal heterogeneity in HMM transition can reduce the number of states estimated in time homogeneous transitions HMM movement of Florida panthers and reduce the overall model complexity.
 
 For some kinds of model predictions, the time homogeneous transition model can perform as good as the time inhomogeneous transition models in terms of estimating the states by the Viterbi algorithm (the tradition state prediction method) and can easily overlook more complicated models. The Viterbi algorithm predicts the most likely sequence of movement states based on the observations which allows the time homogenous transition model's prediction to capture the temporal heterogeneity from the observations. In general, the time homogeneous transition model gives the broader scope of movement pattern where as the time inhomogeneous transitions models gives a more realistic movement structure and future predictions. See Appendix.
 
 Although the time inhomogeneous transition offer an
 objective approach to (1) reduce the number of states to a biologically interpretable level, (2) captures the observational autocorrelation and temporal pattern, (3) reduce the overall complexity as illustrated by our study, several challenges
-must be overcome in order to maximize its potential. The current model is based on the reduced univariate step length response emission without fitting turning angles.Although turning angles are strongly correlated with step length does not effect the overall prediction on number of states (see Appendix), movement trajectories predictions still require both step length and turning angles. Furthermore, modelling temporal heterogeneity only reduce the number of predicted states by 1 resulting in 4/5 states might suggest (1) other factors that might also contribute to over predicting number of states, or (2) there really are 1 or 2 more different movement characteristics that are biologically unknown. Despite the challenges, our study provides an important extension in HMM modeling that is not in the seen before and a real life application that it exist and applicable in animal movement ecology.  
+must be overcome in order to maximize its potential. The current model is based on the reduced univariate step length response emission without fitting turning angles. Although turning angles are strongly correlated with step length, it does not effect the overall prediction on number of states. But movement trajectories predictions, and spatial models still require both step length and turning angles. Furthermore, modelling temporal heterogeneity only reduce the number of predicted states by 1 resulting in 4/5 states might suggest (1) other factors such as spatial components that might also contribute to over predicting number of states, or (2) there really are 1 or 2 more different movement characteristics that are biologically unknown. Despite the challenges, our study provides an important extension in HMM modeling that is not in the seen before and a real life application that it exist and applicable in animal movement ecology.  
 
 
 \bibliography{paper.bib}  

@@ -1,7 +1,8 @@
 ## creating simdf 
 library(reshape2)
+source("plotsimfunctions.R")
 #load("cat1alldat.RData") my windows machine
-load("fitcat1.RData")
+#load("fitcat1.RData")
 tempdf <- data.frame(obs = cat$LogDist,
                      fmm5 = simfmm5$obs,
                      fmmsin4 = simfmmsin4$obs,
