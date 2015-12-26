@@ -24,27 +24,29 @@ library("ggplot2")
 @
 
 \begin{abstract}
+
 Clustering time-series data into discrete groups can improve
 prediction as well as providing insight into the nature of underlying,
 unobservable states of the system. However, temporal heterogeneity and
 autocorrelation (persistence) in group occupancy can obscure such
-signals. We use latent-state and hidden Markov models (HMMs), two
-standard clustering techniques, to model high-resolution hourly
-movement data from Florida panthers. Allowing for temporal
-heterogeneity in transition probabilities, a straightforward but
-rarely explored model extension, resolves previous HMM modeling issues
+signals. We use finite mixture and hidden Markov models, two standard
+clustering techniques, to model high-resolution hourly movement data
+from Florida panthers. Allowing for temporal heterogeneity in
+transition probabilities, a straightforward but rarely explored model
+extension, resolves some shortcomings of current modeling frameworks
 and clarifies the behavioural patterns of panthers.
-...\end{abstract}
 
-\keywords{Hidden Markov, temporal heterogeneity}
+\end{abstract}
+
+\keywords{hidden Markov model, animal movement, temporal autocorrelation, temporal heterogeneity}
 
 \section{Introduction}
 
 %% BMB: note that it is *much* easier to keep track of changes in Github,
 %% which works on the line level, if you don't use line-wrap ...
 
-Given a sequence of animal movements observed via direct observation
-or telemetry, movement models aim to find a parsimonious description
+Given a sequence of animal movements observed directly 
+or via telemetry, movement models aim to find a parsimonious description
 that can be used to understand past movements as well as predict
 future movements. Ecologists have long considered the effects of
 individual-level covariates (sex, age, nutritional status) and
@@ -52,9 +54,9 @@ environmental covariates (habitat type, location of predators or prey)
 on movement \citep{patterson2008state, mckenzie2009first, pal1998dispersal}. 
 More recently, modelers have developed
 \emph{hidden Markov models} (HMMs)
-\citep{firle_influence_1998,nathan_movement_2008,langrock_flexible_2012}
--- formalized in ecological terms as the ``multiphasic movement
-framework'' \citep{fryxell_multiple_2008} -- that consider the effects
+\citep{firle_influence_1998,nathan_movement_2008,langrock_flexible_2012} %
+--- used in animal ecology under the rubric of the ``multiphasic movement
+framework'' \citep{fryxell_multiple_2008} --- that consider the effects
 of organisms' \emph{internal} states; in particular, HMMs model animal
 movement as though individual animals' movement behavior is determined
 by which of a discrete set of unobserved movement states
@@ -75,27 +77,31 @@ behaviour at diurnal and seasonal scales that were previously
 not captured in the data.
 
 HMMs have typically been used to model movements over short time
-scales, where the probability of switching between movement states stays
-relatively constant; changes in behavioural mode switching based on
+scales, where the probability of switching between movement states is
+approximately constant. Changes in behavioural mode switching 
+probabilities based on
 the local environment can be accounted for incorporating environmental
 covariates in the HMM \citep{patterson_classifying_2009}, or by more
-\emph{ad hoc} comparisons between inferred state and environmental
-conditions \citep{fryxell_multiple_2008}.\cite{schliehe-diecks_application_2012}
-consider changes in switching behaviour over time scales of six-hour
-observation periods, but
-in general ecologists have used other tools to describe behavioural
+\emph{ad hoc} comparisons between inferred states and environmental
+conditions \citep{fryxell_multiple_2008}. 
+\cite{schliehe-diecks_application_2012}
+consider temporal trends in switching behaviour over the
+time scales of a six-hour
+observation period, but
+in general ecologists have turned to other tools to describe behavioural
 changes over longer (diurnal, seasonal, or ontogenetic) time scales.
 \todo{Fleming et al Am Nat 2014?  Gurarie?} 
 
 For movement behaviours that change on a very fast time scale, such
-that movement behaviours at successive observations are independent,
-\emph{finite mixture models} (FMM) -- a special case of HMMs where the
-probability of state occupancy is independent of the previous state --
+that movement behaviours at successive observations are effectively independent,
+\emph{finite mixture models} (FMM) --- which can be considered
+a special case of HMMs where the
+probability of state occupancy is independent of the previous state ---
 can adequately describe movement \citep{tracey_mapping_2012}.  
 When movement varies over long time scales
 (relative to the time between observations) with little short-term
 persistence or correlation, movement could be well represented by FMMs
-where the occupancy probabilities changed deterministically over time.  Thus FMMs and HMMs,
+where the occupancy probabilities change deterministically over time.  Thus FMMs and HMMs,
 with or without temporal variation in the occupancy or switching
 probabilities, form a useful family of models for capturing
 changes in movement behaviour over a range of time scales.
@@ -103,9 +109,13 @@ changes in movement behaviour over a range of time scales.
 Our primary goal in this paper is to introduce the use of
 HMMs with temporally varying switching probabilities -- in particular,
 switching probabilities that follow a diurnal cycle -- for modeling
-animal movement recorded over long time scales.  We take data from 
+animal movement recorded over long time scales.  We re-analyze data from 
 \cite{kerk2015hidden}, who used temporally homogeneous hidden semi-Markov
-models, HSMMs (an extension of HMMs that allows flexible modelling of dwell time) 
+models (HSMMs: an extension of HMMs that allow
+flexible modelling of the distribution of \emph{dwell times}, the 
+lengths of consecutive occupancy of a behavioural state) to
+analyze the movement of Florida panthers.
+
 
 %%\todo{we will clarify below that they actually used HSMMs} 
 %%to analyze hourly movement data
@@ -311,6 +321,6 @@ objective approach to (1) reduce the number of states to a biologically interpre
 must be overcome in order to maximize its potential. The current model is based on the reduced univariate step length response emission without fitting turning angles. Although turning angles are strongly correlated with step length, it does not effect the overall prediction on number of states. But movement trajectories predictions, and spatial models still require both step length and turning angles. Furthermore, modelling temporal heterogeneity only reduce the number of predicted states by 1 resulting in 4/5 states might suggest (1) other factors such as spatial components that might also contribute to over predicting number of states, or (2) there really are 1 or 2 more different movement characteristics that are biologically unknown. Despite the challenges, our study provides an important extension in HMM modeling that is not in the seen before and a real life application that it exist and applicable in animal movement ecology.  
 
 
-\bibliography{paper.bib}  
+\bibliography{paper}  
 
 \end{document}
