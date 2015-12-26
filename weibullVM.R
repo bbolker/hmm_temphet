@@ -107,7 +107,6 @@ setMethod("fit", "vonMises",
 setClass("weibull", contains="response")
 library(MASS)
 library(stats)
-data(speed)
 setGeneric("weibull", function(y, pstart = NULL, fixed = NULL, ...) 
   standardGeneric("weibull"))
 
@@ -196,7 +195,6 @@ setMethod("fit", "weibull",
 )
 
 # depmix model setup 3 states ----
-load("cat1.RData")
 dist <- pmax(cat$Distance,1e-3)
 rModels <- list()
 rModels[[1]] <- list()
@@ -223,8 +221,7 @@ inMod <- transInit(~ 1, ns = 3, pstart = rep(1/3, 3),
                    data = data.frame(1))
 mod3 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-fm3 <- fit(mod3, verbose = TRUE, emc=em.control(rand=FALSE))
-summary(fm3)
+WVMHMM3s <- fit(mod3, verbose = TRUE, emc=em.control(rand=FALSE))
 
 # HMM WVM 4 states ----
 rModels <- list()
@@ -258,8 +255,7 @@ inMod <- transInit(~ 1, ns = 4, pstart = rep(1/4, 4),
                    data = data.frame(1))
 mod4 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-fm4 <- fit(mod4, verbose = TRUE, emc=em.control(rand=FALSE))
-summary(fm4)
+WVMHMM4s <- fit(mod4, verbose = TRUE, emc=em.control(rand=FALSE))
 
 # HMM WVM 5 states ----
 
@@ -300,8 +296,7 @@ inMod <- transInit(~ 1, ns = 5, pstart = rep(1/5, 5),
                    data = data.frame(1))
 mod5 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-fm5 <- fit(mod5, verbose = TRUE, emc=em.control(rand=FALSE))
-summary(fm5)
+WVMHMM5s <- fit(mod5, verbose = TRUE, emc=em.control(rand=FALSE))
 
 # HMM WVM 6 states ----
 
@@ -354,7 +349,6 @@ summary(WVMHMM6s)
 
 
 # depmix model setup 3 states time het ----
-load("cat1.RData")
 dist <- pmax(cat$Distance,1e-3)
 rModels <- list()
 rModels[[1]] <- list()
