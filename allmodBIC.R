@@ -229,9 +229,10 @@ bicplot <- function(df){
     scale_y_continuous()+
     scale_size_continuous( name="Num of Parameters") +
     #    geom_point(aes(size=parameters))+
-    labs(y=expression("$\\Delta$ BIC"),
-         x="Number of States") +
-    geom_line(aes(colour=model),size=0.5) +theme_bw()
+    labs(y=expression(paste(Delta, "BIC")),
+         x="Number of States")  +
+    geom_line(aes(colour=model),size=0.5) +theme_bw() +
+    ggtitle("Adjusted BIC Model Comparisons")
   return(temp)
 }
 
