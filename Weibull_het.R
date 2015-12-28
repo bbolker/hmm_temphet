@@ -5,7 +5,6 @@ library(depmixS4)
 setClass("weibull", contains="response")
 library(MASS)
 library(stats)
-data(speed)
 setGeneric("weibull", function(y, pstart = NULL, fixed = NULL, ...) 
   standardGeneric("weibull"))
 
@@ -94,7 +93,6 @@ setMethod("fit", "weibull",
 )
 
 # depmix model setup 3 states time het ----
-load("cat1.RData")
 dist <- pmax(cat$Distance,1e-3)
 rModels <- list()
 rModels[[1]] <- list()
@@ -116,9 +114,9 @@ transition[[3]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 3,dat
                              pstart = c(1/3,1/3,1/3,0,1/3,1/3,0,1/3,1/3))
 inMod <- transInit(~ 1, ns = 3, pstart = rep(1/3, 3),
                    data = data.frame(1))
-sin3 <- makeDepmix(response = rModels, transition = transition,
+ws3 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-Wsin3 <- fit(sin3, verbose = TRUE, emc=em.control(rand=FALSE))
+Wsin3 <- fit(ws3, verbose = TRUE, emc=em.control(rand=FALSE))
 summary(Wsin3)
 
 # HMM W 4 states time het ----
@@ -155,9 +153,9 @@ transition[[4]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 4, da
                                         0,1/4,1/4,1/4))
 inMod <- transInit(~ 1, ns = 4, pstart = rep(1/4, 4),
                    data = data.frame(1))
-sin4 <- makeDepmix(response = rModels, transition = transition,
+ws4 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-Wsin4 <- fit(sin4, verbose = TRUE, emc=em.control(rand=FALSE))
+Wsin4 <- fit(ws4, verbose = TRUE, emc=em.control(rand=FALSE))
 summary(Wsin4)
 
 # HMM W 5 states time het ----
@@ -201,9 +199,9 @@ transition[[5]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, da
                                         0,1/5,1/5,1/5,1/5))
 inMod <- transInit(~ 1, ns = 5, pstart = rep(1/5, 5),
                    data = data.frame(1))
-sin5 <- makeDepmix(response = rModels, transition = transition,
+ws5 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-Wsin5 <- fit(sin5, verbose = TRUE, emc=em.control(rand=FALSE))
+Wsin5 <- fit(ws5, verbose = TRUE, emc=em.control(rand=FALSE))
 summary(Wsin5)
 
 # HMM W 6 states time het ----
@@ -255,11 +253,10 @@ transition[[6]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, da
                                         0,1/6,1/6,1/6,1/6,1/6))
 inMod <- transInit(~ 1, ns = 6, pstart = rep(1/6, 6),
                    data = data.frame(1))
-sin6 <- makeDepmix(response = rModels, transition = transition,
+ws6 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-Wsin6 <- fit(sin6, verbose = TRUE, emc=em.control(rand=FALSE))
+Wsin6 <- fit(ws6, verbose = TRUE, emc=em.control(rand=FALSE))
 summary(Wsin6)
 
-save(list=c("Wsin3","Wsin4","Wsin5","Wsin6"),file="W_het_cat1.RData")
 
 

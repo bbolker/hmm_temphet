@@ -4,7 +4,6 @@ library(depmixS4)
 setClass("weibull", contains="response")
 library(MASS)
 library(stats)
-data(speed)
 setGeneric("weibull", function(y, pstart = NULL, fixed = NULL, ...) 
   standardGeneric("weibull"))
 
@@ -94,11 +93,6 @@ setMethod("fit", "weibull",
 
 # testing weibull ----
 
-aa <- rweibull(1000,1,1.5)
-bb <- rweibull(1000,3,3) 
-dist <- sample(c(aa,bb),1000,replace = FALSE)
-cat <- data.frame(dist=dist)
-load("cat1.RData")
 dist <- pmax(cat$Distance,1e-3)
 rModels <- list()
 rModels[[1]] <- list()
@@ -239,6 +233,3 @@ weibull6s <- fit(w6, verbose = TRUE, emc=em.control(rand=FALSE))
 summary(weibull6s)
 
 
-save(list=c("weibull3s","weibull4s","weibull5s","weibull6s"),file="Weibullcat1.RData")
-
-save(list=c("weibull3s","weibull4s","weibull5s","weibull6s"),file="Weibullcat1.RData")

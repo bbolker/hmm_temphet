@@ -102,7 +102,6 @@ setMethod("fit", "vonMises",
           
 )
 ##****************************
-load("cat1.RData")
 ## HMM LNVM 3 states ----
 rModels <- list()
 rModels[[1]] <- list()
