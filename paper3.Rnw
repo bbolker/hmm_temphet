@@ -122,7 +122,7 @@ analyze the movement of Florida panthers.
 %%from 18 Florida panthers (\emph{Puma concolor coryi}).
 
 \cite{kerk2015hidden} found that the best-fitting HSMMs
-according to BIC incorporated a surprisingly large number of hidden
+incorporated a surprisingly large number of hidden
 behavioural states (as many as 6 for individuals with a large amount
 of available data); for practical reasons, they restricted their
 detailed analysis to models with only 3 underlying states.  In
@@ -158,32 +158,89 @@ heterogeneity can be misidentified as behavioural complexity.
 
 \section{Methods}
 
+\subsection{Data and previous analyses}
+
+\todo{what do we think of this subsection title?}
+
 GPS collars were fitted to 18 Florida panthers in 2005-2012 by Florida
 Fish and Wildlife and Conservation Commission (FWC) staff using
-trained hounds and houndsmen. Locations used in this study were the
-hourly GPS coordinates then decomposed into step lengths (in meters)
-and turning angles (in radians).
+trained hounds and houndsmen. Of these panthers, 13 had 
+sufficient data to be used by \cite{kerk2015hidden}. Here we focus
+on the four cats with the most data, in part because our goal is to understand
+the issues that arise when simple models are fitted to large data sets, and 
+in part because the general trend in telemetry studies is to larger data sets \todo{give cat IDs - these are shown in Fig S2a of vdK.  Give threshold amount of data; justify/describe how we decided.  Figures seem to focus on cat 130 - do we want to include some more info (maybe in suppl) about other cats?}
+As is typical in studies of animal movement, 
+we took first differences of the data by decomposing
+contiguous sequences of hourly GPS coordinates into 
+successive step lengths (in meters) and turning angles (in radians)
+\citep{turchin1998quantitative,kerk2015hidden}.
 
-Hidden semi-Markov models (HSMM), an extension of HMM that permits
-explicit modelling of dwell times (ie. Time spent in a specific state)
-using alternative distributions \citep{langrock_flexible_2012} were
-used to reveal multiphasic movement of Florida panthers
-\citep{kerk2015hidden}. Of 18 Florida panthers GPS-tracked in
-hourly intervals, 13 panthers were modelled independently with 2 to 6
-states time homogeneous HSMM model with alternative distributions for
-step lengths (log-Normal, gamma, and Weibull), turning angle (von
-Mises and wrapped Cauchy) and dwell times (Poisson and negative
-binomial). Weibull and wrapped Cauchy were the choice of distributions
-chosen via Akaike information criterion (AIC) among the alternative
-distributions for step length and turning angle
-respectively. Furthermore, Bayesian information criterion (BIC) were
-used to evaluate goodness of fit between models with different number
-of states. BIC values of these models decrease as the number of states
-increased from three to six states suggesting the six states model was
-favoured statistically, on the other hand, it was hard to interpret
-the six states biologically. Despite the flexibility to model dwell
-time, it did not affect results, thus, in this paper, we will use HMM
-instead of HSMM. Furthermore, the state occupancies based on the
+\cite{kerk2015hidden} used hidden semi-Markov models (HSMM), 
+an extension of HMM that permits explicit modelling of dwell times 
+\citep{langrock_flexible_2012}, considering both Poisson and
+negative binomial distributions.  As shown 
+\todo{I was going to say ``but not emphasized'', but that seems snarky}
+by \cite{kerk2015hidden} (Figure S3b, top row, middle panel),
+the estimated shape parameter of the negative binomial dwell time
+distribution was typically close to 1 ($\approx 0.4-1.6$; confidence
+intervals were not calculated), implying that a geometric distribution
+(i.e., negative binomial with shape=1) might be adequate. In turn,
+this suggests that we might not lose much accuracy by reverting to 
+a simpler HMM framework, which makes precisely this assumption.
+\todo{could say here (or maybe better in the conclusions) that
+revisiting HSMM in this context would be worthwhile future work}
+
+\cite{kerk2015hidden} considered time-homogeneous models with 
+a variety of candidate distributions %
+--- log-Normal, Gamma, and Weibull distributions for step lengths
+and von Mises and wrapped Cauchy distributions for the turning angle --- %
+concluding on the basis of the Akaike information criterion (AIC) 
+that Weibull step length and wrapped Cauchy turning angle distributions
+were best.  
+
+Our analysis again aims for simplicity and qualitative
+conclusions rather than for picking the very best
+predictive model; we focus on models that treat each step as
+a univariate, log-Normally distributed observation, glossing
+over both the relatively subtle distinctions in shape between
+the three candidate step-length distributions and the effects
+of considering multivariate (step length plus turning angle)
+observations. (Note that most movement analyses, including
+\cite{kerk2015hidden}, are only partially multivariate, 
+treating step length and turning angle at a particular time
+as independent observations and neglecting possible correlations
+between them.)  However, we do briefly compare all three
+step-length distributions, with and without incorporating
+a von Mises-distributed turning angle in the model (Figure~1).
+
+\cite{kerk2015hidden} used the Bayesian (Schwarz) information criterion (BIC)
+to test the relative penalized goodness of fit for
+models ranging from 2 to 6 latent behavioural modes.
+\todo{not sure about terminology here (should be consistent about
+what we call the modes/latent states/whatever}
+In general, BIC values decreased as the number of states
+increased from 
+three to six states,
+\todo{should decide on rules for numbers vs numerals (3 vs three) and be consistent}
+suggesting that the six-state model was
+favoured statistically. On the other hand, it was hard to interpret
+the six states biologically.
+We follow their lead in using BIC-optimality (i.e., minimum
+BIC across a family of models) as the criterion for identifying
+the best model, because we are interested in explaining the 
+data generation process by identifying the 'true' number 
+of underlying movement states.  Using BIC also simplifies \ldots
+\todo{cite S. Richards Ecology paper?  it's easier to see if BIC
+identifies the true model than to see if AIC finds the model with
+the minimum K-L distance; admit that tapering effect sizes do
+happen here; claim similar results with AIC, although
+generally higher number of states identified}
+
+\todo{This description of the V. algorithm is not coherent; need to give
+just a \emph{brief} definition here (since we are going to use it) and criticize/
+explain shortcomings later}
+
+Furthermore, the state occupancies based on the
 Viterbi algorithm, which predicts the most likely sequence of movement
 states based on observed movement results
 \citep{zucchini_hidden_2009,langrock_flexible_2012} cannot predict
@@ -191,6 +248,8 @@ future movement patterns and cannot capture which movement modes
 panthers are likely to occupy depending on time of day from the time
 homogeneous transitions (ie, the transition between all states are
 constant through time).
+
+\subsection{Model description}
 
 In a HMM, the joint likelihood of emissions $\textbf{Y} =$ (\boldmath{$ y_{1},...,y_{T}$} \unboldmath) and an hidden states sequence $\textbf{Z}, z_{t} \in \{1,...,n\}, t=1,...,T$, given model parameters \boldmath{$\theta$} \unboldmath and covariates $\textbf{X}_{1:T} =$ (\boldmath{$x_{1},...x_{T}$} \unboldmath), can be written as: \\
 
@@ -210,12 +269,11 @@ hidden sequence. In order to calculate the likelihood of the observed sequence g
 HMM, we need to sum over all possible hidden sequences. This direct method is computationally inefficient, but there exist more efficient ways to computation the likelihood and
 estimate parameters numerically \citep{zucchini_hidden_2009}.
 
-We considered 3 (biologically interpretable number of states identified: (1) resting mode, characterized by short step length; (2) Moderately active mode characterized by intermediate step lengths, and (3) Traveling mode, characterized by long step lengths) to 6 (maximum number of states by BIC selection from time homogeneous transition HSMM) underlying movement states in \citet{kerk2015hidden} for HMM fitting. BIC was used for model selection because we were interested in explaining the data generation process by identifying the 'true' number of underlying movement states.  
+We considered 3 (biologically interpretable number of states identified: (1) resting mode, characterized by short step length; (2) Moderately active mode characterized by intermediate step lengths, and (3) Traveling mode, characterized by long step lengths) to 6 (maximum number of states by BIC selection from time homogeneous transition HSMM) underlying movement states in \citet{kerk2015hidden} for HMM fitting. 
 
-We modeled three types of transition complexity instead of time homogeneous transition; extension of "Switch with covariates" by Morales et al. (2004). For $n$ possible movement states, we have a $n \times n$ matrix that defines the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$ at time $t$ as the following multinomial logistic:
+We modeled three types of transition complexity instead of time homogeneous transition; extension of "Switch with covariates" by \cite{morales_extracting_2004}. For $n$ possible movement states, we have a $n \times n$ matrix that defines the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$ at time $t$ as the following multinomial logistic:
 
-
-$\pi_{ij} = \frac{\mathrm{exp}(\eta_{ij}(t))}{1+\sum_{j=2}^{n}\mathrm{exp}(\eta_{ij}(t))},$ for $j={2,...,n}$
+$\pi_{ij} = \exp(\eta_{ij}(t))/\left(1+\sum_{j=2}^{n}\exp(\eta_{ij}(t))\right),$ for $j={2,...,n}$
 
 $\pi_{i1} = 1 - \sum_{j=2}^{n}\pi_{ij}$
 
@@ -233,13 +291,13 @@ $\eta_{ij}(t) = b_{ij1}+b_{ij2}(\frac{t}{24})+b_{ij3}(\frac{t}{24})^{2}$
 
 \item Sinusoidal functional transition with a time covariate:
 
-$\eta_{ij}(t)= b_{ij1}+b_{ij2}\mathrm{cos}(\frac{2\pi t}{24})+b_{ij3}\mathrm{sin}(\frac{2\pi t}{24})$
+$\eta_{ij}(t)= b_{ij1}+b_{ij2}\cos(\frac{2\pi t}{24})+b_{ij3}\sin(\frac{2\pi t}{24})$
 
 \end{enumerate}
 
 
 
-We assessed the fit of the time homogeneous and inhomogeneous transition HMMs to 4 of the 13 Florida panthers with the most data using three approaches. First, goodness of fit of different number of states by scaled BIC within each type of transition complexity ($\bigtriangleup$B = BIC - min(BIC)). Secondly, the average distance by time of day comparison of observed and simulated data from each type of transition complexity. Lastly, autocorrelation comparison between the observed and simulated data.
+We assessed the fit of the time homogeneous and inhomogeneous transition HMMs to 4 of the 13 Florida panthers with the most data using three approaches. First, goodness of fit of different number of states by scaled BIC within each type of transition complexity ($\Delta$ BIC = BIC - min(BIC)). Secondly, the average distance by time of day comparison of observed and simulated data from each type of transition complexity. Lastly, autocorrelation comparison between the observed and simulated data.
 
 The package depmixS4 \citep{visser2010depmixs4} for R
 (R Development Core Team 2011) was used for fitting covariate dependent transition HMM
@@ -272,7 +330,7 @@ Adding temporal heterogeneity in the transitions for 3 to 6 state HSMM was a cha
 
 \end{knitrout}
 
-As a compliment, we also added FMM, FMM with sinusoidal temporal heterogeneities, and HMM with hourly transitions to compare the temporal effects in goodness of fit. Looking at figure 2, time inhomogenous transition HMMs (vertically) and 5 states yield the lowest $\bigtriangleup$ BIC. The time inhomogeneous transition HMMs reduced the number of states from the HMM by 1 state consistently across all panthers via $\bigtriangleup$ BIC. Two of the four panthers dropped to 4 states from 5 states after adding time inhomogeneity transition moving closer to a biologically and statistically interpretable level. Although adding the time inhomogeneous only reduce the number of states by 1, it does support that adding temporal heterogeneity reduce the number of states and at the same time, increase goodness of fit by BIC.
+As a compliment, we also added FMM, FMM with sinusoidal temporal heterogeneities, and HMM with hourly transitions to compare the temporal effects in goodness of fit. Looking at figure 2, time inhomogenous transition HMMs (vertically) and 5 states yield the lowest $\Delta$ BIC. The time inhomogeneous transition HMMs reduced the number of states from the HMM by 1 state consistently across all panthers via $\Delta$ BIC. Two of the four panthers dropped to 4 states from 5 states after adding time inhomogeneity transition moving closer to a biologically and statistically interpretable level. Although adding the time inhomogeneous only reduce the number of states by 1, it does support that adding temporal heterogeneity reduce the number of states and at the same time, increase goodness of fit by BIC.
 
 Among the different types of time inhomogeneous transition HMMs, sinusoidal time dependent transition HMMs yields the lowest BIC. The multiple block transitions was a good fit for the male panthers, using a combination of three transition matrix ($b_{1}$ for $t={1,2,3,4,5,6,21,22,23,24}$, $b_{2}$ for $ t={7,8,9,10,11,12,13,14,15,16}$, and $b_{3}$ for $t={17,18,19,20}$) and it reduced the number of states by 1 but had no effect on the females. The quadratic and sinusoidal time covariate transitions was motivated by the multiple block switching pattern attempting to capture the cyclic diurnal cycle and same complex level in terms of number of parameters. We concluded that sinusoidal time dependent transition HMM was suitable for modeling these panthers. 
 
