@@ -10,7 +10,7 @@ catsdat.Rout:  ArchivePantherData.csv pantherDataFrame.R
 
 
 %.Rout:	  catsdat.Rout %.RData
-sample.%.Rout:	catsdat %.RData sample.R
+sample.%.Rout:	catsdat.Rout %.RData sample.R
 		$(run-R)
 
 fit.%.Rout:	%.Rout fitfunctions.R mikesim.R simfunctions.R %seeds.R
