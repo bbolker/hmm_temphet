@@ -1,1 +1,1 @@
-cat <- head(cat,100)
+cat <- head(cat,750)
