@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{natbib}
+\usepackage{amsmath}
 \usepackage[utf8]{inputenc} % for accented characters
 %% stuff for editing
 %\usepackage[markup=nocolor,addedmarkup=bf,deletedmarkup=sout]{changes}
@@ -148,7 +149,7 @@ increasing the number of behavioural modes), complexity that is
 present in the data but not accounted for in the model (e.g. spatial
 or temporal heterogeneity) can be misidentified as other forms of
 complexity.  We predict that increasing volumes of data will
-increasingly lead researchers who are accustomed to fitting relatively
+increasingly lead researchers who are accustomed to fitting 
 small models to sparse data into such traps.  We examine whether
 allowing for diurnal variation in the Florida panther data leads to
 selection of models with smaller numbers of behavioural modes; we also
@@ -208,7 +209,7 @@ of considering multivariate (step length plus turning angle)
 observations. (Note that most movement analyses, including
 \cite{kerk2015hidden}, are only partially multivariate, 
 treating step length and turning angle at a particular time
-as independent observations and neglecting possible correlations
+as independent observations while neglecting possible correlations
 between them.)  However, we do briefly compare all three
 step-length distributions, with and without incorporating
 a von Mises-distributed turning angle in the model (Figure~1).
@@ -223,18 +224,27 @@ increased from
 three to six states,
 \todo{should decide on rules for numbers vs numerals (3 vs three) and be consistent}
 suggesting that the six-state model was
-favoured statistically. On the other hand, it was hard to interpret
-the six states biologically.
-We follow their lead in using BIC-optimality (i.e., minimum
+favoured statistically; however,
+the authors used 3-state models in most
+of their analyses for ease of biological interpretation.
+
+We follow \cite{kerk2015hidden}'s lead in using BIC-optimality (i.e., minimum
 BIC across a family of models) as the criterion for identifying
 the best model, because we are interested in explaining the 
 data generation process by identifying the 'true' number 
-of underlying movement states.  Using BIC also simplifies \ldots
-\todo{cite S. Richards Ecology paper?  it's easier to see if BIC
-identifies the true model than to see if AIC finds the model with
-the minimum K-L distance; admit that tapering effect sizes do
-happen here; claim similar results with AIC, although
-generally higher number of states identified}
+of underlying movement states.  Using BIC also simplifies 
+evaluation of model selection procedures; 
+it is more convenient to test whether our model selection
+procedure has selected the model used to simulate the data,
+rather than testing whether it has selected the model with
+the minimal Kullback-Leibler distance
+\citep{Richards2005}. We recognize that 
+ecologists will often be interested in maximizing predictive
+accuracy rather than selecting a true model, and that as
+usual in ecological systems the true model will be far more
+complicated than any candidate model \citep{BurnhamAnderson1998},
+but we suspect that the qualitative conclusions stated here
+for BIC-optimality will carry over to analyses using AIC instead.
 
 \todo{This description of the V. algorithm is not coherent; need to give
 just a \emph{brief} definition here (since we are going to use it) and criticize/
@@ -251,48 +261,64 @@ constant through time).
 
 \subsection{Model description}
 
-In a HMM, the joint likelihood of emissions $\textbf{Y} =$ (\boldmath{$ y_{1},...,y_{T}$} \unboldmath) and an hidden states sequence $\textbf{Z}, z_{t} \in \{1,...,n\}, t=1,...,T$, given model parameters \boldmath{$\theta$} \unboldmath and covariates $\textbf{X}_{1:T} =$ (\boldmath{$x_{1},...x_{T}$} \unboldmath), can be written as: \\
+\newcommand{\obs}{\mathbf{y}}
+\newcommand{\cov}{\mathbf{x}}
+\newcommand{\state}{z}
 
-$P(\textbf{Y}_{1:T},\textbf{Z}_{1:T}\mid$\boldmath{$\theta$}\unboldmath$,\textbf{X}_{1:T})=P(z_{1}\mid $\boldmath{$x_{1}$}\unboldmath$)P($\boldmath{$y_{1}$}\unboldmath$\mid z_{1},$\boldmath{$x_{1}$}\unboldmath$) \\ \prod\limits_{k=2}^{T}P(z_{k} \mid z_{k-1},$\boldmath{$x_{k}$}\unboldmath$)P($\boldmath{$y_{k}$}\unboldmath $\mid z_{k},$\boldmath{$x_{k}$}\unboldmath$)$ \\
+In a HMM, the joint likelihood of \emph{emissions} (i.e., direct observations) $\mathbf Y = \obs_{1},..., \obs_{T}$ and a hidden state sequence $\mathbf{Z}, \state_{t} \in \{1,...,n\}, t=1,...,T$, given model parameters {$\boldsymbol \theta$} and covariates $\mathbf{X}_{1:T} =\cov_{1},..., \cov_{T}$, can be written as:
+\begin{equation}
+\begin{split}
+P(\mathbf{Y}_{1:T},\mathbf{Z}_{1:T}|\boldsymbol \theta,\mathbf{X}_{1:T}) & =
+P(\state_{1} \mid \cov_{1})P(\obs_{1} | \state_{1}, \cov_{1}) \cdot \\
+&  \quad \prod\limits_{k=2}^{T}P(\state_{k} | \state_{k-1}, \cov_{k})P(\obs_{k} | \state_{k},\cov_{k})
+\end{split}
+\label{eq:HMMlik}
+\end{equation}
 
-where we have the following three distinct components:
+The model contains three distinct components:
 
-\begin{enumerate}
-\item Initial Probability: $P(z_{1} = i \mid $\boldmath{$x_{1}$}\unboldmath$)P($\boldmath{$y_{1}$}\unboldmath $\mid z_{1},$ \boldmath{$x_{1}$}\unboldmath $)$, the probability of state $i$ at time $t=1$ where covariate \boldmath{$x_{1}$} \unboldmath and the vector of observation density \boldmath{$y_{1}$} \unboldmath condition on covariates \boldmath{$x_{1}$} \unboldmath at state $z_{1}$.
+\begin{description}
+\item[Initial probability] $P(\state_{1} = i | \cov_{1}) P(\obs_{1} | \state_{1}, \cov_{1} )$, the probability of state $i$ at time $t=1$ where the covariate is $\cov_{1}$ and the vector of observation densities $\obs_{1}$ conditions on covariates $\cov_{1}$ at state $\state_{1}$.
 
-\item Transition Probability: $P(z_{k}=j \mid z_{k-1}=i,$\boldmath{$x_{k}$}\unboldmath$)$, the probability of a transition from state $i$ at time $t=k-1$ to state $j$ with covariate $z_{k}$ at time $t=k$.
+\item[Transition probability] $P(\state_{k}=j | \state_{k-1}=i,\cov_{k})$, the probability of a transition from state $i$ at time $t=k-1$ to state $j$ with covariate $\state_{k}$ at time $t=k$.
 
-\item Emission Probability: $P($\boldmath{$y_{k}$}\unboldmath $\mid z_{k},$\boldmath{$x_{k}$}\unboldmath$)$, a vector of observation density \boldmath{$y_{k}$} \unboldmath condition on covariates \boldmath{$x_{k}$} \unboldmath at state $z_{k}$ at time $t=k$.  
-\end{enumerate}
-The likelihood above is the likelihood of the observed sequence given a particular
-hidden sequence. In order to calculate the likelihood of the observed sequence given the
-HMM, we need to sum over all possible hidden sequences. This direct method is computationally inefficient, but there exist more efficient ways to computation the likelihood and
+\item[Emission probability] $P({\boldmath y_{k}} | \state_{k},\cov_{k})$, a vector of observation density $\obs_{k}$ condition on covariates $\cov_{k}$ at state $\state_{k}$ at time $t=k$.  
+\end{description}
+
+Eq.~\ref{eq:HMMlik} gives the likelihood of the observed sequence 
+given (conditional on) a particular
+hidden sequence. 
+In order to calculate the overall, unconditional (or marginal) 
+likelihood of the 
+observed sequence, we need to average over all possible hidden sequences. 
+This direct method is computationally inefficient, but there exist more efficient ways to computation the likelihood and
 estimate parameters numerically \citep{zucchini_hidden_2009}.
 
 We considered 3 (biologically interpretable number of states identified: (1) resting mode, characterized by short step length; (2) Moderately active mode characterized by intermediate step lengths, and (3) Traveling mode, characterized by long step lengths) to 6 (maximum number of states by BIC selection from time homogeneous transition HSMM) underlying movement states in \citet{kerk2015hidden} for HMM fitting. 
 
-We modeled three types of transition complexity instead of time homogeneous transition; extension of "Switch with covariates" by \cite{morales_extracting_2004}. For $n$ possible movement states, we have a $n \times n$ matrix that defines the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$ at time $t$ as the following multinomial logistic:
-
-$\pi_{ij} = \exp(\eta_{ij}(t))/\left(1+\sum_{j=2}^{n}\exp(\eta_{ij}(t))\right),$ for $j={2,...,n}$
-
-$\pi_{i1} = 1 - \sum_{j=2}^{n}\pi_{ij}$
+We modeled three types of transition complexity instead of time homogeneous transition; extension of ``Switch with covariates" by \cite{morales_extracting_2004}. For $n$ possible movement states, we have a $n \times n$ matrix that defines the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$ at time $t$ as the following multinomial logistic:
+\begin{equation}
+\begin{split}
+\pi_{ij} & = \exp(\eta_{ij}(t))/\left(1+\sum_{j=2}^{n}\exp(\eta_{ij}(t))\right), \textrm{ for } j={2,...,n} \\
+\pi_{i1} & = 1 - \sum_{j=2}^{n}\pi_{ij}
+\end{split}
+\end{equation}
 
 where $\eta_{ij}(t)$ can be modelled as the following: 
 \begin{enumerate}
-\item Multiple block transition:  The transitioning probability $\pi_{ij}$ is a function of time (hour of day), where it is assigned to one of $M$ different time blocks:
-
-$\eta_{ij}(t) = \sum_{m=1}^{M}a_{ijm}b_{m,t}$
-
+\item Multiple block transition:  The transition probability $\pi_{ij}$ is a function of time (hour of day), where it is assigned to one of $M$ different time blocks:
+$$
+\eta_{ij}(t) = \sum_{m=1}^{M}a_{ijm}b_{m,t}
+$$
 where $a_{ijm}$ are parameters, and $b_{m,t}$ is a binary indicator (1 to the time block at the corresponding time $t$, and 0 otherwise).  
-
 \item Quadratic functional transition with a time covariate:
-
-$\eta_{ij}(t) = b_{ij1}+b_{ij2}(\frac{t}{24})+b_{ij3}(\frac{t}{24})^{2}$
-
+$$
+\eta_{ij}(t) = b_{ij1}+b_{ij2}(\frac{t}{24})+b_{ij3}(\frac{t}{24})^{2}
+$$
 \item Sinusoidal functional transition with a time covariate:
-
-$\eta_{ij}(t)= b_{ij1}+b_{ij2}\cos(\frac{2\pi t}{24})+b_{ij3}\sin(\frac{2\pi t}{24})$
-
+$$
+\eta_{ij}(t)= b_{ij1}+b_{ij2}\cos(\frac{2\pi t}{24})+b_{ij3}\sin(\frac{2\pi t}{24})
+$$
 \end{enumerate}
 
 
@@ -332,7 +358,7 @@ Adding temporal heterogeneity in the transitions for 3 to 6 state HSMM was a cha
 
 As a compliment, we also added FMM, FMM with sinusoidal temporal heterogeneities, and HMM with hourly transitions to compare the temporal effects in goodness of fit. Looking at figure 2, time inhomogenous transition HMMs (vertically) and 5 states yield the lowest $\Delta$ BIC. The time inhomogeneous transition HMMs reduced the number of states from the HMM by 1 state consistently across all panthers via $\Delta$ BIC. Two of the four panthers dropped to 4 states from 5 states after adding time inhomogeneity transition moving closer to a biologically and statistically interpretable level. Although adding the time inhomogeneous only reduce the number of states by 1, it does support that adding temporal heterogeneity reduce the number of states and at the same time, increase goodness of fit by BIC.
 
-Among the different types of time inhomogeneous transition HMMs, sinusoidal time dependent transition HMMs yields the lowest BIC. The multiple block transitions was a good fit for the male panthers, using a combination of three transition matrix ($b_{1}$ for $t={1,2,3,4,5,6,21,22,23,24}$, $b_{2}$ for $ t={7,8,9,10,11,12,13,14,15,16}$, and $b_{3}$ for $t={17,18,19,20}$) and it reduced the number of states by 1 but had no effect on the females. The quadratic and sinusoidal time covariate transitions was motivated by the multiple block switching pattern attempting to capture the cyclic diurnal cycle and same complex level in terms of number of parameters. We concluded that sinusoidal time dependent transition HMM was suitable for modeling these panthers. 
+Among the different types of time inhomogeneous transition HMMs, sinusoidal time dependent transition HMMs yields the lowest BIC. The multiple block transitions was a good fit for the male panthers, using a combination of three transition matrix ($b_{1}$ for $t={1-6,21-24}$, $b_{2}$ for $ t={7-16}$, and $b_{3}$ for $t={17-20}$) and it reduced the number of states by 1 but had no effect on the females. The quadratic and sinusoidal time covariate transitions was motivated by the multiple block switching pattern attempting to capture the cyclic diurnal cycle and same complex level in terms of number of parameters. We concluded that sinusoidal time dependent transition HMM was suitable for modeling these panthers. 
 
 \begin{knitrout}
 \begin{figure}
