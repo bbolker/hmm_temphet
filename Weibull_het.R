@@ -255,7 +255,7 @@ inMod <- transInit(~ 1, ns = 6, pstart = rep(1/6, 6),
                    data = data.frame(1))
 ws6 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-Wsin6 <- fit(ws6, verbose = TRUE, emc=em.control(rand=FALSE))
+Wsin6 <- fit(ws6, verbose = TRUE, emc=em.control(rand=FALSE,maxit=480))
 summary(Wsin6)
 
 

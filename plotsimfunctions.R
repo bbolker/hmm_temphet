@@ -52,8 +52,8 @@ bicplot <- function(df){
 sumdat <- sumdf(fitlist)
 
 avgplot <- function(df){
-  simdf <- df %>% select(-obs) %>% group_by(time) %>% summarise_each(funs(mean))
-  obsdf <- df %>% select(c(obs,time)) %>% filter(!is.na(obs)) %>% group_by(time) %>% summarise_each(funs(mean)) %>% select(obs)
+  simdf <- df %>% dplyr:::select(-obs) %>% group_by(time) %>% summarise_each(funs(mean))
+  obsdf <- df %>% dplyr:::select(c(obs,time)) %>% filter(!is.na(obs)) %>% group_by(time) %>% summarise_each(funs(mean)) %>% dplyr:::select(obs)
   avgdf <- cbind(simdf,obsdf)
   avgdf2 <- melt(avgdf,'time')
   tempplot<-ggplot(avgdf2,aes(x=time,y=value,colour=variable)) + 
@@ -70,7 +70,7 @@ acffun <- function(sim){
 }
 
 acfplot <- function(df) {
-  temp <- df %>% select(-time)%>%ldply(.,acffun)
+  temp <- df %>% dplyr:::select(-time)%>%ldply(.,acffun)
   tempplot <- ggplot(temp,aes(lag,ACF,colour=.id))+
     geom_point()+geom_line() +theme_bw() +
     ggtitle("ACF plot of BIC Selected Models")
