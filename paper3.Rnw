@@ -312,7 +312,7 @@ algorithm.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figures/cat1BICPLOT} \caption{Model Reduction Process via Individual based Model Adjusted BIC }\label{fig:BICred_plot}
+\includegraphics[width=\maxwidth]{figures/cat1REDplot} \caption{Model Reduction Process via Individual based Model Adjusted BIC }\label{fig:BICred_plot}
 \end{figure}
 
 
@@ -337,7 +337,7 @@ Among the different types of time inhomogeneous transition HMMs, sinusoidal time
 \begin{knitrout}
 \begin{figure}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figures/130avg} \caption{Average step length by time of day}
+\includegraphics[width=\maxwidth]{figures/cat1avg} \caption{Average step length by time of day}
 \end{figure}
 
 \end{knitrout}
@@ -350,7 +350,7 @@ Next, we used the fitted models and simulate the same number of observations as 
 \begin{knitrout}
 \begin{figure}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figures/130acf} \caption{ACF }
+\includegraphics[width=\maxwidth]{figures/cat1acf} \caption{ACF }
 \end{figure}
 \end{knitrout}
 
@@ -359,7 +359,7 @@ Lastly, the observed data has strong 24 hour lag autocorrelation (correlation wi
 \begin{knitrout}
 \begin{figure}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figures/msd_plot-1} 
+\includegraphics[width=\maxwidth]{figures/cat1states} 
 \end{figure}
 \end{knitrout}
 
