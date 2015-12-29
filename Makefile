@@ -1,20 +1,23 @@
 ###1 Take PantherDF, hack it and store it independently by cats :
 
-current:  target
+current:	target
 
-target:	  fit.sample.cat1.Rout
-	  less fit.sample.cat1.Rout
+target:	fit.sample.cat1.Rout
+	less fit.sample.cat1.Rout
 
-catsdat.Rout:  ArchivePantherData.csv pantherDataFrame.R
-	       $(run-R)
+catsdat.Rout:	ArchivePantherData.csv pantherDataFrame.R
+	$(run-R)
 
 
 %.Rout:	  catsdat.Rout %.RData
 sample.%.Rout:	catsdat.Rout %.RData sample.R
-		$(run-R)
+	$(run-R)
 
+
+fit.%.Rout:	%seeds.R
+fit.sample.%.Rout:	%seeds.R
 fit.%.Rout:	%.Rout fitfunctions.R mikesim.R simfunctions.R %seeds.R
-		$(run-R)
+	$(run-R)
 
 fitcat1.RData: catsdat cat1.RData fitfunctions.R cat1seeds.R
 	       R CMD BATCH cat1seeds.R
