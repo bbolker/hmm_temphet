@@ -9,7 +9,8 @@ catsdat.Rout:	ArchivePantherData.csv pantherDataFrame.R
 	$(run-R)
 
 
-%.Rout:	  catsdat.Rout %.RData
+%.Rout:	  catsdat.Rout %.RData temp.R
+	$(run-R)
 sample.%.Rout:	catsdat.Rout %.RData sample.R
 	$(run-R)
 
