@@ -2,7 +2,7 @@
 library(reshape2)
 source('plotsimfunctions.R')
 #load("cat14alldat.RData") my windows machine
-load("fitcat14.RData")
+#load("fitcat14.RData")
 tempdf <- data.frame(obs = cat$LogDist,
                      fmm4 = simfmm4$obs,
                      fmmsin3 = simfmmsin3$obs,
@@ -16,3 +16,11 @@ tempdf <- data.frame(obs = cat$LogDist,
 print(bicplot(sumdat))
 print(avgplot(tempdf))
 print(acfplot(tempdf))
+print(msd45(fitsin4s,fithomo5s))
+print(avgplot(vitcat(cat,fithomo3s)))
+print(avgplot(vitcat(cat,fitsin3s)))
+print(avgplot(vitcat5(cat,fithomo5s)))
+print(avgplot(vitcat5(cat,fitsin5s)))
+print(acfplot(vitcat(cat,fithomo3s))+ggtitle("Viterbi vs Observed ACF"))
+print(acfplot(vitcat5(cat,fitsin5s))+ggtitle("Viterbi vs Observed ACF"))
+
