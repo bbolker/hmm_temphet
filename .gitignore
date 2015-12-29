@@ -10,5 +10,10 @@ cache/
 *.log
 *.pdf
 *.tex
+*.Rlog
+*.[r]
+*.Rout
+*.rout
+
 texput.log
 

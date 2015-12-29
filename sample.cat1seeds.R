@@ -40,9 +40,6 @@ fitblock6s <- fitblock(6,cat,seed=2830)
 fithourly3 <- fithourly(3,cat,seed=1)
 fithourly4 <- fithourly(4,cat,seed=1)
 
-source('mikesim.R')
-source("simfunctions.R")
-
 simfmm5 <- simmix(5,cat,fitfmm5s)
 simfmmsin4 <- simmixsin(4,cat,fitfmmsin4)
 simhomo6 <- simhomo(6,cat,fithomo6s)
@@ -50,5 +47,3 @@ simhourly3 <- simhourly(3,cat,fithourly3)
 simblock4 <- simblock(4,cat,fitblock4s)
 simquad5 <- simquad(5,cat,fitquad5s)
 simsin5 <- simsin(5,cat,fitsin5s)
-
-save.image(file="fitcat1.RData")
