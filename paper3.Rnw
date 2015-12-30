@@ -82,7 +82,7 @@ not captured in the data.
 HMMs have typically been used to model movements over short time
 scales, where the probability of switching between movement states is
 approximately constant. Changes in behavioural mode switching 
-\todo{do we want to call these transition probabilities (throughout)?}
+\todo{do we want to call these transition probabilities (throughout)? ML: I prefer to call it this because it is consistent with explaning HMM parts.}
 probabilities based on
 the local environment can be accounted for incorporating environmental
 covariates in the HMM \citep{patterson_classifying_2009}, or by more
@@ -164,7 +164,7 @@ heterogeneity can be misidentified as behavioural complexity.
 
 \subsection{Data and previous analyses}
 
-\todo{what do we think of this subsection title?}
+\todo{what do we think of this subsection title? ML:sounds good to me}
 
 GPS collars were fitted to 18 Florida panthers in 2005-2012 by Florida
 Fish and Wildlife and Conservation Commission staff using
@@ -174,7 +174,7 @@ sufficient data to be used by \cite{kerk2015hidden}.
 Here we focus
 on the four cats with the most data, in part because our goal is to understand
 the issues that arise when simple models are fitted to large data sets, and 
-in part because the general trend in telemetry studies is toward larger data sets. \todo{give cat IDs - these are shown in Fig S2a of vdK.  Give threshold amount of data; justify/describe how we decided.  Figures seem to focus on cat 130 - do we want to include some more info (maybe in suppl) about other cats?}
+in part because the general trend in telemetry studies is toward larger data sets. \todo{give cat IDs - these are shown in Fig S2a of vdK.  Give threshold amount of data; justify/describe how we decided.  Figures seem to focus on cat 130 - do we want to include some more info (maybe in suppl) about other cats? ML: Yes, I have all the plots ready in the figures folder. (Note, the public catID is different from what Madelon used, so we have to be careful)}
 As is typical in studies of animal movement, 
 we took first differences of the data by decomposing
 contiguous sequences of hourly GPS coordinates into 
@@ -194,7 +194,8 @@ intervals were not calculated), implying that a geometric distribution
 this suggests that we might not lose much accuracy by reverting to 
 a simpler HMM framework, which makes precisely this assumption.
 \todo{could say here (or maybe better in the conclusions) that
-revisiting HSMM in this context would be worthwhile future work}
+revisiting HSMM in this context would be worthwhile future work. 
+ML: conclusion is good, I still need to add viterbi paragraph}
 
 \cite{kerk2015hidden} considered time-homogeneous models with 
 a variety of candidate distributions %
@@ -223,11 +224,11 @@ a von Mises-distributed turning angle in the model (Figure~1).
 to test the relative penalized goodness of fit for
 models ranging from 2 to 6 latent behavioural modes.
 \todo{not sure about terminology here (should be consistent about
-what we call the modes/latent states/whatever}
+what we call the modes/latent states/whatever) ML: What do you think? Are ecologist more comfortable with modes/ latent states?}
 In general, BIC values decreased as the number of states
 increased from 
 three to six states,
-\todo{should decide on rules for numbers vs numerals (3 vs three) and be consistent}
+\todo{should decide on rules for numbers vs numerals (3 vs three) and be consistent. ML: numeric}
 suggesting that the six-state model was
 favoured statistically; however,
 the authors used 3-state models in most
