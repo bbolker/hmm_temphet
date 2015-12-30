@@ -1,5 +1,4 @@
 library(depmixS4)
-iter = 100
 
 fitmix <- function(state,cat,seed=2830){
   model <- mix(LogDist~1,
@@ -9,7 +8,7 @@ fitmix <- function(state,cat,seed=2830){
                family=gaussian(),
                initdata=cat)
   set.seed(seed)
-  fitmodel <- fit(model,em.control(maxit=iter))
+  fitmodel <- fit(model,emcontrol=em.control(maxit=iter))
   return(fitmodel)
 }
 
@@ -22,7 +21,7 @@ fitmixsin <- function(state,cat,seed=NULL){
                family=gaussian(),
                initdata=cat)
   set.seed(seed)
-  fitmodel <- fit(model,em.control(maxit=iter))
+  fitmodel <- fit(model,emcontrol=em.control(maxit=iter))
   return(fitmodel)
 }
 
@@ -34,7 +33,7 @@ fithomo <- function(state,cat,seed=NULL){
                   nstate=state,
                   transition=~1,
                   family=gaussian())
-  fitmodel <- fit(model,em.control(maxit=iter))
+  fitmodel <- fit(model,emcontrol=em.control(maxit=iter))
   return(fitmodel)
 }
 
@@ -47,7 +46,7 @@ fithourly <- function(state,cat,seed=NULL){
                   transition=~factor(Time),
                   family=gaussian())
   set.seed(seed)
-  fitmodel <- fit(model,em.control(maxit=iter))
+  fitmodel <- fit(model,emcontrol=em.control(maxit=iter))
   return(fitmodel)
 }
 
@@ -60,7 +59,7 @@ fitquad <- function(state,cat,seed=NULL){
                   transition=~I(Time/24)+I((Time/24)^2),
                   family=gaussian())
   set.seed(seed)
-  fitmodel <- fit(model,em.control(maxit=iter))
+  fitmodel <- fit(model,emcontrol=em.control(maxit=iter))
   return(fitmodel)
 }
 
@@ -72,7 +71,7 @@ fitsin <- function(state,cat,seed=NULL){
                   transition=~cos(2*pi*Time/24)+ sin(2*pi*Time/24),
                   family=gaussian())
   set.seed(seed)
-  fitmodel <- fit(model,em.control(maxit=iter))
+  fitmodel <- fit(model,emcontrol=em.control(maxit=iter))
   return(fitmodel)
 }
 
@@ -85,6 +84,6 @@ fitblock <- function(state,cat,seed=NULL){
                   transition=~factor(Block),
                   family=gaussian())
   set.seed(seed)
-  fitmodel <- fit(model,em.control(maxit=iter))
+  fitmodel <- fit(model,emcontrol=em.control(maxit=iter))
   return(fitmodel)
 }
