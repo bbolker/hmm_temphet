@@ -2,28 +2,20 @@
 
 current:	target
 
-target:	plot.sample.cat1.Rout
-	evince plot.sample.cat1.Rout.pdf
+target:	cat1.plot.Rout
+	evince cat1.plot.Rout.pdf
 
 catsdat.Rout:	ArchivePantherData.csv pantherDataFrame.R
 	$(run-R)
 
+%.df.Rout:	%.RData df.R
+		$(run-R)
 
-%.Rout:	  catsdat.Rout %.RData temp.R
-	$(run-R)
-sample.%.Rout:	catsdat.Rout %.RData sample.R
-	$(run-R)
+%.fit.Rout:	%.df.Rout fitfunctions.R mikesim.R simfunctions.R %seeds.R
+		$(run-R)
 
-
-fit.%.Rout:	%seeds.R
-fit.sample.%.Rout:	%seeds.R
-fit.%.Rout:	%.Rout fitfunctions.R mikesim.R simfunctions.R %seeds.R
-	$(run-R)
-
-plot.%.Rout:	plotsimfunctions.R
-plot.sample.%.Rout:	plotsimfunctions.R
-plot.%.Rout:		fit.%.Rout plotsimfunctions.R %simplots.R
-			$(run-R)
+%.plot.Rout:	%.fit.Rout plotsimfunctions.R %simplots.R
+		$(run-R)
 
 
 
