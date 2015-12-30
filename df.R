@@ -1,4 +1,7 @@
+#Default
 #num <- nrow(cat)
-num <- 1000
-iter <- 100
+#iter <- 500
+
+num <- 500
+iter <- 30
 cat <- head(cat,num)
