@@ -57,5 +57,3 @@ simdat <- data.frame(obs = cat$LogDist,
                     hmmquad5 = simquad5$obs,
                     hmmsin5 = simsin5$obs,
                     time = cat$Time)
-
-save(list=c("simdat"),file="cat1simdat.RData")

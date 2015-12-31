@@ -5,8 +5,8 @@ current:	target
 target:	cat1.plot.Rout
 	evince cat1.plot.Rout.pdf
 
-catsdat.Rout:	ArchivePantherData.csv pantherDataFrame.R
-	$(run-R)
+catsdat:       ArchivePantherData.csv pantherDataFrame.R
+	       R CMD BATCH pantherDataFrame.R
 
 %.df.Rout:	%.RData df.R
 		$(run-R)
@@ -17,7 +17,7 @@ catsdat.Rout:	ArchivePantherData.csv pantherDataFrame.R
 %.summary.Rout:	%.fit.Rout summary.R %summary.R
 		$(run-R)
 
-%.plots.Rout:	%simdat.RData %sumdat.RData %.RData plotsimfunctions.R %simplots.R
+%.plot.Rout:	%sumdat.RData %.RData plotsimfunctions.R %simplots.R
 		$(run-R)
 
 
