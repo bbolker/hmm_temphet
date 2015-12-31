@@ -48,7 +48,7 @@ simblock4 <- simblock(4,cat,fitblock4s)
 simquad5 <- simquad(5,cat,fitquad5s)
 simsin5 <- simsin(5,cat,fitsin5s)
 
-simdf <- data.frame(obs = cat$LogDist,
+simdat <- data.frame(obs = cat$LogDist,
                     fmm5 = simfmm5$obs,
                     fmmsin4 = simfmmsin4$obs,
                     hmm6 = simhomo6$obs,
@@ -58,4 +58,4 @@ simdf <- data.frame(obs = cat$LogDist,
                     hmmsin5 = simsin5$obs,
                     time = cat$Time)
 
-save(list=c("simdf"),file="cat1simdat.RData")
+save(list=c("simdat"),file="cat1simdat.RData")

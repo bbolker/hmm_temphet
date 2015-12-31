@@ -15,8 +15,6 @@ bicplot <- function(df){
   return(temp)
 }
 
-sumdat <- sumdf(fitlist)
-
 avgplot <- function(df){
   simdf <- df %>% dplyr:::select(-obs) %>% group_by(time) %>% summarise_each(funs(mean))
   obsdf <- df %>% dplyr:::select(c(obs,time)) %>% filter(!is.na(obs)) %>% group_by(time) %>% summarise_each(funs(mean)) %>% dplyr:::select(obs)

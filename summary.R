@@ -1,3 +1,4 @@
+library(depmixS4)
 library(dplyr)
 library(plyr)
 
@@ -33,8 +34,3 @@ sumdf <- function(lst){
   temp <- data.frame(BICS=BIC$V1,deltaBIC=deltaBIC$V1,nstates=nstates$V1,parameters=para$V1,model,type)
   return(temp)
 }
-
-
-catsummary <- sumdf(fitlist)
-
-save(list=c("sumdf"),file="cat1sumdat.RData")
