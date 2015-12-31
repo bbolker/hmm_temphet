@@ -14,7 +14,10 @@ catsdat.Rout:	ArchivePantherData.csv pantherDataFrame.R
 %.fit.Rout:	%.df.Rout fitfunctions.R mikesim.R simfunctions.R %seeds.R
 		$(run-R)
 
-%.plot.Rout:	%.fit.Rout plotsimfunctions.R %simplots.R
+%.summary.Rout:	%.fit.Rout summary.R
+		$(run-R)
+
+%.plot.Rout:	%.summary.Rout plotsimfunctions.R %simplots.R
 		$(run-R)
 
 
