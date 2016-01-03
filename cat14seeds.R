@@ -49,3 +49,12 @@ simblock4 <- simblock(4,cat,fitblock4s)
 simquad5 <- simquad(5,cat,fitquad5s)
 simsin4 <- simsin(4,cat,fitsin4s)
 
+simdat <- data.frame(obs = cat$LogDist,
+                     fmm4 = simfmm4$obs,
+                     fmmsin3 = simfmmsin3$obs,
+                     hmm5 = simhomo5$obs,
+                     hmmhourly3 = simhourly3$obs,
+                     hmmblock4 = simblock4$obs,
+                     hmmquad5 = simquad5$obs,
+                     hmmsin4 = simsin4$obs,
+                     time = cat$Time)

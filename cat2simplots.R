@@ -1,4 +1,7 @@
-## creating simdf 
+library(ggplot2)
+library(dplyr)
+library(plyr)
+library(depmixS4)
 library(reshape2)
 
 print(bicplot(sumdat))
