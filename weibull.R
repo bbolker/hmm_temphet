@@ -117,7 +117,7 @@ inMod <- transInit(~ 1, ns = 3, pstart = rep(1/3, 3),
 w3 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
 
-weibull3s <- fit(w3, verbose = TRUE, emc=em.control(rand=TRUE))
+weibull3s <- fit(w3, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
 
 summary(weibull3s)
 
@@ -150,7 +150,7 @@ inMod <- transInit(~ 1, ns = 4, pstart = rep(1/4, 4),
                    data = data.frame(1))
 w4 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-weibull4s <- fit(w4, verbose = TRUE, emc=em.control(rand=FALSE))
+weibull4s <- fit(w4, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
 summary(weibull4s)
 
 # HMM Weibull 5 states ----
@@ -187,7 +187,7 @@ inMod <- transInit(~ 1, ns = 5, pstart = rep(1/5, 5),
                    data = data.frame(1))
 w5 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-weibull5s <- fit(w5, verbose = TRUE, emc=em.control(rand=FALSE))
+weibull5s <- fit(w5, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
 summary(weibull5s)
 
 # HMM Weibull 6 states ----
@@ -229,7 +229,7 @@ inMod <- transInit(~ 1, ns = 6, pstart = rep(1/6, 6),
                    data = data.frame(1))
 w6 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-weibull6s <- fit(w6, verbose = TRUE, emc=em.control(rand=FALSE))
+weibull6s <- fit(w6, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
 summary(weibull6s)
 
 

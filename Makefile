@@ -20,6 +20,8 @@ catsdat:       ArchivePantherData.csv pantherDataFrame.R
 %.plot.Rout:	%sumdat.RData %.RData plotsimfunctions.R %simplots.R
 		$(run-R)
 
+%.BIC.Rout:	%.RData wrap.R
+		$(run-R)
 
 
 %.tex: %.Rnw
