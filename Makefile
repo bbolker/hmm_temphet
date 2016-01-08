@@ -8,7 +8,7 @@ target:	cat1.plot.Rout
 catsdat:       ArchivePantherData.csv pantherDataFrame.R
 	       R CMD BATCH pantherDataFrame.R
 
-%.df.Rout:	catsdat %.RData df.R
+%.df.Rout:	%.RData df.R
 		$(run-R)
 
 %.fit.Rout:	%.df.Rout fitfunctions.R mikesim.R simfunctions.R %seeds.R
@@ -17,7 +17,7 @@ catsdat:       ArchivePantherData.csv pantherDataFrame.R
 %.summary.Rout:	%.fit.Rout summary.R %summary.R
 		$(run-R)
 
-%.plot.Rout:	catsdat %sumdat.RData %.RData plotsimfunctions.R %simplots.R
+%.plot.Rout:	%sumdat.RData %.RData plotsimfunctions.R %simplots.R
 		$(run-R)
 
 %.BIC.Rout:	%.RData wrap.R
