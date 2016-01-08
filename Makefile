@@ -1,6 +1,6 @@
 ###1 Take PantherDF, hack it and store it independently by cats :
 
-current:	target
+current:  target
 
 target:	cat1.plot.Rout
 	evince cat1.plot.Rout.pdf
@@ -44,13 +44,13 @@ clean:
 
 #######Make stuff
 
-gitroot = ../
--include local.mk
--include $(gitroot)/local.mk
-ms = $(gitroot)/makestuff
+ms = makestuff/
 
 -include $(ms)/git.mk
-
 -include $(ms)/visual.mk
--include $(ms)/wrapR.mk
 
+-include $(ms)/wrapR.mk
+-include $(ms)/oldlatex.mk
+
+makestuff:
+	git clone https://github.com/mli2830/makestuff.git
