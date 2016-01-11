@@ -246,4 +246,8 @@ ll$deltaBIC[17:20] <- ll$BICS[17:20] - min(ll$BICS[17:20])
 ll$deltaBIC[21:24] <- ll$BICS[21:24] - min(ll$BICS[21:24])
 ll$deltaBIC[25:28] <- ll$BICS[25:28] - min(ll$BICS[25:28])
 ll$deltaBIC[29:32] <- ll$BICS[29:32] - min(ll$BICS[29:32])
-bicplot(ll)
+
+allmodsumdf <- ll
+bicplot(allmodsumdf)
+
+

@@ -131,7 +131,7 @@ inMod <- transInit(~ 1, ns = 3, pstart = rep(1/3, 3),
                    data = data.frame(1))
 mod3 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-LNVMsin3 <- fit(mod3, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
+LNVMsin3 <- fit(mod3, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(LNVMsin3)
 
 # HMM LNVM 4 states ----
@@ -178,7 +178,7 @@ inMod <- transInit(~ 1, ns = 4, pstart = rep(1/4, 4),
                    data = data.frame(1))
 mod4 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-LNVMsin4 <- fit(mod4, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
+LNVMsin4 <- fit(mod4, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(LNVMsin4)
 
 # HMM LNVM 5 states ----
@@ -235,7 +235,7 @@ inMod <- transInit(~ 1, ns = 5, pstart = rep(1/5, 5),
                    data = data.frame(1))
 mod5 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-LNVMsin5 <- fit(mod5, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
+LNVMsin5 <- fit(mod5, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(LNVMsin5)
 
 # HMM LNVM 6 states ----
@@ -301,7 +301,7 @@ inMod <- transInit(~ 1, ns = 6, pstart = rep(1/6, 6),
                    data = data.frame(1))
 mod6 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-LNVMsin6 <- fit(mod6, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
+LNVMsin6 <- fit(mod6, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(LNVMsin6)
 
 save(list=c('LNVMsin3','LNVMsin4','LNVMsin5','LNVMsin6'),file="LNVM_het_cat1.RData")

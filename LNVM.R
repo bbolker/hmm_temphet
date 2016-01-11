@@ -131,7 +131,7 @@ inMod <- transInit(~ 1, ns = 3, pstart = rep(1/3, 3),
                    data = data.frame(1))
 mod3 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-LNVM3s <- fit(mod3, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
+LNVM3s <- fit(mod3, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(LNVM3s)
 
 # HMM LNVM 4 states ----
@@ -170,7 +170,7 @@ inMod <- transInit(~ 1, ns = 4, pstart = rep(1/4, 4),
                    data = data.frame(1))
 mod4 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-LNVM4s <- fit(mod4, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
+LNVM4s <- fit(mod4, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(LNVM4s)
 
 # HMM LNVM 5 states ----
@@ -217,7 +217,7 @@ inMod <- transInit(~ 1, ns = 5, pstart = rep(1/5, 5),
                    data = data.frame(1))
 mod5 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-LNVM5s <- fit(mod5, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
+LNVM5s <- fit(mod5, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(LNVM5s)
 
 # HMM LNVM 6 states ----
@@ -271,7 +271,7 @@ inMod <- transInit(~ 1, ns = 6, pstart = rep(1/6, 6),
                    data = data.frame(1))
 mod6 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-LNVM6s <- fit(mod6, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
+LNVM6s <- fit(mod6, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(LNVM6s)
 
 

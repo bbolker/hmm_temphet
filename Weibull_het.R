@@ -116,7 +116,7 @@ inMod <- transInit(~ 1, ns = 3, pstart = rep(1/3, 3),
                    data = data.frame(1))
 ws3 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-Wsin3 <- fit(ws3, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
+Wsin3 <- fit(ws3, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(Wsin3)
 
 # HMM W 4 states time het ----
@@ -155,7 +155,7 @@ inMod <- transInit(~ 1, ns = 4, pstart = rep(1/4, 4),
                    data = data.frame(1))
 ws4 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-Wsin4 <- fit(ws4, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
+Wsin4 <- fit(ws4, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(Wsin4)
 
 # HMM W 5 states time het ----
@@ -201,7 +201,7 @@ inMod <- transInit(~ 1, ns = 5, pstart = rep(1/5, 5),
                    data = data.frame(1))
 ws5 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-Wsin5 <- fit(ws5, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
+Wsin5 <- fit(ws5, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(Wsin5)
 
 # HMM W 6 states time het ----
@@ -255,7 +255,7 @@ inMod <- transInit(~ 1, ns = 6, pstart = rep(1/6, 6),
                    data = data.frame(1))
 ws6 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-Wsin6 <- fit(ws6, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460,maxit=480))
+Wsin6 <- fit(ws6, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(Wsin6)
 
 
