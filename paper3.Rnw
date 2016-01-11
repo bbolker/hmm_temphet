@@ -24,6 +24,10 @@
 \doublespacing
 <<pkgs,message=FALSE,warning=FALSE,echo=FALSE>>=
 library("ggplot2")
+library("depmixS4")
+library("dplyr")
+library("reshape2")
+library("plyr")
 @
 
 \begin{abstract}
@@ -80,16 +84,16 @@ behaviour at diurnal and seasonal scales that were previously
 not captured in the data.
 
 HMMs have typically been used to model movements over short time
-scales, where the probability of switching between movement states is
-approximately constant. Changes in behavioural mode switching 
-\todo{do we want to call these transition probabilities (throughout)? ML: I prefer to call it this because it is consistent with explaning HMM parts.}
+scales, where the probability of transitioning between movement states is
+approximately constant. Changes in behavioural mode transition 
+\todo{do we want to call these transition probabilities (throughout)? ML: DONE}
 probabilities based on
 the local environment can be accounted for incorporating environmental
 covariates in the HMM \citep{patterson_classifying_2009}, or by more
 \emph{ad hoc} comparisons between inferred states and environmental
 conditions \citep{fryxell_multiple_2008}. 
 \cite{schliehe-diecks_application_2012}
-consider temporal trends in switching behaviour over the
+consider temporal trends in transitioning behaviour over the
 time scales of a six-hour
 observation period, but
 in general ecologists have turned to other tools to describe behavioural
@@ -106,13 +110,13 @@ When movement varies over long time scales
 (relative to the time between observations) with little short-term
 persistence or correlation, movement could be well represented by FMMs
 where the occupancy probabilities change deterministically over time.  Thus FMMs and HMMs,
-with or without temporal variation in the occupancy or switching
+with or without temporal variation in the occupancy or transitioning
 probabilities, form a useful family of models for capturing
 changes in movement behaviour over a range of time scales.
 
 Our primary goal in this paper is to introduce the use of
-HMMs with temporally varying switching probabilities -- in particular,
-switching probabilities that follow a diurnal cycle -- for modeling
+HMMs with temporally varying transitioning probabilities -- in particular,
+transitioning probabilities that follow a diurnal cycle -- for modeling
 animal movement recorded over long time scales.  We re-analyze data from 
 \cite{kerk2015hidden}, who used temporally homogeneous hidden semi-Markov
 models (HSMMs: an extension of HMMs that allow
@@ -180,6 +184,19 @@ we took first differences of the data by decomposing
 contiguous sequences of hourly GPS coordinates into 
 successive step lengths (in meters) and turning angles (in radians)
 \citep{turchin1998quantitative,kerk2015hidden}.
+
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{Cat-ID}
+\begin{tabular}{ccc}
+ (van de Kerk 2015) & (IR@UF)  & Number of Obserations  \\
+  130 & 1 & 10286    \\
+  131& 2  & 1111    \\
+ 48& 14  & 12222    \\
+ 94& 15  & 9999  
+\end{tabular}
+\end{table}
 
 \cite{kerk2015hidden} used hidden semi-Markov models (HSMM), 
 an extension of HMM that permits explicit modelling of dwell times 
@@ -355,13 +372,24 @@ approaches ($\dbic$, hourly averages, ACF) will show}
 
 \section{Results}
 
-
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figures/cat1REDplot} \caption{Model Reduction Process via Individual based Model Adjusted BIC }\label{fig:BICred_plot}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{figure}
+<<All mod BIC plot, warning=FALSE, echo=FALSE, message=FALSE>>=
+load("cat1allmod.RData")
+ggplot(allmodsumdf, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ model,ncol=4)+
+    scale_y_continuous()+
+    scale_size_continuous( name="Num of Parameters") +
+    #    geom_point(aes(size=parameters))+
+    labs(y=expression(paste(Delta, "BIC")),
+         x="Number of States")  +
+    geom_line(aes(colour=model),size=0.5) +theme_bw() +
+    ggtitle("Adjusted BIC Model Comparisons")
+
+@
+\caption{Model Reduction Process via Individual based Model Adjusted BIC }
+\label{fig:BICred_plot}
 \end{figure}
-
-
 \end{knitrout}
 
 
@@ -371,20 +399,45 @@ Adding temporal heterogeneity in the transitions for 3 to 6 state HSMM was a cha
 \begin{knitrout}
 \begin{figure}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figures/cat1BIC} \caption{Overall Adjusted BIC Comparisons between different HMM models}
+
+<<Adjusted BIC comparisons, warning=FALSE, echo=FALSE, message=FALSE>>=
+load("cat1sumdat.RData")
+ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ type,ncol=4)+
+    scale_y_continuous()+
+    scale_size_continuous( name="Num of Parameters") +
+    geom_point(aes(size=parameters))+
+    labs(y=expression(paste(Delta, "BIC")),
+         x="Number of States") +
+    geom_line(aes(colour=model),size=0.5) +theme_bw() +
+    ggtitle("Adjusted BIC Model Comparisons")
+
+@
+
+\caption{Overall Adjusted BIC Comparisons between different HMM models}
 \end{figure}
-
-
 \end{knitrout}
 
 As a complement, we also added FMM, FMM with sinusoidal temporal heterogeneities, and HMM with hourly transitions to compare the temporal effects in goodness of fit.  \todo{if FMMs are here they should be in methods} Looking at figure 2, time inhomogenous transition HMMs (vertically) and 5 states yield the lowest $\Delta$ BIC. The time inhomogeneous transition HMMs reduced the number of states from the HMM by 1 state consistently across all panthers via $\Delta$ BIC. Two of the four panthers dropped to 4 states from 5 states after adding time inhomogeneity transition moving closer to a biologically and statistically interpretable level. Although adding the time inhomogeneous only reduce the number of states by 1, it does support that adding temporal heterogeneity reduce the number of states and at the same time, increase goodness of fit by BIC.
 
-Among the different types of time inhomogeneous transition HMMs, sinusoidal time dependent transition HMMs yields the lowest BIC. The multiple block transitions was a good fit for the male panthers, using a combination of three transition matrix ($b_{1}$ for $t={1-6,21-24}$, $b_{2}$ for $ t={7-16}$, and $b_{3}$ for $t={17-20}$) and it reduced the number of states by 1 but had no effect on the females. The quadratic and sinusoidal time covariate transitions was motivated by the multiple block switching pattern attempting to capture the cyclic diurnal cycle and same complex level in terms of number of parameters. We concluded that sinusoidal time dependent transition HMM was suitable for modeling these panthers. 
+Among the different types of time inhomogeneous transition HMMs, sinusoidal time dependent transition HMMs yields the lowest BIC. The multiple block transitions was a good fit for the male panthers, using a combination of three transition matrix ($b_{1}$ for $t={1-6,21-24}$, $b_{2}$ for $ t={7-16}$, and $b_{3}$ for $t={17-20}$) and it reduced the number of states by 1 but had no effect on the females. The quadratic and sinusoidal time covariate transitions was motivated by the multiple block transitioning pattern attempting to capture the cyclic diurnal cycle and same complex level in terms of number of parameters. We concluded that sinusoidal time dependent transition HMM was suitable for modeling these panthers. 
 
 \begin{knitrout}
 \begin{figure}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figures/cat1avg} \caption{Average step length by time of day}
+
+<<avg step length by time, message=FALSE, echo=FALSE, warning=FALSE>>=
+  simdf <- simdat %>% dplyr:::select(-obs) %>% group_by(time) %>% summarise_each(funs(mean))
+  obsdf <- simdat %>% dplyr:::select(c(obs,time)) %>% filter(!is.na(obs)) %>% group_by(time) %>% summarise_each(funs(mean)) %>% dplyr:::select(obs)
+  avgdf <- cbind(simdf,obsdf)
+  avgdf2 <- melt(avgdf,'time')
+ggplot(avgdf2,aes(x=time,y=value,colour=variable)) + 
+    geom_point() +geom_line()+ xlab("Time of Day") + ylab("Step lengths (log10)")+
+    scale_x_continuous(breaks=0:23) + theme_bw() + 
+    ggtitle("Average Step Lengths at Different Hours of the Day")
+
+@
+
+\caption{Average step length by time of day}
 \end{figure}
 
 \end{knitrout}
@@ -397,16 +450,46 @@ Next, we used the fitted models and simulate the same number of observations as 
 \begin{knitrout}
 \begin{figure}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figures/cat1acf} \caption{ACF }
+<<acf plot, message=FALSE, echo=FALSE, warning=FALSE>>=
+acffun <- function(sim){
+  a <- acf(sim,na.action=na.pass,plot=FALSE)
+  df <- data.frame(ACF=c(a$acf),lag=a$lag)
+  return(df)
+}
+
+  temp <- simdat %>% dplyr:::select(-time)%>%ldply(.,acffun)
+  ggplot(temp,aes(lag,ACF,colour=.id))+
+    geom_point()+geom_line() +theme_bw() +
+    ggtitle("ACF plot of BIC Selected Models")
+  
+@
+\caption{ACF }
 \end{figure}
 \end{knitrout}
+
 
 Lastly, the observed data has strong 24 hour lag autocorrelation (correlation with itself) which suggest temporal heterogeneity. FMM has no autocorrelation at all. HMM without temporal heterogeneity can capture the first few lags of the ACF but is unable to capture lags beyond 7. FMM with temporal heterogeneity can capture lags beyond 12, but not short-term correlation. HMM with temporal heterogeneity can fully capture the autocorrelation pattern of the observed data. 
 
 \begin{knitrout}
 \begin{figure}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figures/cat1states} 
+<<state plots, warning=FALSE, message=FALSE, echo=FALSE>>=
+temp5 <- tail(getpars(fitsin5s),10)
+temp6 <- tail(getpars(fithomo6s),12)
+dat1 <- data.frame(log_mean=temp5[c(1,3,5,7,9)],
+                     log_sd=temp5[c(2,4,6,8,10)], states="5") 
+dat2 <- data.frame(log_mean=temp6[c(1,3,5,7,9,11)],
+                     log_sd=temp6[c(2,4,6,8,10,12)],states="6") 
+dat1 <- dat1[order(dat1$log_mean),]
+dat2 <- dat2[order(dat2$log_mean),]
+  
+dat <- rbind(dat1,dat2)
+ggplot(dat,aes(log_mean,log_sd,color=states))+
+    geom_point()+geom_line() +theme_bw() +
+    ggtitle("State Parameters")  
+
+@
+\caption{States}
 \end{figure}
 \end{knitrout}
 
