@@ -1,4 +1,5 @@
--need to add weibull/vm to pipe/workflow
--need to add weibull/vm metadata 
+- make weibull VN temp_het meta data
 
+- start with one cat for the paper and do the rest later 
+- work on paper on saturday
  
