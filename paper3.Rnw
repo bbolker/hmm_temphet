@@ -85,7 +85,7 @@ not captured in the data.
 
 HMMs have typically been used to model movements over short time
 scales, where the probability of transitioning between movement states is
-approximately constant. Changes in behavioural mode transition 
+approximately constant. Changes in latent/hidden behavioural state/mode transition 
 \todo{do we want to call these transition probabilities (throughout)? ML: DONE}
 probabilities based on
 the local environment can be accounted for incorporating environmental
@@ -143,7 +143,7 @@ kerk2015hidden}. As \cite{kerk2015hidden} comment, behavioural
 repertoires with more than three distinct states are difficult to
 interpret, one possible reason that other authors have not used
 \citeauthor{kerk2015hidden}'s model-based approach to
-identifying the number of behavioural modes.
+identifying the number of latent states.
 
 Our second goal, therefore, is to explore whether
 \citeauthor{kerk2015hidden}'s results might be driven at
@@ -152,15 +152,15 @@ assumption of temporally homogeneous behaviour.  When large data sets
 are available, information-theoretic model selection methods will
 typically choose complex, highly parameterized models; when there is
 only one way in which models can become more complex (e.g. by
-increasing the number of behavioural modes), complexity that is
+increasing the number of latent states), complexity that is
 present in the data but not accounted for in the model (e.g. spatial
 or temporal heterogeneity) can be misidentified as other forms of
 complexity.  We predict that increasing volumes of data will
 increasingly lead researchers who are accustomed to fitting 
 small models to sparse data into such traps.  We examine whether
 allowing for diurnal variation in the Florida panther data leads to
-selection of models with smaller numbers of behavioural modes; we also
-fit models to simulated data with varying numbers of behavioural modes
+selection of models with smaller numbers of latent states; we also
+fit models to simulated data with varying numbers of latent states
 and degrees of temporal heterogeneity to test our conjecture that
 heterogeneity can be misidentified as behavioural complexity.
 
@@ -187,14 +187,14 @@ successive step lengths (in meters) and turning angles (in radians)
 
 \begin{table}[]
 \centering
-\caption{My caption}
+\caption{Cat-ID}
 \label{Cat-ID}
 \begin{tabular}{ccc}
  (van de Kerk 2015) & (IR@UF)  & Number of Obserations  \\
   130 & 1 & 10286    \\
-  131& 2  & 1111    \\
- 48& 14  & 12222    \\
- 94& 15  & 9999  
+  131 & 2  & 9458    \\
+ 48& 14  & 14645    \\
+ 94& 15  & 10250  
 \end{tabular}
 \end{table}
 
@@ -239,14 +239,14 @@ a von Mises-distributed turning angle in the model (Figure~1).
 
 \cite{kerk2015hidden} used the Bayesian (Schwarz) information criterion (BIC)
 to test the relative penalized goodness of fit for
-models ranging from 2 to 6 latent behavioural modes.
+models ranging from 2 to 6 latent states.
 \todo{not sure about terminology here (should be consistent about
-what we call the modes/latent states/whatever) ML: What do you think? Are ecologist more comfortable with modes/ latent states?}
+what we call the modes/latent states/whatever) ML: latent states}
 In general, BIC values decreased as the number of states
 increased from 
-three to six states,
+3 to 6 states,
 \todo{should decide on rules for numbers vs numerals (3 vs three) and be consistent. ML: numeric}
-suggesting that the six-state model was
+suggesting that the 6-state model was
 favoured statistically; however,
 the authors used 3-state models in most
 of their analyses for ease of biological interpretation.
@@ -276,7 +276,7 @@ Furthermore, the state occupancies based on the
 Viterbi algorithm, which predicts the most likely sequence of movement
 states based on observed movement results
 \citep{zucchini_hidden_2009,langrock_flexible_2012} cannot predict
-future movement patterns and cannot capture which movement modes
+future movement patterns and cannot capture which latent states
 panthers are likely to occupy depending on time of day from the time
 homogeneous transitions (ie, the transition between all states are
 constant through time).
@@ -319,7 +319,7 @@ numerically estimating parameters \citep{zucchini_hidden_2009};
 we use the implementations in the {\tt depmixS4} package for R
 \citep{visser2010depmixs4,R}.
 
-We considered 3 (biologically interpretable number of states identified: (1) resting mode, characterized by short step length; (2) Moderately active mode characterized by intermediate step lengths, and (3) Traveling mode, characterized by long step lengths) to 6 (maximum number of states by BIC selection from time homogeneous transition HSMM) underlying movement states in \citet{kerk2015hidden} for HMM fitting. \todo{where do we actually focus on these three states?  Think this could probably be introduced in the Discussion, if we need it}
+We considered 3 (biologically interpretable number of states identified: (1) resting state, characterized by short step length; (2) Moderately active state characterized by intermediate step lengths, and (3) Traveling state, characterized by long step lengths) to 6 (maximum number of states by BIC selection from time homogeneous transition HSMM) underlying movement states in \citet{kerk2015hidden} for HMM fitting. \todo{where do we actually focus on these three states?  Think this could probably be introduced in the Discussion, if we need it}
 
 For any $n$-state HMM, we need to define a $n \times n$ matrix that specifies the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$.  However, this matrix needs to respect the constraints that (1) all probabilities are between 0 and 1 and (2) transition probabilities out of a given state sum to 1. Therefore, as is standard for HMMs with covariates \citep{visser2010depmixs4}, we define this multinomial logistic model in terms of a linear predictor $\eta_{ij}$, where $\eta_{i1}$ is unnecessary (i.e. we have only $n \times (n-1)$ distinct parameters; we nevertheless index $j$ from 2 to $n$ for notational clarity):
 \begin{equation}
