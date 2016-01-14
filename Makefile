@@ -1,6 +1,6 @@
 ###1 Take PantherDF, hack it and store it independently by cats :
 
-current:  target
+current:  paper3.pdf.now
 
 target:	cat1.plot.Rout
 	evince cat1.plot.Rout.pdf
@@ -24,15 +24,14 @@ catsdat:       ArchivePantherData.csv pantherDataFrame.R
 		$(run-R)
 
 
-%.tex: %.Rnw
+%.tex:	%.Rnw
 	echo "library('knitr'); knit(\"$*.Rnw\")" | R --slave
 
-%.pdf: %.tex paper.bib
+%.pdf:	%.tex paper.bib
 	texi2dvi -p $*.tex
 
-%: %.pdf
-	evince paper3.pdf 
-
+%.pdf.now:	 %.pdf
+		 evince paper3.pdf
 clean:
 	rm -f *.bbl *.blg *.log *.aux *.loc *~
 

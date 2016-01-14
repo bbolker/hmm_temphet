@@ -272,15 +272,6 @@ for BIC-optimality will carry over to analyses using AIC instead.
 just a \emph{brief} definition here (since we are going to use it) and criticize/
 explain shortcomings later}
 
-Furthermore, the state occupancies based on the
-Viterbi algorithm, which predicts the most likely sequence of movement
-states based on observed movement results
-\citep{zucchini_hidden_2009,langrock_flexible_2012} cannot predict
-future movement patterns and cannot capture which latent states
-panthers are likely to occupy depending on time of day from the time
-homogeneous transitions (ie, the transition between all states are
-constant through time).
-
 \subsection{Model description}
 
 \newcommand{\obs}{\mathbf{y}}
@@ -502,7 +493,7 @@ Identifying behavioural states based on some set of observations is a common met
 
 We have presented a relatively simple concept yet little-studied extension by covariate dependent HMM can overfit the number of true states in covariate dependent HMM (in our case, time-dependent transitions). HMM with more than three states are not biologically interpretable and often discarded, but we cannot ignore that increasing complexity (number of states) states can increase goodness of fit statistically. Our analyses revealed modeling temporal heterogeneity in HMM transition can reduce the number of states estimated in time homogeneous transitions HMM movement of Florida panthers and reduce the overall model complexity.
 
-For some kinds of model predictions, the time homogeneous transition model can perform as good as the time inhomogeneous transition models in terms of estimating the states by the Viterbi algorithm (the tradition state prediction method) and can easily overlook more complicated models. The Viterbi algorithm predicts the most likely sequence of movement states based on the observations which allows the time homogenous transition model's prediction to capture the temporal heterogeneity from the observations. In general, the time homogeneous transition model gives the broader scope of movement pattern where as the time inhomogeneous transitions models gives a more realistic movement structure and future predictions. See Appendix.
+For some kinds of model predictions, the time homogeneous transition model can perform as good as the time inhomogeneous transition models in terms of predicting the states by the Viterbi algorithm (the tradition state prediction method) and can easily overlook more complicated models. The Viterbi algorithm solves/predicts for the most likely/probable sequence of movement states based on the observations \citep{zucchini_hidden_2009,langrock_flexible_2012}. This approach allows the time homogenous transition model's prediction to capture the temporal heterogeneity from the observations. It is useful to predict missing data in the observation sequence but fail to future movements beyond the observations sequence. In general, the time homogeneous transition model gives the broader scope of movement pattern where as the time inhomogeneous transitions models gives a more realistic movement structure and future predictions.
 
 Although the time inhomogeneous transition offer an
 objective approach to (1) reduce the number of states to a biologically interpretable level, (2) captures the observational autocorrelation and temporal pattern, (3) reduce the overall complexity as illustrated by our study, several challenges
