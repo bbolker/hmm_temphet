@@ -270,7 +270,7 @@ for BIC-optimality will carry over to analyses using AIC instead.
 
 \todo{The following description of the V. algorithm is not coherent; need to give
 just a \emph{brief} definition here (since we are going to use it) and criticize/
-explain shortcomings later}
+explain shortcomings later. ML: I moved the whole previous paragraph to the end where we actually talk about viterbi}
 
 \subsection{Model description}
 
@@ -310,9 +310,17 @@ numerically estimating parameters \citep{zucchini_hidden_2009};
 we use the implementations in the {\tt depmixS4} package for R
 \citep{visser2010depmixs4,R}.
 
-We considered 3 (biologically interpretable number of states identified: (1) resting state, characterized by short step length; (2) Moderately active state characterized by intermediate step lengths, and (3) Traveling state, characterized by long step lengths) to 6 (maximum number of states by BIC selection from time homogeneous transition HSMM) underlying movement states in \citet{kerk2015hidden} for HMM fitting. \todo{where do we actually focus on these three states?  Think this could probably be introduced in the Discussion, if we need it}
+\todo{where do we actually focus on these three states?  Think this could probably be introduced in the Discussion, if we need it. ML: I took it out and gave a half a line in model evaluation subsection}
 
-For any $n$-state HMM, we need to define a $n \times n$ matrix that specifies the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$.  However, this matrix needs to respect the constraints that (1) all probabilities are between 0 and 1 and (2) transition probabilities out of a given state sum to 1. Therefore, as is standard for HMMs with covariates \citep{visser2010depmixs4}, we define this multinomial logistic model in terms of a linear predictor $\eta_{ij}$, where $\eta_{i1}$ is unnecessary (i.e. we have only $n \times (n-1)$ distinct parameters; we nevertheless index $j$ from 2 to $n$ for notational clarity):
+For any $n$-state HMM, we need to define a $n \times n$ matrix that specifies the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$.  However, this matrix needs to respect the constraints that (1) all probabilities are between 0 and 1 and (2) transition probabilities out of a given state sum to 1. The FMM is a special case of HMM where; it can be modelled in the HMM framework by setting the transition probabilities: 
+
+\begin{equation}
+\begin{split}
+\pi_{ij} = \pi_{i*j},     \forall i 
+\end{split}
+\end{equation}
+
+Therefore, as is standard for HMMs with covariates \citep{visser2010depmixs4}, we define this multinomial logistic model in terms of a linear predictor $\eta_{ij}$, where $\eta_{i1}$ is unnecessary (i.e. we have only $n \times (n-1)$ distinct parameters; we nevertheless index $j$ from 2 to $n$ for notational clarity):
 \begin{equation}
 \begin{split}
 \pi_{ij} & = \exp(\eta_{ij}(t))/\left(1+\sum_{j=2}^{n}\exp(\eta_{ij}(t))\right), \textrm{ for } j={2,...,n} \\
@@ -320,7 +328,7 @@ For any $n$-state HMM, we need to define a $n \times n$ matrix that specifies th
 \end{split}
 \end{equation}
 
-We considered three different models for diurnal variation in behaviour; extension of ``Switch with covariates" by \cite{morales_extracting_2004}. \todo{second clause isn't clear; expand?}.
+We considered three different transitions models for diurnal variation in behaviour; extension of ``Switch with covariates" by \cite{morales_extracting_2004} to account for temporal hetergeneitiy \todo{second clause isn't clear; expand? ML: okay now? }.
 
 \begin{description}
 \item[Multiple block transition] Here we assume piecewise-constant transition probabilities. The transition probability $\pi_{ij}$ is a function of time (hour of day), where it is assigned to one of $M$ different time blocks:
@@ -355,10 +363,10 @@ algorithm.
 computation - everything that appears in the results should be described
 explicitly here}
 
-We assessed the fit of the time homogeneous and inhomogeneous transition HMMs to 4 of the 13 Florida panthers with the most data using three approaches. First, goodness of fit of different number of states by scaled BIC within each type of transition complexity ($\dbic$ = BIC - min(BIC)). Secondly, the average distance by time of day comparison of observed and simulated data from each type of transition complexity. Lastly, autocorrelation comparison between the observed and simulated data.
+We assessed the fit of 3 to 6 state, time homogeneous and inhomogeneous transition HMMs to four of the thirteen Florida panthers with the most data using three approaches. First, goodness of fit of different number of states by scaled BIC within each type of transition complexity ($\dbic$ = BIC - min(BIC)). Secondly, the average distance by time of day comparison of observed and simulated data from each type of transition complexity. Lastly, autocorrelation comparison between the observed and simulated data. Increasing the number of latent states of HMM, and incorportating temporal transition heterogeneity of FMM and HMM, can both (independently) improve goodness of fit in their own ways, but it is unclear the tradeoff between the two methods and the combination of both is an underused model extension. 
 
 \todo{give at least a hint of why/what each of these three 
-approaches ($\dbic$, hourly averages, ACF) will show}
+approaches ($\dbic$, hourly averages, ACF) will show. ML: What do you think?}
 
 
 \section{Results}
