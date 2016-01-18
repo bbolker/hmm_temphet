@@ -347,6 +347,48 @@ $$
 $$
 \end{description}
 
+Model complexity and number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorportating temportal heterogeneity. 
+
+
+\begin{table}[]
+\centering
+\caption{Number of Parameters for each model type}
+\label{Cat-ID}
+\begin{tabular}{cccc}
+ Type & Model  & Number of States & Number of Parameters  \\
+  FMM & FMM & 3 & 9    \\
+  FMM & FMM & 4 & 12    \\
+  FMM & FMM & 5 & 15   \\
+  FMM & FMM & 6 & 18  \\
+  FMM + TH & FMM + TH (Sin)  & 3 & 15    \\
+  FMM + TH & FMM + TH (Sin)  & 4 & 20    \\
+  FMM + TH & FMM + TH (Sin)  & 5 & 25    \\
+  FMM + TH & FMM + TH (Sin)  & 6 & 30    \\
+  HMM & HMM & 3 & 18    \\
+  HMM & HMM & 4 & 28    \\
+  HMM & HMM & 5 & 40   \\
+  HMM & HMM & 6 & 54  \\
+  HMM + TH & HMM + TH (Block)  & 3 & 36    \\
+  HMM + TH & HMM + TH (Block)  & 4 & 60    \\
+  HMM + TH & HMM + TH (Block)  & 5 & 90    \\
+  HMM + TH & HMM + TH (Block)  & 6 & 126    \\
+  HMM + TH & HMM + TH (Quad)  & 3 & 36    \\
+  HMM + TH & HMM + TH (Quad)  & 4 & 60    \\
+  HMM + TH & HMM + TH (Quad)  & 5 & 90    \\
+  HMM + TH & HMM + TH (Quad)  & 6 & 126    \\
+  HMM + TH & HMM + TH (Sin)  & 3 & 36    \\
+  HMM + TH & HMM + TH (Sin)  & 4 & 60    \\
+  HMM + TH & HMM + TH (Sin)  & 5 & 90    \\
+  HMM + TH & HMM + TH (Sin)  & 6 & 126    \\
+  HMM + TH & HMM + TH (Hourly)  & 3 & 225    \\
+  HMM + TH & HMM + TH (Hourly)  & 4 & 396    
+  
+\end{tabular}
+\end{table}
+
+
+
+
 \todo{Discuss model complexity/parameter-number computations here, or with each model.  Also discuss the ``hourly'' model here.}
 
 \subsection{Model evaluation}
@@ -361,7 +403,7 @@ algorithm.
 
 \todo{describe the Viterbi algorithm here, and the autocorrelation function
 computation - everything that appears in the results should be described
-explicitly here}
+explicitly here....ML: at the bottom}
 
 We assessed the fit of 3 to 6 state, time homogeneous and inhomogeneous transition HMMs to four of the thirteen Florida panthers with the most data using three approaches. First, goodness of fit of different number of states by scaled BIC within each type of transition complexity ($\dbic$ = BIC - min(BIC)). Secondly, the average distance by time of day comparison of observed and simulated data from each type of transition complexity. Lastly, autocorrelation comparison between the observed and simulated data. Increasing the number of latent states of HMM, and incorportating temporal transition heterogeneity of FMM and HMM, can both (independently) improve goodness of fit in their own ways, but it is unclear the tradeoff between the two methods and the combination of both is an underused model extension. 
 
@@ -502,6 +544,34 @@ Identifying behavioural states based on some set of observations is a common met
 We have presented a relatively simple concept yet little-studied extension by covariate dependent HMM can overfit the number of true states in covariate dependent HMM (in our case, time-dependent transitions). HMM with more than three states are not biologically interpretable and often discarded, but we cannot ignore that increasing complexity (number of states) states can increase goodness of fit statistically. Our analyses revealed modeling temporal heterogeneity in HMM transition can reduce the number of states estimated in time homogeneous transitions HMM movement of Florida panthers and reduce the overall model complexity.
 
 For some kinds of model predictions, the time homogeneous transition model can perform as good as the time inhomogeneous transition models in terms of predicting the states by the Viterbi algorithm (the tradition state prediction method) and can easily overlook more complicated models. The Viterbi algorithm solves/predicts for the most likely/probable sequence of movement states based on the observations \citep{zucchini_hidden_2009,langrock_flexible_2012}. This approach allows the time homogenous transition model's prediction to capture the temporal heterogeneity from the observations. It is useful to predict missing data in the observation sequence but fail to future movements beyond the observations sequence. In general, the time homogeneous transition model gives the broader scope of movement pattern where as the time inhomogeneous transitions models gives a more realistic movement structure and future predictions.
+
+<<viterbi, warning=FALSE, message=FALSE, echo=FALSE >>=
+load("cat1.RData")
+vitcat <- function(catt,mod){
+  params <- tail(getpars(mod),6)
+  vitdist <- numeric(ntimes(mod))
+  states <- viterbi(mod)$state
+  for(i in 1:ntimes(mod)){
+    if(states[i] == 1){
+      vitdist[i] <- rnorm(1,params[1],params[2])
+    }
+    if(states[i] == 2){
+      vitdist[i] <- rnorm(1,params[3],params[4])
+    }
+    if(states[i] == 3){
+      vitdist[i] <- rnorm(1,params[5],params[6])
+    }
+  }
+  dat <- data.frame(viterbi=vitdist,time=catt$Time, obs=catt$LogDist)
+  return(dat)
+}
+
+temp <- vitcat(cat,fithomo3s) %>% dplyr:::select(-time)%>%ldply(.,acffun)
+ggplot(temp,aes(lag,ACF,colour=.id))+
+geom_point()+geom_line() +theme_bw() +
+ggtitle("ACF plot of BIC Selected Models")
+
+@
 
 Although the time inhomogeneous transition offer an
 objective approach to (1) reduce the number of states to a biologically interpretable level, (2) captures the observational autocorrelation and temporal pattern, (3) reduce the overall complexity as illustrated by our study, several challenges
