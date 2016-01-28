@@ -8,7 +8,7 @@
 \usepackage[backgroundcolor=lightgray,textsize=tiny]{todonotes}
 \usepackage{setspace}
 \bibliographystyle{chicago}
-\title{ HMM}
+\title{Incorporating periodic variability in hidden Markov models for animal movement}
 \author{Michael Li and Benjamin M. Bolker }
 \date{\today}
 
@@ -34,18 +34,22 @@ library("plyr")
 
 Clustering time-series data into discrete groups can improve
 prediction as well as providing insight into the nature of underlying,
-unobservable states of the system. However, temporal heterogeneity and
-autocorrelation (persistence) in group occupancy can obscure such
-signals. We use finite mixture and hidden Markov models, two standard
-clustering techniques, to model high-resolution hourly movement data
-from Florida panthers. Allowing for temporal heterogeneity in
-transition probabilities, a straightforward but rarely explored model
-extension, resolves some shortcomings of current modeling frameworks
-and clarifies the behavioural patterns of panthers.
+unobservable states of the system. However, temporal variation in the
+probability that individuals occupy or move between groups can obscure
+such signals. We use finite mixture and hidden Markov models, two
+standard clustering techniques, to model high-resolution hourly
+movement data from Florida panthers. Allowing for temporal
+heterogeneity in transition probabilities, a straightforward but
+rarely explored model extension, resolves some shortcomings of current
+modeling frameworks and clarifies the behavioural patterns of
+panthers. More generally, incorporating previously neglected
+structure in statistical models can allow researchers to more
+accurately identify models of appropriate complexity.
+
 
 \end{abstract}
 
-\keywords{hidden Markov model, animal movement, temporal autocorrelation, temporal heterogeneity}
+\keywords{hidden Markov model, animal movement, temporal autocorrelation, temporal heterogeneity, Florida panther}
 
 \section{Introduction}
 
@@ -86,22 +90,22 @@ not captured in the data.
 HMMs have typically been used to model movements over short time
 scales, where the probability of transitioning between movement states is
 approximately constant. Changes in latent/hidden behavioural state/mode transition 
-\todo{do we want to call these transition probabilities (throughout)? ML: DONE}
 probabilities based on
 the local environment can be accounted for incorporating environmental
 covariates in the HMM \citep{patterson_classifying_2009}, or by more
 \emph{ad hoc} comparisons between inferred states and environmental
 conditions \citep{fryxell_multiple_2008}. 
 \cite{schliehe-diecks_application_2012}
-consider temporal trends in transitioning behaviour over the
+consider temporal trends in behavioural transitions over the
 time scales of a six-hour
 observation period, but
 in general ecologists have turned to other tools to describe behavioural
 changes over longer (diurnal, seasonal, or ontogenetic) time scales.
 \todo{Fleming et al Am Nat 2014?  Gurarie?} 
 
-For movement behaviours that change on a very fast time scale, such
-that movement behaviours at successive observations are effectively independent,
+For movement behaviours that change on a fast time scale, such
+that movement behaviours recorded
+at successive observations are effectively independent,
 \emph{finite mixture models} (FMM) --- which can be considered
 a special case of HMMs where the
 probability of state occupancy is independent of the previous state ---
@@ -109,20 +113,25 @@ can adequately describe movement \citep{tracey_mapping_2012}.
 When movement varies over long time scales
 (relative to the time between observations) with little short-term
 persistence or correlation, movement could be well represented by FMMs
-where the occupancy probabilities change deterministically over time.  Thus FMMs and HMMs,
-with or without temporal variation in the occupancy or transitioning
+where the occupancy probabilities change deterministically over time.
+Thus FMMs and HMMs,
+with or without temporal variation in the occupancy or transition
 probabilities, form a useful family of models for capturing
 changes in movement behaviour over a range of time scales.
+\todo{do we want a figure showing this?}
 
 Our primary goal in this paper is to introduce the use of
-HMMs with temporally varying transitioning probabilities -- in particular,
-transitioning probabilities that follow a diurnal cycle -- for modeling
-animal movement recorded over long time scales.  We re-analyze data from 
+HMMs with temporally varying transition probabilities -- in particular,
+transition probabilities that follow a diurnal cycle -- for modeling
+animal movement recorded over long time scales.  
+In addition to simulation-based examples,
+we also re-analyze data from 
 \cite{kerk2015hidden}, who used temporally homogeneous hidden semi-Markov
 models (HSMMs: an extension of HMMs that allow
 flexible modelling of the distribution of \emph{dwell times}, the 
 lengths of consecutive occupancy of a behavioural state) to
-analyze the movement of Florida panthers.
+describe the movement and putative underlying
+behavioural states of Florida panthers.
 
 
 %%\todo{we will clarify below that they actually used HSMMs} 
@@ -134,14 +143,12 @@ incorporated a surprisingly large number of hidden
 behavioural states (as many as 6 for individuals with a large amount
 of available data); for practical reasons, they restricted their
 detailed analysis to models with only 3 underlying states.  In
-contrast, most studies using HMM have decided \emph{a priori} on a
-number of underlying states, typically using either two
-\citep{schliehe-diecks_application_2012,mckellar_using_2014,langrock_flexible_2012,
-  fryxell_multiple_2008}, or three states
-\citep{dean2012behavioural,morales_extracting_2004,franke_prediction_2006,
-kerk2015hidden}. As \cite{kerk2015hidden} comment, behavioural
+contrast, most studies using HMM have chosen the
+number of underlying states \emph{a priori}, typically using either two
+\citep{schliehe-diecks_application_2012,mckellar_using_2014,langrock_flexible_2012,fryxell_multiple_2008}, or three states
+\citep{dean2012behavioural,morales_extracting_2004,franke_prediction_2006,kerk2015hidden}. As \cite{kerk2015hidden} comment, behavioural
 repertoires with more than three distinct states are difficult to
-interpret, one possible reason that other authors have not used
+interpret, one possible reason that other authors have not adopted
 \citeauthor{kerk2015hidden}'s model-based approach to
 identifying the number of latent states.
 
@@ -167,8 +174,6 @@ heterogeneity can be misidentified as behavioural complexity.
 \section{Methods}
 
 \subsection{Data and previous analyses}
-
-\todo{what do we think of this subsection title? ML:sounds good to me}
 
 GPS collars were fitted to 18 Florida panthers in 2005-2012 by Florida
 Fish and Wildlife and Conservation Commission staff using
@@ -460,7 +465,7 @@ ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ type,ncol=4)
 
 As a complement, we also added FMM, FMM with sinusoidal temporal heterogeneities, and HMM with hourly transitions to compare the temporal effects in goodness of fit.  \todo{if FMMs are here they should be in methods} Looking at figure 2, time inhomogenous transition HMMs (vertically) and 5 states yield the lowest $\Delta$ BIC. The time inhomogeneous transition HMMs reduced the number of states from the HMM by 1 state consistently across all panthers via $\Delta$ BIC. Two of the four panthers dropped to 4 states from 5 states after adding time inhomogeneity transition moving closer to a biologically and statistically interpretable level. Although adding the time inhomogeneous only reduce the number of states by 1, it does support that adding temporal heterogeneity reduce the number of states and at the same time, increase goodness of fit by BIC.
 
-Among the different types of time inhomogeneous transition HMMs, sinusoidal time dependent transition HMMs yields the lowest BIC. The multiple block transitions was a good fit for the male panthers, using a combination of three transition matrix ($b_{1}$ for $t={1-6,21-24}$, $b_{2}$ for $ t={7-16}$, and $b_{3}$ for $t={17-20}$) and it reduced the number of states by 1 but had no effect on the females. The quadratic and sinusoidal time covariate transitions was motivated by the multiple block transitioning pattern attempting to capture the cyclic diurnal cycle and same complex level in terms of number of parameters. We concluded that sinusoidal time dependent transition HMM was suitable for modeling these panthers. 
+Among the different types of time inhomogeneous transition HMMs, sinusoidal time dependent transition HMMs yields the lowest BIC. The multiple block transitions was a good fit for the male panthers, using a combination of three transition matrix ($b_{1}$ for $t={1-6,21-24}$, $b_{2}$ for $ t={7-16}$, and $b_{3}$ for $t={17-20}$) and it reduced the number of states by 1 but had no effect on the females. The quadratic and sinusoidal time covariate transitions was motivated by the multiple block transition pattern attempting to capture the cyclic diurnal cycle and same complex level in terms of number of parameters. We concluded that sinusoidal time dependent transition HMM was suitable for modeling these panthers. 
 
 \begin{knitrout}
 \begin{figure}
