@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{natbib}
 \usepackage{amsmath}
+\usepackage{alltt}
 \usepackage[utf8]{inputenc} % for accented characters
 %% stuff for editing
 %\usepackage[markup=nocolor,addedmarkup=bf,deletedmarkup=sout]{changes}
@@ -23,11 +24,18 @@
 
 \doublespacing
 <<pkgs,message=FALSE,warning=FALSE,echo=FALSE>>=
-library("ggplot2")
+library("ggplot2"); theme_set(theme_bw())
+scale_colour_discrete <- function(...,palette="Set1")
+    scale_colour_brewer(...,palette=palette)
+scale_fill_discrete <- function(...,palette="Set1")
+    scale_fill_brewer(...,palette=palette)
+zmargin <- theme(panel.margin=grid::unit(0,"lines"))
+library("knitr")
+opts_chunk$set(fig.width=6,fig.height=4)
 library("depmixS4")
+library("plyr")
 library("dplyr")
 library("reshape2")
-library("plyr")
 @
 
 \begin{abstract}
@@ -131,8 +139,7 @@ models (HSMMs: an extension of HMMs that allow
 flexible modelling of the distribution of \emph{dwell times}, the 
 lengths of consecutive occupancy of a behavioural state) to
 describe the movement and putative underlying
-behavioural states of Florida panthers.
-
+behavioural states of Florida panthers (\emph{Puma concolor coryi}).
 
 %%\todo{we will clarify below that they actually used HSMMs} 
 %%to analyze hourly movement data
@@ -181,33 +188,19 @@ trained hounds and houndsmen. Of these animals, 13 had
 sufficient data to be used by \cite{kerk2015hidden}.
 \todo{not sure quite where we should use {\tt citeauthor} vs. {\tt cite} \ldots}
 Here we focus
-on the four cats with the most data, in part because our goal is to understand
+on the four cats with the most data (all with approximately 10,000-15,000 observations: see Table~1 in Supplementary Material), 
+in part because our goal is to understand
 the issues that arise when simple models are fitted to large data sets, and 
-in part because the general trend in telemetry studies is toward larger data sets. \todo{give cat IDs - these are shown in Fig S2a of vdK.  Give threshold amount of data; justify/describe how we decided.  Figures seem to focus on cat 130 - do we want to include some more info (maybe in suppl) about other cats? ML: Yes, I have all the plots ready in the figures folder. (Note, the public catID is different from what Madelon used, so we have to be careful)}
-As is typical in studies of animal movement, 
+in part because the general trend in telemetry studies is toward larger data sets.  As is typical in studies of animal movement, 
 we took first differences of the data by decomposing
 contiguous sequences of hourly GPS coordinates into 
 successive step lengths (in meters) and turning angles (in radians)
 \citep{turchin1998quantitative,kerk2015hidden}.
 
-\begin{table}[]
-\centering
-\caption{Cat-ID}
-\label{Cat-ID}
-\begin{tabular}{ccc}
- (van de Kerk 2015) & (IR@UF)  & Number of Obserations  \\
-  130 & 1 & 10286    \\
-  131 & 2  & 9458    \\
- 48& 14  & 14645    \\
- 94& 15  & 10250  
-\end{tabular}
-\end{table}
-
 \cite{kerk2015hidden} used hidden semi-Markov models (HSMM), 
 an extension of HMM that permits explicit modelling of dwell times 
 \citep{langrock_flexible_2012}, considering both Poisson and
 negative binomial distributions for dwell times.  As shown 
-\todo{I was going to say ``but not emphasized'', but that seems snarky}
 by \cite{kerk2015hidden} (Figure S3b, top row, middle panel),
 the estimated shape parameter of the negative binomial dwell time
 distribution was typically close to 1 ($\approx 0.4-1.6$; confidence
@@ -226,39 +219,36 @@ and von Mises and wrapped Cauchy distributions for the turning angle --- %
 concluding on the basis of the Akaike information criterion (AIC) 
 that Weibull step length and wrapped Cauchy turning angle distributions
 were best.  
-
-Our analysis again aims for simplicity and qualitative
+Since our analysis aims for simplicity and qualitative
 conclusions rather than for picking the very best
-predictive model; we focus on models that treat each step as
+predictive model, we focus on models that treat each step as
 a univariate, log-Normally distributed observation, glossing
-over both the relatively subtle distinctions in shape between
+over both the differences in shape between
 the three candidate step-length distributions and the effects
 of considering multivariate (step length plus turning angle)
-observations. (Note that most movement analyses, including
+observations.  However, we do briefly compare log-Normal and Weibull
+step-length distributions\todo{have we run Gamma as well?}, with and without 
+a von Mises-distributed turning angle included in the model (Figure~\ref{fig:BICred_plot}).\todo{W/VM/HMM (blue/solid/left panel) should correspond to vdK's results, but that has $\dbic=0$ for 5 states rather than 6. Is that right? Is that HMM/HSMM diff?}
+(Note that most movement analyses, including
 \cite{kerk2015hidden}, are only partially multivariate, 
 treating step length and turning angle at a particular time
 as independent observations while neglecting possible correlations
-between them.)  However, we do briefly compare all three
-step-length distributions, with and without incorporating
-a von Mises-distributed turning angle in the model (Figure~1).
+between them.) 
 
 \cite{kerk2015hidden} used the Bayesian (Schwarz) information criterion (BIC)
 to test the relative penalized goodness of fit for
 models ranging from 2 to 6 latent states.
-\todo{not sure about terminology here (should be consistent about
-what we call the modes/latent states/whatever) ML: latent states}
 In general, BIC values decreased as the number of states
 increased from 
 3 to 6 states,
-\todo{should decide on rules for numbers vs numerals (3 vs three) and be consistent. ML: numeric}
 suggesting that the 6-state model was
 favoured statistically; however,
 the authors used 3-state models in most
 of their analyses for ease of biological interpretation.
-We follow \cite{kerk2015hidden}'s lead in using BIC-optimality (i.e., minimum
+We follow \cite{kerk2015hidden} in using BIC-optimality (i.e., minimum
 BIC across a family of models) as the criterion for identifying
 the best model, because we are interested in explaining the 
-data generation process by identifying the `true' number 
+data generation process by identifying the ``true'' number 
 of underlying movement states.  Using BIC also simplifies 
 evaluation of model selection procedures; 
 it is easier to test whether our model selection
@@ -272,10 +262,6 @@ usual in ecological systems the true model will be far more
 complicated than any candidate model \citep{BurnhamAnderson1998};
 we suspect that the qualitative conclusions stated here
 for BIC-optimality will carry over to analyses using AIC instead.
-
-\todo{The following description of the V. algorithm is not coherent; need to give
-just a \emph{brief} definition here (since we are going to use it) and criticize/
-explain shortcomings later. ML: I moved the whole previous paragraph to the end where we actually talk about viterbi}
 
 \subsection{Model description}
 
@@ -309,23 +295,15 @@ hidden sequence.
 In order to calculate the overall, unconditional (or marginal) 
 likelihood of the 
 observed sequence, we need to average over all possible hidden sequences. 
-While naive approaches to this averaging process there are several
-more efficient algorithms for computing the marginal likelihood and
+There are several efficient algorithms for computing the marginal likelihood and
 numerically estimating parameters \citep{zucchini_hidden_2009};
-we use the implementations in the {\tt depmixS4} package for R
+we use those implemented in the \texttt{depmixS4} package for R
 \citep{visser2010depmixs4,R}.
 
-\todo{where do we actually focus on these three states?  Think this could probably be introduced in the Discussion, if we need it. ML: I took it out and gave a half a line in model evaluation subsection}
+For any $n$-state HMM, we need to define a $n \times n$ matrix that specifies the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$.  The FMM is a special case of HMM where the probabilities of \emph{entering} a given state are identical across all states --- i.e., the probability of occupying a state at the next time step is independent of the current state occupancy. It can be modelled in the HMM framework by setting the transition probabilities  $\pi_{ij} = \pi_{i*}$. \todo{is this right?}
 
-For any $n$-state HMM, we need to define a $n \times n$ matrix that specifies the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$.  However, this matrix needs to respect the constraints that (1) all probabilities are between 0 and 1 and (2) transition probabilities out of a given state sum to 1. The FMM is a special case of HMM where; it can be modelled in the HMM framework by setting the transition probabilities: 
-
-\begin{equation}
-\begin{split}
-\pi_{ij} = \pi_{i*j},     \forall i 
-\end{split}
-\end{equation}
-
-Therefore, as is standard for HMMs with covariates \citep{visser2010depmixs4}, we define this multinomial logistic model in terms of a linear predictor $\eta_{ij}$, where $\eta_{i1}$ is unnecessary (i.e. we have only $n \times (n-1)$ distinct parameters; we nevertheless index $j$ from 2 to $n$ for notational clarity):
+In any case, the transition matrix $\pi_{ij}$ must respect the constraints that (1) all probabilities are between 0 and 1 and (2) transition probabilities out of a given state sum to 1.
+As is standard for HMMs with covariates \citep{visser2010depmixs4}, we define this multinomial logistic model in terms of a linear predictor $\eta_{ij}$, where $\eta_{i1}$ is set to 1 without loss of generality (i.e. we have only $n \times (n-1)$ distinct parameters; we nevertheless index $j$ from 2 to $n$ for notational clarity):
 \begin{equation}
 \begin{split}
 \pi_{ij} & = \exp(\eta_{ij}(t))/\left(1+\sum_{j=2}^{n}\exp(\eta_{ij}(t))\right), \textrm{ for } j={2,...,n} \\
@@ -333,7 +311,7 @@ Therefore, as is standard for HMMs with covariates \citep{visser2010depmixs4}, w
 \end{split}
 \end{equation}
 
-We considered three different transitions models for diurnal variation in behaviour; extension of ``Switch with covariates" by \cite{morales_extracting_2004} to account for temporal hetergeneitiy \todo{second clause isn't clear; expand? ML: okay now? }.
+We considered three different transition models for diurnal variation in behaviour, incorporating hour-of-day as a covariate following the general approach of \cite{morales_extracting_2004} of allowing for a covariate-dependent transition matrix.
 
 \begin{description}
 \item[Multiple block transition] Here we assume piecewise-constant transition probabilities. The transition probability $\pi_{ij}$ is a function of time (hour of day), where it is assigned to one of $M$ different time blocks:
@@ -342,17 +320,17 @@ $$
 $$
 where $a_{ijm}$ are parameters, and $\delta_{m=t}$ is a Kronecker delta or  indicator variable (1 for the time block at the corresponding time $t$, and 0 otherwise).  
 \item[Quadratic transition model] We assume the elements of the linear predictor
-are quadratic functions of hour, with an additional diurnal continuity constraint that $\eta_{ij}(0)=\eta_{ij}(24)$ \todo{am I right/do we actually impose this constraint? give a bit more detail ...}
+are quadratic functions of hour. Note that the quadratic model is not diurnally continuous, i.e. there is no constraint forcing $\eta_{ij}(0)=\eta_{ij}(1)$; imposing a diurnal continuity constraint would collapse the model to a constant.
 $$
 \eta_{ij}(t) = b_{ij1}+b_{ij2}(\frac{t}{24})+b_{ij3}(\frac{t}{24})^{2}
 $$
-\item[Sinusoidal transition model] A sinusoidal model with a period of 24 hours is identical in complexity to the quadratic model, \todo{apparently true from eqs here, but not true if we constrain the quadratic model??} but automatically satisfies the diurnal continuity constraint.
+\item[Sinusoidal transition model] A sinusoidal model with a period of 24 hours is identical in complexity to the quadratic model, but automatically satisfies the diurnal continuity constraint.
 $$
 \eta_{ij}(t)= b_{ij1}+b_{ij2}\cos\left(\frac{2\pi t}{24}\right)+b_{ij3}\sin\left(\frac{2\pi t}{24}\right)
 $$
 \end{description}
 
-Model complexity and number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorportating temportal heterogeneity. 
+Model complexity and number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorportating temporal heterogeneity. 
 
 
 \begin{table}[]
@@ -387,14 +365,12 @@ Model complexity and number of parameters increase as the number of latent state
   HMM + TH & HMM + TH (Sin)  & 6 & 126    \\
   HMM + TH & HMM + TH (Hourly)  & 3 & 225    \\
   HMM + TH & HMM + TH (Hourly)  & 4 & 396    
-  
 \end{tabular}
 \end{table}
 
 
 
-
-\todo{Discuss model complexity/parameter-number computations here, or with each model.  Also discuss the ``hourly'' model here.}
+\todo{Discuss model complexity/parameter-number computations here, or with each model.  Also discuss the ``hourly'' model here.  Make the table into a figure!}
 
 \subsection{Model evaluation}
 
@@ -418,85 +394,58 @@ approaches ($\dbic$, hourly averages, ACF) will show. ML: What do you think?}
 
 \section{Results}
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\begin{figure}
-<<All mod BIC plot, warning=FALSE, echo=FALSE, message=FALSE>>=
+<<BICred_plot,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#130.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
 load("cat1allmod.RData")
-ggplot(allmodsumdf, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ model,ncol=4)+
-    scale_y_continuous()+
-    scale_size_continuous( name="Num of Parameters") +
+df2 <- transform(allmodsumdf,
+            distrib=ifelse(grepl("LN",model),"log-Normal","Weibull"),
+            turn_angle=ifelse(grepl("VM",model),"yes","no"),
+            homog=ifelse(grepl("HMM",model),"homogeneous HMM","time-heterogeneous HMM"))
+ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))+
+    geom_line()+
+    facet_wrap(~ homog)+
+    scale_colour_brewer(name="step length\ndistribution",palette="Set1")+
+    ## scale_size_continuous( name="# parameters") +
     #    geom_point(aes(size=parameters))+
-    labs(y=expression(paste(Delta, "BIC")),
-         x="Number of States")  +
-    geom_line(aes(colour=model),size=0.5) +theme_bw() +
-    ggtitle("Adjusted BIC Model Comparisons")
-
+    scale_linetype(name="von Mises\nturning angle?")+
+    labs(y=expression(Delta*"BIC"),
+         x="Number of States")+
+    geom_hline(yintercept=0,colour="gray")+
+    zmargin
 @
-\caption{Model Reduction Process via Individual based Model Adjusted BIC }
-\label{fig:BICred_plot}
-\end{figure}
-\end{knitrout}
-
 
 Adding temporal heterogeneity in the transitions for 3 to 6 state HSMM was a challenge because the number of parameters and model complexity increase dramatically, thus creating overfitting problems. Model reduction was used to balance out the increase in parameters and see if there are evidence suggesting adding temporal heterogeneity complexity can reduce the number of states to a statistically and biologically interpretable level. Without loss of generality, we assessed time homogeneous transition HMM models instead of HSMM and made sure each model reduction does not change the BIC selection of number of states, which HMM heavily depends on. Goodness of fit will decrease, but the information on the number of states remains the same. 
 
 
-\begin{knitrout}
-\begin{figure}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-
-<<Adjusted BIC comparisons, warning=FALSE, echo=FALSE, message=FALSE>>=
+<<adj_BIC_comparisons, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall Adjusted BIC Comparisons between different HMM models">>=
 load("cat1sumdat.RData")
 ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ type,ncol=4)+
-    scale_y_continuous()+
     scale_size_continuous( name="Num of Parameters") +
     geom_point(aes(size=parameters))+
+    scale_colour_brewer(palette="Dark2")+
     labs(y=expression(paste(Delta, "BIC")),
          x="Number of States") +
-    geom_line(aes(colour=model),size=0.5) +theme_bw() +
-    ggtitle("Adjusted BIC Model Comparisons")
-
+    geom_line() + zmargin
 @
-
-\caption{Overall Adjusted BIC Comparisons between different HMM models}
-\end{figure}
-\end{knitrout}
 
 As a complement, we also added FMM, FMM with sinusoidal temporal heterogeneities, and HMM with hourly transitions to compare the temporal effects in goodness of fit.  \todo{if FMMs are here they should be in methods} Looking at figure 2, time inhomogenous transition HMMs (vertically) and 5 states yield the lowest $\Delta$ BIC. The time inhomogeneous transition HMMs reduced the number of states from the HMM by 1 state consistently across all panthers via $\Delta$ BIC. Two of the four panthers dropped to 4 states from 5 states after adding time inhomogeneity transition moving closer to a biologically and statistically interpretable level. Although adding the time inhomogeneous only reduce the number of states by 1, it does support that adding temporal heterogeneity reduce the number of states and at the same time, increase goodness of fit by BIC.
 
 Among the different types of time inhomogeneous transition HMMs, sinusoidal time dependent transition HMMs yields the lowest BIC. The multiple block transitions was a good fit for the male panthers, using a combination of three transition matrix ($b_{1}$ for $t={1-6,21-24}$, $b_{2}$ for $ t={7-16}$, and $b_{3}$ for $t={17-20}$) and it reduced the number of states by 1 but had no effect on the females. The quadratic and sinusoidal time covariate transitions was motivated by the multiple block transition pattern attempting to capture the cyclic diurnal cycle and same complex level in terms of number of parameters. We concluded that sinusoidal time dependent transition HMM was suitable for modeling these panthers. 
 
-\begin{knitrout}
-\begin{figure}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-
-<<avg step length by time, message=FALSE, echo=FALSE, warning=FALSE>>=
+<<avg_step_length_by_time, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="Average step length by time of day">>=
   simdf <- simdat %>% dplyr:::select(-obs) %>% group_by(time) %>% summarise_each(funs(mean))
   obsdf <- simdat %>% dplyr:::select(c(obs,time)) %>% filter(!is.na(obs)) %>% group_by(time) %>% summarise_each(funs(mean)) %>% dplyr:::select(obs)
   avgdf <- cbind(simdf,obsdf)
   avgdf2 <- melt(avgdf,'time')
 ggplot(avgdf2,aes(x=time,y=value,colour=variable)) + 
     geom_point() +geom_line()+ xlab("Time of Day") + ylab("Step lengths (log10)")+
-    scale_x_continuous(breaks=0:23) + theme_bw() + 
-    ggtitle("Average Step Lengths at Different Hours of the Day")
-
+    scale_x_continuous(breaks=0:23)
 @
-
-\caption{Average step length by time of day}
-\end{figure}
-
-\end{knitrout}
-
 
 Next, we used the fitted models and simulate the same number of observations as the observed movement data and compare the average distance by time with the observed data. Models that assume temporal homogeneity (FMM and HMM) fail to capture the diurnal activity cycle. Models incorporating temporal heterogeneity can capture the observed patterns in the hourly average step. 
 
 
 
-\begin{knitrout}
-\begin{figure}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-<<acf plot, message=FALSE, echo=FALSE, warning=FALSE>>=
+<<acf_plot, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="ACF">>=
 acffun <- function(sim){
   a <- acf(sim,na.action=na.pass,plot=FALSE)
   df <- data.frame(ACF=c(a$acf),lag=a$lag)
@@ -505,21 +454,12 @@ acffun <- function(sim){
 
   temp <- simdat %>% dplyr:::select(-time)%>%ldply(.,acffun)
   ggplot(temp,aes(lag,ACF,colour=.id))+
-    geom_point()+geom_line() +theme_bw() +
-    ggtitle("ACF plot of BIC Selected Models")
-  
+    geom_point()+geom_line()
 @
-\caption{ACF }
-\end{figure}
-\end{knitrout}
-
 
 Lastly, the observed data has strong 24 hour lag autocorrelation (correlation with itself) which suggest temporal heterogeneity. FMM has no autocorrelation at all. HMM without temporal heterogeneity can capture the first few lags of the ACF but is unable to capture lags beyond 7. FMM with temporal heterogeneity can capture lags beyond 12, but not short-term correlation. HMM with temporal heterogeneity can fully capture the autocorrelation pattern of the observed data. 
 
-\begin{knitrout}
-\begin{figure}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-<<state plots, warning=FALSE, message=FALSE, echo=FALSE>>=
+<<state_plots, warning=FALSE, message=FALSE, echo=FALSE, fig.cap="States">>=
 temp5 <- tail(getpars(fitsin5s),10)
 temp6 <- tail(getpars(fithomo6s),12)
 dat1 <- data.frame(log_mean=temp5[c(1,3,5,7,9)],
@@ -531,13 +471,8 @@ dat2 <- dat2[order(dat2$log_mean),]
   
 dat <- rbind(dat1,dat2)
 ggplot(dat,aes(log_mean,log_sd,color=states))+
-    geom_point()+geom_line() +theme_bw() +
-    ggtitle("State Parameters")  
-
+    geom_point()+geom_line()
 @
-\caption{States}
-\end{figure}
-\end{knitrout}
 
 The biggest issue with multiple states is identifying them biologically. We really do not know if there Florida panthers really moves according to hidden states, and even if they do, we don't know the true number nor able to observe them. Three distinct movement states seems biologically interpretable for Florida panthers: Short step length suggests resting states, intermediate step length might suggest foraging state and long step length might suggest traveling state. Long step lengths are easy to capture in all models, where as short step lengths are hard to capture given the GPS errors and unstable movements patterns suggesting multiple states associate with short step lengths. Thus, lower number of short step length states with higher variance can be equalivent or more realistic than multiple distinguishable short step length states with low variance.     
 
@@ -581,6 +516,21 @@ ggtitle("ACF plot of BIC Selected Models")
 Although the time inhomogeneous transition offer an
 objective approach to (1) reduce the number of states to a biologically interpretable level, (2) captures the observational autocorrelation and temporal pattern, (3) reduce the overall complexity as illustrated by our study, several challenges
 must be overcome in order to maximize its potential. The current model is based on the reduced univariate step length response emission without fitting turning angles. Although turning angles are strongly correlated with step length, it does not effect the overall prediction on number of states. But movement trajectories predictions, and spatial models still require both step length and turning angles. Furthermore, modelling temporal heterogeneity only reduce the number of predicted states by 1 resulting in 4/5 states might suggest (1) other factors such as spatial components that might also contribute to over predicting number of states, or (2) there really are 1 or 2 more different movement characteristics that are biologically unknown. Despite the challenges, our study provides an important extension in HMM modeling that is not in the seen before and a real life application that it exist and applicable in animal movement ecology.  
+
+\appendix
+\section{Supplementary material}
+\begin{table}[]
+\centering
+\caption{Cat-ID}
+\label{Cat-ID}
+\begin{tabular}{ccc}
+  (van de Kerk 2015) & (IR@UF)  & Number of Obserations  \\
+  130 & 1   & 10286    \\
+  131 & 2   & 9458    \\
+  48  & 14  & 14645    \\
+  94  & 15  & 10250  
+\end{tabular}
+\end{table}
 
 
 \bibliography{paper}  
