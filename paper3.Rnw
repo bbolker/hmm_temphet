@@ -77,7 +77,7 @@ More recently, modelers have developed
 --- used in animal ecology under the rubric of the ``multiphasic movement
 framework'' \citep{fryxell_multiple_2008} --- that consider the effects
 of organisms' \emph{internal} states; in particular, HMMs model animal
-movement as though individual animals' movement behavior is determined
+movement as though individual animals' movement behaviour is determined
 by which of a discrete set of unobserved movement states
 (e.g. ``foraging'', ``traveling'', ``resting'') they currently occupy.
 Conditional on the state occupied by an individual, HMMs typically
@@ -300,7 +300,7 @@ numerically estimating parameters \citep{zucchini_hidden_2009};
 we use those implemented in the \texttt{depmixS4} package for R
 \citep{visser2010depmixs4,R}.
 
-For any $n$-state HMM, we need to define a $n \times n$ matrix that specifies the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$.  The FMM is a special case of HMM where the probabilities of \emph{entering} a given state are identical across all states --- i.e., the probability of occupying a state at the next time step is independent of the current state occupancy. It can be modelled in the HMM framework by setting the transition probabilities  $\pi_{ij} = \pi_{i*}$. \todo{is this right?}
+For any $n$-state HMM, we need to define a $n \times n$ matrix that specifies the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$.  The FMM is a special case of HMM where the probabilities of \emph{entering} a given state are identical across all states --- i.e., the probability of occupying a state at the next time step is independent of the current state occupancy. It can be modelled in the HMM framework by setting the transition probabilities  $\pi_{ij} = \pi_{i*}$. \todo{BMB: is this right?}
 
 In any case, the transition matrix $\pi_{ij}$ must respect the constraints that (1) all probabilities are between 0 and 1 and (2) transition probabilities out of a given state sum to 1.
 As is standard for HMMs with covariates \citep{visser2010depmixs4}, we define this multinomial logistic model in terms of a linear predictor $\eta_{ij}$, where $\eta_{i1}$ is set to 1 without loss of generality (i.e. we have only $n \times (n-1)$ distinct parameters; we nevertheless index $j$ from 2 to $n$ for notational clarity):
@@ -311,18 +311,18 @@ As is standard for HMMs with covariates \citep{visser2010depmixs4}, we define th
 \end{split}
 \end{equation}
 
-We considered three different transition models for diurnal variation in behaviour, incorporating hour-of-day as a covariate following the general approach of \cite{morales_extracting_2004} of allowing for a covariate-dependent transition matrix.
+We considered three different transition models for diurnal variation in behaviour, incorporating hour-of-day as a covariate following the general approach of \cite{morales_extracting_2004} of incorporating covariate dependence in the transition matrix.
 
 \begin{description}
 \item[Multiple block transition] Here we assume piecewise-constant transition probabilities. The transition probability $\pi_{ij}$ is a function of time (hour of day), where it is assigned to one of $M$ different time blocks:
 $$
 \eta_{ij}(t) = \sum_{m=1}^{M}a_{ijm} \delta_{m=t}
 $$
-where $a_{ijm}$ are parameters, and $\delta_{m=t}$ is a Kronecker delta or  indicator variable (1 for the time block at the corresponding time $t$, and 0 otherwise).  
+where $a_{ijm}$ are parameters, and $\delta_{m=t}$ is a Kronecker delta ($\delta_{m=t}=1$ for the time block at the corresponding time $t$, and 0 otherwise).  
 \item[Quadratic transition model] We assume the elements of the linear predictor
-are quadratic functions of hour. Note that the quadratic model is not diurnally continuous, i.e. there is no constraint forcing $\eta_{ij}(0)=\eta_{ij}(1)$; imposing a diurnal continuity constraint would collapse the model to a constant.
+are quadratic functions of hour. The quadratic model is not diurnally continuous, i.e. there is no constraint that forces $\eta_{ij}(0)=\eta_{ij}(24)$; imposing a diurnal continuity constraint would collapse the model to a constant.
 $$
-\eta_{ij}(t) = b_{ij1}+b_{ij2}(\frac{t}{24})+b_{ij3}(\frac{t}{24})^{2}
+\eta_{ij}(t) = b_{ij1}+b_{ij2}\left(\frac{t}{24}\right)+b_{ij3}\left(\frac{t}{24}\right)^{2}
 $$
 \item[Sinusoidal transition model] A sinusoidal model with a period of 24 hours is identical in complexity to the quadratic model, but automatically satisfies the diurnal continuity constraint.
 $$
@@ -330,12 +330,12 @@ $$
 $$
 \end{description}
 
-Model complexity and number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorportating temporal heterogeneity. 
+Model complexity and number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorporating temporal heterogeneity. 
 
 
 \begin{table}[]
 \centering
-\caption{Number of Parameters for each model type}
+\caption{Number of Parameters for each model type. \textbf{BMB: supplementary material?}
 \label{Cat-ID}
 \begin{tabular}{cccc}
  Type & Model  & Number of States & Number of Parameters  \\
@@ -376,17 +376,20 @@ Model complexity and number of parameters increase as the number of latent state
 
 \todo{Give more details about parameters, structure of simulations, etc.}
 
-The {\tt depmixS4} package
-was used for fitting covariate dependent transition HMM
-models, simulating states and step lengths using the
-estimated parameters, and for estimating states with the Viterbi
+We used the {\tt depmixS4} package
+to fit covariate-dependent transition HMMs, 
+simulate states and step lengths using the
+estimated parameters, and estimate the most likely
+states with the Viterbi
 algorithm.
 
 \todo{describe the Viterbi algorithm here, and the autocorrelation function
 computation - everything that appears in the results should be described
 explicitly here....ML: at the bottom}
 
-We assessed the fit of 3 to 6 state, time homogeneous and inhomogeneous transition HMMs to four of the thirteen Florida panthers with the most data using three approaches. First, goodness of fit of different number of states by scaled BIC within each type of transition complexity ($\dbic$ = BIC - min(BIC)). Secondly, the average distance by time of day comparison of observed and simulated data from each type of transition complexity. Lastly, autocorrelation comparison between the observed and simulated data. Increasing the number of latent states of HMM, and incorportating temporal transition heterogeneity of FMM and HMM, can both (independently) improve goodness of fit in their own ways, but it is unclear the tradeoff between the two methods and the combination of both is an underused model extension. 
+We used three approaches to assess the fit of both time-homogeneous and time-inhomogeneous HMMs with 3 to 6 states to step-length data from the four of the thirteen Florida panthers with the most data ($>  $ observations). (1) BIC relative to the optimal-BIC model within each type of transition complexity\todo{BMB: not sure what that means. Clarify?} ($\dbic$ = BIC - min(BIC)). 
+(2) Computed average step-length by hour of day for the observed data and for data simulated from the models.
+(3) Computed temporal autocorrelation function (ACF) for the observed data and for data simulated from the models. For the second and third metrics (hourly average and ACF), we simulated data from the models because the metrics are hard to compute from first principles for HMMs with temporally varying transition probabilities.
 
 \todo{give at least a hint of why/what each of these three 
 approaches ($\dbic$, hourly averages, ACF) will show. ML: What do you think?}
@@ -474,7 +477,7 @@ ggplot(dat,aes(log_mean,log_sd,color=states))+
     geom_point()+geom_line()
 @
 
-The biggest issue with multiple states is identifying them biologically. We really do not know if there Florida panthers really moves according to hidden states, and even if they do, we don't know the true number nor able to observe them. Three distinct movement states seems biologically interpretable for Florida panthers: Short step length suggests resting states, intermediate step length might suggest foraging state and long step length might suggest traveling state. Long step lengths are easy to capture in all models, where as short step lengths are hard to capture given the GPS errors and unstable movements patterns suggesting multiple states associate with short step lengths. Thus, lower number of short step length states with higher variance can be equalivent or more realistic than multiple distinguishable short step length states with low variance.     
+The biggest issue with multiple states is identifying them biologically. We really do not know if there Florida panthers really moves according to hidden states, and even if they do, we don't know the true number nor able to observe them. Three distinct movement states seems biologically interpretable for Florida panthers: Short step length suggests resting states, intermediate step length might suggest foraging state and long step length might suggest traveling state. Long step lengths are easy to capture in all models, where as short step lengths are hard to capture given the GPS errors and unstable movements patterns suggesting multiple states associate with short step lengths. Thus, lower number of short step length states with higher variance can be equivalent or more realistic than multiple distinguishable short step length states with low variance.     
 
 \section{Discussion}
 
@@ -483,7 +486,7 @@ Identifying behavioural states based on some set of observations is a common met
 
 We have presented a relatively simple concept yet little-studied extension by covariate dependent HMM can overfit the number of true states in covariate dependent HMM (in our case, time-dependent transitions). HMM with more than three states are not biologically interpretable and often discarded, but we cannot ignore that increasing complexity (number of states) states can increase goodness of fit statistically. Our analyses revealed modeling temporal heterogeneity in HMM transition can reduce the number of states estimated in time homogeneous transitions HMM movement of Florida panthers and reduce the overall model complexity.
 
-For some kinds of model predictions, the time homogeneous transition model can perform as good as the time inhomogeneous transition models in terms of predicting the states by the Viterbi algorithm (the tradition state prediction method) and can easily overlook more complicated models. The Viterbi algorithm solves/predicts for the most likely/probable sequence of movement states based on the observations \citep{zucchini_hidden_2009,langrock_flexible_2012}. This approach allows the time homogenous transition model's prediction to capture the temporal heterogeneity from the observations. It is useful to predict missing data in the observation sequence but fail to future movements beyond the observations sequence. In general, the time homogeneous transition model gives the broader scope of movement pattern where as the time inhomogeneous transitions models gives a more realistic movement structure and future predictions.
+For some kinds of model predictions, the time homogeneous transition model can perform as good as the time inhomogeneous transition models in terms of predicting the states by the Viterbi algorithm (the tradition state prediction method) and can easily overlook more complicated models. The Viterbi algorithm solves/predicts for the most likely/probable sequence of movement states based on the observations \citep{zucchini_hidden_2009,langrock_flexible_2012}. This approach allows the time homogeneous transition model's prediction to capture the temporal heterogeneity from the observations. It is useful to predict missing data in the observation sequence but fail to future movements beyond the observations sequence. In general, the time homogeneous transition model gives the broader scope of movement pattern where as the time inhomogeneous transitions models gives a more realistic movement structure and future predictions.
 
 <<viterbi, warning=FALSE, message=FALSE, echo=FALSE >>=
 load("cat1.RData")
@@ -524,7 +527,7 @@ must be overcome in order to maximize its potential. The current model is based 
 \caption{Cat-ID}
 \label{Cat-ID}
 \begin{tabular}{ccc}
-  (van de Kerk 2015) & (IR@UF)  & Number of Obserations  \\
+  (van de Kerk 2015) & (IR@UF)  & Number of Observations  \\
   130 & 1   & 10286    \\
   131 & 2   & 9458    \\
   48  & 14  & 14645    \\
