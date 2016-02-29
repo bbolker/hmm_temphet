@@ -109,8 +109,7 @@ consider temporal trends in behavioural transitions over the
 time scales of a six-hour
 observation period, but
 in general ecologists have turned to other tools to describe behavioural
-changes over longer (diurnal, seasonal, or ontogenetic) time scales.
-\todo{Fleming et al Am Nat 2014?  Gurarie?} 
+changes over longer (diurnal, seasonal, or ontogenetic) time scales \citep{gurarie2009novel}.
 
 For movement behaviours that change on a fast time scale, such
 that movement behaviours recorded
@@ -127,7 +126,6 @@ Thus FMMs and HMMs,
 with or without temporal variation in the occupancy or transition
 probabilities, form a useful family of models for capturing
 changes in movement behaviour over a range of time scales.
-\todo{do we want a figure showing this?}
 
 Our primary goal in this paper is to introduce the use of
 HMMs with temporally varying transition probabilities -- in particular,
@@ -187,7 +185,6 @@ GPS collars were fitted to 18 Florida panthers in 2005-2012 by Florida
 Fish and Wildlife and Conservation Commission staff using
 trained hounds and houndsmen. Of these animals, 13 had 
 sufficient data to be used by \cite{kerk2015hidden}.
-\todo{not sure quite where we should use {\tt citeauthor} vs. {\tt cite} \ldots}
 Here we focus
 on the four cats with the most data (all with approximately 10,000-15,000 observations: see Table~1 in Supplementary Material), 
 in part because our goal is to understand
@@ -209,9 +206,6 @@ intervals were not calculated), implying that a geometric distribution
 (i.e., negative binomial with shape=1) might be adequate. In turn,
 this suggests that we might not lose much accuracy by reverting to 
 a simpler HMM framework, which makes precisely this assumption.
-\todo{could say here (or maybe better in the conclusions) that
-revisiting HSMM in this context would be worthwhile future work. 
-ML: conclusion is good, I still need to add viterbi paragraph}
 
 \cite{kerk2015hidden} considered time-homogeneous models with 
 a variety of candidate distributions %
@@ -228,8 +222,8 @@ over both the differences in shape between
 the three candidate step-length distributions and the effects
 of considering multivariate (step length plus turning angle)
 observations.  However, we do briefly compare log-Normal and Weibull
-step-length distributions\todo{have we run Gamma as well?}, with and without 
-a von Mises-distributed turning angle included in the model (Figure~\ref{fig:BICred_plot}).\todo{W/VM/HMM (blue/solid/left panel) should correspond to vdK's results, but that has $\dbic=0$ for 5 states rather than 6. Is that right? Is that HMM/HSMM diff?}
+step-length distributions, with and without 
+a von Mises-distributed turning angle included in the model (Figure~\ref{fig:BICred_plot}).
 (Note that most movement analyses, including
 \cite{kerk2015hidden}, are only partially multivariate, 
 treating step length and turning angle at a particular time
@@ -301,7 +295,7 @@ numerically estimating parameters \citep{zucchini_hidden_2009};
 we use those implemented in the \texttt{depmixS4} package for R
 \citep{visser2010depmixs4,R}.
 
-For any $n$-state HMM, we need to define a $n \times n$ matrix that specifies the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$.  The FMM is a special case of HMM where the probabilities of \emph{entering} a given state are identical across all states --- i.e., the probability of occupying a state at the next time step is independent of the current state occupancy. It can be modelled in the HMM framework by setting the transition probabilities  $\pi_{ij} = \pi_{i*}$. \todo{BMB: is this right?}
+For any $n$-state HMM, we need to define a $n \times n$ matrix that specifies the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$.  The FMM is a special case of HMM where the probabilities of \emph{entering} a given state are identical across all states --- i.e., the probability of occupying a state at the next time step is independent of the current state occupancy. It can be modelled in the HMM framework by setting the transition probabilities  $\pi_{ij} = \pi_{i*}$.
 
 In any case, the transition matrix $\pi_{ij}$ must respect the constraints that (1) all probabilities are between 0 and 1 and (2) transition probabilities out of a given state sum to 1.
 As is standard for HMMs with covariates \citep{visser2010depmixs4}, we define this multinomial logistic model in terms of a linear predictor $\eta_{ij}$, where $\eta_{i1}$ is set to 1 without loss of generality (i.e. we have only $n \times (n-1)$ distinct parameters; we nevertheless index $j$ from 2 to $n$ for notational clarity):
@@ -331,14 +325,9 @@ $$
 $$
 \end{description}
 
-Model complexity and number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorporating temporal heterogeneity. 
-
-
-\todo{Discuss model complexity/parameter-number computations here, or with each model.  Also discuss the ``hourly'' model here.  Make the table into a figure!}
+Model complexity and number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorporating temporal heterogeneity. See supplementary material Table 1.
 
 \subsection{Model evaluation}
-
-\todo{Give more details about parameters, structure of simulations, etc.}
 
 We used the {\tt depmixS4} package
 to fit covariate-dependent transition HMMs, 
@@ -347,21 +336,13 @@ estimated parameters, and estimate the most likely
 states with the Viterbi
 algorithm.
 
-\todo{describe the Viterbi algorithm here, and the autocorrelation function
-computation - everything that appears in the results should be described
-explicitly here....ML: at the bottom}
-
-We used three approaches to assess the fit of both time-homogeneous and time-inhomogeneous HMMs with 3 to 6 states to step-length data from the four of the thirteen Florida panthers with the most data ($>  $ observations). (1) BIC relative to the optimal-BIC model within each type of transition complexity\todo{BMB: not sure what that means. Clarify?} ($\dbic$ = BIC - min(BIC)). 
-(2) Computed average step-length by hour of day for the observed data and for data simulated from the models.
-(3) Computed temporal autocorrelation function (ACF) for the observed data and for data simulated from the models. For the second and third metrics (hourly average and ACF), we simulated data from the models because the metrics are hard to compute from first principles for HMMs with temporally varying transition probabilities.
-
-\todo{give at least a hint of why/what each of these three 
-approaches ($\dbic$, hourly averages, ACF) will show. ML: What do you think?}
-
+We used three approaches to assess the fit of both time-homogeneous and time-inhomogeneous HMMs with 3 to 6 states to step-length data from the four of the thirteen Florida panthers with the most data ($>  $ observations). (1) Comparing BICs to the optimal-BIC model within each type of transition complexity ($\dbic$ = BIC - min(BIC)). 
+(2) Compare average step-length by hour of day for the observed data and for data simulated from the models.
+(3) Compare temporal autocorrelations for the observed data and for data simulated from the models. For the second and third metrics (hourly average and ACF), we simulated data from the models because the metrics are hard to compute from first principles for HMMs with temporally varying transition probabilities.
 
 \section{Results}
 
-<<BICred_plot,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#130.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
+<<BICred_plot,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#1.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
 load("cat1allmod.RData")
 df2 <- transform(allmodsumdf,
             distrib=ifelse(grepl("LN",model),"log-Normal","Weibull"),
@@ -395,7 +376,7 @@ ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ type,ncol=4)
     geom_line() + zmargin
 @
 
-As a complement, we also added FMM, FMM with sinusoidal temporal heterogeneities, and HMM with hourly transitions to compare the temporal effects in goodness of fit. Looking at Figure 2, models with temporal heterogenity is better than models without in both FMM and HMM frameworks, but time homogenous HMM models is better than FMM with sinusoidal temporal heterogeneity. Temporal heterogenity is good with good models such as the quadratic and sinuosidal. Multiple block models is good for cats with distinguishable diurnal patterns and hourly model is too complicated. 
+As a complement, we also added FMM, FMM with sinusoidal temporal heterogeneities, and HMM with hourly transitions (24-hour multiple block transition model) to compare the temporal effects in goodness of fit. Looking at Figure 2, models with temporal heterogenity is better than models without in both FMM and HMM frameworks, but time homogenous HMM models is better than FMM with sinusoidal temporal heterogeneity. Temporal heterogenity is good with good models such as the quadratic and sinuosidal. Multiple block models is good for cats with distinguishable diurnal patterns and hourly model is too complicated. 
 
 <<avg_step_length_by_time, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="Average step length by time of day">>=
   simdf <- simdat %>% dplyr:::select(-obs) %>% group_by(time) %>% summarise_each(funs(mean))
@@ -438,7 +419,7 @@ sd1 <- ggplot(dat,aes(log_mean,log_sd,color=Model))+
     geom_point()+geom_line() + ggtitle("Cat 1")
 @
 
-<<state_plots cat2, warning=FALSE, message=FALSE, echo=FALSE, fig.cap="States">>=
+<<state_plots cat2, warning=FALSE, message=FALSE, echo=FALSE>>=
 load("cat2sumdat.RData")
 temp5 <- tail(getpars(fithomo5s),10)
 temp4 <- tail(getpars(fitsin4s),8)
@@ -454,7 +435,7 @@ sd2 <- ggplot(dat,aes(log_mean,log_sd,color=Model))+
     geom_point()+geom_line() + ggtitle("Cat 2")
 @
 
-<<state_plots cat14, warning=FALSE, message=FALSE, echo=FALSE, fig.cap="States">>=
+<<state_plots cat14, warning=FALSE, message=FALSE, echo=FALSE>>=
 load("cat14sumdat.RData")
 temp5 <- tail(getpars(fithomo5s),10)
 temp4 <- tail(getpars(fitsin4s),8)
@@ -470,7 +451,7 @@ sd14 <- ggplot(dat,aes(log_mean,log_sd,color=Model))+
     geom_point()+geom_line() + ggtitle("Cat 14")
 @
 
-<<state_plots cat15, warning=FALSE, message=FALSE, echo=FALSE, fig.cap="States">>=
+<<state_plots cat15, warning=FALSE, message=FALSE, echo=FALSE, fig.cap="State Parameter Estimates">>=
 load("cat15sumdat.RData")
 temp5 <- tail(getpars(fitsin5s),10)
 temp6 <- tail(getpars(fithomo6s),12)
@@ -488,7 +469,7 @@ sd15 <- ggplot(dat,aes(log_mean,log_sd,color=Model))+
 grid.arrange(sd1,sd2,sd14,sd15)
 @
 
-The biggest issue with multiple states is identifying them biologically. We really do not know if there Florida panthers really moves according to hidden states, and even if they do, we don't know the true number nor able to observe them. Three distinct movement states seems biologically interpretable for Florida panthers: Short step length suggests resting states, intermediate step length might suggest foraging state and long step length might suggest traveling state. Long step lengths are easy to capture in all models, where as short step lengths are hard to capture given the GPS errors and unstable movements patterns suggesting multiple states associate with short step lengths. Thus, lower number of short step length states with higher variance can be equivalent or more realistic than multiple distinguishable short step length states with low variance.     
+The biggest issue with multiple states is identifying them biologically. We really do not know if there Florida panthers really moves according to hidden states, and even if they do, we don't know the true number nor able to observe them. Three distinct movement states seems biologically interpretable for Florida panthers according \citet{kerk2015hidden}: Short step length suggests resting states, intermediate step length might suggest foraging state and long step length might suggest traveling state. Long step lengths are easy to capture in all models, where as short step lengths are hard to capture given the GPS errors and unstable movements patterns suggesting multiple states associate with short step lengths. Thus, lower number of short step length states with higher variance can be equivalent or more realistic than multiple distinguishable short step length states with low variance.     
 
 \section{Discussion}
 
@@ -503,8 +484,9 @@ Although the time inhomogeneous transition offer an
 objective approach to (1) reduce the number of states to a biologically interpretable level, (2) captures the observational autocorrelation and temporal pattern, (3) reduce the overall complexity as illustrated by our study, several challenges
 must be overcome in order to maximize its potential. The current model is based on the reduced univariate step length response emission without fitting turning angles. Although turning angles are strongly correlated with step length, it does not effect the overall prediction on number of states. But movement trajectories predictions, and spatial models still require both step length and turning angles. Furthermore, modelling temporal heterogeneity only reduce the number of predicted states by 1 resulting in 4/5 states might suggest (1) other factors such as spatial components that might also contribute to over predicting number of states, or (2) there really are 1 or 2 more different movement characteristics that are biologically unknown. Despite the challenges, our study provides an important extension in HMM modeling that is not in the seen before and a real life application that it exist and applicable in animal movement ecology.  
 
-\appendix
+\newpage
 \section{Supplementary material}
+
 \begin{table}[]
 \centering
 \caption{Cat-ID}
@@ -554,7 +536,7 @@ must be overcome in order to maximize its potential. The current model is based 
 \end{tabular}
 \end{table}
 
-<<BICred_plot cat131,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#131.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
+<<BICred_plot cat131,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#2.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
 allmodsumdf <- readRDS("cat2allmod.RDS")
 df2 <- transform(allmodsumdf,
             distrib=ifelse(grepl("LN",model),"log-Normal","Weibull"),
@@ -574,7 +556,7 @@ ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))+
 @
 
 
-<<BICred_plot cat94,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#94.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
+<<BICred_plot cat94,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#15.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
 allmodsumdf <- readRDS("cat15allmod.RDS")
 df2 <- transform(allmodsumdf,
             distrib=ifelse(grepl("LN",model),"log-Normal","Weibull"),
@@ -595,6 +577,7 @@ ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))+
 
 <<viterbi, warning=FALSE, message=FALSE, echo=FALSE >>=
 load("cat1.RData")
+load("cat1sumdat.RData")
 vitcat <- function(catt,mod){
   params <- tail(getpars(mod),6)
   vitdist <- numeric(ntimes(mod))
