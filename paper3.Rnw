@@ -394,7 +394,7 @@ ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ type,ncol=4)
     geom_line() + zmargin
 @
 
-As a complement, we also added FMM, FMM with sinusoidal temporal heterogeneities, and HMM with hourly transitions to compare the temporal effects in goodness of fit.  \todo{if FMMs are here they should be in methods} Looking at figure 2, time inhomogenous transition HMMs (vertically) and 5 states yield the lowest $\Delta$ BIC. The time inhomogeneous transition HMMs reduced the number of states from the HMM by 1 state consistently across all panthers via $\Delta$ BIC. Two of the four panthers dropped to 4 states from 5 states after adding time inhomogeneity transition moving closer to a biologically and statistically interpretable level. Although adding the time inhomogeneous only reduce the number of states by 1, it does support that adding temporal heterogeneity reduce the number of states and at the same time, increase goodness of fit by BIC.
+As a complement, we also added FMM, FMM with sinusoidal temporal heterogeneities, and HMM with hourly transitions to compare the temporal effects in goodness of fit. Looking at Figure 2, time inhomogenous transition HMMs (vertically) and 5 states yield the lowest $\Delta$ BIC. The time inhomogeneous transition HMMs reduced the number of states from the HMM by 1 state consistently across all panthers via $\Delta$ BIC. Two of the four panthers dropped to 4 states from 5 states after adding time inhomogeneity transition moving closer to a biologically and statistically interpretable level. Although adding the time inhomogeneous only reduce the number of states by 1, it does support that adding temporal heterogeneity reduce the number of states and at the same time, increase goodness of fit by BIC.
 
 Among the different types of time inhomogeneous transition HMMs, sinusoidal time dependent transition HMMs yields the lowest BIC. The multiple block transitions was a good fit for the male panthers, using a combination of three transition matrix ($b_{1}$ for $t={1-6,21-24}$, $b_{2}$ for $ t={7-16}$, and $b_{3}$ for $t={17-20}$) and it reduced the number of states by 1 but had no effect on the females. The quadratic and sinusoidal time covariate transitions was motivated by the multiple block transition pattern attempting to capture the cyclic diurnal cycle and same complex level in terms of number of parameters. We concluded that sinusoidal time dependent transition HMM was suitable for modeling these panthers. 
 
@@ -554,6 +554,25 @@ ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))+
     zmargin
 @
 
+
+<<BICred_plot cat94,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#94.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
+allmodsumdf <- readRDS("cat15allmod.RDS")
+df2 <- transform(allmodsumdf,
+            distrib=ifelse(grepl("LN",model),"log-Normal","Weibull"),
+            turn_angle=ifelse(grepl("VM",model),"yes","no"),
+            homog=ifelse(grepl("HMM",model),"homogeneous HMM","time-heterogeneous HMM"))
+ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))+
+    geom_line()+
+    facet_wrap(~ homog)+
+    scale_colour_brewer(name="step length\ndistribution",palette="Set1")+
+    ## scale_size_continuous( name="# parameters") +
+    #    geom_point(aes(size=parameters))+
+    scale_linetype(name="von Mises\nturning angle?")+
+    labs(y=expression(Delta*"BIC"),
+         x="Number of States")+
+    geom_hline(yintercept=0,colour="gray")+
+    zmargin
+@
 
 \bibliography{paper}  
 
