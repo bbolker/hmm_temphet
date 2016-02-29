@@ -521,7 +521,7 @@ must be overcome in order to maximize its potential. The current model is based 
 
 \begin{table}[]
 \centering
-\caption{Number of Parameters for each model type. 
+\caption{Number of Parameters for each model type.}
 \label{Cat-ID}
 \begin{tabular}{cccc}
  Type & Model  & Number of States & Number of Parameters  \\
