@@ -404,69 +404,32 @@ acffun <- function(sim){
 
 The observed data has strong 24 hour lag autocorrelation (correlation with itself) which suggest temporal heterogeneity. HMM without temporal heterogeneity can capture short-term autocorrelation (without Viterbi algorithm) but is unable to capture lags beyond 7. FMM with temporal heterogeneity can capture lags beyond 12, but not short-term autocorrelations. HMM with temporal heterogeneity can fully capture the autocorrelation pattern of the observed data whereas the FMM completely missed the autocorrelations. 
 
-<<state_plots, warning=FALSE, message=FALSE, echo=FALSE, fig.cap="States">>=
-temp5 <- tail(getpars(fitsin5s),10)
-temp6 <- tail(getpars(fithomo6s),12)
-dat1 <- data.frame(log_mean=temp5[c(1,3,5,7,9)],
-                     log_sd=temp5[c(2,4,6,8,10)], Model="HMM + TH(sin)") 
-dat2 <- data.frame(log_mean=temp6[c(1,3,5,7,9,11)],
-                     log_sd=temp6[c(2,4,6,8,10,12)],Model="HMM") 
-dat1 <- dat1[order(dat1$log_mean),]
-dat2 <- dat2[order(dat2$log_mean),]
-  
-dat <- rbind(dat1,dat2)
-sd1 <- ggplot(dat,aes(log_mean,log_sd,color=Model))+
-    geom_point()+geom_line() + ggtitle("Cat 1")
-@
-
-<<state_plots cat2, warning=FALSE, message=FALSE, echo=FALSE>>=
-load("cat2sumdat.RData")
-temp5 <- tail(getpars(fithomo5s),10)
-temp4 <- tail(getpars(fitsin4s),8)
-dat1 <- data.frame(log_mean=temp5[c(1,3,5,7,9)],
-                     log_sd=temp5[c(2,4,6,8,10)], Model="HMM") 
-dat2 <- data.frame(log_mean=temp4[c(1,3,5,7)],
-                     log_sd=temp4[c(2,4,6,8)],Model="HMM + TH(sin)") 
-dat1 <- dat1[order(dat1$log_mean),]
-dat2 <- dat2[order(dat2$log_mean),]
-  
-dat <- rbind(dat2,dat1)
-sd2 <- ggplot(dat,aes(log_mean,log_sd,color=Model))+
-    geom_point()+geom_line() + ggtitle("Cat 2")
-@
-
-<<state_plots cat14, warning=FALSE, message=FALSE, echo=FALSE>>=
-load("cat14sumdat.RData")
-temp5 <- tail(getpars(fithomo5s),10)
-temp4 <- tail(getpars(fitsin4s),8)
-dat1 <- data.frame(log_mean=temp5[c(1,3,5,7,9)],
-                     log_sd=temp5[c(2,4,6,8,10)], Model="HMM") 
-dat2 <- data.frame(log_mean=temp4[c(1,3,5,7)],
-                     log_sd=temp4[c(2,4,6,8)],Model="HMM + TH(sin)") 
-dat1 <- dat1[order(dat1$log_mean),]
-dat2 <- dat2[order(dat2$log_mean),]
-  
-dat <- rbind(dat2,dat1)
-sd14 <- ggplot(dat,aes(log_mean,log_sd,color=Model))+
-    geom_point()+geom_line() + ggtitle("Cat 14")
-@
-
-<<state_plots cat15, warning=FALSE, message=FALSE, echo=FALSE, fig.cap="State Parameter Estimates">>=
-load("cat15sumdat.RData")
-temp5 <- tail(getpars(fitsin5s),10)
-temp6 <- tail(getpars(fithomo6s),12)
-dat1 <- data.frame(log_mean=temp5[c(1,3,5,7,9)],
-                     log_sd=temp5[c(2,4,6,8,10)], Model="HMM + TH(sin)") 
-dat2 <- data.frame(log_mean=temp6[c(1,3,5,7,9,11)],
-                     log_sd=temp6[c(2,4,6,8,10,12)],Model="HMM") 
-dat1 <- dat1[order(dat1$log_mean),]
-dat2 <- dat2[order(dat2$log_mean),]
-  
-dat <- rbind(dat1,dat2)
-sd15 <- ggplot(dat,aes(log_mean,log_sd,color=Model))+
-    geom_point()+geom_line() + ggtitle("Cat 15")
-
-grid.arrange(sd1,sd2,sd14,sd15)
+<<state_plots, warning=FALSE, message=FALSE, echo=FALSE, fig.cap="Step-length parameters">>=
+## translate single fit to data frame of params
+trans_pars <- function(fit,npar,Model=NULL) {
+    x <- tail(getpars(fit),npar)
+    d <- data.frame(log_mean=x[names(x)!="sd"],
+                    log_sd=x[names(x)=="sd"])
+    if (!is.null(Model)) d$Model <- Model
+    d <- arrange(d,log_mean)
+    return(d)
+}
+## get pars for best-fit TH(sin) and HMM models for each cat
+get_cat_pars <- function(catnum) {
+    load(paste0("cat",catnum,"sumdat.RData"))
+    ## figure out
+    w <- with(sumdat,which(deltaBIC==min(deltaBIC[model=="HMM + THsin"])))
+    optstates <- sumdat$nstates[w]
+    ## ASSUME that best fit is het-sin, corresponding homo has +1 states
+    sinfit <- get(paste0("fitsin",optstates,"s"))
+    homofit <- get(paste0("fithomo",optstates+1,"s"))
+    d <- rbind(trans_pars(sinfit,optstates*2,Model="HMM+TH(sin)"),
+               trans_pars(homofit,(optstates+1)*2,Model="HMM"))
+    return(d)
+}
+all_cat_pars <- ldply(lme4:::namedList(1,2,14,15),get_cat_pars,.id="catID")
+ggplot(all_cat_pars,aes(log_mean,log_sd,color=Model))+
+    geom_point()+geom_line() + facet_wrap(~catID,labeller=label_both)
 @
 
 The biggest issue with multiple states is identifying them biologically. We really do not know if there Florida panthers really moves according to hidden states, and even if they do, we don't know the true number nor able to observe them. Three distinct movement states seems biologically interpretable for Florida panthers according \citet{kerk2015hidden}: Short step length suggests resting states, intermediate step length might suggest foraging state and long step length might suggest traveling state. Long step lengths are easy to capture in all models, where as short step lengths are hard to capture given the GPS errors and unstable movements patterns suggesting multiple states associate with short step lengths. Thus, lower number of short step length states with higher variance can be equivalent or more realistic than multiple distinguishable short step length states with low variance.     
