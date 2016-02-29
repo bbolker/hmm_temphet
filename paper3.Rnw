@@ -536,7 +536,7 @@ must be overcome in order to maximize its potential. The current model is based 
 \end{table}
 
 <<BICred_plot cat131,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#131.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
-load("cat2allmod.RData")
+allmodsumdf <- readRDS("cat2allmod.RDS")
 df2 <- transform(allmodsumdf,
             distrib=ifelse(grepl("LN",model),"log-Normal","Weibull"),
             turn_angle=ifelse(grepl("VM",model),"yes","no"),
