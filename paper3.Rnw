@@ -385,14 +385,15 @@ Figure~\ref{fig:BICred_plot} shows the BIC-optimal number of states for time hom
 
 <<adj_BIC_comparisons, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall adjusted BIC comparisons among models",fig.width=8>>=
 L <- load("cat1sumdat.RData")
-ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ type,ncol=4)+
+(adj_BIC_plot <- ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+
+    facet_wrap(~ type,ncol=4)+
     scale_size_continuous( name="# of parameters") +
     scale_x_continuous(expand=c(0,0.5),breaks=2:6)+
     geom_point(aes(size=parameters))+
     scale_colour_brewer(palette="Dark2")+
     labs(y=expression(paste(Delta, "BIC")),
          x="Number of States") +
-    geom_line() + zmargin
+    geom_line() + zmargin)
 @
 
 As a complement, we also fitted FMM; FMM with sinusoidal variation in state occupancy probabilities; and HMM with hourly transitions (24-hour multiple block transition model) to compare the temporal effects in goodness of fit. Figure~\ref{fig:adj_BIC_comparisons} shows that models with temporal heterogenity are better (lower BIC) than homogeneous models in both FMM and HMM frameworks, but time-homogenous HMM models are better than FMM with sinusoidal temporal heterogeneity. Turning to the temporally heterogeneous HMMs (right panel), we see that the model with different transition probabilities for each hour of the day (HMM + THhourly) is overparameterized; it underperforms homogeneous HMM with even 3 states, and gets much worse with 4 states. The multiple-block model approximately matches the homogeneous HMM, although it gives the BIC-optimal number of states as 4, in contrast to 6 for the homogeneous HMM.  Finally, the quadratic and sinusoidal models are considerably better than any other models tested; they both give the BIC-optimal number of states as 5, and they have similar goodness of fit.
@@ -401,7 +402,7 @@ normally be interpreted as an enormous difference in goodness of fit,
 between the sinusoidal and quadratic models (both of which have 90 
 parameters).
 
-<<avg_step_length_by_time, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="Average step length by time of day. \\textbf{todo: leave out hmm quad for clarity? fix factor labels; make y axis log-scale rather than showing log-step-length; make colours consistent with prev fig (may need scalecolourmanual [need underscores] with RColorBrewer::brewer.pal(10,'Dark2') or some such. Maybe set obs as a wide, pointless, semitransparent line?})",fig.width=8>>=
+<<avg_step_length_by_time, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="Average step length by time of day. \\textbf{todo: leave out hmm quad for clarity? fix factor labels; make y axis log-scale rather than showing log-step-length; make colours consistent with prev fig (may need scalecolourmanual [need underscores] with RColorBrewer::brewer.pal(10,'Dark2') or some such. Opinion on this way of handling obs data (need to include in legend)?})",fig.width=8>>=
 simdf <- simdat %>% dplyr::select(-obs) %>%
     group_by(time) %>% summarise_each(funs(mean))
 obsdf <- simdat %>% dplyr::select(c(obs,time)) %>%
@@ -417,7 +418,7 @@ ggplot(avgdf2,aes(x=time,y=value,colour=variable)) +
               aes(y=obs),lwd=2.5,alpha=0.3,colour="black")
 @
 
-Figure~\ref{fig:avg_step_length_by_time} shows a clear diurnal pattern from the average hourly step lengths from the observed data. As expected, temporally homogeneous models (FMM and HMM) predict the same mean step length regardless of time of day, failing to capture the diurnal activity cycle. All of the models incorporating temporal heterogeneity, including the temporally heterogeneous FMM, can capture the observed patterns. However, the block model does markedly worse than the other temporal models, and the (overparameterized) hourly model does better than any other model at capturing the early-evening peak (but worse at capturing the mid-day trough).
+Figure~\ref{fig:avg_step_length_by_time} shows a clear diurnal pattern from the average hourly step lengths from the observed data. As expected, temporally homogeneous models (whether FMM or HMM) predict the same mean step length regardless of time of day, failing to capture the diurnal activity cycle. All of the models incorporating temporal heterogeneity, including the temporally heterogeneous FMM, can capture the observed patterns. However, the block model does markedly worse than the other temporal models, and the (overparameterized) hourly model does better than any other model at capturing the early-evening peak (but worse at capturing the mid-day trough).
 
 <<acf_plot, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="ACF \\textbf{fix similarly to Fig 3}">>=
 acffun <- function(sim){
@@ -430,7 +431,10 @@ temp <- simdat %>% dplyr::select(-time)%>%ldply(.,acffun)
     geom_point()+geom_line()
 @
 
-The observed data has strong 24 hour lag autocorrelation (correlation with itself) which suggest temporal heterogeneity (Figure~\ref{fig:acf_plot}). HMM without temporal heterogeneity can capture short-term autocorrelation (without Viterbi algorithm) but is unable to capture lags beyond 7. FMM with temporal heterogeneity can capture lags beyond 12, but not short-term autocorrelations. HMM with temporal heterogeneity can fully capture the autocorrelation pattern of the observed data whereas the FMM completely missed the autocorrelations. 
+Like the diurnal pattern shown in Figure~\ref{fig:avg_step_length_by_time},
+the strong autocorrelation of the observed step lengths at a 24-hour lag (Figure~\ref{fig:acf_plot}) shows the need to incorporate temporal heterogeneity in the model even without any formal statistical modeling.
+Because there are an unlimited number of potential complexities that can be added to movement models (e.g. spatial/temporal/among-individual heterogeneity; effects of conspecific attraction or avoidance; memory or cognitive effects), each with associated costs in researcher and computational effort, such diagnostic plots are invaluable. In contrast to the hourly averages, the autocorrelation (ACF) captures both short- and long-term temporal effects. HMM without temporal heterogeneity captures the short-term autocorrelation, but misses the long-term autocorrelation beyond a 7-hour lag.
+Temporally homogeneous FMM, by definition, produces neither short- nor long-term autocorrelation. FMM without temporal heterogeneity, although it captures the diurnal pattern well, underpredicts the degree of short-term autocorrelation.
 
 <<get_cat_pars, warning=FALSE, message=FALSE, echo=FALSE, cache=TRUE>>=
 ## translate single fit to data frame of params
@@ -458,13 +462,18 @@ get_cat_pars <- function(catnum) {
 all_cat_pars <- ldply(lme4:::namedList(1,2,14,15),get_cat_pars,.id="catID")
 @
 
-<<state_plots, warning=FALSE, message=FALSE, echo=FALSE, fig.cap="Step-length parameters">>=
-ggplot(all_cat_pars,aes(log_mean,log_sd,color=Model))+
-    geom_point()+geom_line() + facet_wrap(~catID,labeller=label_both)
+<<state_plots, warning=FALSE, message=FALSE, echo=FALSE, fig.cap="Step-length parameters (\\textbf{todo: change scales from log() to log-scale}">>=
+source("bhull.R")
+g0 <- ggplot(all_cat_pars,aes(log_mean,log_sd,color=Model))+
+    geom_point()+geom_line() + facet_wrap(~catID,labeller=label_both)+zmargin
+g0 +
+    geom_encircle(data=subset(all_cat_pars,
+                              (catID=="15" & log_mean<1.5) |
+                              (catID!="15" & log_mean<1.8)),
+                  colour="black",linetype=2,expand=0.05)
 @
 
-TODO: add ellipses?
-
+\todo{maybe do Viterbi plots for mean state occupancy by hour for HMM vs HMM/TH models? Still trying to figure out what's really going on here ...}
 The biggest issue with multiple states is identifying them biologically. We really do not know if there Florida panthers really moves according to hidden states, and even if they do, we don't know the true number nor able to observe them. Three distinct movement states seems biologically interpretable for Florida panthers according \citet{kerk2015hidden}: Short step length suggests resting states, intermediate step length might suggest foraging state and long step length might suggest traveling state. Long step lengths are easy to capture in all models, where as short step lengths are hard to capture given the GPS errors and unstable movements patterns suggesting multiple states associate with short step lengths. Thus, lower number of short step length states with higher variance can be equivalent or more realistic than multiple distinguishable short step length states with low variance.     
 
 \section{Discussion}
@@ -598,40 +607,25 @@ temp <- vitcat(cat,fithomo3s) %>% dplyr::select(-time)%>%ldply(.,acffun)
 ggplot(temp,aes(lag,ACF,colour=.id))+
 geom_point()+geom_line() +theme_bw() +
 ggtitle("ACF plot of BIC Selected Models")
-
 @
 
-<<adj_BIC_comparisons_cat2, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall adjusted BIC comparisons between different HMM models">>=
+
+\todo{does it make any sense to compress figs~\ref{adj_BIC-comparisons_cat2} etc. into a single plot (via facetgrid or multi-lines)?  Same idea for all repeated plots; also, update to use percent-+-percent syntax}
+
+
+<<adj_BIC_comparisons_cat2, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall adjusted BIC comparisons between different HMM models",fig.width=8>>=
 load("cat2sumdat.RData")
-ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ type,ncol=4)+
-    scale_size_continuous( name="Num of Parameters") +
-    geom_point(aes(size=parameters))+
-    scale_colour_brewer(palette="Dark2")+
-    labs(y=expression(paste(Delta, "BIC")),
-         x="Number of States") +
-    geom_line() + zmargin
+adj_BIC_plot %+% sumdat
 @
 
-<<adj_BIC_comparisons_cat14, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall Adjusted BIC Comparisons between different HMM models">>=
+<<adj_BIC_comparisons_cat14, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall Adjusted BIC Comparisons between different HMM models",fig.width=8>>=
 load("cat14sumdat.RData")
-ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ type,ncol=4)+
-    scale_size_continuous( name="Num of Parameters") +
-    geom_point(aes(size=parameters))+
-    scale_colour_brewer(palette="Dark2")+
-    labs(y=expression(paste(Delta, "BIC")),
-         x="Number of States") +
-    geom_line() + zmargin
+adj_BIC_plot %+% sumdat
 @
 
-<<adj_BIC_comparisons_cat15, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall Adjusted BIC Comparisons between different HMM models">>=
+<<adj_BIC_comparisons_cat15, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall Adjusted BIC Comparisons between different HMM models",fig.width=8>>=
 load("cat15sumdat.RData")
-ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ type,ncol=4)+
-    scale_size_continuous( name="Num of Parameters") +
-    geom_point(aes(size=parameters))+
-    scale_colour_brewer(palette="Dark2")+
-    labs(y=expression(paste(Delta, "BIC")),
-         x="Number of States") +
-    geom_line() + zmargin
+adj_BIC_plot %+% sumdat
 @
 
 <<avg_step_length_by_time_cat2, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="Average step length by time of day">>=
