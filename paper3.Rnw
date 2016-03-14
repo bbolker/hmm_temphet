@@ -37,6 +37,12 @@ library("plyr")
 library("dplyr")
 library("reshape2")
 library("gridExtra")
+if (!require("ggalt")) {
+    cat("installing ggalt from BB repo ...\n")
+    library("devtools")
+    install_github("bbolker/ggalt")
+    library("ggalt")
+}
 @
 
 \begin{abstract}
@@ -463,14 +469,13 @@ all_cat_pars <- ldply(lme4:::namedList(1,2,14,15),get_cat_pars,.id="catID")
 @
 
 <<state_plots, warning=FALSE, message=FALSE, echo=FALSE, fig.cap="Step-length parameters (\\textbf{todo: change scales from log() to log-scale}">>=
-source("bhull.R")
 g0 <- ggplot(all_cat_pars,aes(log_mean,log_sd,color=Model))+
     geom_point()+geom_line() + facet_wrap(~catID,labeller=label_both)+zmargin
-g0 +
+(g0c <- g0 +
     geom_encircle(data=subset(all_cat_pars,
                               (catID=="15" & log_mean<1.5) |
                               (catID!="15" & log_mean<1.8)),
-                  colour="black",linetype=2,expand=0.05)
+                  colour="black",linetype=2,expand=0.05))
 @
 
 \todo{maybe do Viterbi plots for mean state occupancy by hour for HMM vs HMM/TH models? Still trying to figure out what's really going on here ...}
