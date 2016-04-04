@@ -37,6 +37,12 @@ library("plyr")
 library("dplyr")
 library("reshape2")
 library("gridExtra")
+if (!require("ggalt")) {
+    cat("installing ggalt from BB repo ...\n")
+    library("devtools")
+    install_github("bbolker/ggalt")
+    library("ggalt")
+}
 @
 
 \begin{abstract}
@@ -47,7 +53,8 @@ unobservable states of the system. However, temporal variation in the
 probability that individuals occupy or move between groups can obscure
 such signals. We use finite mixture and hidden Markov models, two
 standard clustering techniques, to model high-resolution hourly
-movement data from Florida panthers. Allowing for temporal
+movement data from Florida panthers (\emph{Puma concolor coryi}).
+Allowing for temporal
 heterogeneity in transition probabilities, a straightforward but
 rarely explored model extension, resolves some shortcomings of current
 modeling frameworks and clarifies the behavioural patterns of
@@ -152,15 +159,17 @@ detailed analysis to models with only 3 underlying states.  In
 contrast, most studies using HMM have chosen the
 number of underlying states \emph{a priori}, typically using either two
 \citep{schliehe-diecks_application_2012,mckellar_using_2014,langrock_flexible_2012,fryxell_multiple_2008}, or three states
-\citep{dean2012behavioural,morales_extracting_2004,franke_prediction_2006,kerk2015hidden}. As \cite{kerk2015hidden} comment, behavioural
+\citep{dean2012behavioural,morales_extracting_2004,franke_prediction_2006,kerk2015hidden}. As \cite{kerk2015hidden} comment, and as
+we discuss further below, behavioural
 repertoires with more than three distinct states are difficult to
-interpret, one possible reason that other authors have not adopted
+interpret --- one possible reason that other authors have not adopted
 \citeauthor{kerk2015hidden}'s model-based approach to
 identifying the number of latent states.
 
 Our second goal, therefore, is to explore whether
 \citeauthor{kerk2015hidden}'s results might be driven at
-least in part by structural problems with the HMM, i.e. the
+least in part by structural problems with their statistical
+model, i.e. the
 assumption of temporally homogeneous behaviour.  When large data sets
 are available, information-theoretic model selection methods will
 typically choose complex, highly parameterized models; when there is
@@ -205,7 +214,8 @@ distribution was typically close to 1 ($\approx 0.4-1.6$; confidence
 intervals were not calculated), implying that a geometric distribution
 (i.e., negative binomial with shape=1) might be adequate. In turn,
 this suggests that we might not lose much accuracy by reverting to 
-a simpler HMM framework, which makes precisely this assumption.
+a simpler HMM framework, which corresponds
+to making precisely this assumption.
 
 \cite{kerk2015hidden} considered time-homogeneous models with 
 a variety of candidate distributions %
@@ -244,7 +254,12 @@ We follow \cite{kerk2015hidden} in using BIC-optimality (i.e., minimum
 BIC across a family of models) as the criterion for identifying
 the best model, because we are interested in explaining the 
 data generation process by identifying the ``true'' number 
-of underlying movement states.  Using BIC also simplifies 
+of underlying movement states.  
+\todo{it occurs to me that we haven't really included any
+information about simulation testing in this version!
+We should probably add a short section; if don't, then we
+should delete following sentence}
+Using BIC also simplifies 
 evaluation of model selection procedures; 
 it is easier to test whether our model selection
 procedure has selected the model used to simulate the data,
@@ -268,21 +283,24 @@ In a HMM, the joint likelihood of \emph{emissions} (i.e., direct observations) $
 \begin{equation}
 \begin{split}
 P(\mathbf{Y}_{1:T},\mathbf{Z}_{1:T}|\boldsymbol \theta,\mathbf{X}_{1:T}) & =
-P(\state_{1} \mid \cov_{1})P(\obs_{1} | \state_{1}, \cov_{1}) \times \\
+P(\state_{1} \mid \cov_{1})P(\obs_{1} | \state_{1}, \cov_{1}) \cdot \\
 &  \quad \prod\limits_{k=2}^{T}P(\state_{k} | \state_{k-1}, \cov_{k})P(\obs_{k} | \state_{k},\cov_{k})
 \end{split}
 \label{eq:HMMlik}
 \end{equation}
 
+The emissions $\obs_i$ are boldfaced to denote that we may have a vector of observations at each time point (e.g., step length and turning angle).
 The model contains three distinct components:
 
 \begin{description}
-\item[Initial probability] $P(\state_{1} = i | \cov_{1}) P(\obs_{1} | \state_{1}, \cov_{1} )$: the probability of state $i$ at time $t=1$ where the covariate is $\cov_{1}$; the vector of observation densities $\obs_{1}$ conditions on covariates $\cov_{1}$ and state $\state_{1}$.
+\item[Initial probability] $P(\state_{1} = i | \cov_{1}) P(\obs_{1} | \state_{1}, \cov_{1} )$: the probability of state $i$ at time $t=1$ where the covariate is $\cov_{1}$, times the vector of observations $\obs_{1}$ conditioned on covariates $\cov_{1}$ and state $\state_{1}$.
 
 \item[Transition probability] $P(\state_{k}=j | \state_{k-1}=i,\cov_{k})$: the probability of a transition from state $i$ at time $t=k-1$ to state $j$ with covariate $\cov_{k}$ at time $t=k$.
 
-\item[Emission probability] $P(\obs_{k} | \state_{k},\cov_{k})$: a vector of observation density $\obs_{k}$ condition on covariates $\cov_{k}$ at state $\state_{k}$ at time $t=k$.  
+\item[Emission probability] $P(\obs_{k} | \state_{k},\cov_{k})$: a vector of observations $\obs_{k}$ conditioned on covariates $\cov_{k}$ at state $\state_{k}$ at time $t=k$.  
 \end{description}
+
+\todo{maybe give the formula for number of parameters (constrained) for each model type here?}
 
 Eq.~\ref{eq:HMMlik} gives the likelihood of the observed sequence 
 given (conditional on) a particular
@@ -306,9 +324,10 @@ As is standard for HMMs with covariates \citep{visser2010depmixs4}, we define th
 \end{split}
 \end{equation}
 
-We considered three different transition models for diurnal variation in behaviour, incorporating hour-of-day as a covariate following the general approach of \cite{morales_extracting_2004} of incorporating covariate dependence in the transition matrix.
+We considered four different transition models for diurnal variation in behaviour, incorporating hour-of-day as a covariate following the general approach of \cite{morales_extracting_2004} of incorporating covariate dependence in the transition matrix.
 
 \begin{description}
+\item[Hourly model] \todo{describe hourly model. Explain that it's included for comparative purposes, i.e. not really practical.  Explain that we only fitted up to 4 states (because too many parameters)}
 \item[Multiple block transition] Here we assume piecewise-constant transition probabilities. The transition probability $\pi_{ij}$ is a function of time (hour of day), where it is assigned to one of $M$ different time blocks:
 $$
 \eta_{ij}(t) = \sum_{m=1}^{M}a_{ijm} \delta_{m=t}
@@ -325,7 +344,9 @@ $$
 $$
 \end{description}
 
-Model complexity and number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorporating temporal heterogeneity. See supplementary material Table 1.
+Other periodic functions, such as Fourier series (the sinusoidal transition model augmented by additional sinusoidal components at higher frequencies) or periodic splines\todo{citation?}, could be useful directions for future exploration.
+
+Model complexity and the number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorporating temporal heterogeneity (Supplementary material, Table 1).
 
 \subsection{Model evaluation}
 
@@ -336,14 +357,19 @@ estimated parameters, and estimate the most likely
 states with the Viterbi
 algorithm.
 
-We used three approaches to assess the fit of both time-homogeneous and time-inhomogeneous HMMs with 3 to 6 states to step-length data from the four of the thirteen Florida panthers with the most data ($>  $ observations). (1) Comparing BICs to the optimal-BIC model within each type of transition complexity ($\dbic$ = BIC - min(BIC)). 
-(2) Compare average step-length by hour of day for the observed data and for data simulated from the models.
-(3) Compare temporal autocorrelations for the observed data and for data simulated from the models. For the second and third metrics (hourly average and ACF), we simulated data from the models because the metrics are hard to compute from first principles for HMMs with temporally varying transition probabilities.
+We used three approaches to assess the fit of both time-homogeneous and time-inhomogeneous HMMs with 3 to 6 states to step-length data from the four of the thirteen Florida panthers with the most data ($>  $ observations). (1) Comparing BICs to the optimal-BIC model within each type of transition complexity ($\dbic$ = BIC - min(BIC)) assesses the overall goodness of
+fit of each model type.
+(2) Comparing average step-length by hour of day for the observed data and for data simulated from the models shows how well a particular class of models can capture the diurnal variation in behaviour.
+(3) Comparing temporal autocorrelations for the observed data and for data simulated from the models shows how well a particular class of models
+captures serial correlation at both short and long scales. 
+We used simulations to predict hourly step length and ACF 
+because, while the computation is reasonably straightforward for FMMs, and manageable for homogeneous HMMs, the interaction between the geometric dwell time within each state and the temporally varying interaction probabilities makes it unreasonably complex.
+\todo{need to explain here, if we haven't elsewhere, that using the Viterbi algorithm to simulate double-counts the data ...}
 
 \section{Results}
 
 <<BICred_plot,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#1.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
-load("cat1allmod.RData")
+L <- load("cat1allmod.RData")
 df2 <- transform(allmodsumdf,
             distrib=ifelse(grepl("LN",model),"log-Normal","Weibull"),
             turn_angle=ifelse(grepl("VM",model),"yes","no"),
@@ -361,50 +387,62 @@ ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))+
     zmargin
 @
 
-Figure 1 shows the BIC-optimal number of states for time homogenous models is consistent with \citeauthor{kerk2015hidden}'s results. Furthermore, BIC-optimal number of states does not depend on the model for both time-homogenous and time-inhomogenous within their respective framework, but time-inhomogenous models have the BIC-optimal number of states overall.
+Figure~\ref{fig:BICred_plot} shows the BIC-optimal number of states for time homogenous models is consistent with \citeauthor{kerk2015hidden}'s results. Furthermore, BIC-optimal number of states does not depend on the model for both time-homogenous and time-inhomogenous within their respective framework, but time-inhomogenous models have the BIC-optimal number of states overall.\todo{do we need to run some models with 7 states to show that $\dbic$ eventually increases?}
 
-
-
-<<adj_BIC_comparisons, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall Adjusted BIC Comparisons between different HMM models">>=
-load("cat1sumdat.RData")
-ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ type,ncol=4)+
-    scale_size_continuous( name="Num of Parameters") +
+<<adj_BIC_comparisons, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall adjusted BIC comparisons among models",fig.width=8>>=
+L <- load("cat1sumdat.RData")
+(adj_BIC_plot <- ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+
+    facet_wrap(~ type,ncol=4)+
+    scale_size_continuous( name="# of parameters") +
+    scale_x_continuous(expand=c(0,0.5),breaks=2:6)+
     geom_point(aes(size=parameters))+
     scale_colour_brewer(palette="Dark2")+
     labs(y=expression(paste(Delta, "BIC")),
          x="Number of States") +
-    geom_line() + zmargin
+    geom_line() + zmargin)
 @
 
-As a complement, we also added FMM, FMM with sinusoidal temporal heterogeneities, and HMM with hourly transitions (24-hour multiple block transition model) to compare the temporal effects in goodness of fit. Looking at Figure 2, models with temporal heterogenity is better than models without in both FMM and HMM frameworks, but time homogenous HMM models is better than FMM with sinusoidal temporal heterogeneity. Temporal heterogenity is good with good models such as the quadratic and sinuosidal. Multiple block models is good for cats with distinguishable diurnal patterns and hourly model is too complicated. 
+As a complement, we also fitted FMM; FMM with sinusoidal variation in state occupancy probabilities; and HMM with hourly transitions (24-hour multiple block transition model) to compare the temporal effects in goodness of fit. Figure~\ref{fig:adj_BIC_comparisons} shows that models with temporal heterogenity are better (lower BIC) than homogeneous models in both FMM and HMM frameworks, but time-homogenous HMM models are better than FMM with sinusoidal temporal heterogeneity. Turning to the temporally heterogeneous HMMs (right panel), we see that the model with different transition probabilities for each hour of the day (HMM + THhourly) is overparameterized; it underperforms homogeneous HMM with even 3 states, and gets much worse with 4 states. The multiple-block model approximately matches the homogeneous HMM, although it gives the BIC-optimal number of states as 4, in contrast to 6 for the homogeneous HMM.  Finally, the quadratic and sinusoidal models are considerably better than any other models tested; they both give the BIC-optimal number of states as 5, and they have similar goodness of fit.
+However, this similarity is somewhat overstated due to the very large variation in BIC (over thousands of units) across the full range of models; there is a difference of approximately 80 BIC units, which would
+normally be interpreted as an enormous difference in goodness of fit,
+between the sinusoidal and quadratic models (both of which have 90 
+parameters).
 
-<<avg_step_length_by_time, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="Average step length by time of day">>=
-  simdf <- simdat %>% dplyr:::select(-obs) %>% group_by(time) %>% summarise_each(funs(mean))
-  obsdf <- simdat %>% dplyr:::select(c(obs,time)) %>% filter(!is.na(obs)) %>% group_by(time) %>% summarise_each(funs(mean)) %>% dplyr:::select(obs)
-  avgdf <- cbind(simdf,obsdf)
-  avgdf2 <- melt(avgdf,'time')
+<<avg_step_length_by_time, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="Average step length by time of day. \\textbf{todo: leave out hmm quad for clarity? fix factor labels; make y axis log-scale rather than showing log-step-length; make colours consistent with prev fig (may need scalecolourmanual [need underscores] with RColorBrewer::brewer.pal(10,'Dark2') or some such. Opinion on this way of handling obs data (need to include in legend)?})",fig.width=8>>=
+simdf <- simdat %>% dplyr::select(-obs) %>%
+    group_by(time) %>% summarise_each(funs(mean))
+obsdf <- simdat %>% dplyr::select(c(obs,time)) %>%
+    filter(!is.na(obs)) %>% group_by(time) %>%
+    summarise_each(funs(mean))
+
+avgdf2 <- melt(simdf,'time')
 ggplot(avgdf2,aes(x=time,y=value,colour=variable)) + 
-    geom_point() +geom_line()+ xlab("Time of Day") + ylab("Step lengths (log10)")+
-    scale_x_continuous(breaks=0:23)
+    geom_point() +geom_line()+ xlab("Time of Day") +
+    ylab("Step lengths (log10)")+
+    scale_x_continuous(breaks=0:23)+
+    geom_line(data=obsdf,
+              aes(y=obs),lwd=2.5,alpha=0.3,colour="black")
 @
 
-Figure 3 shows a clear diurnal pattern from the average hourly step lengths from the observed data. Models that assume temporal homogeneity (FMM and HMM) fail to capture the diurnal activity cycle. Models incorporating temporal heterogeneity can capture the observed patterns without the Viterbi algorithm.
+Figure~\ref{fig:avg_step_length_by_time} shows a clear diurnal pattern from the average hourly step lengths from the observed data. As expected, temporally homogeneous models (whether FMM or HMM) predict the same mean step length regardless of time of day, failing to capture the diurnal activity cycle. All of the models incorporating temporal heterogeneity, including the temporally heterogeneous FMM, can capture the observed patterns. However, the block model does markedly worse than the other temporal models, and the (overparameterized) hourly model does better than any other model at capturing the early-evening peak (but worse at capturing the mid-day trough).
 
-<<acf_plot, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="ACF">>=
+<<acf_plot, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="ACF \\textbf{fix similarly to Fig 3}">>=
 acffun <- function(sim){
   a <- acf(sim,na.action=na.pass,plot=FALSE)
   df <- data.frame(ACF=c(a$acf),lag=a$lag)
   return(df)
 }
-
-  temp <- simdat %>% dplyr:::select(-time)%>%ldply(.,acffun)
+temp <- simdat %>% dplyr::select(-time)%>%ldply(.,acffun)
   ggplot(temp,aes(lag,ACF,colour=.id))+
     geom_point()+geom_line()
 @
 
-The observed data has strong 24 hour lag autocorrelation (correlation with itself) which suggest temporal heterogeneity. HMM without temporal heterogeneity can capture short-term autocorrelation (without Viterbi algorithm) but is unable to capture lags beyond 7. FMM with temporal heterogeneity can capture lags beyond 12, but not short-term autocorrelations. HMM with temporal heterogeneity can fully capture the autocorrelation pattern of the observed data whereas the FMM completely missed the autocorrelations. 
+Like the diurnal pattern shown in Figure~\ref{fig:avg_step_length_by_time},
+the strong autocorrelation of the observed step lengths at a 24-hour lag (Figure~\ref{fig:acf_plot}) shows the need to incorporate temporal heterogeneity in the model even without any formal statistical modeling.
+Because there are an unlimited number of potential complexities that can be added to movement models (e.g. spatial/temporal/among-individual heterogeneity; effects of conspecific attraction or avoidance; memory or cognitive effects), each with associated costs in researcher and computational effort, such diagnostic plots are invaluable. In contrast to the hourly averages, the autocorrelation (ACF) captures both short- and long-term temporal effects. HMM without temporal heterogeneity captures the short-term autocorrelation, but misses the long-term autocorrelation beyond a 7-hour lag.
+Temporally homogeneous FMM, by definition, produces neither short- nor long-term autocorrelation. FMM without temporal heterogeneity, although it captures the diurnal pattern well, underpredicts the degree of short-term autocorrelation.
 
-<<state_plots, warning=FALSE, message=FALSE, echo=FALSE, fig.cap="Step-length parameters">>=
+<<get_cat_pars, warning=FALSE, message=FALSE, echo=FALSE, cache=TRUE>>=
 ## translate single fit to data frame of params
 trans_pars <- function(fit,npar,Model=NULL) {
     x <- tail(getpars(fit),npar)
@@ -416,7 +454,7 @@ trans_pars <- function(fit,npar,Model=NULL) {
 }
 ## get pars for best-fit TH(sin) and HMM models for each cat
 get_cat_pars <- function(catnum) {
-    load(paste0("cat",catnum,"sumdat.RData"))
+    L <- load(paste0("cat",catnum,"sumdat.RData"))
     ## figure out
     w <- with(sumdat,which(deltaBIC==min(deltaBIC[model=="HMM + THsin"])))
     optstates <- sumdat$nstates[w]
@@ -428,10 +466,19 @@ get_cat_pars <- function(catnum) {
     return(d)
 }
 all_cat_pars <- ldply(lme4:::namedList(1,2,14,15),get_cat_pars,.id="catID")
-ggplot(all_cat_pars,aes(log_mean,log_sd,color=Model))+
-    geom_point()+geom_line() + facet_wrap(~catID,labeller=label_both)
 @
 
+<<state_plots, warning=FALSE, message=FALSE, echo=FALSE, fig.cap="Step-length parameters (\\textbf{todo: change scales from log() to log-scale}">>=
+g0 <- ggplot(all_cat_pars,aes(log_mean,log_sd,color=Model))+
+    geom_point()+geom_line() + facet_wrap(~catID,labeller=label_both)+zmargin
+(g0c <- g0 +
+    geom_encircle(data=subset(all_cat_pars,
+                              (catID=="15" & log_mean<1.5) |
+                              (catID!="15" & log_mean<1.8)),
+                  colour="black",linetype=2,expand=0.05))
+@
+
+\todo{maybe do Viterbi plots for mean state occupancy by hour for HMM vs HMM/TH models? Still trying to figure out what's really going on here ...}
 The biggest issue with multiple states is identifying them biologically. We really do not know if there Florida panthers really moves according to hidden states, and even if they do, we don't know the true number nor able to observe them. Three distinct movement states seems biologically interpretable for Florida panthers according \citet{kerk2015hidden}: Short step length suggests resting states, intermediate step length might suggest foraging state and long step length might suggest traveling state. Long step lengths are easy to capture in all models, where as short step lengths are hard to capture given the GPS errors and unstable movements patterns suggesting multiple states associate with short step lengths. Thus, lower number of short step length states with higher variance can be equivalent or more realistic than multiple distinguishable short step length states with low variance.     
 
 \section{Discussion}
@@ -441,9 +488,9 @@ Identifying behavioural states based on some set of observations is a common met
 
 We have presented a relatively simple concept yet little-studied extension by covariate dependent HMM can overfit the number of true states in covariate dependent HMM (in our case, time-dependent transitions). HMM with more than three states are not biologically interpretable and often discarded, but we cannot ignore that increasing complexity (number of states) states can increase goodness of fit statistically. Our analyses revealed modeling temporal heterogeneity in HMM transition can reduce the number of states estimated in time homogeneous transitions HMM movement of Florida panthers and reduce the overall model complexity.
 
-For some kinds of model predictions, the time homogeneous transition model can perform as good as the time inhomogeneous transition models in terms of predicting the states by the Viterbi algorithm (the tradition state prediction method) and can easily overlook more complicated models. The Viterbi algorithm solves/predicts for the most likely/probable sequence of movement states based on the observations \citep{zucchini_hidden_2009,langrock_flexible_2012}. This approach allows the time homogeneous transition model's prediction to capture the temporal heterogeneity from the observations. It is useful to predict missing data in the observation sequence but fail to future movements beyond the observations sequence. In general, the time homogeneous transition model gives the broader scope of movement pattern where as the time inhomogeneous transitions models gives a more realistic movement structure and future predictions.
+For some kinds of model predictions, the time homogeneous transition model can perform as good as the time inhomogeneous transition models in terms of predicting the states by the Viterbi algorithm (the tradition state prediction method) and can easily overlook more complicated models. The Viterbi algorithm solves/predicts for the most likely/probable sequence of movement states based on the observations \citep{zucchini_hidden_2009,langrock_flexible_2012}. This approach allows the time homogeneous transition model's prediction to capture the temporal heterogeneity from the observations. It is useful to predict missing data in the observation sequence, but because it is conditional on the observed values, it cannot predict future movements beyond the observation sequence. In general, the time homogeneous transition model gives the broader scope of movement pattern where as the time inhomogeneous transitions models gives a more realistic movement structure and future predictions.
 
-Although the time inhomogeneous transition offer an
+Although the time inhomogeneous transitions offer an
 objective approach to (1) reduce the number of states to a biologically interpretable level, (2) captures the observational autocorrelation and temporal pattern, (3) reduce the overall complexity as illustrated by our study, several challenges
 must be overcome in order to maximize its potential. The current model is based on the reduced univariate step length response emission without fitting turning angles. Although turning angles are strongly correlated with step length, it does not effect the overall prediction on number of states. But movement trajectories predictions, and spatial models still require both step length and turning angles. Furthermore, modelling temporal heterogeneity only reduce the number of predicted states by 1 resulting in 4/5 states might suggest (1) other factors such as spatial components that might also contribute to over predicting number of states, or (2) there really are 1 or 2 more different movement characteristics that are biologically unknown. Despite the challenges, our study provides an important extension in HMM modeling that is not in the seen before and a real life application that it exist and applicable in animal movement ecology.  
 
@@ -463,11 +510,12 @@ must be overcome in order to maximize its potential. The current model is based 
 \end{tabular}
 \end{table}
 
-
 \begin{table}[]
 \centering
-\caption{Number of Parameters for each model type.}
-\label{Cat-ID}
+\caption{Number of Parameters for each model type.
+\textbf{todo: add general formula for each model type, e.g. FMM = $S$ (occupancies) + $2S$ (emissions: mean and std dev for each state); HMM = $S(S-1)+2S=S^2+S$.  Be clear about whether we're talking about restricted (constrained) or unconstrained.}
+}
+\label{npartab}
 \begin{tabular}{cccc}
  Type & Model  & Number of States & Number of Parameters  \\
   FMM & FMM & 3 & 9    \\
@@ -499,7 +547,7 @@ must be overcome in order to maximize its potential. The current model is based 
 \end{tabular}
 \end{table}
 
-<<BICred_plot cat131,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#2.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
+<<BICred_plot_cat131,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#2.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
 allmodsumdf <- readRDS("cat2allmod.RDS")
 df2 <- transform(allmodsumdf,
             distrib=ifelse(grepl("LN",model),"log-Normal","Weibull"),
@@ -519,7 +567,7 @@ ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))+
 @
 
 
-<<BICred_plot cat94,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#15.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
+<<BICred_plot_cat94,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#15.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
 allmodsumdf <- readRDS("cat15allmod.RDS")
 df2 <- transform(allmodsumdf,
             distrib=ifelse(grepl("LN",model),"log-Normal","Weibull"),
@@ -560,50 +608,35 @@ vitcat <- function(catt,mod){
   return(dat)
 }
 
-temp <- vitcat(cat,fithomo3s) %>% dplyr:::select(-time)%>%ldply(.,acffun)
+temp <- vitcat(cat,fithomo3s) %>% dplyr::select(-time)%>%ldply(.,acffun)
 ggplot(temp,aes(lag,ACF,colour=.id))+
 geom_point()+geom_line() +theme_bw() +
 ggtitle("ACF plot of BIC Selected Models")
-
 @
 
-<<adj_BIC_comparisons cat2, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall Adjusted BIC Comparisons between different HMM models">>=
+
+\todo{does it make any sense to compress figs~\ref{adj_BIC-comparisons_cat2} etc. into a single plot (via facetgrid or multi-lines)?  Same idea for all repeated plots; also, update to use percent-+-percent syntax}
+
+
+<<adj_BIC_comparisons_cat2, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall adjusted BIC comparisons between different HMM models",fig.width=8>>=
 load("cat2sumdat.RData")
-ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ type,ncol=4)+
-    scale_size_continuous( name="Num of Parameters") +
-    geom_point(aes(size=parameters))+
-    scale_colour_brewer(palette="Dark2")+
-    labs(y=expression(paste(Delta, "BIC")),
-         x="Number of States") +
-    geom_line() + zmargin
+adj_BIC_plot %+% sumdat
 @
 
-<<adj_BIC_comparisons cat14, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall Adjusted BIC Comparisons between different HMM models">>=
+<<adj_BIC_comparisons_cat14, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall Adjusted BIC Comparisons between different HMM models",fig.width=8>>=
 load("cat14sumdat.RData")
-ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ type,ncol=4)+
-    scale_size_continuous( name="Num of Parameters") +
-    geom_point(aes(size=parameters))+
-    scale_colour_brewer(palette="Dark2")+
-    labs(y=expression(paste(Delta, "BIC")),
-         x="Number of States") +
-    geom_line() + zmargin
+adj_BIC_plot %+% sumdat
 @
 
-<<adj_BIC_comparisons cat15, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall Adjusted BIC Comparisons between different HMM models">>=
+<<adj_BIC_comparisons_cat15, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall Adjusted BIC Comparisons between different HMM models",fig.width=8>>=
 load("cat15sumdat.RData")
-ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+facet_wrap(~ type,ncol=4)+
-    scale_size_continuous( name="Num of Parameters") +
-    geom_point(aes(size=parameters))+
-    scale_colour_brewer(palette="Dark2")+
-    labs(y=expression(paste(Delta, "BIC")),
-         x="Number of States") +
-    geom_line() + zmargin
+adj_BIC_plot %+% sumdat
 @
 
-<<avg_step_length_by_time cat2, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="Average step length by time of day">>=
+<<avg_step_length_by_time_cat2, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="Average step length by time of day">>=
 load("cat2sumdat.RData")
-  simdf <- simdat %>% dplyr:::select(-obs) %>% group_by(time) %>% summarise_each(funs(mean))
-  obsdf <- simdat %>% dplyr:::select(c(obs,time)) %>% filter(!is.na(obs)) %>% group_by(time) %>% summarise_each(funs(mean)) %>% dplyr:::select(obs)
+  simdf <- simdat %>% dplyr::select(-obs) %>% group_by(time) %>% summarise_each(funs(mean))
+  obsdf <- simdat %>% dplyr::select(c(obs,time)) %>% filter(!is.na(obs)) %>% group_by(time) %>% summarise_each(funs(mean)) %>% dplyr::select(obs)
   avgdf <- cbind(simdf,obsdf)
   avgdf2 <- melt(avgdf,'time')
 ggplot(avgdf2,aes(x=time,y=value,colour=variable)) + 
@@ -611,10 +644,10 @@ ggplot(avgdf2,aes(x=time,y=value,colour=variable)) +
     scale_x_continuous(breaks=0:23)
 @
 
-<<avg_step_length_by_time cat14, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="Average step length by time of day">>=
+<<avg_step_length_by_time_cat14, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="Average step length by time of day">>=
 load("cat14sumdat.RData")
-  simdf <- simdat %>% dplyr:::select(-obs) %>% group_by(time) %>% summarise_each(funs(mean))
-  obsdf <- simdat %>% dplyr:::select(c(obs,time)) %>% filter(!is.na(obs)) %>% group_by(time) %>% summarise_each(funs(mean)) %>% dplyr:::select(obs)
+  simdf <- simdat %>% dplyr::select(-obs) %>% group_by(time) %>% summarise_each(funs(mean))
+  obsdf <- simdat %>% dplyr::select(c(obs,time)) %>% filter(!is.na(obs)) %>% group_by(time) %>% summarise_each(funs(mean)) %>% dplyr::select(obs)
   avgdf <- cbind(simdf,obsdf)
   avgdf2 <- melt(avgdf,'time')
 ggplot(avgdf2,aes(x=time,y=value,colour=variable)) + 
@@ -622,10 +655,10 @@ ggplot(avgdf2,aes(x=time,y=value,colour=variable)) +
     scale_x_continuous(breaks=0:23)
 @
 
-<<avg_step_length_by_time cat15, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="Average step length by time of day">>=
+<<avg_step_length_by_time_cat15, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="Average step length by time of day">>=
 load("cat15sumdat.RData")
-  simdf <- simdat %>% dplyr:::select(-obs) %>% group_by(time) %>% summarise_each(funs(mean))
-  obsdf <- simdat %>% dplyr:::select(c(obs,time)) %>% filter(!is.na(obs)) %>% group_by(time) %>% summarise_each(funs(mean)) %>% dplyr:::select(obs)
+  simdf <- simdat %>% dplyr::select(-obs) %>% group_by(time) %>% summarise_each(funs(mean))
+  obsdf <- simdat %>% dplyr::select(c(obs,time)) %>% filter(!is.na(obs)) %>% group_by(time) %>% summarise_each(funs(mean)) %>% dplyr::select(obs)
   avgdf <- cbind(simdf,obsdf)
   avgdf2 <- melt(avgdf,'time')
 ggplot(avgdf2,aes(x=time,y=value,colour=variable)) + 
@@ -633,7 +666,7 @@ ggplot(avgdf2,aes(x=time,y=value,colour=variable)) +
     scale_x_continuous(breaks=0:23)
 @
 
-<<acf_plot cat2, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="ACF">>=
+<<acf_plot_cat2, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="ACF">>=
 load('cat2sumdat.RData')
 acffun <- function(sim){
   a <- acf(sim,na.action=na.pass,plot=FALSE)
@@ -641,12 +674,12 @@ acffun <- function(sim){
   return(df)
 }
 
-  temp <- simdat %>% dplyr:::select(-time)%>%ldply(.,acffun)
+  temp <- simdat %>% dplyr::select(-time)%>%ldply(.,acffun)
   ggplot(temp,aes(lag,ACF,colour=.id))+
     geom_point()+geom_line()
 @
 
-<<acf_plot cat14, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="ACF">>=
+<<acf_plot_cat14, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="ACF">>=
 load("cat14sumdat.RData")
 acffun <- function(sim){
   a <- acf(sim,na.action=na.pass,plot=FALSE)
@@ -654,12 +687,12 @@ acffun <- function(sim){
   return(df)
 }
 
-  temp <- simdat %>% dplyr:::select(-time)%>%ldply(.,acffun)
+  temp <- simdat %>% dplyr::select(-time)%>%ldply(.,acffun)
   ggplot(temp,aes(lag,ACF,colour=.id))+
     geom_point()+geom_line()
 @
 
-<<acf_plot cat15, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="ACF">>=
+<<acf_plot_cat15, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="ACF">>=
 load("cat15sumdat.RData")
 acffun <- function(sim){
   a <- acf(sim,na.action=na.pass,plot=FALSE)
@@ -667,7 +700,7 @@ acffun <- function(sim){
   return(df)
 }
 
-  temp <- simdat %>% dplyr:::select(-time)%>%ldply(.,acffun)
+  temp <- simdat %>% dplyr::select(-time)%>%ldply(.,acffun)
   ggplot(temp,aes(lag,ACF,colour=.id))+
     geom_point()+geom_line()
 @
