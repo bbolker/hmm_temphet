@@ -1,4 +1,4 @@
-default = 0
+default = 1
 num <- nrow(cat)
 iter <- 500
 
