@@ -394,7 +394,7 @@ L <- load("cat1sumdat.RData")
 (adj_BIC_plot <- ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+
     facet_wrap(~ type,ncol=4)+
     scale_size_continuous( name="# of parameters") +
-    scale_x_continuous(expand=c(0,0.5),breaks=2:6)+
+    scale_x_continuous(expand=c(0,0.5),breaks=2:7)+
     geom_point(aes(size=parameters))+
     scale_colour_brewer(palette="Dark2")+
     labs(y=expression(paste(Delta, "BIC")),
@@ -518,32 +518,38 @@ must be overcome in order to maximize its potential. The current model is based 
 \label{npartab}
 \begin{tabular}{cccc}
  Type & Model  & Number of States & Number of Parameters  \\
-  FMM & FMM & 3 & 9    \\
-  FMM & FMM & 4 & 12    \\
-  FMM & FMM & 5 & 15   \\
-  FMM & FMM & 6 & 18  \\
-  FMM + TH & FMM + TH (Sin)  & 3 & 15    \\
-  FMM + TH & FMM + TH (Sin)  & 4 & 20    \\
-  FMM + TH & FMM + TH (Sin)  & 5 & 25    \\
-  FMM + TH & FMM + TH (Sin)  & 6 & 30    \\
-  HMM & HMM & 3 & 18    \\
-  HMM & HMM & 4 & 28    \\
-  HMM & HMM & 5 & 40   \\
-  HMM & HMM & 6 & 54  \\
-  HMM + TH & HMM + TH (Block)  & 3 & 36    \\
-  HMM + TH & HMM + TH (Block)  & 4 & 60    \\
-  HMM + TH & HMM + TH (Block)  & 5 & 90    \\
-  HMM + TH & HMM + TH (Block)  & 6 & 126    \\
-  HMM + TH & HMM + TH (Quad)  & 3 & 36    \\
-  HMM + TH & HMM + TH (Quad)  & 4 & 60    \\
-  HMM + TH & HMM + TH (Quad)  & 5 & 90    \\
-  HMM + TH & HMM + TH (Quad)  & 6 & 126    \\
-  HMM + TH & HMM + TH (Sin)  & 3 & 36    \\
-  HMM + TH & HMM + TH (Sin)  & 4 & 60    \\
-  HMM + TH & HMM + TH (Sin)  & 5 & 90    \\
-  HMM + TH & HMM + TH (Sin)  & 6 & 126    \\
-  HMM + TH & HMM + TH (Hourly)  & 3 & 225    \\
-  HMM + TH & HMM + TH (Hourly)  & 4 & 396    
+  FMM & FMM & 3 & 8    \\
+  FMM & FMM & 4 & 11    \\
+  FMM & FMM & 5 & 14   \\
+  FMM & FMM & 6 & 17  \\
+  FMM & FMM & 7 & 20  \\
+  FMM + TH & FMM + TH (Sin)  & 3 & 12    \\
+  FMM + TH & FMM + TH (Sin)  & 4 & 17    \\
+  FMM + TH & FMM + TH (Sin)  & 5 & 22    \\
+  FMM + TH & FMM + TH (Sin)  & 6 & 27    \\
+  FMM + TH & FMM + TH (Sin)  & 7 & 32    \\
+  HMM & HMM & 3 & 14    \\
+  HMM & HMM & 4 & 23    \\
+  HMM & HMM & 5 & 24   \\
+  HMM & HMM & 6 & 47  \\
+  HMM & HMM & 7 & 62  \\
+  HMM + TH & HMM + TH (Block)  & 3 & 26    \\
+  HMM + TH & HMM + TH (Block)  & 4 & 47    \\
+  HMM + TH & HMM + TH (Block)  & 5 & 74    \\
+  HMM + TH & HMM + TH (Block)  & 6 & 107    \\
+  HMM + TH & HMM + TH (Block)  & 7 & 146    \\
+  HMM + TH & HMM + TH (Quad)  & 3 & 26    \\
+  HMM + TH & HMM + TH (Quad)  & 4 & 47    \\
+  HMM + TH & HMM + TH (Quad)  & 5 & 74    \\
+  HMM + TH & HMM + TH (Quad)  & 6 & 107    \\
+  HMM + TH & HMM + TH (Quad)  & 7 & 146    \\
+  HMM + TH & HMM + TH (Sin)  & 3 & 26    \\
+  HMM + TH & HMM + TH (Sin)  & 4 & 47    \\
+  HMM + TH & HMM + TH (Sin)  & 5 & 74    \\
+  HMM + TH & HMM + TH (Sin)  & 6 & 107    \\
+  HMM + TH & HMM + TH (Sin)  & 7 & 146    \\
+  HMM + TH & HMM + TH (Hourly)  & 3 & 152    \\
+  HMM + TH & HMM + TH (Hourly)  & 4 & 299    
 \end{tabular}
 \end{table}
 
