@@ -253,4 +253,4 @@ ll$deltaBIC[31:35] <- ll$BICS[31:35] - min(ll$BICS[31:35])
 ll$deltaBIC[36:40] <- ll$BICS[36:40] - min(ll$BICS[36:40])
 bicplot(ll)
 allmodsumdf <- ll
-save(allmodsumdf,file='temp1.RData')
+save(allmodsumdf,file='cat1allmod.RData')
