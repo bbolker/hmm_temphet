@@ -47,7 +47,7 @@ fithourly3 <- fithourly(3,cat,seed=1)
 fithourly4 <- fithourly(4,cat,seed=1)
 
 simfmm5 <- simmix(5,cat,fitfmm5s)
-simfmmsin4 <- simmixsin(4,cat,fitfmmsin4)
+simfmmsin7 <- simmixsin(7,cat,fitfmmsin7)
 simhomo6 <- simhomo(6,cat,fithomo6s)
 simhourly3 <- simhourly(3,cat,fithourly3)
 simblock4 <- simblock(4,cat,fitblock4s)
@@ -56,7 +56,7 @@ simsin5 <- simsin(5,cat,fitsin5s)
 
 simdat <- data.frame(obs = cat$LogDist,
                     fmm5 = simfmm5$obs,
-                    fmmsin4 = simfmmsin4$obs,
+                    fmmsin7 = simfmmsin7$obs,
                     hmm6 = simhomo6$obs,
                     hmmhourly3 = simhourly3$obs,
                     hmmblock4 = simblock4$obs,

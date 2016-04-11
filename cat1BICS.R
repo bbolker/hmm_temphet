@@ -4,12 +4,12 @@ library(ggplot2)
 library(depmixS4)
 library(circular)
 
-load("Weibullcat1.RData")
-load("W_het_cat1.RData")
-load("LNVM_het_cat1.RData")
-load("WVMcat1.RData")
-load("LNHMMcat1.RData")
-load("LNVMcat1.RData")
+load(".cat1.weibull.RData")
+load(".cat1.Weibull_het.RData")
+load(".cat1.LNVM_het.RData")
+load(".cat1.weibullVM.RData")
+load(".cat1.LNVM.RData")
+load("cat1alldat.RData")
 
 # VM setup ----
 setClass("vonMises", contains="response")
@@ -206,26 +206,26 @@ setMethod("fit", "weibull",
 
 # making bic plot ----
 
-fitlist <- list(WVMHMM3s,WVMHMM4s,WVMHMM5s,WVMHMM6s,
-                LNVM3s,LNVM4s,LNVM5s,LNVM6s,
-                weibull3s,weibull4s,weibull5s,weibull6s,
-                fithomo3s,fithomo4s,fithomo5s,fithomo6s,
-                WVMsin3,WVMsin4,WVMsin5,WVMsin6,
-                LNVMsin3,LNVMsin4,LNVMsin5,LNVMsin6,
-                Wsin3,Wsin4,Wsin5,Wsin6,
-                fitsin3s,fitsin4s,fitsin5s,fitsin6s)
+fitlist <- list(WVMHMM3s,WVMHMM4s,WVMHMM5s,WVMHMM6s,WVMHMM7s,
+                LNVM3s,LNVM4s,LNVM5s,LNVM6s,LNVM7s,
+                weibull3s,weibull4s,weibull5s,weibull6s,weibull7s,
+                fithomo3s,fithomo4s,fithomo5s,fithomo6s,fithomo7s,
+                WVMsin3,WVMsin4,WVMsin5,WVMsin6,WVMsin7,
+                LNVMsin3,LNVMsin4,LNVMsin5,LNVMsin6,LNVMsin7,
+                Wsin3,Wsin4,Wsin5,Wsin6,Wsin7,
+                fitsin3s,fitsin4s,fitsin5s,fitsin6s,fitsin7s)
 
 sumdf <- function(lst){
   BIC2 <- ldply(lst,BIC)
   nstates <-ldply(lst,nstates)
-  model <- c('A WVM-HMM','A WVM-HMM','A WVM-HMM','A WVM-HMM',
-             'A LNVM-HMM','A LNVM-HMM','A LNVM-HMM','A LNVM-HMM',
-             'B Weibull-HMM','B Weibull-HMM','B Weibull-HMM','B Weibull-HMM',
-             'B LN-HMM','B LN-HMM', 'B LN-HMM', 'B LN-HMM',
-             'C WVM-Time_het_sin','C WVM-Time_het_sin','C WVM-Time_het_sin','C WVM-Time_het_sin',
-             'C LNVM-Time_het_sin','C LNVM-Time_het_sin','C LNVM-Time_het_sin','C LNVM-Time_het_sin',
-             'D W-Time_het_sin','D W-Time_het_sin','D W-Time_het_sin','D W-Time_het_sin',
-             'D LN-Time_het_sin','D LN-Time_het_sin','D LN-Time_het_sin','D LN-Time_het_sin')
+  model <- c('A WVM-HMM','A WVM-HMM','A WVM-HMM','A WVM-HMM', 'A WVM-HMM',
+             'A LNVM-HMM','A LNVM-HMM','A LNVM-HMM','A LNVM-HMM', 'A LNVM-HMM',
+             'B Weibull-HMM','B Weibull-HMM','B Weibull-HMM','B Weibull-HMM', 'B Weibull-HMM',
+             'B LN-HMM','B LN-HMM', 'B LN-HMM', 'B LN-HMM', 'B LN-HMM',
+             'C WVM-Time_het_sin','C WVM-Time_het_sin','C WVM-Time_het_sin','C WVM-Time_het_sin','C WVM-Time_het_sin',
+             'C LNVM-Time_het_sin','C LNVM-Time_het_sin','C LNVM-Time_het_sin','C LNVM-Time_het_sin', 'C LNVM-Time_het_sin',
+             'D W-Time_het_sin','D W-Time_het_sin','D W-Time_het_sin','D W-Time_het_sin','D W-Time_het_sin',
+             'D LN-Time_het_sin','D LN-Time_het_sin','D LN-Time_het_sin','D LN-Time_het_sin','D LN-Time_het_sin')
   temp <- data.frame(BICS=BIC2$V1,nstates=nstates$V1,model=model)
   return(temp)
 }
@@ -243,12 +243,14 @@ bicplot <- function(df){
 
 ll <- sumdf(fitlist)
 
-ll$deltaBIC[1:4] <- ll$BICS[1:4] - min(ll$BICS[1:4])
-ll$deltaBIC[5:8] <- ll$BICS[5:8] - min(ll$BICS[5:8])
-ll$deltaBIC[9:12] <- ll$BICS[9:12] - min(ll$BICS[9:12])
-ll$deltaBIC[13:16] <- ll$BICS[13:16] - min(ll$BICS[13:16])
-ll$deltaBIC[17:20] <- ll$BICS[17:20] - min(ll$BICS[17:20])
-ll$deltaBIC[21:24] <- ll$BICS[21:24] - min(ll$BICS[21:24])
-ll$deltaBIC[25:28] <- ll$BICS[25:28] - min(ll$BICS[25:28])
-ll$deltaBIC[29:32] <- ll$BICS[29:32] - min(ll$BICS[29:32])
+ll$deltaBIC[1:5] <- ll$BICS[1:5] - min(ll$BICS[1:5])
+ll$deltaBIC[6:10] <- ll$BICS[6:10] - min(ll$BICS[6:10])
+ll$deltaBIC[11:15] <- ll$BICS[11:15] - min(ll$BICS[11:15])
+ll$deltaBIC[16:20] <- ll$BICS[16:20] - min(ll$BICS[16:20])
+ll$deltaBIC[21:25] <- ll$BICS[21:25] - min(ll$BICS[21:25])
+ll$deltaBIC[26:30] <- ll$BICS[26:30] - min(ll$BICS[26:30])
+ll$deltaBIC[31:35] <- ll$BICS[31:35] - min(ll$BICS[31:35])
+ll$deltaBIC[36:40] <- ll$BICS[36:40] - min(ll$BICS[36:40])
 bicplot(ll)
+allmodsumdf <- ll
+save(allmodsumdf,file='temp1.RData')

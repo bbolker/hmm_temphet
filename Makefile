@@ -23,6 +23,22 @@ catsdat.Rout: ArchivePantherData.csv pantherDataFrame.R
 %.BIC.Rout: %.RData wrap.R
 	$(run-R)
 
+%.weibull.Rout: %.df.Rout weibull.R
+	$(run-R)
+
+%.weibullVM.Rout: %.df.Rout weibullVM.R
+	$(run-R)
+
+%.LNVM.Rout: %.df.Rout LNVM.R
+	$(run-R)
+
+%.Weibull_het.Rout: %.df.Rout Weibull_het.R
+	$(run-R)
+
+%.LNVM_het.Rout: %.df.Rout LNVM_het.R
+	$(run-R)
+
+
 
 %.tex: %.Rnw
 	echo "library('knitr'); knit(\"$*.Rnw\")" | R --slave

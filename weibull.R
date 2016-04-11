@@ -233,3 +233,53 @@ weibull6s <- fit(w6, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(weibull6s)
 
 
+
+# HMM Weibull 7 states ----
+
+rModels <- list()
+rModels[[1]] <- list()
+rModels[[1]][[1]] <- weibull(dist, pstart = c(0.5,1),data=cat)
+
+rModels[[2]] <- list()
+rModels[[2]][[1]] <- weibull(dist, pstart = c(1,1),data=cat)
+
+rModels[[3]] <- list()
+rModels[[3]][[1]] <- weibull(dist, pstart = c(2,5),data=cat)
+
+rModels[[4]] <- list()
+rModels[[4]][[1]] <- weibull(dist, pstart = c(3,1),data=cat)
+
+rModels[[5]] <- list()
+rModels[[5]][[1]] <- weibull(dist, pstart = c(5,5),data=cat)
+
+rModels[[6]] <- list()
+rModels[[6]][[1]] <- weibull(dist, pstart = c(4,2),data=cat)
+
+rModels[[7]] <- list()
+rModels[[7]][[1]] <- weibull(dist, pstart = c(5,2),data=cat)
+
+trstart <- rep(1/7,49)
+transition <- list()
+transition[[1]] <- transInit(~ 1, nst = 7, data=cat,
+                             pstart = rep(1/7, 7))
+transition[[2]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+transition[[3]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+transition[[4]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+transition[[5]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+transition[[6]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+transition[[7]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+inMod <- transInit(~ 1, ns = 7, pstart = rep(1/7, 7),
+                   data = data.frame(1))
+w7 <- makeDepmix(response = rModels, transition = transition,
+                 prior=inMod,homogeneous = FALSE)
+weibull7s <- fit(w7, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
+summary(weibull7s)
+
+
+

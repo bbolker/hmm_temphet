@@ -275,4 +275,67 @@ LNVM6s <- fit(mod6, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(LNVM6s)
 
 
+# HMM LNVM 7 states ----
+
+rModels <- list()
+rModels[[1]] <- list()
+rModels[[1]][[1]] <- GLMresponse(formula = LogDist ~ 1, data = cat,
+                                 family = gaussian(), pstart = c(3, 1))
+rModels[[1]][[2]] <- vonMises(cat$Turningangle, pstart = c(0, 1),data=cat)
+
+rModels[[2]] <- list()
+rModels[[2]][[1]] <- GLMresponse(formula = LogDist ~ 1, data = cat,
+                                 family = gaussian(), pstart = c(4, 1))
+rModels[[2]][[2]] <- vonMises(cat$Turningangle, pstart = c(1, 1),data=cat)
+
+rModels[[3]] <- list()
+rModels[[3]][[1]] <- GLMresponse(formula = LogDist ~ 1, data = cat,
+                                 family = gaussian(), pstart = c(5, 1))
+rModels[[3]][[2]] <- vonMises(cat$Turningangle, pstart = c(2, 1))
+
+rModels[[4]] <- list()
+rModels[[4]][[1]] <- GLMresponse(formula = LogDist ~ 1, data = cat,
+                                 family = gaussian(), pstart = c(6, 1))
+rModels[[4]][[2]] <- vonMises(cat$Turningangle, pstart = c(3, 1))
+
+rModels[[5]] <- list()
+rModels[[5]][[1]] <- GLMresponse(formula = LogDist ~ 1, data = cat,
+                                 family = gaussian(), pstart = c(7, 1))
+rModels[[5]][[2]] <- vonMises(cat$Turningangle, pstart = c(4, 1))
+
+rModels[[6]] <- list()
+rModels[[6]][[1]] <- GLMresponse(formula = LogDist ~ 1, data = cat,
+                                 family = gaussian(), pstart = c(8, 1))
+rModels[[6]][[2]] <- vonMises(cat$Turningangle, pstart = c(5, 1))
+
+rModels[[7]] <- list()
+rModels[[7]][[1]] <- GLMresponse(formula = LogDist ~ 1, data = cat,
+                                 family = gaussian(), pstart = c(9, 1))
+rModels[[7]][[2]] <- vonMises(cat$Turningangle, pstart = c(6, 1))
+
+trstart <- rep(1/7,49)
+transition <- list()
+transition[[1]] <- transInit(~ 1, nst = 7, data=cat,
+                             pstart = rep(1/7, 7))
+transition[[2]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+transition[[3]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+transition[[4]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+transition[[5]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+transition[[6]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+transition[[7]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+inMod <- transInit(~ 1, ns = 7, pstart = rep(1/7, 7),
+                   data = data.frame(1))
+mod7 <- makeDepmix(response = rModels, transition = transition,
+                   prior=inMod,homogeneous = FALSE)
+LNVM7s <- fit(mod7, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
+summary(LNVM7s)
+
+
+
 

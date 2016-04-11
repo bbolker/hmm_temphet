@@ -348,6 +348,61 @@ WVMHMM6s <- fit(mod6, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(WVMHMM6s)
 
 
+# HMM WVM 7 states ----
+
+rModels <- list()
+rModels[[1]] <- list()
+rModels[[1]][[1]] <- weibull(dist, pstart = c(0.5,1),data=cat)
+rModels[[1]][[2]] <- vonMises(cat$Turningangle, pstart = c(0, 1),data=cat)
+
+rModels[[2]] <- list()
+rModels[[2]][[1]] <- weibull(dist, pstart = c(1,1),data=cat)
+rModels[[2]][[2]] <- vonMises(cat$Turningangle, pstart = c(1, 1),data=cat)
+
+rModels[[3]] <- list()
+rModels[[3]][[1]] <- weibull(dist, pstart = c(2,5),data=cat)
+rModels[[3]][[2]] <- vonMises(cat$Turningangle, pstart = c(2, 1))
+
+rModels[[4]] <- list()
+rModels[[4]][[1]] <- weibull(dist, pstart = c(3,1),data=cat)
+rModels[[4]][[2]] <- vonMises(cat$Turningangle, pstart = c(3, 1))
+
+rModels[[5]] <- list()
+rModels[[5]][[1]] <- weibull(dist, pstart = c(5,5),data=cat)
+rModels[[5]][[2]] <- vonMises(cat$Turningangle, pstart = c(4, 1))
+
+rModels[[6]] <- list()
+rModels[[6]][[1]] <- weibull(dist, pstart = c(4,2),data=cat)
+rModels[[6]][[2]] <- vonMises(cat$Turningangle, pstart = c(5, 1))
+
+rModels[[7]] <- list()
+rModels[[7]][[1]] <- weibull(dist, pstart = c(5,2),data=cat)
+rModels[[7]][[2]] <- vonMises(cat$Turningangle, pstart = c(6, 1))
+
+trstart <- rep(1/7,49)
+transition <- list()
+transition[[1]] <- transInit(~ 1, nst = 7, data=cat,
+                             pstart = rep(1/7, 7))
+transition[[2]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+transition[[3]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+transition[[4]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+transition[[5]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+transition[[6]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+transition[[7]] <- transInit(~ 1, nst = 7,data=cat,
+                             pstart = rep(1/7, 7))
+inMod <- transInit(~ 1, ns = 7, pstart = rep(1/7, 7),
+                   data = data.frame(1))
+mod7 <- makeDepmix(response = rModels, transition = transition,
+                   prior=inMod,homogeneous = FALSE)
+WVMHMM7s <- fit(mod7, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
+summary(WVMHMM7s)
+
+
 
 # depmix model setup 3 states time het ----
 dist <- pmax(cat$Distance,1e-3)
@@ -533,3 +588,72 @@ sin6 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
 WVMsin6 <- fit(sin6, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(WVMsin6)
+
+# HMM WVM 7 states time het ----
+
+rModels <- list()
+rModels[[1]] <- list()
+rModels[[1]][[1]] <- weibull(dist, pstart = c(0.5,1),data=cat)
+rModels[[1]][[2]] <- vonMises(cat$Turningangle, pstart = c(0, 1),data=cat)
+
+rModels[[2]] <- list()
+rModels[[2]][[1]] <- weibull(dist, pstart = c(1,1),data=cat)
+rModels[[2]][[2]] <- vonMises(cat$Turningangle, pstart = c(1, 1),data=cat)
+
+rModels[[3]] <- list()
+rModels[[3]][[1]] <- weibull(dist, pstart = c(2,5),data=cat)
+rModels[[3]][[2]] <- vonMises(cat$Turningangle, pstart = c(2, 1))
+
+rModels[[4]] <- list()
+rModels[[4]][[1]] <- weibull(dist, pstart = c(3,1),data=cat)
+rModels[[4]][[2]] <- vonMises(cat$Turningangle, pstart = c(3, 1))
+
+rModels[[5]] <- list()
+rModels[[5]][[1]] <- weibull(dist, pstart = c(5,5),data=cat)
+rModels[[5]][[2]] <- vonMises(cat$Turningangle, pstart = c(4, 1))
+
+rModels[[6]] <- list()
+rModels[[6]][[1]] <- weibull(dist, pstart = c(4,2),data=cat)
+rModels[[6]][[2]] <- vonMises(cat$Turningangle, pstart = c(5, 1))
+
+rModels[[7]] <- list()
+rModels[[7]][[1]] <- weibull(dist, pstart = c(5,2),data=cat)
+rModels[[7]][[2]] <- vonMises(cat$Turningangle, pstart = c(6, 1))
+
+trstart <- rep(1/7,49)
+transition <- list()
+transition[[1]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 7, data=cat,
+                             pstart = c(1/7,1/7,1/7,1/7,1/7,1/7,1/7,
+                                        0,1/7,1/7,1/7,1/7,1/7,1/7,
+                                        0,1/7,1/7,1/7,1/7,1/7,1/7))
+transition[[2]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 7, data=cat,
+                             pstart = c(1/7,1/7,1/7,1/7,1/7,1/7,1/7,
+                                        0,1/7,1/7,1/7,1/7,1/7,1/7,
+                                        0,1/7,1/7,1/7,1/7,1/7,1/7))
+transition[[3]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 7, data=cat,
+                             pstart = c(1/7,1/7,1/7,1/7,1/7,1/7,1/7,
+                                        0,1/7,1/7,1/7,1/7,1/7,1/7,
+                                        0,1/7,1/7,1/7,1/7,1/7,1/7))
+transition[[4]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 7, data=cat,
+                             pstart = c(1/7,1/7,1/7,1/7,1/7,1/7,1/7,
+                                        0,1/7,1/7,1/7,1/7,1/7,1/7,
+                                        0,1/7,1/7,1/7,1/7,1/7,1/7))
+transition[[5]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 7, data=cat,
+                             pstart = c(1/7,1/7,1/7,1/7,1/7,1/7,1/7,
+                                        0,1/7,1/7,1/7,1/7,1/7,1/7,
+                                        0,1/7,1/7,1/7,1/7,1/7,1/7))
+transition[[6]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 7, data=cat,
+                             pstart = c(1/7,1/7,1/7,1/7,1/7,1/7,1/7,
+                                        0,1/7,1/7,1/7,1/7,1/7,1/7,
+                                        0,1/7,1/7,1/7,1/7,1/7,1/7))
+transition[[7]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 7, data=cat,
+                             pstart = c(1/7,1/7,1/7,1/7,1/7,1/7,1/7,
+                                        0,1/7,1/7,1/7,1/7,1/7,1/7,
+                                        0,1/7,1/7,1/7,1/7,1/7,1/7))
+inMod <- transInit(~ 1, ns = 7, pstart = rep(1/7, 7),
+                   data = data.frame(1))
+sin7 <- makeDepmix(response = rModels, transition = transition,
+                   prior=inMod,homogeneous = FALSE)
+WVMsin7 <- fit(sin7, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
+summary(WVMsin7)
+
