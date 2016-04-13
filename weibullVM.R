@@ -297,7 +297,7 @@ inMod <- transInit(~ 1, ns = 5, pstart = rep(1/5, 5),
                    data = data.frame(1))
 mod5 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-WVMHMM5s <- fit(mod5, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
+WVMHMM5s <- fit(mod5, verbose = TRUE, emc=em.control(rand=TRUE, maxit=460))
 
 # HMM WVM 6 states ----
 

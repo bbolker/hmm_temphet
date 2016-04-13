@@ -5,7 +5,8 @@ fitfmm3s <- fitmix(3,cat,seed=562)
 fitfmm4s <- fitmix(4,cat,seed=265)
 fitfmm5s <- fitmix(5,cat,seed=11)
 fitfmm6s <- fitmix(6,cat,seed=48)
-fitfmm7s <- fitmix(7,cat,seed=48)
+fitfmm7s <- fitmix(7,cat,seed=12)
+
 
 #FMM sin ----
 fitfmmsin3 <- fitmixsin(3,cat,seed=3)
