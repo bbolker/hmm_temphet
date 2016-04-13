@@ -317,7 +317,7 @@ inMod <- transInit(~ 1, ns = 7, pstart = rep(1/7, 7),
                    data = data.frame(1))
 ws7 <- makeDepmix(response = rModels, transition = transition,
                   prior=inMod,homogeneous = FALSE)
-Wsin7 <- fit(ws7, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
+Wsin7 <- fit(ws7, verbose = TRUE, emc=em.control(rand=FALSE, maxit=280))
 summary(Wsin7)
 
 
