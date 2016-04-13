@@ -554,7 +554,7 @@ must be overcome in order to maximize its potential. The current model is based 
 \end{table}
 
 <<BICred_plot_cat131,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#2.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
-allmodsumdf <- readRDS("cat2allmod.RDS")
+load("cat2allmod.RData")
 df2 <- transform(allmodsumdf,
             distrib=ifelse(grepl("LN",model),"log-Normal","Weibull"),
             turn_angle=ifelse(grepl("VM",model),"yes","no"),
@@ -574,7 +574,7 @@ ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))+
 
 
 <<BICred_plot_cat94,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#15.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
-allmodsumdf <- readRDS("cat15allmod.RDS")
+load("cat15allmod.RData")
 df2 <- transform(allmodsumdf,
             distrib=ifelse(grepl("LN",model),"log-Normal","Weibull"),
             turn_angle=ifelse(grepl("VM",model),"yes","no"),
