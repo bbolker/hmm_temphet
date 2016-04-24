@@ -39,7 +39,7 @@ catsdat.Rout: ArchivePantherData.csv pantherDataFrame.R
 	$(run-R)
 
 
-simtest.Rout: simtest.R
+simtest.Rout: mikesim.R simfunctions.R simtest.R
 	      $(run-R)
 
 
