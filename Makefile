@@ -38,9 +38,8 @@ catsdat.Rout: ArchivePantherData.csv pantherDataFrame.R
 %.LNVM_het.Rout: %.df.Rout LNVM_het.R
 	$(run-R)
 
-
-simtest.Rout: mikesim.R simfunctions.R simtest.R
-	      $(run-R)
+simtest_%.Rout: mikesim.R simfunctions.R simtest.R %.txt
+	$(run-R)
 
 
 %.tex: %.Rnw
@@ -53,7 +52,7 @@ simtest.Rout: mikesim.R simfunctions.R simtest.R
 	evince paper3.pdf
 
 clean:
-	rm -f *.bbl *.blg *.log *.aux *.loc *~
+	rm -f *.bbl *.blg *.log *.aux *.loc *~ *.txt
 
 
 
