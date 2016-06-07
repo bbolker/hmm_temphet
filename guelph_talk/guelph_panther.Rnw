@@ -1,0 +1,422 @@
+\documentclass[english]{beamer}
+\definecolor{links}{HTML}{2A1B81}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links}
+\usepackage{natbib}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{multicol}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{animate}
+\usepackage{arydshln}
+\usepackage[normalem]{ulem}
+\newcommand{\colemph}[1]{{\color{red} \emph{#1}}}
+%\bibliographystyle{shortreflist}
+\bibliographystyle{notitle}
+
+\usetheme{Frankfurt}
+\usecolortheme{dove}
+\setbeamercovered{transparent}
+\setbeamercolor{description item}{fg=blue}
+\newcommand{\citepx}[1]{{\small \citep{#1}}}
+\newcommand{\citex}[1]{{\small \cite{#1}}}
+% \renewcommand{\descriptionlabel}[1]{\hspace{\labelsep}\textbf{#1}}
+\usepackage{babel}
+
+% "Beamer infolines outer theme with miniframe bullets only for the current section"
+% (http://tex.stackexchange.com/a/45152/3323)
+%\useoutertheme[subsection=false]{miniframes}
+\useoutertheme[subsection=false]{miniframes}
+%% \setbeamertemplate{mini frame in other subsection}{}
+%% \usepackage{etoolbox}
+\makeatletter
+\beamer@compressfalse
+%% \patchcmd{\insertnavigation}{\hskip-1.875ex plus-1fill}{}{}{}
+%% \patchcmd{\sectionentry}{\beamer@section@set@min@width}{}{}{}
+%% \patchcmd{\sectionentry}{\hskip1.875ex plus 1fill}{}{}{}
+%% \patchcmd{\sectionentry}{\hyperlink{Navigation#3}{{\usebeamertemplate{section in head/foot shaded}}}}{}{}{}
+%% \patchcmd{\slideentry}{\beamer@ypos=#2\relax}{}{}{}
+%% \patchcmd{\fakeslideentry}{\beamer@ypos=#2\relax}{}{}{}
+\makeatother 
+
+\begin{document}
+
+\newcommand{\rzero}{{\mathcal R}_0}
+\newcommand{\rzeroi}[1]{{\mathcal R}_{0,#1}}
+
+
+\makeatletter
+\def\newblock{\beamer@newblock}
+\makeatother 
+
+<<setup,echo=FALSE,message=FALSE>>=
+library(knitr)
+opts_chunk$set(echo=FALSE,error=FALSE,
+               fig.align="center",out.width="0.8\\textwidth",
+               fig.width=6,fig.height=4)
+library(deSolve)
+library(reshape)
+library(lattice)
+library(latticeExtra)
+library(emdbook)
+library(nlme)
+library(bbmle)
+library(tikzDevice)
+## http://yihui.name/en/2011/04/produce-authentic-math-formulas-in-r-graphics/
+options(tikzMetricPackages = c( "\\usepackage[utf8]{inputenc}",
+                "\\usepackage[T1]{fontenc}", "\\usetikzlibrary{calc}",
+                "\\usepackage{amssymb}"))
+
+##options(tikzMetricPackages = c("\\usepackage[utf8]{inputenc}",
+##    "\\usepackage[T1]{fontenc}", "\\usetikzlibrary{calc}",
+##    "\\usepackage{amssymb}"))
+library(ggplot2)
+theme_set(theme_bw())
+library("ggplot2"); theme_set(theme_classic())
+library("MASS")
+## use Dark2 rather than Set1 because colour #6 of Set1 is yellow (ugh/too light)
+scale_colour_discrete <- function(...,palette="Dark2") scale_colour_brewer(...,palette=palette)
+scale_fill_discrete <- function(...,palette="Dark2") scale_fill_brewer(...,palette=palette)
+library("gridExtra")
+library("plyr")  ## for ldply()
+library("dplyr") ## for full_join()
+library("reshape2")  ## for melt()
+library("GGally")
+library("ggstance")
+library(scales) ## for squish()
+library(gridExtra) ## for grid.arrange()
+library(mgcv)
+library(plyr)   ## for mutate()
+library(psyphy) ## for restricted-link models
+library(reshape2)
+library(splines)  ## for vir asymptote profile
+library(deSolve)
+library(Hmisc)
+library(gsubfn)
+@ 
+
+\title[Animal movement]{Model complexity and model choice for animal movement models}
+\author[Ben Bolker]{Ben~Bolker, McMaster University \\
+  {\tiny Departments of Mathematics \& Statistics and Biology}}
+\institute{Guelph Biomathematics \& Biostatistics Symposium}
+\date{9 June 2016}
+% \pgfdeclareimage[height=0.5cm]{uflogo}{letterhdwm}
+% \logo{\pgfuseimage{uflogo}}
+\AtBeginSubsection[]{
+  \frame<beamer>{ 
+     \frametitle{Outline}   
+     \tableofcontents[currentsection,currentsubsection] 
+   }
+ }
+
+\begin{frame}
+\titlepage
+\end{frame}
+% \beamerdefaultoverlayspecification{<+->}
+
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents{}
+\end{frame}
+
+\begin{frame}
+\frametitle{Acknowledgements}
+\begin{description}
+\item[People] Michael Li, Madelon van de Kerk, Dave Onorato
+\item[Support] NSERC Discovery grant
+\end{description}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{To do}
+\begin{itemize}
+\item pix!
+\item general REFS: Turchin, Morales et al, Langrock ... ?
+\end{itemize}
+\end{frame}
+
+\section{Animal movement}
+\subsection{}
+
+\begin{frame}
+\frametitle{Animal movement: data}
+
+\begin{itemize}
+\item observations:  \\
+e.g. mass mark-recapture, longitudinal density,
+direct observation, telemetry (VHF, GPS)
+\item most methods provide a sequence of times and locations for each individual
+\item summaries:
+\begin{itemize}
+\item home range \\
+(convex hull, kernel density estimate, etc.)
+\item root-mean-squared displacement
+\item step length and turning angle
+\end{itemize}
+\item covariates: \\
+e.g. habitat map, individual characteristics (sex, age, weight \ldots)
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Animal movement: questions}
+\begin{itemize}
+\item simple description
+\item how do animals' movements change  
+as a function of their (internal or external) environment?  \\
+what does that tell us about their biology?
+\item how might animals' distributions, etc. change when conditions 
+(density, habitat, ...) change?
+\end{itemize}
+\end{frame}
+
+
+\section[Panthers]{Florida panthers}
+\subsection{}
+
+\begin{frame}
+\frametitle{Biological/conservation issues}
+
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+    \begin{itemize}
+    \item Florida panther: \emph{Felix ...}
+    \item severely reduced habitat, endangered
+    \item small, isolated population
+    \item currently recovering
+    \end{itemize}
+  \end{column}
+\end{columns}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Panther movement questions}
+
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+    \begin{itemize}
+    \item abc
+    \end{itemize}
+  \end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Panther movement data}
+
+\begin{columns}
+  \begin{column}{0.5\textwidth}
+    \begin{itemize}
+    \item panthers tracked, captured
+    \item GPS collars
+    \item 18 males (13 male, 5 female, 1-15 years old)
+    \item 3200 panther days, hourly/bihourly; 49000 locations
+    \item ?? per panther
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+    \includegraphics[trim={10cm 0 10cm 0},clip,width=\textwidth]{pix/panther_collar.jpg}
+  \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{example movement tracks}
+FIXME: picture here!
+(animation?? map background??)
+\end{frame}
+
+\section[HMM]{Hidden Markov models}
+\subsection{}
+
+\begin{frame}
+\frametitle{Hidden Markov models}
+
+\begin{itemize}
+\item finite mixture model with temporal dependence
+\item discrete time steps
+\item discrete latent state; \emph{transition matrix}
+\item observations from \emph{emission distributions} \\
+(continuous or discrete, univariate or multivariate)
+\end{itemize}
+
+\includegraphics[width=\textwidth]{pix/hmm.jpg}
+\end{frame}
+
+\begin{frame}
+\frametitle{Hidden Markov models (cont.)}
+
+\begin{itemize}
+\item \emph{forward-backward algorithm} for estimating parameters
+\item \emph{Viterbi algorithm} for estimating most probable state sequences
+\item {\tt depmixS4} package \citepx{visser2010depmixs4}
+(also {\tt moveHMM} \citepx{michelot_movehmm_2016}, {\tt move.HMM} \citepx{augustine_hmm})
+\end{itemize}
+
+\end{frame}
+
+\section[Basic analysis]{Basic analysis (vdK et al.)}
+\subsection{}
+
+\begin{frame}
+\frametitle{State distributions}
+
+\includegraphics[trim={0 6.5cm 0 0}, clip, width=\textwidth]{pix/jae_fig2.png}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Parameter estimates}
+
+\includegraphics[width=\textwidth]{pix/jae_fig3.png}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Transition parameters}
+
+picture/table here of transition parameters (network diagram??)
+\end{frame}
+
+\begin{frame}
+\frametitle{Diurnal variation}
+
+\includegraphics[trim={0 8cm 0 0}, clip, width=\textwidth]{pix/jae_fig4.png}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{what can we conclude so far?}
+
+\textbf{good news}
+
+\begin{itemize}
+\item basic biology: males move faster, farther
+\item three states are identifiable, sensible
+\item ...
+\end{itemize}
+
+\pause
+\textbf{bad news}
+\begin{itemize}
+\item diurnal variation in Viterbi results - but it's not in the model!
+\item estimates of model complexity are too high
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Model complexity}
+
+\includegraphics[height=\textheight]{pix/jae_fig1.png}
+
+\end{frame}
+
+\section[Diurnal model]{Incorporating diurnal variation}
+\subsection{}
+
+\begin{frame}
+\frametitle{Broadening the model}
+
+Attempting to fix these problems:
+\begin{itemize}
+\item extend the model to allow covariates
+\item specifically, allow for diurnal variation
+\begin{itemize}
+\item simplify model (log-Normal step length only)
+\item \emph{fixed} state-specific emissions parameters\\
+(step length mean and std dev)
+\item time-varying transition parameters
+\item also try \emph{finite mixture models} \\
+(independent occupancy)
+\end{itemize}
+\item how much does this help?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Temporal models}
+
+figure showing alternative temporal models
+\end{frame}
+
+\begin{frame}
+\frametitle{Comparison}
+
+Figure 1 from paper
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Goodness of fit}
+
+Figure 2 from paper
+\end{frame}
+
+\begin{frame}
+\frametitle{Temporal patterns}
+Figures 3 (and 4?) from paper
+\end{frame}
+
+\begin{frame}
+\frametitle{Model complexity}
+Figure showing BIC plots for all cats tried
+\end{frame}
+
+\begin{frame}
+\frametitle{Model complexity}
+Simulation results
+\end{frame}
+
+\section{Broader issues/outlook}
+\subsection{}
+
+\begin{frame}
+\frametitle{Big data and small models}
+
+\begin{itemize}
+\item simple model families +  \\
+  model misspecification $\to$ \\
+  overparameterization
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{an aside on AIC vs BIC}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Tools needed}
+
+\begin{itemize}
+\item cross-validation \citepx{wenger_assessing_2012}
+\item diagnostic plots
+\item score tests?
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\begin{multicols}{2}
+\frametitle{References}
+
+% \tiny
+\fontsize{3pt}{5pt}\selectfont
+\bibliography{../paper}
+\end{multicols}
+\end{frame}
+
+
+\end{document}
+
