@@ -38,7 +38,7 @@ catsdat.Rout: ArchivePantherData.csv pantherDataFrame.R
 %.LNVM_het.Rout: %.df.Rout LNVM_het.R
 	$(run-R)
 
-simtest_%.Rout: mikesim.R simfunctions.R simtest.R %.txt
+simtest.Rout: mikesim.R simfunctions.R simtest.R
 	$(run-R)
 
 

@@ -14,6 +14,7 @@ cache/
 *.[r]
 *.Rout
 *.rout
+*.txt
 
 texput.log
 

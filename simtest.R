@@ -13,8 +13,8 @@ system.time(mod <- depmix(y~1
 )
 getpars(mod)
 
-set.seed(unlist(strsplit(input_files,"[.]"))[1])
-
+# set.seed(unlist(strsplit(input_files,"[.]"))[1])
+set.seed(101)
 randpars <- sample(1:4,length(getpars(mod))-6,replace=TRUE)
 newmod <- setpars(mod,c(0.5,0.5,randpars,0,2,4,2))
 newmod
