@@ -38,9 +38,11 @@ catsdat.Rout: ArchivePantherData.csv pantherDataFrame.R
 %.LNVM_het.Rout: %.df.Rout LNVM_het.R
 	$(run-R)
 
-simtest.Rout: mikesim.R simfunctions.R simtest.R
+simtest.Rout: mikesim.R simfunctions.R simtest.R 101.txt
 	$(run-R)
 
+sim_%.Rout: mikesim.R simfunction.R simtest.R %.txt
+	$(run-R)
 
 %.tex: %.Rnw
 	echo "library('knitr'); knit(\"$*.Rnw\")" | R --slave

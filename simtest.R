@@ -13,8 +13,8 @@ system.time(mod <- depmix(y~1
 )
 getpars(mod)
 
-# set.seed(unlist(strsplit(input_files,"[.]"))[1])
-set.seed(101)
+set.seed(unlist(strsplit(input_files,"[.]"))[1])
+
 randpars <- sample(1:4,length(getpars(mod))-6,replace=TRUE)
 newmod <- setpars(mod,c(0.5,0.5,randpars,0,2,4,2))
 newmod
@@ -69,3 +69,49 @@ print(summary(fit1))
 print(summary(fit2))
 print(summary(fit3))
 print(summary(fit4))
+
+dat <- data.frame(seed=seed
+                  , twoS_LL = logLik(fit1)
+                  , twoS_AIC = AIC(fit1)
+                  , twoS_BIC = BIC(fit1)
+                  , twoS_mu1 = getpars(fit1)[7]
+                  , twoS_mu2 = getpars(fit1)[9]
+                  , twoS_sd1 = getpars(fit1)[8]
+                  , twoS_sd2 = getpars(fit1)[10]
+                  , threeS_LL = logLik(fit2)
+                  , threeS_AIC = AIC(fit2)
+                  , threeS_BIC = BIC(fit2)
+                  , threeS_mu1 = getpars(fit2)[13]
+                  , threeS_mu2 = getpars(fit2)[15]
+                  , threeS_mu3 = getpars(fit2)[17]
+                  , threeS_sd1 = getpars(fit2)[14]
+                  , threeS_sd2 = getpars(fit2)[16]
+                  , threeS_sd3 = getpars(fit2)[18]
+                  , fourS_LL = logLik(fit3)
+                  , fourS_AIC = AIC(fit3)
+                  , fourS_BIC = BIC(fit3)
+                  , fourS_mu1 = getpars(fit3)[21]
+                  , fourS_mu2 = getpars(fit3)[23]
+                  , fourS_mu3 = getpars(fit3)[25]
+                  , fourS_mu4 = getpars(fit3)[27]
+                  , fourS_sd1 = getpars(fit3)[22]
+                  , fourS_sd2 = getpars(fit3)[24]
+                  , fourS_sd3 = getpars(fit3)[26]
+                  , fourS_sd4 = getpars(fit3)[28]
+                  , fiveS_LL = logLik(fit4)
+                  , fiveS_AIC = AIC(fit4)
+                  , fiveS_BIC = BIC(fit4)
+                  , fiveS_mu1 = getpars(fit4)[31]
+                  , fiveS_mu2 = getpars(fit4)[33]
+                  , fiveS_mu3 = getpars(fit4)[35]
+                  , fiveS_mu4 = getpars(fit4)[37]
+                  , fiveS_mu5 = getpars(fit4)[39]
+                  , fiveS_sd1 = getpars(fit4)[32]
+                  , fiveS_sd2 = getpars(fit4)[34]
+                  , fiveS_sd3 = getpars(fit4)[36]
+                  , fiveS_sd4 = getpars(fit4)[38]
+                  , fiveS_sd5 = getpars(fit4)[40]
+                  )
+
+rownames(dat) <- NULL
+saveRDS(dat, file=paste("sim",seed,"RDS",sep="."))
