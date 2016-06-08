@@ -67,6 +67,7 @@ library(emdbook)
 library(nlme)
 library(bbmle)
 library(tikzDevice)
+library(plotrix)
 ## http://yihui.name/en/2011/04/produce-authentic-math-formulas-in-r-graphics/
 options(tikzMetricPackages = c( "\\usepackage[utf8]{inputenc}",
                 "\\usepackage[T1]{fontenc}", "\\usetikzlibrary{calc}",
@@ -140,8 +141,9 @@ ss <- sumdat %>% filter(grepl("HMM",type)) %>%
 \begin{frame}
 \frametitle{Acknowledgements}
 \begin{description}
-\item[People] \textbf{Michael Li}, \textbf{Madelon van de Kerk}, Dave Onorato, Madan Oli
-\item[Agencies] US Fish and Wildlife, US Geological Survey, US National Park Service
+\item[People] \textbf{Michael Li}, \textbf{Madelon van de Kerk}, \\
+Dave Onorato, Madan Oli
+\item[Agencies] US Fish and Wildlife Service, US Geological Survey, US National Park Service
 \item[Funding] NSERC Discovery grant, NSF IGERT program
 \end{description}
 
@@ -164,7 +166,24 @@ direct observation, telemetry (VHF, GPS)
 \end{itemize}
 \end{column}
 \begin{column}{0.5\textwidth}
-(sequence pix)
+<<arcpic,echo=FALSE,fig.width=3,fig.height=3>>=
+x <- c(0,-0.5,0.5,0)
+y <- c(0,0.5,1,1.5)
+par(mar=c(1,1,1,1),cex=1.5,xpd=NA)
+plot(x,y,axes=FALSE,ann=FALSE,pch=16)
+eps <- 0.04
+arrows(x[-4]+c(-1,1,-1)*eps,y[-4]+eps,x[-1]+c(1,-1,1)*eps,y[-1]-eps,lwd=2)
+draw.arc(x[2],y[2],radius=0.2,angle1=-pi/6,angle2=pi/10,col=4)
+text(x[2]+0.28,y[2],expression(theta[1]),col=4)
+draw.arc(x[3],y[3],radius=0.2,angle1=pi-pi/6,angle2=pi+pi/8,col=4)
+text(x[3]-0.28,y[3],expression(theta[2]),col=4)
+text((x[2]+x[3])/2,(y[2]+y[3])/2,pos=3,expression(s[1]),col=2)
+text((x[3]+x[4])/2,(y[3]+y[4])/2,pos=3,expression(s[2]),col=2)
+posvec <- c(4,2,4,3)
+for(i in 1:4)
+    text(x[i], y[i], substitute(t[j],
+                                 list(j = i)),pos=posvec[i])
+@ 
 \end{column}
 \end{columns}
 \end{frame}
@@ -187,7 +206,23 @@ individual characteristics (sex, age, weight \ldots)
 \end{itemize}
 \end{column}
 \begin{column}{0.5\textwidth}
-(step length/turning angle pix)
+<<getdat,echo=FALSE,cache=TRUE,warning=FALSE>>=
+load("../allcats.RData")  ## all data
+d1 <- subset(dat,cat==1)
+g1 <- ggplot(d1,aes(x=LogDist))+
+    geom_histogram(binwidth=0.1)+
+    labs(x=expression("step length"~(log[10]*m)))
+g2 <- ggplot(d1,aes(x=Turningangle))+
+    geom_histogram(binwidth=pi/16,alpha=0.2,colour="black",lwd=0.2)+
+    coord_polar()+labs(x="",y="")+
+    scale_x_continuous(breaks=c(-1,-0.5,0,0.5)*pi,
+                       labels=c(180,270,0,90))
+print(g1)
+@ 
+
+<<g2plot,warning=FALSE>>=
+print(g2)
+@ 
 \end{column}
 \end{columns}
 \end{frame}
@@ -265,7 +300,7 @@ what does that tell us about their biology?
     \end{itemize}
   \end{column}
   \begin{column}{0.5\textwidth}
-    \includegraphics[trim={10cm 0 10cm 0},clip,width=\textwidth]{pix/panther_collar.jpg}
+    \includegraphics[trim={10cm 5cm 10cm 0},clip,width=\textwidth]{pix/panther_collar.jpg}
   \end{column}
 \end{columns}
 \end{frame}
@@ -339,14 +374,14 @@ what does that tell us about their biology?
 \begin{frame}
 \frametitle{State distributions}
 
-\includegraphics[trim={0 6.5cm 0 0}, clip, width=\textwidth]{pix/jae_fig2.png}
+\includegraphics[width=\textwidth]{pix/distpars.pdf}
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Parameter estimates}
 
-\includegraphics[width=\textwidth]{pix/jae_fig3.png}
+\includegraphics[width=\textwidth]{pix/parplot.pdf}
 
 \end{frame}
 
@@ -357,11 +392,11 @@ what does that tell us about their biology?
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Transition parameters}
+%% \begin{frame}
+%% \frametitle{Transition parameters}
 
-picture/table here of transition parameters (network diagram??)
-\end{frame}
+%% picture/table here of transition parameters (network diagram??)
+%% \end{frame}
 
 \begin{frame}
 \frametitle{Diurnal variation}
@@ -391,7 +426,7 @@ picture/table here of transition parameters (network diagram??)
 \end{frame}
 
 \begin{frame}
-\frametitle{Model complexity}
+\frametitle{Model complexity (bad news)}
 
 \includegraphics[height=0.8\textheight]{pix/BICplot.pdf}
 
@@ -438,11 +473,12 @@ ggplot(sheardat2,aes(n,dloglik))+
 \subsection{}
 
 \begin{frame}
-\frametitle{Broadening the model}
+\frametitle{Expanding the model}
 
 Attempting to fix these problems:
 \begin{itemize}
 \item extend the model to allow covariates
+\pause
 \item specifically, allow for diurnal variation
 \begin{itemize}
 \item simplify model (log-Normal step length only)
@@ -458,8 +494,27 @@ Attempting to fix these problems:
 
 \begin{frame}
 \frametitle{Temporal models}
-
-figure showing alternative temporal models
+<<tempmodel>>=
+bpar <- c(1,0.2,0.8,0.3)
+bseg <- c(10,15,20,24)
+hourpars <- c(0,  0.5, 0.8, 0.9, 0.87, 0.8,
+              0.3,0.4, 0.3, 0.5, 0.4,  0.7,
+              0.9,0.8, 0.7, 0.6, 0.7,  0.6, 0.7,
+              0.5,0.1,0.3,0.4,0.5)
+dd <- data.frame(time=seq(0,to=23.9,length=101)) %>%
+    mutate(sin=((1+sin(2*pi*time/24))/2),
+           quad=1-(time/24)^2,
+           block=ifelse(time<bseg[1],bpar[1],
+                   ifelse(time<bseg[2],bpar[2],
+                      ifelse(time<bseg[3],bpar[3],bpar[4]))),
+           hourly=hourpars[floor(time)+1]) %>%
+    gather(model,val,-time)
+ggplot(dd,aes(time,val,colour=model))+geom_line(size=1.5)+
+    scale_x_continuous(limits=c(0,24),breaks=seq(0,24,by=6))+
+    theme(axis.ticks.y=element_blank(),
+          axis.text.y=element_blank())+
+    labs(y="")
+@ 
 \end{frame}
 
 
@@ -534,31 +589,22 @@ ggplot(temp,
 
 \end{frame}
 
-
 \begin{frame}
-\frametitle{Model complexity}
-Figure showing BIC plots for all cats tried
-\end{frame}
-
-\begin{frame}
-\frametitle{Model complexity}
-Simulation results
+\frametitle{Diurnal model: conclusions}
+\begin{itemize}
+\item diurnal structure greatly improves fit ($\Delta \textrm{BIC} \approx 500$)
+\item slightly improves latent-state issue ($n=6 \to 5$)
+\item lots left to do!
+\begin{itemize}
+\item seasonal variation
+\item incorporate habitat, home range behaviour
+\item etc. etc. etc.
+\end{itemize}
+\end{itemize}
 \end{frame}
 
 \section{Broader issues/outlook}
 \subsection{}
-
-\begin{frame}
-\frametitle{Animal movement: open challenges}
-\begin{itemize}
-\item Cognition
-\item Intraspecific interaction/collective movement \citepx{delgado_statistical_2014}
-\item Continuous-time movement models \citepx{calabrese_ctmm_2016}
-\item Edges, barriers, and corridors \citepx{beyer_you_2016}
-\item Efficient (big-data) approaches \citepx{brillinger_three_2008}
-\item Putting it all together ...
-\end{itemize}
-\end{frame}
 
 \begin{frame}
 \frametitle{Big data and small models}
@@ -567,14 +613,16 @@ Simulation results
 \item simple model families +  \\
   model misspecification $\to$ \\
   overparameterization
-\item protocols and tools for model checking \citepx{potts_generalized_2014};
-score tests?
-\item flexible computational frameworks
+\item Gelman: ``Sample sizes are never large'':
+(\href{http://andrewgelman.com/2005/07/31/n_is_never_larg/}{blog post})
+\begin{quote}
+$N$ is never enough because if it were ``enough'' you'd already be on to the next problem for which you need more data.
+\end{quote}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{an aside on AIC vs BIC}
+\frametitle{An aside on AIC vs BIC}
 
 \begin{columns}
 \begin{column}{0.5\textwidth}
@@ -604,12 +652,27 @@ ggplot(d,aes(n,val,fill=type))+
 \end{frame}
 
 \begin{frame}
+\frametitle{Animal movement: open challenges}
+\begin{itemize}
+\item Cognition/memory \citepx{bracis_memory_2015}
+\item Intraspecific interaction/collective movement \citepx{delgado_statistical_2014}
+\item Continuous-time movement models \citepx{calabrese_ctmm_2016}
+\item Edges, barriers, and corridors \citepx{beyer_you_2016}
+\item Efficient (big-data) approaches \citepx{brillinger_three_2008}
+\item Putting it all together ...
+\end{itemize}
+\end{frame}
+
+\begin{frame}
 \frametitle{Tools needed}
 
 \begin{itemize}
 \item cross-validation \citepx{wenger_assessing_2012}
-\item diagnostic plots
-\item score tests?
+\item protocols and tools for model checking \citepx{potts_generalized_2014};
+score tests?
+\item flexible computational frameworks \\
+(ecologists can't afford consultants/ \\
+there are too many species out there)
 \end{itemize}
 
 \end{frame}

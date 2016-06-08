@@ -1,0 +1,7 @@
+- general refs: Morales, Turchin, ...
+- transition matrices?
+- BIC-optimal states for sims?
+- conclusion slide for diurnal stuff
+- clip some panther pix?
+- temporal models: change order
+- kitchen sink picture: https://pierres.com/products/premium-ice-cream/?everything-but-the-kitchen-sink
