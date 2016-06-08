@@ -1,0 +1,2 @@
+#!/bin/bash
+cp /media/sf_Dropbox/Florida\ panther\ project/Chapter1/Codes/$1.pdf pix

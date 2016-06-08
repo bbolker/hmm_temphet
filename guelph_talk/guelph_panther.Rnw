@@ -75,19 +75,21 @@ options(tikzMetricPackages = c( "\\usepackage[utf8]{inputenc}",
 ##options(tikzMetricPackages = c("\\usepackage[utf8]{inputenc}",
 ##    "\\usepackage[T1]{fontenc}", "\\usetikzlibrary{calc}",
 ##    "\\usepackage{amssymb}"))
-library(ggplot2)
-theme_set(theme_bw())
-library("ggplot2"); theme_set(theme_classic())
+library("ggplot2"); theme_set(theme_bw())
+library(RColorBrewer)
+zmargin <- theme(panel.margin=grid::unit(0,"lines"))
+
 library("MASS")
 ## use Dark2 rather than Set1 because colour #6 of Set1 is yellow (ugh/too light)
 scale_colour_discrete <- function(...,palette="Dark2") scale_colour_brewer(...,palette=palette)
 scale_fill_discrete <- function(...,palette="Dark2") scale_fill_brewer(...,palette=palette)
-library("gridExtra")
-library("plyr")  ## for ldply()
-library("dplyr") ## for full_join()
-library("reshape2")  ## for melt()
-library("GGally")
-library("ggstance")
+library(gridExtra)
+library(plyr)  ## for ldply()
+library(dplyr) ## for full_join()
+library(reshape2)  ## for melt()
+library(tidyr)
+library(GGally)
+library(ggstance)
 library(scales) ## for squish()
 library(gridExtra) ## for grid.arrange()
 library(mgcv)
@@ -99,6 +101,17 @@ library(deSolve)
 library(Hmisc)
 library(gsubfn)
 @ 
+
+<<cat1sumdat,echo=FALSE,cache=TRUE>>=
+L <- load("../cat1sumdat.RData")
+ss <- sumdat %>% filter(grepl("HMM",type)) %>%
+    mutate(deltaBIC=deltaBIC-min(deltaBIC),
+           model=factor(model,
+              levels=c("HMM","HMM + THsin","HMM + THquad",
+                       "HMM + THblock", "HMM + THhourly"),
+              labels=c("homogeneous","sinusoid","quadratic",
+                       "block","hourly")))
+@
 
 \title[Animal movement]{Model complexity and model choice for animal movement models}
 \author[Ben Bolker]{Ben~Bolker, McMaster University \\
@@ -148,11 +161,26 @@ library(gsubfn)
 \begin{frame}
 \frametitle{Animal movement: data}
 
+\begin{columns}
+\begin{column}{0.5\textwidth}
 \begin{itemize}
 \item observations:  \\
 e.g. mass mark-recapture, longitudinal density,
 direct observation, telemetry (VHF, GPS)
 \item most methods provide a sequence of times and locations for each individual
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+(sequence pix)
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
 \item summaries:
 \begin{itemize}
 \item home range \\
@@ -164,7 +192,11 @@ direct observation, telemetry (VHF, GPS)
 e.g. habitat map,  \\
 individual characteristics (sex, age, weight \ldots)
 \end{itemize}
-
+\end{column}
+\begin{column}{0.5\textwidth}
+(step length/turning angle pix)
+\end{column}
+\end{columns}
 \end{frame}
 
 \begin{frame}
@@ -189,19 +221,20 @@ what does that tell us about their biology?
 \begin{columns}
   \begin{column}{0.5\textwidth}
     \begin{itemize}
-    \item Florida panther: \emph{Felix ...}
-    \item severely reduced habitat, endangered
+    \item Florida panther: \emph{Puma concolor coryi}
+    \item endangered subspecies
+    \item severely reduced habitat
     \item small, isolated population
     \item currently recovering
     \end{itemize}
   \end{column}
   \begin{column}{0.5\textwidth}
-    (cute panther pictures here)
+    \includegraphics[width=0.8\textwidth]{pix/map1.jpg} \\
+      {\tiny \href{http://www.peer.org/campaigns/wildlife-protection/florida-panther/ecological-needs.html}{www.peer.org}} \\
+     \includegraphics[width=0.9\textwidth]{pix/kitten1.jpg}
   \end{column}
 \end{columns}
-
 \end{frame}
-
 
 \begin{frame}
 \frametitle{Panther movement questions}
@@ -209,16 +242,17 @@ what does that tell us about their biology?
 \begin{columns}
   \begin{column}{0.5\textwidth}
     \begin{itemize}
-    \item how does panther movement vary by sex and life history stage \\
+    \item movement variation by sex and life history stage \\
       (juvenile, adult, mom with kittens \ldots)
-    \item how does movement mediate exposure to threats \\
+    \item effects of movement on threats \\
       (intraspecific aggression, roadkill) ?
-    \item can we predict the effects of future changes in 
-      population density / population structure / habitat?
+    \item predicting the effects of future changes in 
+      population density / population structure / habitat
     \end{itemize}
   \end{column}
   \begin{column}{0.5\textwidth}
-    (more cute pictures here ... or roadkill?)
+    \includegraphics[width=0.8\textwidth]{pix/momkitten1.jpg} \\
+    \includegraphics[width=0.7\textwidth]{pix/roadkill.jpg}
   \end{column}
 \end{columns}
 
@@ -273,16 +307,23 @@ what does that tell us about their biology?
 \begin{frame}
 \frametitle{Hidden Markov models (cont.)}
 
-\fixme{notation, underbraces}
-
-\begin{equation}
+\textbf{state:}
+\begin{equation*}
 \begin{split}
-P(\mathbf{Y}_{1:T},\mathbf{Z}_{1:T}|\boldsymbol \theta,\mathbf{X}_{1:T}) & =
-P(\state_{1} \mid \cov_{1})P(\obs_{1} | \state_{1}, \cov_{1}) \cdot \\
-&  \quad \prod\limits_{k=2}^{T}P(\state_{k} | \state_{k-1}, \cov_{k})P(\obs_{k} | \state_{k},\cov_{k})
+  S_t & \sim \textrm{Multinomial}(S_{t-1},\mu_{S,t}) \\
+\mu_{S,t} & = \textrm{multi-logistic}(\mathbf{X}_{S,t} \boldsymbol \beta_{S} ) 
 \end{split}
-\label{eq:HMMlik}
-\end{equation}
+\end{equation*}
+
+\textbf{emission:}
+\begin{equation*}
+\begin{split}
+\mathbf{Z}_t & \sim \left\{ \textrm{Dist}_1(\mu_{Z_1,S_t}),
+\dots, \textrm{Dist}_n(\mu_{Z_n,S_t}) \right\}
+ \\
+\mu_{Z_i,S_t} & = g^{-1}\left(\mathbf{X}_{Z_i,t} \boldsymbol \beta_{Z_i,S_t} \right)
+\end{split}
+\end{equation*}
 
 \end{frame}
 
@@ -362,7 +403,44 @@ picture/table here of transition parameters (network diagram??)
 
 \end{frame}
 
-\section[Diurnal model]{Incorporating diurnal variation}
+\begin{frame}
+\frametitle{Model complexity (Manx shearwaters, \citex{dean_behavioural_2013})}
+
+<<shearwater>>=
+sheardat <- read.table("shearwater_loglik.dat")
+names(sheardat) <- c("n","loglik")
+npar <- function(n) {
+    ## 2 emissions parameters per state;
+    ## n*(n-1) transition parameters
+    2*n+n*(n-1)
+}
+## don't know how many total data points;
+## ~130 individuals tagged; 10-minute intervals for 2 days = 250 points
+##
+nobs <- 30000
+sheardat2 <- mutate(sheardat,
+       npar=npar(n),
+       dloglik=loglik-min(loglik),
+       AIC=2*npar-2*loglik,
+       dAIC=AIC-min(AIC),
+       BIC=log(nobs)*npar-2*loglik,
+       dBIC=BIC-min(BIC)) %>%
+    select(-c(AIC,BIC)) %>%
+    mutate(type=ifelse(dBIC==0,"min BIC",
+                ifelse(dAIC==0,"min AIC","")),
+           type=factor(type,levels=c("","min AIC","min BIC")))
+
+ggplot(sheardat2,aes(n,dloglik))+
+    geom_line(colour="gray")+
+    geom_point(size=5,aes(colour=type))+
+    xlab("number of latent states")+
+    ylab(expression(Delta~"negative log-likelihood"))+
+    scale_colour_manual(name="",values=c("gray","blue","red"))
+## min BIC ~ 7; min AIC ~ 10
+@ 
+\end{frame}
+
+\section[Diurnal model]{Incorporating diurnal variation \citepx{li_incorporating_2015}}
 \subsection{}
 
 \begin{frame}
@@ -390,23 +468,78 @@ Attempting to fix these problems:
 figure showing alternative temporal models
 \end{frame}
 
-\begin{frame}
-\frametitle{Comparison}
 
-Figure 1 from paper
+\begin{frame}
+\frametitle{Temporal patterns (step length)}
+
+<<timeplot,out.width="0.9\\textwidth">>=
+simdf <- simdat %>% dplyr::select(-obs) %>%
+    group_by(time) %>% summarise_each(funs(mean))
+obsdf <- simdat %>% dplyr::select(c(obs,time)) %>%
+    filter(!is.na(obs)) %>% group_by(time) %>%
+    summarise_each(funs(mean))
+combdf <- rbind(gather(simdf,model,steplen,-time),
+          data_frame(time=obsdf$time,model="obs",steplen=obsdf$obs))
+mnames <- c("hmm6","hmmblock4","hmmquad5",
+            "hmmsin5","hmmhourly3","obs")
+mnames2 <- c("homogeneous (n=6)","block (n=4)",
+             "quadratic (n=5)","sin (n=5)","hourly (n=3)","observed")
+combdf2 <- combdf %>%
+    filter(model %in% mnames) %>%
+    mutate(model=factor(model,levels=mnames,labels=mnames2))
+colvec <- c(brewer.pal(5,"Dark2"),"black")
+lwdvec <- rep(c(1,4),c(5,1))
+alphavec <- rep(c(1,0.2),c(5,1))
+ggplot(combdf2,aes(x=time,y=steplen,colour=model, lwd=model, alpha=model)) + 
+    geom_line()+ xlab("Time of day") +
+    ylab(expression("Mean step length"~(log[10]*m)))+
+    scale_colour_manual(values=colvec)+
+    scale_alpha_manual(values=alphavec)+
+    scale_size_manual(values=lwdvec)
+@
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Temporal patterns (autocorrelation)}
+<<acfplot,cache=TRUE,out.width="0.9\\textwidth">>=
+acffun <- function(sim){
+  a <- acf(sim,na.action=na.pass,plot=FALSE)
+  df <- data.frame(ACF=c(a$acf),lag=a$lag)
+  return(df)
+}
+temp <- simdat %>% dplyr::select(-time)%>%ldply(.,acffun,.id="model") %>%
+    filter(model %in% mnames) %>%
+    mutate(model=factor(model,levels=mnames,labels=mnames2))
+
+ggplot(temp,
+       aes(x=lag,y=ACF,colour=model, lwd=model, alpha=model))+ 
+    geom_line()+ xlab("Time of day") +
+    ylab("Autocorrelation") +
+    scale_colour_manual(values=colvec)+
+    scale_alpha_manual(values=alphavec)+
+    scale_size_manual(values=lwdvec)+
+    geom_hline(yintercept=0,lty=2)
+@
+
 \end{frame}
 
 
 \begin{frame}
-\frametitle{Goodness of fit}
+\frametitle{Goodness of fit/model complexity}
+<<adj_BIC,out.width="0.9\\textwidth">>=
+(adj_BIC_plot <- ggplot(ss, aes(x=nstates,y=deltaBIC,colour=model))+
+    scale_size_continuous( name="# of parameters") +
+    scale_x_continuous(expand=c(0,0.5),breaks=2:7)+
+    geom_point(aes(size=parameters))+
+    scale_colour_brewer(palette="Dark2")+
+    labs(y=expression(paste(Delta, "BIC")),
+         x="number of latent states")+
+    geom_line() + zmargin)
+@
 
-Figure 2 from paper
 \end{frame}
 
-\begin{frame}
-\frametitle{Temporal patterns}
-Figures 3 (and 4?) from paper
-\end{frame}
 
 \begin{frame}
 \frametitle{Model complexity}
@@ -420,6 +553,17 @@ Simulation results
 
 \section{Broader issues/outlook}
 \subsection{}
+
+\begin{frame}
+\frametitle{Animal movement: open challenges}
+\begin{itemize}
+\item Cognition
+\item Intraspecific interaction/collective movement
+\item Continuous-time movement models
+\item Edges, barriers, and corridors
+\item Efficient (big-data) approaches
+\end{itemize}
+\end{frame}
 
 \begin{frame}
 \frametitle{Big data and small models}
