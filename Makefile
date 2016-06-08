@@ -44,6 +44,9 @@ simtest.Rout: mikesim.R simfunctions.R simtest.R 101.txt
 sim_%.Rout: mikesim.R simfunctions.R simtest.R %.txt
 	$(run-R)
 
+plotsimtest.Rout: plotsimtest.R
+	$(run-R)
+
 %.tex: %.Rnw
 	echo "library('knitr'); knit(\"$*.Rnw\")" | R --slave
 
