@@ -18,6 +18,7 @@
 %\bibliographystyle{shortreflist}
 \bibliographystyle{notitle}
 
+\newcommand{\fixme}[1]{{\color{red} \textbf{#1}}}
 \usetheme{Frankfurt}
 \usecolortheme{dove}
 \setbeamercovered{transparent}
@@ -126,8 +127,9 @@ library(gsubfn)
 \begin{frame}
 \frametitle{Acknowledgements}
 \begin{description}
-\item[People] Michael Li, Madelon van de Kerk, Dave Onorato
-\item[Support] NSERC Discovery grant
+\item[People] \textbf{Michael Li}, \textbf{Madelon van de Kerk}, Dave Onorato, Madan Oli
+\item[Agencies] US Fish and Wildlife, US Geological Survey, US National Park Service
+\item[Funding] NSERC Discovery grant, NSF IGERT program
 \end{description}
 
 \end{frame}
@@ -159,7 +161,8 @@ direct observation, telemetry (VHF, GPS)
 \item step length and turning angle
 \end{itemize}
 \item covariates: \\
-e.g. habitat map, individual characteristics (sex, age, weight \ldots)
+e.g. habitat map,  \\
+individual characteristics (sex, age, weight \ldots)
 \end{itemize}
 
 \end{frame}
@@ -192,6 +195,9 @@ what does that tell us about their biology?
     \item currently recovering
     \end{itemize}
   \end{column}
+  \begin{column}{0.5\textwidth}
+    (cute panther pictures here)
+  \end{column}
 \end{columns}
 
 \end{frame}
@@ -203,8 +209,16 @@ what does that tell us about their biology?
 \begin{columns}
   \begin{column}{0.5\textwidth}
     \begin{itemize}
-    \item abc
+    \item how does panther movement vary by sex and life history stage \\
+      (juvenile, adult, mom with kittens \ldots)
+    \item how does movement mediate exposure to threats \\
+      (intraspecific aggression, roadkill) ?
+    \item can we predict the effects of future changes in 
+      population density / population structure / habitat?
     \end{itemize}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+    (more cute pictures here ... or roadkill?)
   \end{column}
 \end{columns}
 
@@ -231,8 +245,7 @@ what does that tell us about their biology?
 
 \begin{frame}
 \frametitle{example movement tracks}
-FIXME: picture here!
-(animation?? map background??)
+\includegraphics[width=\textwidth]{pix/track1.pdf}
 \end{frame}
 
 \section[HMM]{Hidden Markov models}
@@ -247,24 +260,46 @@ FIXME: picture here!
 \item discrete latent state; \emph{transition matrix}
 \item observations from \emph{emission distributions} \\
 (continuous or discrete, univariate or multivariate)
+\item \textbf{multiphasic movement} \citepx{fryxell_multiple_2008,langrock_flexible_2012}
 \end{itemize}
 
 \includegraphics[width=\textwidth]{pix/hmm.jpg}
 \end{frame}
 
+\newcommand{\obs}{\mathbf{y}}
+\newcommand{\cov}{\mathbf{x}}
+\newcommand{\state}{z}
+
 \begin{frame}
 \frametitle{Hidden Markov models (cont.)}
+
+\fixme{notation, underbraces}
+
+\begin{equation}
+\begin{split}
+P(\mathbf{Y}_{1:T},\mathbf{Z}_{1:T}|\boldsymbol \theta,\mathbf{X}_{1:T}) & =
+P(\state_{1} \mid \cov_{1})P(\obs_{1} | \state_{1}, \cov_{1}) \cdot \\
+&  \quad \prod\limits_{k=2}^{T}P(\state_{k} | \state_{k-1}, \cov_{k})P(\obs_{k} | \state_{k},\cov_{k})
+\end{split}
+\label{eq:HMMlik}
+\end{equation}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Hidden Markov models (part 3)}
 
 \begin{itemize}
 \item \emph{forward-backward algorithm} for estimating parameters
 \item \emph{Viterbi algorithm} for estimating most probable state sequences
 \item {\tt depmixS4} package \citepx{visser2010depmixs4}
-(also {\tt moveHMM} \citepx{michelot_movehmm_2016}, {\tt move.HMM} \citepx{augustine_hmm})
+(also {\tt moveHMM} \citepx{michelot_movehmm_2016})
+\item hidden \emph{semi-Markov} models: allow for non-geometric \emph{dwell distributions} \citepx{langrock_hidden_2011-1,augustine_hmm}: {\tt move.HMM}
 \end{itemize}
 
 \end{frame}
 
-\section[Basic analysis]{Basic analysis (vdK et al.)}
+\section[Basic analysis]{Basic analysis \citepx{kerk2015hidden}}
 \subsection{}
 
 \begin{frame}
@@ -278,6 +313,13 @@ FIXME: picture here!
 \frametitle{Parameter estimates}
 
 \includegraphics[width=\textwidth]{pix/jae_fig3.png}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Tracks with Viterbi estimates}
+
+\includegraphics[width=\textwidth]{pix/track1C.pdf}
 
 \end{frame}
 
@@ -316,7 +358,7 @@ picture/table here of transition parameters (network diagram??)
 \begin{frame}
 \frametitle{Model complexity}
 
-\includegraphics[height=\textheight]{pix/jae_fig1.png}
+\includegraphics[height=0.8\textheight]{pix/BICplot.pdf}
 
 \end{frame}
 
