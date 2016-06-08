@@ -41,7 +41,7 @@ catsdat.Rout: ArchivePantherData.csv pantherDataFrame.R
 simtest.Rout: mikesim.R simfunctions.R simtest.R 101.txt
 	$(run-R)
 
-sim_%.Rout: mikesim.R simfunction.R simtest.R %.txt
+sim_%.Rout: mikesim.R simfunctions.R simtest.R %.txt
 	$(run-R)
 
 %.tex: %.Rnw

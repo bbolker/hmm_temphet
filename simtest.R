@@ -13,7 +13,8 @@ system.time(mod <- depmix(y~1
 )
 getpars(mod)
 
-set.seed(unlist(strsplit(input_files,"[.]"))[1])
+seed = unlist(strsplit(input_files,"[.]"))[1]
+set.seed(seed)
 
 randpars <- sample(1:4,length(getpars(mod))-6,replace=TRUE)
 newmod <- setpars(mod,c(0.5,0.5,randpars,0,2,4,2))
@@ -115,3 +116,5 @@ dat <- data.frame(seed=seed
 
 rownames(dat) <- NULL
 saveRDS(dat, file=paste("sim",seed,"RDS",sep="."))
+
+# rdsave(seed)
