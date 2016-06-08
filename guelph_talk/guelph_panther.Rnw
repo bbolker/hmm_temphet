@@ -120,7 +120,7 @@ ss <- sumdat %>% filter(grepl("HMM",type)) %>%
 \date{9 June 2016}
 % \pgfdeclareimage[height=0.5cm]{uflogo}{letterhdwm}
 % \logo{\pgfuseimage{uflogo}}
-\AtBeginSubsection[]{
+\AtBeginSection[]{
   \frame<beamer>{ 
      \frametitle{Outline}   
      \tableofcontents[currentsection,currentsubsection] 
@@ -147,13 +147,6 @@ ss <- sumdat %>% filter(grepl("HMM",type)) %>%
 
 \end{frame}
 
-\begin{frame}
-\frametitle{To do}
-\begin{itemize}
-\item pix!
-\item general REFS: Turchin, Morales et al, Langrock ... ?
-\end{itemize}
-\end{frame}
 
 \section{Animal movement}
 \subsection{}
@@ -385,7 +378,8 @@ picture/table here of transition parameters (network diagram??)
 \begin{itemize}
 \item basic biology: males move faster, farther
 \item three states are identifiable, sensible
-\item ...
+\item dwell distributions approximately geometric \\
+(HSMM $\to$ HMM)
 \end{itemize}
 
 \pause
@@ -558,10 +552,11 @@ Simulation results
 \frametitle{Animal movement: open challenges}
 \begin{itemize}
 \item Cognition
-\item Intraspecific interaction/collective movement
-\item Continuous-time movement models
-\item Edges, barriers, and corridors
-\item Efficient (big-data) approaches
+\item Intraspecific interaction/collective movement \citepx{delgado_statistical_2014}
+\item Continuous-time movement models \citepx{calabrese_ctmm_2016}
+\item Edges, barriers, and corridors \citepx{beyer_you_2016}
+\item Efficient (big-data) approaches \citepx{brillinger_three_2008}
+\item Putting it all together ...
 \end{itemize}
 \end{frame}
 
@@ -572,13 +567,40 @@ Simulation results
 \item simple model families +  \\
   model misspecification $\to$ \\
   overparameterization
-
+\item protocols and tools for model checking \citepx{potts_generalized_2014};
+score tests?
+\item flexible computational frameworks
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{an aside on AIC vs BIC}
 
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item ``should I use AIC or BIC? I heard that AIC is inconsistent ...''
+\item complexity penalty = 2 (AIC) vs $\log(n)$ (BIC)
+\item best prediction vs. model identification \citepx{yang_can_2005}
+\item \emph{effect size spectrum}: \\
+tapering or discrete?
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+<<effectsize,echo=FALSE,fig.height=5,fig.width=4>>=
+d <- data.frame(type=rep(c("tapering","discrete"),each=10),
+                n=rep(1:10,2),
+                val=c(0.6^(0:9),rep(c(1,0),c(3,7))))
+ggplot(d,aes(n,val,fill=type))+
+    geom_bar(stat="identity",position="identity",alpha=0.6)+
+    theme(axis.ticks=element_blank(),
+          axis.text.x=element_blank(),
+          axis.text.y=element_blank())+
+    labs(x="effect",y="effect size")+
+    scale_fill_brewer(palette="Set2")
+@ 
+\end{column}
+\end{columns}
 \end{frame}
 
 \begin{frame}
