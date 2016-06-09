@@ -3,7 +3,7 @@
 \hypersetup{colorlinks,linkcolor=,urlcolor=links}
 \usepackage{natbib}
 \usepackage[T1]{fontenc}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{multicol}
 \usepackage{color}
@@ -142,7 +142,7 @@ ss <- sumdat %>% filter(grepl("HMM",type)) %>%
 \frametitle{Acknowledgements}
 \begin{description}
 \item[People] \textbf{Michael Li}, \textbf{Madelon van de Kerk}, \\
-Dave Onorato, Madan Oli
+Dave Onorato, Madan Oli; many unnamed field biologists
 \item[Agencies] US Fish and Wildlife Service, US Geological Survey, US National Park Service
 \item[Funding] NSERC Discovery grant, NSF IGERT program
 \end{description}
@@ -704,6 +704,12 @@ there are too many species out there)
 
 \end{frame}
 
+
+\begin{frame}
+\includegraphics[width=\textwidth]{pix/panther2.jpg}
+
+\url{http://tinyurl.com/panthermoves}; \url{http://www.slideshare.net/bbolker}
+\end{frame}
 
 \begin{frame}
 \begin{multicols}{2}
