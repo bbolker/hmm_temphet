@@ -108,9 +108,9 @@ L <- load("../cat1sumdat.RData")
 ss <- sumdat %>% filter(grepl("HMM",type)) %>%
     mutate(deltaBIC=deltaBIC-min(deltaBIC),
            model=factor(model,
-              levels=c("HMM","HMM + THsin","HMM + THquad",
+              levels=c("HMM","HMM + THquad","HMM + THsin",
                        "HMM + THblock", "HMM + THhourly"),
-              labels=c("homogeneous","sinusoid","quadratic",
+              labels=c("homogeneous","quadratic","sinusoid",
                        "block","hourly")))
 @
 
@@ -590,6 +590,26 @@ ggplot(temp,
 \end{frame}
 
 \begin{frame}
+\frametitle{Model complexity: simulation}
+<<modsim>>=
+mnames3 <- c("hmm","hmmquad",
+            "hmmsin","hmmhourly")
+mnames4 <- c("homogeneous",
+             "quadratic","sin","hourly")
+simdf2 <- readRDS("../simdf.RDS") %>%
+    filter(!type %in% c("fmm","fmmsin")) %>%
+    group_by(type) %>%
+    mutate(dBIC=BIC-min(BIC)) %>% ungroup() %>%
+    mutate(type=factor(type,levels=mnames3,labels=mnames4))
+ggplot(simdf2,aes(states,dBIC,colour=type))+
+    geom_point(size=2)+geom_line()+
+    scale_colour_brewer(palette="Dark2")+
+    labs(y=expression(paste(Delta, "BIC")),
+         x="number of latent states")
+@
+\end{frame}
+
+\begin{frame}
 \frametitle{Diurnal model: conclusions}
 \begin{itemize}
 \item diurnal structure greatly improves fit ($\Delta \textrm{BIC} \approx 500$)
@@ -653,6 +673,8 @@ ggplot(d,aes(n,val,fill=type))+
 
 \begin{frame}
 \frametitle{Animal movement: open challenges}
+\begin{columns}
+\begin{column}{0.5\textwidth}
 \begin{itemize}
 \item Cognition/memory \citepx{bracis_memory_2015}
 \item Intraspecific interaction/collective movement \citepx{delgado_statistical_2014}
@@ -661,6 +683,11 @@ ggplot(d,aes(n,val,fill=type))+
 \item Efficient (big-data) approaches \citepx{brillinger_three_2008}
 \item Putting it all together ...
 \end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\includegraphics[width=\textwidth]{pix/kitchensink.jpg}
+\end{column}
+\end{columns}
 \end{frame}
 
 \begin{frame}
