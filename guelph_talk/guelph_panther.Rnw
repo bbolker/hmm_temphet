@@ -708,7 +708,10 @@ there are too many species out there)
 \begin{frame}
 \includegraphics[width=\textwidth]{pix/panther2.jpg}
 
-\url{http://tinyurl.com/panthermoves}; \url{http://www.slideshare.net/bbolker}
+\url{http://tinyurl.com/panthermoves}; 
+{\small
+  \url{http://www.slideshare.net/bbolker/model-complexity-and-model-choice-for-animal-movement-models}}
+
 \end{frame}
 
 \begin{frame}
@@ -716,7 +719,7 @@ there are too many species out there)
 \frametitle{References}
 
 % \tiny
-\fontsize{3pt}{5pt}\selectfont
+\fontsize{5pt}{7pt}\selectfont
 \bibliography{../paper}
 \end{multicols}
 \end{frame}
