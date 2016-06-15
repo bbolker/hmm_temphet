@@ -10,13 +10,13 @@ cat.%.df: dataframe.R ArchivePantherData.csv %.cat
 cat.1.%: %.R cat.1.RDS mikesim.R 
 	$(R) $^ 
 
-cat.2.%: %.R cat.1.RDS mikesim.R 
+cat.2.%: %.R cat.2.RDS mikesim.R 
 	$(R) $^ 
 
-cat.14.%: %.R cat.1.RDS mikesim.R 
+cat.14.%: %.R cat.14.RDS mikesim.R 
 	$(R) $^ 
 
-cat.15.%: %.R cat.1.RDS mikesim.R 
+cat.15.%: %.R cat.15.RDS mikesim.R 
 	$(R) $^ 
 
 
