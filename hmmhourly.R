@@ -47,10 +47,10 @@ fithmmhourly4s <- fithmmhourly(4,dat,seed=1)
 fitlist <- list(fithmmhourly3s,fithmmhourly4s)
 
 catsum <- sumdf(fitlist)
-simdf <- data.frame(hmm3S=simhmmhourly(3,dat,fithmm3s)[2]
-                    , hmm3obs=simhmmhourly(3,dat,fithmm3s)[1]
-                    , hmm4S=simhmmhourly(4,dat,fithmm4s)[2]
-                    , hmm4obs=simhmmhourly(4,dat,fithmm4s)[1]
+simdf <- data.frame(hmmhourly3S=simhmmhourly(3,dat,fithmmhourly3s)[2]
+                    , hmmhourly3obs=simhmmhourly(3,dat,fithmmhourly3s)[1]
+                    , hmmhourly4S=simhmmhourly(4,dat,fithmmhourly4s)[2]
+                    , hmmhourly4obs=simhmmhourly(4,dat,fithmmhourly4s)[1]
 )
 
 saveRDS(catsum,file=paste("cat",catid,"hmmhourly","sum","RDS",sep="."))
