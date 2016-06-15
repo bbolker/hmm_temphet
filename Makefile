@@ -1,15 +1,14 @@
 ###1 Take PantherDF, hack it and store it independently by cats :
 
+R := /usr/bin/env Rscript
+
 current:  paper3.pdf.now
 
-target:	cat1.plot.Rout
-	evince cat1.plot.Rout.pdf
+cat.%.df: dataframe.R ArchivePantherData.csv %.cat
+	$(R) $^
 
-catsdat.Rout: ArchivePantherData.csv pantherDataFrame.R
-	$(run-R)
-
-%.df.Rout: catsdat.Rout %.RData df.R
-	$(run-R)
+cat.1.%: %.R cat.1.RDS mikesim.R 
+	$(R) $^ 
 
 %.fit.Rout: %.df.Rout fitfunctions.R mikesim.R simfunctions.R %seeds.R
 	$(run-R)
@@ -59,7 +58,11 @@ plotsimtest.Rout: plotsimtest.R
 clean:
 	rm -f *.bbl *.blg *.log *.aux *.loc *~ *.txt
 
+move_sum: 
+	mv *.sum.RDS ./summary_stats/
 
+move_catsims:
+	mv *.sim.RDS ./cat_sims/
 
 
 
