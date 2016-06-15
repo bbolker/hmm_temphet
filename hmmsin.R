@@ -1,0 +1,91 @@
+library(depmixS4)
+library(dplyr)
+library(plyr)
+
+files <- commandArgs(trailingOnly = TRUE)
+catid <- unlist(strsplit(files[1],split="[.]"))[2]
+dat <- readRDS(files[1])
+source(files[2])
+
+fithmmsin <- function(state,cat,seed=NULL){
+  if(!is.null(seed))set.seed(seed)
+  model <- depmix(LogDist~1,
+                  data=cat,
+                  nstate=state,
+                  transition=~cos(2*pi*Time/24)+ sin(2*pi*Time/24),
+                  family=gaussian())
+  set.seed(seed)
+  fitmodel <- fit(model,emcontrol=em.control(maxit=iter))
+  return(fitmodel)
+}
+
+simhmmsin <- function(state,cat,fit){
+  model <- depmix(LogDist~1,
+                  data=cat,
+                  nstate=state,
+                  transition=~cos((2*pi*Time)/24)+ sin((2*pi*Time)/24),
+                  family=gaussian())
+  model<-setpars(model,getpars(fit))
+  sim <- simhmm(model)
+  df <- data.frame(obs= sim@response[[1]][[1]]@y,states=sim@states)
+  return(df)}
+
+sumdf <- function(lst){
+  BIC <- ldply(lst,BIC)
+  nstates <-ldply(lst,nstates)
+  para <- ldply(lst,freepars)
+  model <- c('FMM + THsin','FMM + THsin','FMM + THsin','FMM + THsin','FMM + THsin')
+  type <- c('HMM + TH','HMM + TH','HMM + TH','HMM + TH','HMM + TH')
+  temp <- data.frame(BICS=BIC$V1,nstates=nstates$V1,parameters=para$V1,model,type)
+  return(temp)
+}
+
+if(catid == 15){
+fithmmsin3s <- fithmmsin(3,cat,seed=3030)
+fithmmsin4s <- fithmmsin(4,cat,seed=2830)
+fithmmsin5s <- fithmmsin(5,cat,seed=3030)
+fithmmsin6s <- fithmmsin(6,cat,seed=2830)
+fithmmsin7s <- fithmmsin(7,cat,seed=2830)
+}
+
+if(catid == 1){
+  fithmmsin3s <- fithmmsin(3,cat,seed=2030)
+  fithmmsin4s <- fithmmsin(4,cat,seed=2830)
+  fithmmsin5s <- fithmmsin(5,cat,seed=2030)
+  fithmmsin6s <- fithmmsin(6,cat,seed=2830)
+  fithmmsin7s <- fithmmsin(7,cat,seed=2830)
+}
+
+if(catid == 2){
+  fithmmsin3s <- fithmmsin(3,cat,seed=2030)
+  fithmmsin4s <- fithmmsin(4,cat,seed=2830)
+  fithmmsin5s <- fithmmsin(5,cat,seed=2030)
+  fithmmsin6s <- fithmmsin(6,cat,seed=2830)
+  fithmmsin7s <- fithmmsin(7,cat,seed=2830)
+}
+
+if(catid == 14){
+  fithmmsin3s <- fithmmsin(3,cat,seed=2030)
+  fithmmsin4s <- fithmmsin(4,cat,seed=2830)
+  fithmmsin5s <- fithmmsin(5,cat,seed=2030)
+  fithmmsin6s <- fithmmsin(6,cat,seed=2830)
+  fithmmsin7s <- fithmmsin(7,cat,seed=2830)
+}
+
+fitlist <- list(fithmmsin3s,fithmmsin4s,fithmmsin5s,fithmmsin6s,fithmmsin7s)
+
+catsum <- sumdf(fitlist)
+simdf <- data.frame(hmmsin3S=simhmmsin(3,dat,fithmmsin3s)[2]
+                    , hmmsin3obs=simhmmsin(3,dat,fithmmsin3s)[1]
+                    , hmmsin4S=simhmmsin(4,dat,fithmmsin4s)[2]
+                    , hmmsin4obs=simhmmsin(4,dat,fithmmsin4s)[1]
+                    , hmmsin5S=simhmmsin(5,dat,fithmmsin5s)[2]
+                    , hmmsin5obs=simhmmsin(5,dat,fithmmsin5s)[1]
+                    , hmmsin6S=simhmmsin(6,dat,fithmmsin6s)[2]
+                    , hmmsin6obs=simhmmsin(6,dat,fithmmsin6s)[1]
+                    , hmmsin7S=simhmmsin(7,dat,fithmmsin7s)[2]
+                    , hmmsin7obs=simhmmsin(7,dat,fithmmsin7s)[1]
+)
+
+saveRDS(catsum,file=paste("cat",catid,"hmmsin","sum","RDS",sep="."))
+saveRDS(simdf,file=paste("cat",catid,"hmmsin","sim","RDS",sep="."))

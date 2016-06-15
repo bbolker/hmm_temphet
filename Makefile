@@ -10,6 +10,16 @@ cat.%.df: dataframe.R ArchivePantherData.csv %.cat
 cat.1.%: %.R cat.1.RDS mikesim.R 
 	$(R) $^ 
 
+cat.2.%: %.R cat.1.RDS mikesim.R 
+	$(R) $^ 
+
+cat.14.%: %.R cat.1.RDS mikesim.R 
+	$(R) $^ 
+
+cat.15.%: %.R cat.1.RDS mikesim.R 
+	$(R) $^ 
+
+
 %.fit.Rout: %.df.Rout fitfunctions.R mikesim.R simfunctions.R %seeds.R
 	$(run-R)
 
