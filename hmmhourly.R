@@ -40,8 +40,8 @@ sumdf <- function(lst){
   return(temp)
 }
 
-fithmmhourly3s <- fithourly(3,dat,seed=1)
-fithmmhourly4s <- fithourly(4,dat,seed=1)
+fithmmhourly3s <- fithmmhourly(3,dat,seed=1)
+fithmmhourly4s <- fithmmhourly(4,dat,seed=1)
 
 
 fitlist <- list(fithmmhourly3s,fithmmhourly4s)
