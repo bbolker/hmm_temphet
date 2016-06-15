@@ -14,7 +14,7 @@ fithmm <- function(state,cat,seed=NULL){
                   nstate=state,
                   transition=~1,
                   family=gaussian())
-  fitmodel <- fit(model,emcontrol=em.control(maxit=iter))
+  fitmodel <- fit(model,emcontrol=em.control(maxit=500))
   return(fitmodel)
 }
 
