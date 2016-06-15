@@ -15,7 +15,7 @@ fitmix <- function(state,cat,seed=2830){
                family=gaussian(),
                initdata=cat)
   set.seed(seed)
-  fitmodel <- fit(model,emcontrol=em.control(maxit=100))
+  fitmodel <- fit(model,emcontrol=em.control(maxit=500))
   return(fitmodel)
 }
 
@@ -89,5 +89,5 @@ simdf <- data.frame(fmm3S=simmix(3,dat,fitfmm3s)[2]
   , fmm7obs=simmix(7,dat,fitfmm7s)[1]
 )
 
-saveRDS(catsum,file="cat",catid,"fmm","sum","RDS",sep=".")
-saveRDS(simdf,file="cat",catid,"fmm","sim","RDS",sep=".")
+saveRDS(catsum,file=paste("cat",catid,"fmm","sum","RDS",sep="."))
+saveRDS(simdf,file=paste("cat",catid,"fmm","sim","RDS",sep="."))
