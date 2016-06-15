@@ -16,7 +16,7 @@ fithmmsin <- function(state,cat,seed=NULL){
                   transition=~cos(2*pi*Time/24)+ sin(2*pi*Time/24),
                   family=gaussian())
   set.seed(seed)
-  fitmodel <- fit(model,emcontrol=em.control(maxit=iter))
+  fitmodel <- fit(model,emcontrol=em.control(maxit=500))
   return(fitmodel)
 }
 
