@@ -1,4 +1,5 @@
 library(depmixS4)
+library(methods)
 library(dplyr)
 library(plyr)
 
