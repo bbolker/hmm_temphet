@@ -43,11 +43,11 @@ sumdf <- function(lst){
   return(temp)
 }
 
-fitfmmsin3 <- fitmixsin(3,dat,seed=3)
-fitfmmsin4 <- fitmixsin(4,dat,seed=1)
-fitfmmsin5 <- fitmixsin(5,dat,seed=1)
-fitfmmsin6 <- fitmixsin(6,dat,seed=1)
-fitfmmsin7 <- fitmixsin(7,dat,seed=1)
+fitfmmsin3s <- fitmixsin(3,dat,seed=3)
+fitfmmsin4s <- fitmixsin(4,dat,seed=1)
+fitfmmsin5s <- fitmixsin(5,dat,seed=1)
+fitfmmsin6s <- fitmixsin(6,dat,seed=1)
+fitfmmsin7s <- fitmixsin(7,dat,seed=1)
 
 fitlist <- list(fitfmmsin3s,fitfmmsin4s,fitfmmsin5s,fitfmmsin6s,fitfmmsin7s)
 
