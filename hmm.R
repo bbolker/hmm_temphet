@@ -40,35 +40,35 @@ sumdf <- function(lst){
   return(temp)
 }
 if(catid == 1){
-  fithmm3s <- fithmm(3,cat,3)
-  fithmm4s <- fithmm(4,cat,2)
-  fithmm5s <- fithmm(5,cat,1)
-  fithmm6s <- fithmm(6,cat,1)
-  fithmm7s <- fithmm(7,cat,1)
+  fithmm3s <- fithmm(3,dat,3)
+  fithmm4s <- fithmm(4,dat,2)
+  fithmm5s <- fithmm(5,dat,1)
+  fithmm6s <- fithmm(6,dat,1)
+  fithmm7s <- fithmm(7,dat,1)
 }
 
 if(catid == 2){
-  fithmm3s <- fithomo(3,cat,2830)
-  fithmm4s <- fithomo(4,cat,2)
-  fithmm5s <- fithomo(5,cat,1)
-  fithmm6s <- fithomo(6,cat,1)
-  fithmm7s <- fithomo(7,cat,1)
+  fithmm3s <- fithomo(3,dat,2830)
+  fithmm4s <- fithomo(4,dat,2)
+  fithmm5s <- fithomo(5,dat,1)
+  fithmm6s <- fithomo(6,dat,1)
+  fithmm7s <- fithomo(7,dat,1)
 }
 
 if(catid == 14){
-  fithmm3s <- fithmm(3,cat,3030)
-  fithmm4s <- fithmm(4,cat,2)
-  fithmm5s <- fithmm(5,cat,1)
-  fithmm6s <- fithmm(6,cat,1)
-  fithmm7s <- fithmm(7,cat,7)
+  fithmm3s <- fithmm(3,dat,3030)
+  fithmm4s <- fithmm(4,dat,2)
+  fithmm5s <- fithmm(5,dat,1)
+  fithmm6s <- fithmm(6,dat,1)
+  fithmm7s <- fithmm(7,dat,7)
 }
 
 if(catid == 15){
-  fithmm3s <- fithmm(3,cat,3030)
-  fithmm4s <- fithmm(4,cat,2)
-  fithmm5s <- fithmm(5,cat,1)
-  fithmm6s <- fithmm(6,cat,1)
-  fithmm7s <- fithmm(7,cat,1)
+  fithmm3s <- fithmm(3,dat,3030)
+  fithmm4s <- fithmm(4,dat,2)
+  fithmm5s <- fithmm(5,dat,1)
+  fithmm6s <- fithmm(6,dat,1)
+  fithmm7s <- fithmm(7,dat,1)
 }
 fitlist <- list(fithmm3s,fithmm4s,fithmm5s,fithmm6s,fithmm7s)
 
