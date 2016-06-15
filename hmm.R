@@ -18,7 +18,7 @@ fithmm <- function(state,cat,seed=NULL){
   return(fitmodel)
 }
 
-simhmm <- function(state,cat,fit){
+simhomo <- function(state,cat,fit){
   model <- depmix(LogDist~1,
                   data=cat,
                   nstate=state,
@@ -48,11 +48,11 @@ if(catid == 1){
 }
 
 if(catid == 2){
-  fithmm3s <- fithomo(3,dat,2830)
-  fithmm4s <- fithomo(4,dat,2)
-  fithmm5s <- fithomo(5,dat,1)
-  fithmm6s <- fithomo(6,dat,1)
-  fithmm7s <- fithomo(7,dat,1)
+  fithmm3s <- fithmm(3,dat,2830)
+  fithmm4s <- fithmm(4,dat,2)
+  fithmm5s <- fithmm(5,dat,1)
+  fithmm6s <- fithmm(6,dat,1)
+  fithmm7s <- fithmm(7,dat,1)
 }
 
 if(catid == 14){
@@ -73,16 +73,16 @@ if(catid == 15){
 fitlist <- list(fithmm3s,fithmm4s,fithmm5s,fithmm6s,fithmm7s)
 
 catsum <- sumdf(fitlist)
-simdf <- data.frame(hmm3S=simhmm(3,dat,fithmm3s)[2]
-                    , hmm3obs=simhmm(3,dat,fithmm3s)[1]
-                    , hmm4S=simhmm(4,dat,fithmm4s)[2]
-                    , hmm4obs=simhmm(4,dat,fithmm4s)[1]
-                    , hmm5S=simhmm(5,dat,fithmm5s)[2]
-                    , hmm5obs=simhmm(5,dat,fithmm5s)[1]
-                    , hmm6S=simhmm(6,dat,fithmm6s)[2]
-                    , hmm6obs=simhmm(6,dat,fithmm6s)[1]
-                    , hmm7S=simhmm(7,dat,fithmm7s)[2]
-                    , hmm7obs=simhmm(7,dat,fithmm7s)[1]
+simdf <- data.frame(hmm3S=simhomo(3,dat,fithmm3s)[2]
+                    , hmm3obs=simhomo(3,dat,fithmm3s)[1]
+                    , hmm4S=simhomo(4,dat,fithmm4s)[2]
+                    , hmm4obs=simhomo(4,dat,fithmm4s)[1]
+                    , hmm5S=simhomo(5,dat,fithmm5s)[2]
+                    , hmm5obs=simhomo(5,dat,fithmm5s)[1]
+                    , hmm6S=simhomo(6,dat,fithmm6s)[2]
+                    , hmm6obs=simhomo(6,dat,fithmm6s)[1]
+                    , hmm7S=simhomo(7,dat,fithmm7s)[2]
+                    , hmm7obs=simhomo(7,dat,fithmm7s)[1]
 )
 
 saveRDS(catsum,file=paste("cat",catid,"hmm","sum","RDS",sep="."))
