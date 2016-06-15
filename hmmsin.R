@@ -40,36 +40,37 @@ sumdf <- function(lst){
   return(temp)
 }
 
-if(catid == 15){
-fithmmsin3s <- fithmmsin(3,cat,seed=3030)
-fithmmsin4s <- fithmmsin(4,cat,seed=2830)
-fithmmsin5s <- fithmmsin(5,cat,seed=3030)
-fithmmsin6s <- fithmmsin(6,cat,seed=2830)
-fithmmsin7s <- fithmmsin(7,cat,seed=2830)
-}
-
 if(catid == 1){
-  fithmmsin3s <- fithmmsin(3,cat,seed=2030)
-  fithmmsin4s <- fithmmsin(4,cat,seed=2830)
-  fithmmsin5s <- fithmmsin(5,cat,seed=2030)
-  fithmmsin6s <- fithmmsin(6,cat,seed=2830)
-  fithmmsin7s <- fithmmsin(7,cat,seed=2830)
+  fithmmsin3s <- fithmmsin(3,dat,seed=2030)
+  fithmmsin4s <- fithmmsin(4,dat,seed=2830)
+  fithmmsin5s <- fithmmsin(5,dat,seed=2030)
+  fithmmsin6s <- fithmmsin(6,dat,seed=2830)
+  fithmmsin7s <- fithmmsin(7,dat,seed=2830)
 }
 
 if(catid == 2){
-  fithmmsin3s <- fithmmsin(3,cat,seed=2030)
-  fithmmsin4s <- fithmmsin(4,cat,seed=2830)
-  fithmmsin5s <- fithmmsin(5,cat,seed=2030)
-  fithmmsin6s <- fithmmsin(6,cat,seed=2830)
-  fithmmsin7s <- fithmmsin(7,cat,seed=2830)
+  fithmmsin3s <- fithmmsin(3,dat,seed=2030)
+  fithmmsin4s <- fithmmsin(4,dat,seed=2830)
+  fithmmsin5s <- fithmmsin(5,dat,seed=2030)
+  fithmmsin6s <- fithmmsin(6,dat,seed=2830)
+  fithmmsin7s <- fithmmsin(7,dat,seed=2830)
 }
 
 if(catid == 14){
-  fithmmsin3s <- fithmmsin(3,cat,seed=2030)
-  fithmmsin4s <- fithmmsin(4,cat,seed=2830)
-  fithmmsin5s <- fithmmsin(5,cat,seed=2030)
-  fithmmsin6s <- fithmmsin(6,cat,seed=2830)
-  fithmmsin7s <- fithmmsin(7,cat,seed=2830)
+  fithmmsin3s <- fithmmsin(3,dat,seed=2030)
+  fithmmsin4s <- fithmmsin(4,dat,seed=2830)
+  fithmmsin5s <- fithmmsin(5,dat,seed=2030)
+  fithmmsin6s <- fithmmsin(6,dat,seed=2830)
+  fithmmsin7s <- fithmmsin(7,dat,seed=2830)
+}
+
+
+if(catid == 15){
+  fithmmsin3s <- fithmmsin(3,dat,seed=3030)
+  fithmmsin4s <- fithmmsin(4,dat,seed=2830)
+  fithmmsin5s <- fithmmsin(5,dat,seed=3030)
+  fithmmsin6s <- fithmmsin(6,dat,seed=2830)
+  fithmmsin7s <- fithmmsin(7,dat,seed=2830)
 }
 
 fitlist <- list(fithmmsin3s,fithmmsin4s,fithmmsin5s,fithmmsin6s,fithmmsin7s)

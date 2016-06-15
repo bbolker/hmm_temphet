@@ -51,27 +51,27 @@ if(catid == 1){
 }
 
 if(catid == 2){
-  fitfmm3s <- fitmix(3,cat,seed=562)
-  fitfmm4s <- fitmix(4,cat,seed=265)
-  fitfmm5s <- fitmix(5,cat,seed=11)
-  fitfmm6s <- fitmix(6,cat,seed=48)
-  fitfmm7s <- fitmix(7,cat,seed=12)
+  fitfmm3s <- fitmix(3,dat,seed=562)
+  fitfmm4s <- fitmix(4,dat,seed=265)
+  fitfmm5s <- fitmix(5,dat,seed=11)
+  fitfmm6s <- fitmix(6,dat,seed=48)
+  fitfmm7s <- fitmix(7,dat,seed=12)
 }
 
 if(catid == 14){
-  fitfmm3s <- fitmix(3,cat,seed=64)
-  fitfmm4s <- fitmix(4,cat,seed=4)
-  fitfmm5s <- fitmix(5,cat,seed=54)
-  fitfmm6s <- fitmix(6,cat,seed=16)
-  fitfmm7s <- fitmix(7,cat,seed=3)
+  fitfmm3s <- fitmix(3,dat,seed=64)
+  fitfmm4s <- fitmix(4,dat,seed=4)
+  fitfmm5s <- fitmix(5,dat,seed=54)
+  fitfmm6s <- fitmix(6,dat,seed=16)
+  fitfmm7s <- fitmix(7,dat,seed=3)
 }
 
 if(catid == 15){
-  fitfmm3s <- fitmix(3,cat,seed=3)
-  fitfmm4s <- fitmix(4,cat,seed=1)
-  fitfmm5s <- fitmix(5,cat,seed=1)
-  fitfmm6s <- fitmix(6,cat,seed=1)
-  fitfmm7s <- fitmix(7,cat,seed=1)
+  fitfmm3s <- fitmix(3,dat,seed=3)
+  fitfmm4s <- fitmix(4,dat,seed=1)
+  fitfmm5s <- fitmix(5,dat,seed=1)
+  fitfmm6s <- fitmix(6,dat,seed=1)
+  fitfmm7s <- fitmix(7,dat,seed=1)
 }
 
 fitlist <- list(fitfmm3s,fitfmm4s,fitfmm5s,fitfmm6s,fitfmm7s)
