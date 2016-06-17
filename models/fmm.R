@@ -77,17 +77,23 @@ if(catid == 15){
 fitlist <- list(fitfmm3s,fitfmm4s,fitfmm5s,fitfmm6s,fitfmm7s)
 
 catsum <- sumdf(fitlist)
-simdf <- data.frame(fmm3S=simmix(3,dat,fitfmm3s)[2]
-  , fmm3obs=simmix(3,dat,fitfmm3s)[1]
-  , fmm4S=simmix(4,dat,fitfmm4s)[2]
-  , fmm4obs=simmix(4,dat,fitfmm4s)[1]
-  , fmm5S=simmix(5,dat,fitfmm5s)[2]
-  , fmm5obs=simmix(5,dat,fitfmm5s)[1]
-  , fmm6S=simmix(6,dat,fitfmm6s)[2]
-  , fmm6obs=simmix(6,dat,fitfmm6s)[1]
-  , fmm7S=simmix(7,dat,fitfmm7s)[2]
-  , fmm7obs=simmix(7,dat,fitfmm7s)[1]
+simdf <- data.frame(fmm3S=simmix(3,dat,fitfmm3s)[,2]
+  , fmm3obs=simmix(3,dat,fitfmm3s)[,1]
+  , fmm4S=simmix(4,dat,fitfmm4s)[,2]
+  , fmm4obs=simmix(4,dat,fitfmm4s)[,1]
+  , fmm5S=simmix(5,dat,fitfmm5s)[,2]
+  , fmm5obs=simmix(5,dat,fitfmm5s)[,1]
+  , fmm6S=simmix(6,dat,fitfmm6s)[,2]
+  , fmm6obs=simmix(6,dat,fitfmm6s)[,1]
+  , fmm7S=simmix(7,dat,fitfmm7s)[,2]
+  , fmm7obs=simmix(7,dat,fitfmm7s)[,1]
 )
 
-saveRDS(catsum,file=paste("cat",catid,"fmm","sum","RDS",sep="."))
-saveRDS(simdf,file=paste("cat",catid,"fmm","sim","RDS",sep="."))
+parslist <- list()
+for(i in 1:length(fitlist)){
+  parslist[[i]] <- getpars(fitlist[[i]])
+}
+
+datlist <- list(catsum,parslist,simdf)
+
+saveRDS(datlist,file=paste("cat",catid,"fmm","RDS",sep="."))

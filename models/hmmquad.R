@@ -49,17 +49,22 @@ fithmmquad7s <- fithmmquad(7,dat,seed=3030)
 fitlist <- list(fithmmquad3s,fithmmquad4s,fithmmquad5s,fithmmquad6s,fithmmquad7s)
 
 catsum <- sumdf(fitlist)
-simdf <- data.frame(hmmquad3S=simhmmquad(3,dat,fithmmquad3s)[2]
-                    , hmmquad3obs=simhmmquad(3,dat,fithmmquad3s)[1]
-                    , hmmquad4S=simhmmquad(4,dat,fithmmquad4s)[2]
-                    , hmmquad4obs=simhmmquad(4,dat,fithmmquad4s)[1]
-                    , hmmquad5S=simhmmquad(5,dat,fithmmquad5s)[2]
-                    , hmmquad5obs=simhmmquad(5,dat,fithmmquad5s)[1]
-                    , hmmquad6S=simhmmquad(6,dat,fithmmquad6s)[2]
-                    , hmmquad6obs=simhmmquad(6,dat,fithmmquad6s)[1]
-                    , hmmquad7S=simhmmquad(7,dat,fithmmquad7s)[2]
-                    , hmmquad7obs=simhmmquad(7,dat,fithmmquad7s)[1]
+simdf <- data.frame(hmmquad3S=simhmmquad(3,dat,fithmmquad3s)[,2]
+                    , hmmquad3obs=simhmmquad(3,dat,fithmmquad3s)[,1]
+                    , hmmquad4S=simhmmquad(4,dat,fithmmquad4s)[,2]
+                    , hmmquad4obs=simhmmquad(4,dat,fithmmquad4s)[,1]
+                    , hmmquad5S=simhmmquad(5,dat,fithmmquad5s)[,2]
+                    , hmmquad5obs=simhmmquad(5,dat,fithmmquad5s)[,1]
+                    , hmmquad6S=simhmmquad(6,dat,fithmmquad6s)[,2]
+                    , hmmquad6obs=simhmmquad(6,dat,fithmmquad6s)[,1]
+                    , hmmquad7S=simhmmquad(7,dat,fithmmquad7s)[,2]
+                    , hmmquad7obs=simhmmquad(7,dat,fithmmquad7s)[,1]
 )
+parslist <- list()
+for(i in 1:length(fitlist)){
+  parslist[[i]] <- getpars(fitlist[[i]])
+}
 
-saveRDS(catsum,file=paste("cat",catid,"hmmquad","sum","RDS",sep="."))
-saveRDS(simdf,file=paste("cat",catid,"hmmquad","sim","RDS",sep="."))
+datlist <- list(catsum,parslist,simdf)
+
+saveRDS(datlist,file=paste("cat",catid,"hmmquad","RDS",sep="."))

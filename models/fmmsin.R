@@ -52,17 +52,22 @@ fitfmmsin7s <- fitmixsin(7,dat,seed=1)
 fitlist <- list(fitfmmsin3s,fitfmmsin4s,fitfmmsin5s,fitfmmsin6s,fitfmmsin7s)
 
 catsum <- sumdf(fitlist)
-simdf <- data.frame(fmmsin3S=simmixsin(3,dat,fitfmmsin3s)[2]
-                    , fmmsin3obs=simmixsin(3,dat,fitfmmsin3s)[1]
-                    , fmmsin4S=simmixsin(4,dat,fitfmmsin4s)[2]
-                    , fmmsin4obs=simmixsin(4,dat,fitfmmsin4s)[1]
-                    , fmmsin5S=simmixsin(5,dat,fitfmmsin5s)[2]
-                    , fmmsin5obs=simmixsin(5,dat,fitfmmsin5s)[1]
-                    , fmmsin6S=simmixsin(6,dat,fitfmmsin6s)[2]
-                    , fmmsin6obs=simmixsin(6,dat,fitfmmsin6s)[1]
-                    , fmmsin7S=simmixsin(7,dat,fitfmmsin7s)[2]
-                    , fmmsin7obs=simmixsin(7,dat,fitfmmsin7s)[1]
+simdf <- data.frame(fmmsin3S=simmixsin(3,dat,fitfmmsin3s)[,2]
+                    , fmmsin3obs=simmixsin(3,dat,fitfmmsin3s)[,1]
+                    , fmmsin4S=simmixsin(4,dat,fitfmmsin4s)[,2]
+                    , fmmsin4obs=simmixsin(4,dat,fitfmmsin4s)[,1]
+                    , fmmsin5S=simmixsin(5,dat,fitfmmsin5s)[,2]
+                    , fmmsin5obs=simmixsin(5,dat,fitfmmsin5s)[,1]
+                    , fmmsin6S=simmixsin(6,dat,fitfmmsin6s)[,2]
+                    , fmmsin6obs=simmixsin(6,dat,fitfmmsin6s)[,1]
+                    , fmmsin7S=simmixsin(7,dat,fitfmmsin7s)[,2]
+                    , fmmsin7obs=simmixsin(7,dat,fitfmmsin7s)[,1]
 )
+parslist <- list()
+for(i in 1:length(fitlist)){
+  parslist[[i]] <- getpars(fitlist[[i]])
+}
 
-saveRDS(catsum,file=paste("cat",catid,"fmmsin","sum","RDS",sep="."))
-saveRDS(simdf,file=paste("cat",catid,"fmmsin","sim","RDS",sep="."))
+datlist <- list(catsum,parslist,simdf)
+
+saveRDS(datlist,file=paste("cat",catid,"fmmsin","RDS",sep="."))

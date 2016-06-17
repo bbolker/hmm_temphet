@@ -50,17 +50,22 @@ fithmmblock7s <- fithmmblock(7,dat,seed=3030)
 fitlist <- list(fithmmblock3s,fithmmblock4s,fithmmblock5s,fithmmblock6s,fithmmblock7s)
 
 catsum <- sumdf(fitlist)
-simdf <- data.frame(hmmblock3S=simhmmblock(3,dat,fithmmblock3s)[2]
-                    , hmmblock3obs=simhmmblock(3,dat,fithmmblock3s)[1]
-                    , hmmblock4S=simhmmblock(4,dat,fithmmblock4s)[2]
-                    , hmmblock4obs=simhmmblock(4,dat,fithmmblock4s)[1]
-                    , hmmblock5S=simhmmblock(5,dat,fithmmblock5s)[2]
-                    , hmmblock5obs=simhmmblock(5,dat,fithmmblock5s)[1]
-                    , hmmblock6S=simhmmblock(6,dat,fithmmblock6s)[2]
-                    , hmmblock6obs=simhmmblock(6,dat,fithmmblock6s)[1]
-                    , hmmblock7S=simhmmblock(7,dat,fithmmblock7s)[2]
-                    , hmmblock7obs=simhmmblock(7,dat,fithmmblock7s)[1]
+simdf <- data.frame(hmmblock3S=simhmmblock(3,dat,fithmmblock3s)[,2]
+                    , hmmblock3obs=simhmmblock(3,dat,fithmmblock3s)[,1]
+                    , hmmblock4S=simhmmblock(4,dat,fithmmblock4s)[,2]
+                    , hmmblock4obs=simhmmblock(4,dat,fithmmblock4s)[,1]
+                    , hmmblock5S=simhmmblock(5,dat,fithmmblock5s)[,2]
+                    , hmmblock5obs=simhmmblock(5,dat,fithmmblock5s)[,1]
+                    , hmmblock6S=simhmmblock(6,dat,fithmmblock6s)[,2]
+                    , hmmblock6obs=simhmmblock(6,dat,fithmmblock6s)[,1]
+                    , hmmblock7S=simhmmblock(7,dat,fithmmblock7s)[,2]
+                    , hmmblock7obs=simhmmblock(7,dat,fithmmblock7s)[,1]
 )
+parslist <- list()
+for(i in 1:length(fitlist)){
+  parslist[[i]] <- getpars(fitlist[[i]])
+}
 
-saveRDS(catsum,file=paste("cat",catid,"hmmblock","sum","RDS",sep="."))
-saveRDS(simdf,file=paste("cat",catid,"hmmblock","sim","RDS",sep="."))
+datlist <- list(catsum,parslist,simdf)
+
+saveRDS(datlist,file=paste("cat",catid,"hmmblock","RDS",sep="."))

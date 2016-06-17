@@ -48,11 +48,16 @@ fithmmhourly4s <- fithmmhourly(4,dat,seed=1)
 fitlist <- list(fithmmhourly3s,fithmmhourly4s)
 
 catsum <- sumdf(fitlist)
-simdf <- data.frame(hmmhourly3S=simhmmhourly(3,dat,fithmmhourly3s)[2]
-                    , hmmhourly3obs=simhmmhourly(3,dat,fithmmhourly3s)[1]
-                    , hmmhourly4S=simhmmhourly(4,dat,fithmmhourly4s)[2]
-                    , hmmhourly4obs=simhmmhourly(4,dat,fithmmhourly4s)[1]
+simdf <- data.frame(hmmhourly3S=simhmmhourly(3,dat,fithmmhourly3s)[,2]
+                    , hmmhourly3obs=simhmmhourly(3,dat,fithmmhourly3s)[,1]
+                    , hmmhourly4S=simhmmhourly(4,dat,fithmmhourly4s)[,2]
+                    , hmmhourly4obs=simhmmhourly(4,dat,fithmmhourly4s)[,1]
 )
+parslist <- list()
+for(i in 1:length(fitlist)){
+  parslist[[i]] <- getpars(fitlist[[i]])
+}
 
-saveRDS(catsum,file=paste("cat",catid,"hmmhourly","sum","RDS",sep="."))
-saveRDS(simdf,file=paste("cat",catid,"hmmhourly","sim","RDS",sep="."))
+datlist <- list(catsum,parslist,simdf)
+
+saveRDS(datlist,file=paste("cat",catid,"hmmhourly","RDS",sep="."))

@@ -74,17 +74,22 @@ if(catid == 15){
 fitlist <- list(fithmm3s,fithmm4s,fithmm5s,fithmm6s,fithmm7s)
 
 catsum <- sumdf(fitlist)
-simdf <- data.frame(hmm3S=simhomo(3,dat,fithmm3s)[2]
-                    , hmm3obs=simhomo(3,dat,fithmm3s)[1]
-                    , hmm4S=simhomo(4,dat,fithmm4s)[2]
-                    , hmm4obs=simhomo(4,dat,fithmm4s)[1]
-                    , hmm5S=simhomo(5,dat,fithmm5s)[2]
-                    , hmm5obs=simhomo(5,dat,fithmm5s)[1]
-                    , hmm6S=simhomo(6,dat,fithmm6s)[2]
-                    , hmm6obs=simhomo(6,dat,fithmm6s)[1]
-                    , hmm7S=simhomo(7,dat,fithmm7s)[2]
-                    , hmm7obs=simhomo(7,dat,fithmm7s)[1]
+simdf <- data.frame(hmm3S=simhomo(3,dat,fithmm3s)[,2]
+                    , hmm3obs=simhomo(3,dat,fithmm3s)[,1]
+                    , hmm4S=simhomo(4,dat,fithmm4s)[,2]
+                    , hmm4obs=simhomo(4,dat,fithmm4s)[,1]
+                    , hmm5S=simhomo(5,dat,fithmm5s)[,2]
+                    , hmm5obs=simhomo(5,dat,fithmm5s)[,1]
+                    , hmm6S=simhomo(6,dat,fithmm6s)[,2]
+                    , hmm6obs=simhomo(6,dat,fithmm6s)[,1]
+                    , hmm7S=simhomo(7,dat,fithmm7s)[,2]
+                    , hmm7obs=simhomo(7,dat,fithmm7s)[,1]
 )
+parslist <- list()
+for(i in 1:length(fitlist)){
+  parslist[[i]] <- getpars(fitlist[[i]])
+}
 
-saveRDS(catsum,file=paste("cat",catid,"hmm","sum","RDS",sep="."))
-saveRDS(simdf,file=paste("cat",catid,"hmm","sim","RDS",sep="."))
+datlist <- list(catsum,parslist,simdf)
+
+saveRDS(datlist,file=paste("cat",catid,"hmm","RDS",sep="."))

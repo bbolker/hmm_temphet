@@ -7,16 +7,16 @@ current:  paper3.pdf.now
 cat.%.df: dataframe.R ArchivePantherData.csv %.cat
 	$(R) $^
 
-cat.1.%: %.R cat.1.RDS mikesim.R 
+cat.1.%: ./models/%.R cat.1.RDS mikesim.R 
 	$(R) $^ 
 
-cat.2.%: %.R cat.2.RDS mikesim.R 
+cat.2.%: ./models/%.R cat.2.RDS mikesim.R 
 	$(R) $^ 
 
-cat.14.%: %.R cat.14.RDS mikesim.R 
+cat.14.%: ./models/%.R cat.14.RDS mikesim.R 
 	$(R) $^ 
 
-cat.15.%: %.R cat.15.RDS mikesim.R 
+cat.15.%: ./models/%.R cat.15.RDS mikesim.R 
 	$(R) $^ 
 
 
