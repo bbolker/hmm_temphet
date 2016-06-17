@@ -5,6 +5,8 @@ library(methods)
 setClass("weibull", contains="response")
 library(MASS)
 library(stats)
+library(dplyr)
+library(plyr)
 
 files <- commandArgs(trailingOnly = TRUE)
 catid <- unlist(strsplit(files[1],split="[.]"))[2]
@@ -125,7 +127,7 @@ inMod <- transInit(~ 1, ns = 3, pstart = rep(1/3, 3),
 w3 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
 
-wbhmm3s <- fit(w3, verbose = TRUE, emc=em.control(rand=FALSE, maxit=20))
+wbhmm3s <- fit(w3, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 summary(wbhmm3s)
 
@@ -158,7 +160,7 @@ inMod <- transInit(~ 1, ns = 4, pstart = rep(1/4, 4),
                    data = data.frame(1))
 w4 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-wbhmm4s <- fit(w4, verbose = TRUE, emc=em.control(rand=FALSE, maxit=20))
+wbhmm4s <- fit(w4, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(wbhmm4s)
 
 # HMM Weibull 5 states ----
@@ -195,7 +197,7 @@ inMod <- transInit(~ 1, ns = 5, pstart = rep(1/5, 5),
                    data = data.frame(1))
 w5 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-wbhmm5s <- fit(w5, verbose = TRUE, emc=em.control(rand=FALSE, maxit=20))
+wbhmm5s <- fit(w5, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(wbhmm5s)
 
 # HMM Weibull 6 states ----
@@ -237,7 +239,7 @@ inMod <- transInit(~ 1, ns = 6, pstart = rep(1/6, 6),
                    data = data.frame(1))
 w6 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-wbhmm6s <- fit(w6, verbose = TRUE, emc=em.control(rand=FALSE, maxit=20))
+wbhmm6s <- fit(w6, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(wbhmm6s)
 
 
@@ -286,7 +288,7 @@ inMod <- transInit(~ 1, ns = 7, pstart = rep(1/7, 7),
                    data = data.frame(1))
 w7 <- makeDepmix(response = rModels, transition = transition,
                  prior=inMod,homogeneous = FALSE)
-wbhmm7s <- fit(w7, verbose = TRUE, emc=em.control(rand=FALSE, maxit=20))
+wbhmm7s <- fit(w7, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 summary(wbhmm7s)
 
 
@@ -294,8 +296,8 @@ sumdf <- function(lst){
   BIC <- ldply(lst,BIC)
   nstates <-ldply(lst,nstates)
   para <- ldply(lst,freepars)
-  model <- c('FMM','FMM','FMM','FMM','FMM')
-  type <- c('FMM','FMM','FMM','FMM','FMM')
+  model <- c('HMM Weibull','HMM Weibull','HMM Weibull','HMM Weibull','HMM Weibull')
+  type <- c('HMM','HMM','HMM','HMM','HMM')
   temp <- data.frame(BICS=BIC$V1,nstates=nstates$V1,parameters=para$V1,model,type)
   return(temp)
 }
@@ -305,5 +307,5 @@ fitlist <- list(wbhmm3s,wbhmm4s,wbhmm5s,wbhmm6s,wbhmm7s)
 catsum <- sumdf(fitlist)
 
 
-saveRDS(catsum,file=paste("cat",catid,"wbhmm,"sum","RDS",sep="."))
+saveRDS(catsum,file=paste("cat",catid,"wbhmm","RDS",sep="."))
 
