@@ -16,7 +16,7 @@ fithmmblock <- function(state,cat,seed=NULL){
                   transition=~factor(Block),
                   family=gaussian())
   set.seed(seed)
-  fitmodel <- fit(model,emcontrol=em.control(maxit=iter))
+  fitmodel <- fit(model,emcontrol=em.control(maxit=500))
   return(fitmodel)
 }
 
