@@ -269,9 +269,9 @@ transition[[4]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 4, da
                                         0,1/4,1/4,1/4))
 inMod <- transInit(~ 1, ns = 4, pstart = rep(1/4, 4),
                    data = data.frame(1))
-wbvmsinhmm4s <- makeDepmix(response = rModels, transition = transition,
+sin4 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-WVMsin4 <- fit(sin4, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
+wbvmsinhmm4s <- fit(sin4, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 
 # HMM WVM 5 states time het ----
