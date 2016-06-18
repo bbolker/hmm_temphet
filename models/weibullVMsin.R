@@ -202,28 +202,6 @@ setMethod("fit", "weibull",
           }
           
 )
-
-
-
-
-sumdf <- function(lst){
-  BIC <- ldply(lst,BIC)
-  nstates <-ldply(lst,nstates)
-  para <- ldply(lst,freepars)
-  model <- c('HMM WeibullVMsin','HMM WeibullVMsin','HMM WeibullVMsin','HMM WeibullVMsin','HMM WeibullVMsin')
-  type <- c('HMM + TH','HMM + TH','HMM + TH','HMM + TH','HMM + TH')
-  temp <- data.frame(BICS=BIC$V1,nstates=nstates$V1,parameters=para$V1,model,type)
-  return(temp)
-}
-
-fitlist <- list(wbvmhmmsin3s,wbvmhmmsin4s,wbvmhmmsin5s,wbvmhmmsin6s,wbvmhmmsin7s)
-
-catsum <- sumdf(fitlist)
-
-
-saveRDS(datsum,file=paste("cat",catid,"wbvmhmmsin","RDS",sep="."))
-
-
 # depmix model setup 3 states time het ----
 dist <- pmax(dat$Distance,1e-3)
 rModels <- list()
@@ -474,4 +452,24 @@ inMod <- transInit(~ 1, ns = 7, pstart = rep(1/7, 7),
 sin7 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
 wbvmsinhmm7s <- fit(sin7, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
+
+
+
+
+sumdf <- function(lst){
+  BIC <- ldply(lst,BIC)
+  nstates <-ldply(lst,nstates)
+  para <- ldply(lst,freepars)
+  model <- c('HMM WeibullVMsin','HMM WeibullVMsin','HMM WeibullVMsin','HMM WeibullVMsin','HMM WeibullVMsin')
+  type <- c('HMM + TH','HMM + TH','HMM + TH','HMM + TH','HMM + TH')
+  temp <- data.frame(BICS=BIC$V1,nstates=nstates$V1,parameters=para$V1,model,type)
+  return(temp)
+}
+
+fitlist <- list(wbvmhmmsin3s,wbvmhmmsin4s,wbvmhmmsin5s,wbvmhmmsin6s,wbvmhmmsin7s)
+
+catsum <- sumdf(fitlist)
+
+
+saveRDS(datsum,file=paste("cat",catid,"wbvmhmmsin","RDS",sep="."))
 
