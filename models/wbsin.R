@@ -124,7 +124,7 @@ inMod <- transInit(~ 1, ns = 3, pstart = rep(1/3, 3),
                    data = data.frame(1))
 ws3 <- makeDepmix(response = rModels, transition = transition,
                   prior=inMod,homogeneous = FALSE)
-wbsinhmm3s <- fit(ws3, verbose = TRUE, emc=em.control(rand=FALSE, maxit=20))
+wbsinhmm3s <- fit(ws3, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 # HMM W 4 states time het ----
 rModels <- list()
@@ -162,7 +162,7 @@ inMod <- transInit(~ 1, ns = 4, pstart = rep(1/4, 4),
                    data = data.frame(1))
 ws4 <- makeDepmix(response = rModels, transition = transition,
                   prior=inMod,homogeneous = FALSE)
-wbsinhmm4s <- fit(ws4, verbose = TRUE, emc=em.control(rand=FALSE, maxit=20))
+wbsinhmm4s <- fit(ws4, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 # HMM W 5 states time het ----
 
@@ -207,7 +207,7 @@ inMod <- transInit(~ 1, ns = 5, pstart = rep(1/5, 5),
                    data = data.frame(1))
 ws5 <- makeDepmix(response = rModels, transition = transition,
                   prior=inMod,homogeneous = FALSE)
-wbsinhmm5s <- fit(ws5, verbose = TRUE, emc=em.control(rand=FALSE, maxit=20))
+wbsinhmm5s <- fit(ws5, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 # HMM W 6 states time het ----
 
@@ -260,7 +260,7 @@ inMod <- transInit(~ 1, ns = 6, pstart = rep(1/6, 6),
                    data = data.frame(1))
 ws6 <- makeDepmix(response = rModels, transition = transition,
                   prior=inMod,homogeneous = FALSE)
-wbsinhmm6s <- fit(ws6, verbose = TRUE, emc=em.control(rand=FALSE, maxit=20))
+wbsinhmm6s <- fit(ws6, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 
 # HMM W 7 states time het ----
@@ -321,7 +321,7 @@ inMod <- transInit(~ 1, ns = 7, pstart = rep(1/7, 7),
                    data = data.frame(1))
 ws7 <- makeDepmix(response = rModels, transition = transition,
                   prior=inMod,homogeneous = FALSE)
-wbsinhmm7s <- fit(ws7, verbose = TRUE, emc=em.control(rand=FALSE, maxit=20))
+wbsinhmm7s <- fit(ws7, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 
 
