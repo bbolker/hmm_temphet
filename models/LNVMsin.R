@@ -13,6 +13,9 @@ dat <- readRDS(files[1])
 
 ## library(VGAM)  ## this may mess up multinomial()
 
+setClass("vonMises", contains="response")
+## library(VGAM)  ## this may mess up multinomial()
+
 
 setGeneric("vonMises", function(y, pstart = NULL, fixed = NULL, ...) 
   standardGeneric("vonMises"))
