@@ -41,11 +41,37 @@ sumdf <- function(lst){
   return(temp)
 }
 
-fithmmblock3s <- fithmmblock(3,dat,seed=2830)
-fithmmblock4s <- fithmmblock(4,dat,seed=2830)
-fithmmblock5s <- fithmmblock(5,dat,seed=2830)
-fithmmblock6s <- fithmmblock(6,dat,seed=2830)
-fithmmblock7s <- fithmmblock(7,dat,seed=3030)
+if(catid == 1){
+  fithmmblock3s <- fithmmblock(3,dat,seed=2830)
+  fithmmblock4s <- fithmmblock(4,dat,seed=2830)
+  fithmmblock5s <- fithmmblock(5,dat,seed=2830)
+  fithmmblock6s <- fithmmblock(6,dat,seed=2830)
+  fithmmblock7s <- fithmmblock(7,dat,seed=3030)
+}
+
+if(catid == 2){
+  fithmmblock3s <- fithmmblock(3,dat,seed=2830)
+  fithmmblock4s <- fithmmblock(4,dat,seed=2830)
+  fithmmblock5s <- fithmmblock(5,dat,seed=2830)
+  fithmmblock6s <- fithmmblock(6,dat,seed=2830)
+  fithmmblock7s <- fithmmblock(7,dat,seed=3030)
+}
+
+if(catid == 14){
+  fithmmblock3s <- fithmmblock(3,dat,seed=2830)
+  fithmmblock4s <- fithmmblock(4,dat,seed=2830)
+  fithmmblock5s <- fithmmblock(5,dat,seed=2830)
+  fithmmblock6s <- fithmmblock(6,dat,seed=2830)
+  fithmmblock7s <- fithmmblock(7,dat,seed=2030)
+}
+
+if(catid == 15){
+  fithmmblock3s <- fithmmblock(3,dat,seed=2830)
+  fithmmblock4s <- fithmmblock(4,dat,seed=2830)
+  fithmmblock5s <- fithmmblock(5,dat,seed=2830)
+  fithmmblock6s <- fithmmblock(6,dat,seed=2830)
+  fithmmblock7s <- fithmmblock(7,dat,seed=3030)
+}
 
 fitlist <- list(fithmmblock3s,fithmmblock4s,fithmmblock5s,fithmmblock6s,fithmmblock7s)
 
