@@ -35,7 +35,7 @@ sumdf <- function(lst){
   BIC <- ldply(lst,BIC)
   nstates <-ldply(lst,nstates)
   para <- ldply(lst,freepars)
-  model <- c('FMM + THsin','FMM + THsin','FMM + THsin','FMM + THsin','FMM + THsin')
+  model <- c('HMM + THsin','HMM + THsin','HMM + THsin','HMM + THsin','HMM + THsin')
   type <- c('HMM + TH','HMM + TH','HMM + TH','HMM + TH','HMM + TH')
   temp <- data.frame(BICS=BIC$V1,nstates=nstates$V1,parameters=para$V1,model,type)
   return(temp)
