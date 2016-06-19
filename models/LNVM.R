@@ -140,7 +140,7 @@ inMod <- transInit(~ 1, ns = 3, pstart = rep(1/3, 3),
                    data = data.frame(1))
 mod3 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-lnvmhmm3s <- fit(mod3, verbose = TRUE, emc=em.control(rand=FALSE, maxit=20))
+lnvmhmm3s <- fit(mod3, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 
 # HMM LNVM 4 states ----
@@ -179,7 +179,7 @@ inMod <- transInit(~ 1, ns = 4, pstart = rep(1/4, 4),
                    data = data.frame(1))
 mod4 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-lnvmhmm4s <- fit(mod4, verbose = TRUE, emc=em.control(rand=FALSE, maxit=20))
+lnvmhmm4s <- fit(mod4, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 
 # HMM LNVM 5 states ----
@@ -226,7 +226,7 @@ inMod <- transInit(~ 1, ns = 5, pstart = rep(1/5, 5),
                    data = data.frame(1))
 mod5 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-lnvmhmm5s <- fit(mod5, verbose = TRUE, emc=em.control(rand=FALSE, maxit=20))
+lnvmhmm5s <- fit(mod5, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 
 # HMM LNVM 6 states ----
@@ -280,7 +280,7 @@ inMod <- transInit(~ 1, ns = 6, pstart = rep(1/6, 6),
                    data = data.frame(1))
 mod6 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-lnvmhmm6s <- fit(mod6, verbose = TRUE, emc=em.control(rand=FALSE, maxit=20))
+lnvmhmm6s <- fit(mod6, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 
 
@@ -342,7 +342,7 @@ inMod <- transInit(~ 1, ns = 7, pstart = rep(1/7, 7),
                    data = data.frame(1))
 mod7 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-lnvmhmm7s <- fit(mod7, verbose = TRUE, emc=em.control(rand=FALSE, maxit=20))
+lnvmhmm7s <- fit(mod7, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 
 sumdf <- function(lst){
