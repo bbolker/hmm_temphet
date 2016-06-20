@@ -69,7 +69,7 @@ clean:
 	rm -f *.bbl *.blg *.log *.aux *.loc *~ *.txt
 
 move_sum: 
-	mv cat.*.RDS ./summary_stats/
+	mv cat.*.*.RDS ./summary_stats/
 
 
 

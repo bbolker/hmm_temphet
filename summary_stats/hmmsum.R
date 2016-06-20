@@ -16,6 +16,23 @@ sumdf <- (sumdf
   %>% mutate(deltaBIC = BICS-min(BICS))
 )
 
+multimoddf <- data.frame()
+for(i in multimods){i
+  multimoddf <- rbind(multimoddf,i)
+}
+
+
+minBICS <- (multimoddf 
+  %>% group_by(model) 
+  %>% slice(which.min(BICS))
+  %>% ungroup()
+  %>% transmute(minBICS = BICS, model=model)
+)
+
+multimoddf2 <- (left_join(multimoddf,minBICS)
+          %>% mutate(deltaBIC = BICS-minBICS)
+)
+
 (adj_BIC_plot <- ggplot(sumdf, aes(x=nstates,y=deltaBIC,colour=model))+
   facet_wrap(~ type,ncol=4)+
   scale_size_continuous( name="# of parameters") +
