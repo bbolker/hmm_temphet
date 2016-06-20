@@ -329,7 +329,7 @@ sumdf <- function(lst){
   BIC <- ldply(lst,BIC)
   nstates <-ldply(lst,nstates)
   para <- ldply(lst,freepars)
-  model <- c('HMM WeibullVMsin','HMM WeibullVMsin','HMM WeibullVMsin','HMM WeibullVMsin','HMM WeibullVMsin')
+  model <- c('HMM Weibullsin','HMM Weibullsin','HMM Weibullsin','HMM Weibullsin','HMM Weibullsin')
   type <- c('HMM + TH','HMM + TH','HMM + TH','HMM + TH','HMM + TH')
   temp <- data.frame(BICS=BIC$V1,nstates=nstates$V1,parameters=para$V1,model,type)
   return(temp)

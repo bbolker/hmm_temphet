@@ -460,7 +460,7 @@ sumdf <- function(lst){
   BIC <- ldply(lst,BIC)
   nstates <-ldply(lst,nstates)
   para <- ldply(lst,freepars)
-  model <- c('HMM LNVM','HMM LNVM','HMM LNVM','HMM LNVM','HMM LNVM')
+  model <- c('HMM WBVM','HMM WBVM','HMM WBVM','HMM WBVM','HMM WBVM')
   type <- c('HMM','HMM','HMM','HMM','HMM')
   temp <- data.frame(BICS=BIC$V1,nstates=nstates$V1,parameters=para$V1,model,type)
   return(temp)
