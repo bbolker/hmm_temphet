@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage{natbib}
+\usepackage[sort]{natbib}
 \usepackage{amsmath}
 \usepackage{alltt}
 \usepackage[utf8]{inputenc} % for accented characters
@@ -48,20 +48,22 @@ if (!require("ggalt")) {
 \begin{abstract}
 
 Clustering time-series data into discrete groups can improve
-prediction as well as providing insight into the nature of underlying,
+prediction and provide insight into the nature of underlying,
 unobservable states of the system. However, temporal variation in the
-probability that individuals occupy or move between groups can obscure
-such signals. We use finite mixture and hidden Markov models, two
+rates at which individuals move between groups can obscure
+such signals. We use finite mixture and hidden Markov models (HMMs), two
 standard clustering techniques, to model high-resolution hourly
 movement data from Florida panthers (\emph{Puma concolor coryi}).
 Allowing for temporal
 heterogeneity in transition probabilities, a straightforward but
-rarely explored model extension, resolves some shortcomings of current
-modeling frameworks and clarifies the behavioural patterns of
-panthers. More generally, incorporating previously neglected
-structure in statistical models can allow researchers to more
-accurately identify models of appropriate complexity.
-
+rarely extension of the standard HMM framework, 
+resolves some shortcomings of current
+models and clarifies the behavioural patterns of
+panthers. More generally, we point out that model misspecification
+(omitting important sources of variation) can lead to overfitting,
+and as a corollary that incorporating previously neglected
+structure in statistical models can allow more
+accurate assessment of appropriate model complexity.
 
 \end{abstract}
 
@@ -69,12 +71,12 @@ accurately identify models of appropriate complexity.
 
 \section{Introduction}
 
+\todo{ethics statement? numbers vs words?}
 %% BMB: note that it is *much* easier to keep track of changes in Github,
 %% which works on the line level, if you don't use line-wrap ...
 
-Given a sequence of animal movements observed directly 
-or via telemetry, movement models aim to find a parsimonious description
-that can be used to understand past movements as well as predict
+Given a sequence of animal movements, movement models aim to find a parsimonious description
+that can be used to understand past movements and predict
 future movements. Ecologists have long considered the effects of
 individual-level covariates (sex, age, nutritional status) and
 environmental covariates (habitat type, location of predators or prey)
@@ -85,7 +87,8 @@ More recently, modelers have developed
 --- used in animal ecology under the rubric of the ``multiphasic movement
 framework'' \citep{fryxell_multiple_2008} --- that consider the effects
 of organisms' \emph{internal} states; in particular, HMMs model animal
-movement as though individual animals' movement behaviour is determined
+movement as though individual animals' movement behaviour 
+at particular times is determined
 by which of a discrete set of unobserved movement states
 (e.g. ``foraging'', ``traveling'', ``resting'') they currently occupy.
 Conditional on the state occupied by an individual, HMMs typically
@@ -98,7 +101,7 @@ ever-wider range of time scales, at both higher resolution (e.g. hourly data
 from GPS collars vs. daily or weekly fixes for radio or VHF
 collars) and longer extent (e.g. from a few days to significant
 fractions of a year, or longer).  When analyzing such
-remote-sensing data, ecologists will more
+long-term data, ecologists will more
 often have to account for temporal variability in movement
 behaviour at diurnal and seasonal scales that were previously
 not captured in the data.
@@ -106,10 +109,13 @@ not captured in the data.
 HMMs have typically been used to model movements over short time
 scales, where the probability of transitioning between movement states is
 approximately constant. Changes in latent/hidden behavioural state/mode transition 
+% BMB: pick one (perhaps include a parenthetical statement/definition
+% saying that we treat these as a synonyms.  Just stringing them together
+% with slashes is awkward)
 probabilities based on
 the local environment can be accounted for incorporating environmental
 covariates in the HMM \citep{patterson_classifying_2009}, or by more
-\emph{ad hoc} comparisons between inferred states and environmental
+direct comparisons between inferred states and environmental
 conditions \citep{fryxell_multiple_2008}. 
 \cite{schliehe-diecks_application_2012}
 consider temporal trends in behavioural transitions over the
@@ -153,13 +159,18 @@ behavioural states of Florida panthers (\emph{Puma concolor coryi}).
 
 \cite{kerk2015hidden} found that the best-fitting HSMMs
 incorporated a surprisingly large number of hidden
-behavioural states (as many as 6 for individuals with a large amount
-of available data); for practical reasons, they restricted their
-detailed analysis to models with only 3 underlying states.  In
+behavioural states (as many as six for individuals with a large amount
+of available data); for reasons of computational 
+practicality and biological interpretability, they restricted their
+detailed analysis to models with only three underlying states.  In
 contrast, most studies using HMM have chosen the
 number of underlying states \emph{a priori}, typically using either two
 \citep{schliehe-diecks_application_2012,mckellar_using_2014,langrock_flexible_2012,fryxell_multiple_2008}, or three states
-\citep{dean2012behavioural,morales_extracting_2004,franke_prediction_2006,kerk2015hidden}. As \cite{kerk2015hidden} comment, and as
+\citep{dean2012behavioural,morales_extracting_2004,franke_prediction_2006}. 
+In contrast, \cite{dean_behavioural_2013} evaluated models with up to 10
+states, but like \cite{kerk2015hidden} they chose to consider only 
+models with three states (their criterion for choosing ...\todo{check \cite{zhao_knee_2008}!}).
+As \cite{kerk2015hidden} comment, and as
 we discuss further below, behavioural
 repertoires with more than three distinct states are difficult to
 interpret --- one possible reason that other authors have not adopted
@@ -167,11 +178,12 @@ interpret --- one possible reason that other authors have not adopted
 identifying the number of latent states.
 
 Our second goal, therefore, is to explore whether
-\citeauthor{kerk2015hidden}'s results might be driven at
+\citeauthor{kerk2015hidden}'s results on optimal
+model complexity might be driven at
 least in part by structural problems with their statistical
 model, i.e. the
-assumption of temporally homogeneous behaviour.  When large data sets
-are available, information-theoretic model selection methods will
+assumption of temporally homogeneous behaviour.  For large data sets, 
+information-theoretic model selection methods will
 typically choose complex, highly parameterized models; when there is
 only one way in which models can become more complex (e.g. by
 increasing the number of latent states), complexity that is
@@ -211,7 +223,7 @@ negative binomial distributions for dwell times.  As shown
 by \cite{kerk2015hidden} (Figure S3b, top row, middle panel),
 the estimated shape parameter of the negative binomial dwell time
 distribution was typically close to 1 ($\approx 0.4-1.6$; confidence
-intervals were not calculated), implying that a geometric distribution
+intervals were not given), implying that a geometric distribution
 (i.e., negative binomial with shape=1) might be adequate. In turn,
 this suggests that we might not lose much accuracy by reverting to 
 a simpler HMM framework, which corresponds
@@ -230,15 +242,16 @@ predictive model, we focus on models that treat each step as
 a univariate, log-Normally distributed observation, glossing
 over both the differences in shape between
 the three candidate step-length distributions and the effects
-of considering multivariate (step length plus turning angle)
+of considering multivariate (i.e., step length plus turning angle)
 observations.  However, we do briefly compare log-Normal and Weibull
 step-length distributions, with and without 
 a von Mises-distributed turning angle included in the model (Figure~\ref{fig:BICred_plot}).
 (Note that most movement analyses, including
 \cite{kerk2015hidden}, are only partially multivariate, 
 treating step length and turning angle at a particular time
-as independent observations while neglecting possible correlations
-between them.) 
+as multivariate observations for the purpose of HMM
+analysis but neglecting possible correlations
+between the two measures.) 
 
 \cite{kerk2015hidden} used the Bayesian (Schwarz) information criterion (BIC)
 to test the relative penalized goodness of fit for
@@ -270,7 +283,7 @@ ecologists will often be interested in maximizing predictive
 accuracy rather than selecting a true model, and that as
 usual in ecological systems the true model will be far more
 complicated than any candidate model \citep{BurnhamAnderson1998};
-we suspect that the qualitative conclusions stated here
+we believe that the qualitative conclusions stated here
 for BIC-optimality will carry over to analyses using AIC instead.
 
 \subsection{Model description}
@@ -310,13 +323,13 @@ likelihood of the
 observed sequence, we need to average over all possible hidden sequences. 
 There are several efficient algorithms for computing the marginal likelihood and
 numerically estimating parameters \citep{zucchini_hidden_2009};
-we use those implemented in the \texttt{depmixS4} package for R
+we used those implemented in the \texttt{depmixS4} package for R
 \citep{visser2010depmixs4,R}.
 
 For any $n$-state HMM, we need to define a $n \times n$ matrix that specifies the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$.  The FMM is a special case of HMM where the probabilities of \emph{entering} a given state are identical across all states --- i.e., the probability of occupying a state at the next time step is independent of the current state occupancy. It can be modelled in the HMM framework by setting the transition probabilities  $\pi_{ij} = \pi_{i*}$.
 
 In any case, the transition matrix $\pi_{ij}$ must respect the constraints that (1) all probabilities are between 0 and 1 and (2) transition probabilities out of a given state sum to 1.
-As is standard for HMMs with covariates \citep{visser2010depmixs4}, we define this multinomial logistic model in terms of a linear predictor $\eta_{ij}$, where $\eta_{i1}$ is set to 1 without loss of generality (i.e. we have only $n \times (n-1)$ distinct parameters; we nevertheless index $j$ from 2 to $n$ for notational clarity):
+As is standard for HMMs with covariates \citep{visser2010depmixs4}, we define this multinomial logistic model in terms of a linear predictor $\eta_{ij}$, where $\eta_{i1}$ is set to 1 without loss of generality (i.e. we have only $n \times (n-1)$ distinct parameters; we index $j$ from 2 to $n$ for notational clarity):
 \begin{equation}
 \begin{split}
 \pi_{ij} & = \exp(\eta_{ij}(t))/\left(1+\sum_{j=2}^{n}\exp(\eta_{ij}(t))\right), \textrm{ for } j={2,...,n} \\

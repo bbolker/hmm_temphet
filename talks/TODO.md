@@ -1,7 +1,7 @@
 ISEC talk:
 
-- skip animal movement stuff/summaries?
-- jump straight to diurnal movement summary, model complexity
+- add points per cat
+- add FMM stuff
 
 
 

@@ -1,5 +1,7 @@
 cache/
 *~
+\#*
+.#*
 *.Rout
 *.RData
 .Rhistory
@@ -15,6 +17,10 @@ cache/
 *.Rout
 *.rout
 *.txt
+*.nav
+*.out
+*.toc
+*.snm
 *.wrapR.*
 
 texput.log
