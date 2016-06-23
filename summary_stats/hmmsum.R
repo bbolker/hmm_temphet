@@ -1,10 +1,7 @@
 library(dplyr)
 library(ggplot2)
 library(reshape2)
-
-files <- commandArgs(trailingOnly = TRUE)
-catid <- unlist(strsplit(files[1],split="[.]"))[2]
-dat <- readRDS(files[1])
+library(plyr)
 
 sumdf <- data.frame()
 for(i in mods){
@@ -13,7 +10,7 @@ for(i in mods){
 }
 
 sumdf <- (sumdf
-  %>% mutate(deltaBIC = BICS-min(BICS))
+          %>% mutate(deltaBIC = BICS-min(BICS))
 )
 
 multimoddf <- data.frame()
@@ -22,16 +19,17 @@ for(i in multimods){i
 }
 
 
-minBICS <- (multimoddf 
-  %>% group_by(model) 
-  %>% slice(which.min(BICS))
-  %>% ungroup()
-  %>% transmute(minBICS = BICS, model=model)
+multimoddf <- (multimoddf 
+               %>% group_by(model) 
+               # %>% slice(which.min(BICS))
+               %>% mutate(deltaBIC = BICS-min(BICS))
+               %>% ungroup()
+               # %>% transmute(minBICS = BICS, model=model)
 )
-
-multimoddf2 <- (left_join(multimoddf,minBICS)
-          %>% mutate(deltaBIC = BICS-minBICS)
-)
+# 
+# multimoddf2 <- (left_join(multimoddf,minBICS)
+#           %>% mutate(deltaBIC = BICS-minBICS)
+# )
 
 (adj_BIC_plot <- ggplot(sumdf, aes(x=nstates,y=deltaBIC,colour=model))+
   facet_wrap(~ type,ncol=4)+
@@ -67,6 +65,6 @@ acffun <- function(sim){
   return(df)
 }
 
-temp <- simdf2 %>% dplyr::select(-time)%>%ldply(.,acffun)
+temp <- simdat %>% dplyr::select(-time)%>%ldply(.,acffun)
 ggplot(temp,aes(lag,ACF,colour=.id))+
   geom_point()+geom_line()
