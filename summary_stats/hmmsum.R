@@ -68,3 +68,11 @@ acffun <- function(sim){
 temp <- simdat %>% dplyr::select(-time)%>%ldply(.,acffun)
 ggplot(temp,aes(lag,ACF,colour=.id))+
   geom_point()+geom_line()
+
+alldf <- list(HMMsumdf = sumdf
+              , multimoddf = multimoddf
+              , avgplotdf = avgdf2
+              , acfdf = temp
+              , msdlist = msd)
+
+#saveRDS(alldf, file="cat.15.df.RDS")
