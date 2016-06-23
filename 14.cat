@@ -1,1 +1,36 @@
+dat <- readRDS("cat.14.RDS")
+fmm <- readRDS("cat.14.fmm.RDS")
+fmmsin <- readRDS("cat.14.fmmsin.RDS")
+hmm <- readRDS("cat.14.hmm.RDS")
+hmmblock <- readRDS("cat.14.hmmblock.RDS")
+hmmhourly <- readRDS("cat.14.hmmhourly.RDS")
+hmmquad <- readRDS("cat.14.hmmquad.RDS")
+hmmsin <- readRDS("cat.14.hmmsin.RDS")
 
+mods <- list(fmm,fmmsin,hmm,hmmblock,hmmhourly,hmmquad,hmmsin)
+
+
+simdat <- data.frame(fmm4 = fmm[[3]]$fmm4obs
+                    , fmmsin3 = fmmsin[[3]]$fmmsin3obs
+                    , hmm5 = hmm[[3]]$hmm5obs
+                    , hmmblock4 = hmmblock[[3]]$hmmblock4obs
+                    , hmmhourly3 = hmmhourly[[3]]$hmmhourly3obs
+                    , hmmquad5 = hmmquad[[3]]$hmmquad5obs
+                    , hmmsin4 = hmmsin[[3]]$hmmsin4obs
+                    , time = dat$Time
+                    , obs = dat$LogDist)
+
+msd <- list(hmm6sMean = hmm[[2]][[3]][c(31,33,35,37,39)]
+  , hmm5sSD = hmm[[2]][[4]][c(32,34,36,38,40)]
+  , hmmsin4sMean = hmmsin[[2]][[2]][c(53,55,57,59)]
+  , hmmsin4sSD = hmmsin[[2]][[2]][c(54,56,58,60)])
+
+                    
+LNVM <- readRDS("cat.14.lnvmhmm.RDS")
+LNVMsin <- readRDS("cat.14.lnvmhmmsin.RDS")
+WB <- readRDS("cat.14.wbhmm.RDS")
+WBVM <- readRDS("cat.14.wbvmhmm.RDS")
+WBsin <- readRDS("cat.14.wbsinhmm.RDS")
+WBVMsin <- readRDS("cat.14.wbvmhmmsin.RDS")
+
+multimods <- list(hmm[[1]],hmmsin[[1]],LNVM,LNVMsin,WB,WBVM,WBsin,WBVMsin)
