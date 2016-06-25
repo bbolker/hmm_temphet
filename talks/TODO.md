@@ -1,9 +1,9 @@
 ISEC talk:
 
-- add points per cat
+- take out some panther stuff
 - add FMM stuff
-
-
+- add lines on shearwater pix? or just mention shearwater?
+- add Mike simulations
 
 - link/slide-share?
 - general refs: Morales, Turchin, ...

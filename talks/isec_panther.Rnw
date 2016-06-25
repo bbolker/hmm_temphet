@@ -152,39 +152,39 @@ Dave Onorato, Madan Oli; many unnamed field biologists
 \section[Panthers]{Florida panthers}
 \subsection{}
 
+%% \begin{frame}
+%% \frametitle{Biological/conservation issues}
+
+%% \begin{columns}
+%%   \begin{column}{0.5\textwidth}
+%%     \begin{itemize}
+%%     \item Florida panther: \emph{Puma concolor coryi}
+%%     \item endangered subspecies
+%%     \item severely reduced habitat
+%%     \item small, isolated population
+%%     \item currently recovering
+%%     \end{itemize}
+%%   \end{column}
+%%   \begin{column}{0.5\textwidth}
+%%     \includegraphics[width=0.8\textwidth]{pix/map1.jpg} \\
+%%       {\tiny \href{http://www.peer.org/campaigns/wildlife-protection/florida-panther/ecological-needs.html}{www.peer.org}} \\
+%%      \includegraphics[width=0.9\textwidth]{pix/kitten1.jpg}
+%%   \end{column}
+%% \end{columns}
+%% \end{frame}
+
 \begin{frame}
-\frametitle{Biological/conservation issues}
+\frametitle{Florida panther movement}
 
 \begin{columns}
   \begin{column}{0.5\textwidth}
     \begin{itemize}
-    \item Florida panther: \emph{Puma concolor coryi}
-    \item endangered subspecies
-    \item severely reduced habitat
-    \item small, isolated population
-    \item currently recovering
-    \end{itemize}
-  \end{column}
-  \begin{column}{0.5\textwidth}
-    \includegraphics[width=0.8\textwidth]{pix/map1.jpg} \\
-      {\tiny \href{http://www.peer.org/campaigns/wildlife-protection/florida-panther/ecological-needs.html}{www.peer.org}} \\
-     \includegraphics[width=0.9\textwidth]{pix/kitten1.jpg}
-  \end{column}
-\end{columns}
-\end{frame}
-
-\begin{frame}
-\frametitle{Panther movement questions}
-
-\begin{columns}
-  \begin{column}{0.5\textwidth}
-    \begin{itemize}
+    \item endangered subspecies, \emph{Puma concolor coryi}
     \item movement variation by sex and life history stage \\
       (juvenile, adult, mom with kittens \ldots)
-    \item effects of movement on threats \\
-      (intraspecific aggression, roadkill) ?
-    \item predicting the effects of future changes in 
-      population density / population structure / habitat
+    \item effects of movement on threats 
+    \item predicting the effects of changes in 
+      habitat, etc.
     \end{itemize}
   \end{column}
   \begin{column}{0.5\textwidth}
@@ -195,28 +195,33 @@ Dave Onorato, Madan Oli; many unnamed field biologists
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Panther movement data}
+%% \begin{frame}
+%% \frametitle{Panther movement data}
 
-\begin{columns}
-  \begin{column}{0.5\textwidth}
-    \begin{itemize}
-    \item panthers tracked, captured
-    \item GPS collars
-    \item 18 males (13 male, 5 female, 1-15 years old)
-    \item 3200 panther days, hourly/bihourly; 49000 locations
-    \item ?? per panther
-    \end{itemize}
-  \end{column}
-  \begin{column}{0.5\textwidth}
-    \includegraphics[trim={10cm 5cm 10cm 0},clip,width=\textwidth]{pix/panther_collar.jpg}
-  \end{column}
-\end{columns}
-\end{frame}
+%% \begin{columns}
+%%   \begin{column}{0.5\textwidth}
+%%     \begin{itemize}
+%%     \item panthers tracked, captured
+%%     \item GPS collars
+%%     \item 18 males (13 male, 5 female, 1-15 years old)
+%%     \item 3200 panther days, hourly/bihourly; 49000 locations
+%%     \item ?? per panther
+%%     \end{itemize}
+%%   \end{column}
+%%   \begin{column}{0.5\textwidth}
+%%     \includegraphics[trim={10cm 5cm 10cm 0},clip,width=\textwidth]{pix/panther_collar.jpg}
+%%   \end{column}
+%% \end{columns}
+%% \end{frame}
 
 \begin{frame}
-\frametitle{example movement tracks}
-\includegraphics[width=\textwidth]{pix/track1.pdf}
+\frametitle{panther movement tracks}
+18 GPS-collared animals, 3200 panther days;  \\
+49000 locations (hourly); 1-15K observations per animal
+
+\begin{center}
+\includegraphics[width=0.9\textwidth]{pix/track1.pdf}
+\end{center}
 \end{frame}
 
 \section[HMM]{Hidden Markov models}
@@ -272,7 +277,7 @@ Dave Onorato, Madan Oli; many unnamed field biologists
 \item \emph{Viterbi algorithm} for estimating most probable state sequences
 \item {\tt depmixS4} package \citepx{visser2010depmixs4}
 (also {\tt moveHMM} \citepx{michelot_movehmm_2016})
-\item hidden \emph{semi-Markov} models: allow for non-geometric \emph{dwell distributions} \citepx{langrock_hidden_2011-1,augustine_hmm}: {\tt move.HMM}
+\item hidden \emph{semi-Markov} models: allow for non-geometric \emph{dwell time distributions} \citepx{langrock_hidden_2011-1,augustine_hmm}: {\tt move.HMM}
 \end{itemize}
 
 \end{frame}
@@ -283,7 +288,8 @@ Dave Onorato, Madan Oli; many unnamed field biologists
 \begin{frame}
 \frametitle{Diurnal variation}
 
-\includegraphics[trim={0 8cm 0 0}, clip, width=\textwidth]{pix/jae_fig4.png}
+\includegraphics[width=\textwidth]{pix/diurnal1.pdf}
+%\includegraphics[trim={0 8cm 0 0}, clip, width=\textwidth]{pix/jae_fig4.png}
 
 \end{frame}
 
