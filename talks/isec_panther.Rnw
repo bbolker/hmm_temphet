@@ -182,7 +182,7 @@ Dave Onorato, Madan Oli; many unnamed field biologists
     \item endangered subspecies, \emph{Puma concolor coryi}
     \item movement variation by sex and life history stage \\
       (juvenile, adult, mom with kittens \ldots)
-    \item effects of movement on threats 
+    \item threats 
     \item predicting the effects of changes in 
       habitat, etc.
     \end{itemize}
@@ -247,30 +247,7 @@ Dave Onorato, Madan Oli; many unnamed field biologists
 \newcommand{\state}{z}
 
 \begin{frame}
-\frametitle{Hidden Markov models (cont.)}
-
-\textbf{state:}
-\begin{equation*}
-\begin{split}
-  S_t & \sim \textrm{Multinomial}(S_{t-1},\mu_{S,t}) \\
-\mu_{S,t} & = \textrm{multi-logistic}(\mathbf{X}_{S,t} \boldsymbol \beta_{S} ) 
-\end{split}
-\end{equation*}
-
-\textbf{emission:}
-\begin{equation*}
-\begin{split}
-\mathbf{Z}_t & \sim \left\{ \textrm{Dist}_1(\mu_{Z_1,S_t}),
-\dots, \textrm{Dist}_n(\mu_{Z_n,S_t}) \right\}
- \\
-\mu_{Z_i,S_t} & = g^{-1}\left(\mathbf{X}_{Z_i,t} \boldsymbol \beta_{Z_i,S_t} \right)
-\end{split}
-\end{equation*}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Hidden Markov models (part 3)}
+\frametitle{Hidden Markov models in practice}
 
 \begin{itemize}
 \item \emph{forward-backward algorithm} for estimating parameters
@@ -286,7 +263,7 @@ Dave Onorato, Madan Oli; many unnamed field biologists
 \subsection{}
 
 \begin{frame}
-\frametitle{Diurnal variation}
+\frametitle{Diurnal variation: Viterbi results}
 
 \includegraphics[width=\textwidth]{pix/diurnal1.pdf}
 %\includegraphics[trim={0 8cm 0 0}, clip, width=\textwidth]{pix/jae_fig4.png}
@@ -320,10 +297,10 @@ Dave Onorato, Madan Oli; many unnamed field biologists
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Model complexity (Manx shearwaters, \citex{dean_behavioural_2013})}
+%\begin{frame}
+%\frametitle{Model complexity (Manx shearwaters, \citex{dean_behavioural_2013})}
 
-<<shearwater>>=
+<<shearwater,eval=FALSE>>=
 sheardat <- read.table("shearwater_loglik.dat")
 names(sheardat) <- c("n","loglik")
 npar <- function(n) {
@@ -347,15 +324,27 @@ sheardat2 <- mutate(sheardat,
                 ifelse(dAIC==0,"min AIC","")),
            type=factor(type,levels=c("","min AIC","min BIC")))
 
+## want to add guide lines with slope +1 and +log(n)/2
+## (required increase in loglik/parameter
+nBIC <- sheardat2[sheardat2$dBIC==0,"n"]
+likBIC <- sheardat2[sheardat2$dBIC==0,"dloglik"]
+nAIC <- sheardat2[sheardat2$dAIC==0,"n"]
+likAIC <- sheardat2[sheardat2$dAIC==0,"dloglik"]
+
+## y = a + bx -> a = y-b*x
+BIC_int <- likBIC-2*log(nobs)*nBIC
+AIC_int <- likAIC-1*nAIC
 ggplot(sheardat2,aes(n,dloglik))+
     geom_line(colour="gray")+
     geom_point(size=5,aes(colour=type))+
     xlab("number of latent states")+
     ylab(expression(Delta~"negative log-likelihood"))+
-    scale_colour_manual(name="",values=c("gray","blue","red"))
+    scale_colour_manual(name="",values=c("gray","blue","red"))+
+    geom_abline(slope=log(nobs)*2,intercept=BIC_int,linetype=2)
 ## min BIC ~ 7; min AIC ~ 10
+## haven't got this right yet ... !!
 @ 
-\end{frame}
+%\end{frame}
 
 \section[Diurnal model]{Incorporating diurnal variation \citepx{li_incorporating_2015}}
 \subsection{}
@@ -363,20 +352,11 @@ ggplot(sheardat2,aes(n,dloglik))+
 \begin{frame}
 \frametitle{Expanding the model}
 
-Attempting to fix these problems:
 \begin{itemize}
-\item extend the model to allow covariates
-\pause
-\item specifically, allow for diurnal variation
-\begin{itemize}
-\item simplify model (log-Normal step length only)
-\item \emph{fixed} state-specific emissions parameters\\
-(step length mean and std dev)
-\item time-varying transition parameters
-\item also try \emph{finite mixture models} \\
-(independent occupancy)
-\end{itemize}
-\item how much does this help?
+\item allow for diurnal variation: \\
+  time-varying transition parameters
+\item (also try \emph{finite mixture models} \\
+with time-varying occupancy)
 \end{itemize}
 \end{frame}
 
@@ -396,9 +376,15 @@ dd <- data.frame(time=seq(0,to=23.9,length=101)) %>%
                    ifelse(time<bseg[2],bpar[2],
                       ifelse(time<bseg[3],bpar[3],bpar[4]))),
            hourly=hourpars[floor(time)+1]) %>%
-    gather(model,val,-time)
+    gather(model,val,-time) %>%
+    mutate(model=factor(model,
+                        levels=c("block",
+                                 "quad",
+                                 "sin",
+                                 "hourly")))
 ggplot(dd,aes(time,val,colour=model))+geom_line(size=1.5)+
     scale_x_continuous(limits=c(0,24),breaks=seq(0,24,by=6))+
+    scale_colour_manual(values=brewer.pal(5,"Dark2")[-1])+
     theme(axis.ticks.y=element_blank(),
           axis.text.y=element_blank())+
     labs(y="")
@@ -465,6 +451,12 @@ ggplot(temp,
 \begin{frame}
 \frametitle{Goodness of fit/model complexity}
 <<adj_BIC,out.width="0.9\\textwidth">>=
+ss <- mutate(ss,model=factor(model,
+                        levels=c("homogeneous",
+                                 "block",
+                                 "quadratic",
+                                 "sinusoid",
+                                 "hourly")))
 (adj_BIC_plot <- ggplot(ss, aes(x=nstates,y=deltaBIC,colour=model))+
     scale_size_continuous( name="# of parameters") +
     scale_x_continuous(expand=c(0,0.5),breaks=2:7)+
@@ -478,22 +470,35 @@ ggplot(temp,
 \end{frame}
 
 \begin{frame}
-\frametitle{Model complexity: simulation}
+\frametitle{Model complexity: simulation \\ (2-state heterogeneous)}
 <<modsim>>=
-mnames3 <- c("hmm","hmmquad",
-            "hmmsin","hmmhourly")
-mnames4 <- c("homogeneous",
-             "quadratic","sin","hourly")
-simdf2 <- readRDS("../simdf.RDS") %>%
-    filter(!type %in% c("fmm","fmmsin")) %>%
-    group_by(type) %>%
-    mutate(dBIC=BIC-min(BIC)) %>% ungroup() %>%
-    mutate(type=factor(type,levels=mnames3,labels=mnames4))
-ggplot(simdf2,aes(states,dBIC,colour=type))+
-    geom_point(size=2)+geom_line()+
-    scale_colour_brewer(palette="Dark2")+
-    labs(y=expression(paste(Delta, "BIC")),
-         x="number of latent states")
+ICdat <- readRDS("../sim_results/ICdat.rds")
+ICdat <- mutate(ICdat,
+                model=factor(model,
+                         levels=c("HMM","HMMsin"),
+                         labels=c("homogeneous","heterogeneous")))
+simplot <- ggplot(ICdat,aes(x=nstates,y=n,color=model,
+                            linetype=IC,shape=IC))+
+                        geom_point(size=3) +
+                        geom_line() +
+                        scale_colour_brewer(palette="Set1")+
+                        labs(y="counts",x="# latent states")
+print(simplot)
+
+## mnames3 <- c("hmm","hmmquad",
+##             "hmmsin","hmmhourly")
+## mnames4 <- c("homogeneous",
+##              "quadratic","sin","hourly")
+## simdf2 <- readRDS("../simdf.RDS") %>%
+##     filter(!type %in% c("fmm","fmmsin")) %>%
+##     group_by(type) %>%
+##     mutate(dBIC=BIC-min(BIC)) %>% ungroup() %>%
+##     mutate(type=factor(type,levels=mnames3,labels=mnames4))
+## ggplot(simdf2,aes(states,dBIC,colour=type))+
+##     geom_point(size=2)+geom_line()+
+##     scale_colour_brewer(palette="Dark2")+
+##     labs(y=expression(paste(Delta, "BIC")),
+##          x="number of latent states")
 @
 \end{frame}
 
@@ -502,6 +507,8 @@ ggplot(simdf2,aes(states,dBIC,colour=type))+
 \begin{itemize}
 \item diurnal structure greatly improves fit ($\Delta \textrm{BIC} \approx 500$)
 \item slightly improves latent-state issue ($n=6 \to 5$)
+\item be careful using Viterbi to assess model fit \\
+(double-dipping)
 \item lots left to do!
 \begin{itemize}
 \item seasonal variation
@@ -519,6 +526,7 @@ ggplot(simdf2,aes(states,dBIC,colour=type))+
 
 \begin{itemize}
 \item simple model families +  \\
+  large data $\to$ \\
   model misspecification $\to$ \\
   overparameterization
 \item Gelman: ``Sample sizes are never large'':
@@ -526,7 +534,70 @@ ggplot(simdf2,aes(states,dBIC,colour=type))+
 \begin{quote}
 $N$ is never enough because if it were ``enough'' you'd already be on to the next problem for which you need more data.
 \end{quote}
+\ldots i.e. should add \emph{appropriate} complexity to soak up variation
 \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Tools needed}
+
+\begin{itemize}
+\item convenient tools for model checking: \\
+graphical \& quantitative \citepx{potts_generalized_2014}
+\item cross-validation \citepx{wenger_assessing_2012} ?
+\item flexible computational frameworks \\
+(ecologists can't afford consultants/ \\
+there are too many species)
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\includegraphics[width=\textwidth]{pix/panther2.png}
+
+%\url{http://tinyurl.com/panthermoves}; 
+%{\small
+% \url{http://www.slideshare.net/bbolker/model-complexity-and-model-choice-for-animal-movement-models}}
+
+\end{frame}
+
+\begin{frame}
+\begin{multicols}{2}
+\frametitle{References}
+
+% \tiny
+\fontsize{5pt}{7pt}\selectfont
+\bibliography{../paper}
+\end{multicols}
+\end{frame}
+
+\begin{frame}
+\frametitle{extras}
+\end{frame}
+
+\begin{frame}
+\frametitle{Hidden Markov models (cont.)}
+
+\textbf{state:}
+\begin{equation*}
+\begin{split}
+  S_t & \sim \textrm{Multinomial}(S_{t-1},\mu_{S,t}) \\
+\mu_{S,t} & = \textrm{multi-logistic}(\mathbf{X}_{S,t} \boldsymbol \beta_{S} ) 
+\end{split}
+\end{equation*}
+
+\textbf{emission:}
+\begin{equation*}
+\begin{split}
+\mathbf{Z}_t & \sim \left\{ \textrm{Dist}_1(\mu_{Z_1,S_t}),
+\dots, \textrm{Dist}_n(\mu_{Z_n,S_t}) \right\}
+ \\
+\mu_{Z_i,S_t} & = g^{-1}\left(\mathbf{X}_{Z_i,t} \boldsymbol \beta_{Z_i,S_t} \right)
+\end{split}
+\end{equation*}
+
 \end{frame}
 
 \begin{frame}
@@ -557,40 +628,6 @@ ggplot(d,aes(n,val,fill=type))+
 @ 
 \end{column}
 \end{columns}
-\end{frame}
-
-\begin{frame}
-\frametitle{Tools needed}
-
-\begin{itemize}
-\item cross-validation \citepx{wenger_assessing_2012}
-\item protocols and tools for model checking \citepx{potts_generalized_2014};
-score tests?
-\item flexible computational frameworks \\
-(ecologists can't afford consultants/ \\
-there are too many species out there)
-\end{itemize}
-
-\end{frame}
-
-
-\begin{frame}
-\includegraphics[width=\textwidth]{pix/panther2.png}
-
-%\url{http://tinyurl.com/panthermoves}; 
-%{\small
-% \url{http://www.slideshare.net/bbolker/model-complexity-and-model-choice-for-animal-movement-models}}
-
-\end{frame}
-
-\begin{frame}
-\begin{multicols}{2}
-\frametitle{References}
-
-% \tiny
-\fontsize{5pt}{7pt}\selectfont
-\bibliography{../paper}
-\end{multicols}
 \end{frame}
 
 
