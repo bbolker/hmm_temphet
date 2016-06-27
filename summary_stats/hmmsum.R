@@ -10,26 +10,17 @@ for(i in mods){
 }
 
 sumdf <- (sumdf
-          %>% mutate(deltaBIC = BICS-min(BICS))
+          %>% mutate(deltaBIC = BICS-min(BICS)
+                     , kBIC = BICS/(-2))
 )
 
-multimoddf <- data.frame()
-for(i in multimods){i
-  multimoddf <- rbind(multimoddf,i)
-}
+multimoddf <- do.call(rbind,multimods)
 
 
 multimoddf <- (multimoddf 
                %>% group_by(model) 
-               # %>% slice(which.min(BICS))
-               %>% mutate(deltaBIC = BICS-min(BICS))
-               %>% ungroup()
-               # %>% transmute(minBICS = BICS, model=model)
+               %>% dplyr:::mutate(deltaBIC = BICS-min(BICS))
 )
-# 
-# multimoddf2 <- (left_join(multimoddf,minBICS)
-#           %>% mutate(deltaBIC = BICS-minBICS)
-# )
 
 (adj_BIC_plot <- ggplot(sumdf, aes(x=nstates,y=deltaBIC,colour=model))+
   facet_wrap(~ type,ncol=4)+
@@ -75,4 +66,6 @@ alldf <- list(HMMsumdf = sumdf
               , acfdf = temp
               , msdlist = msd)
 
-#saveRDS(alldf, file="cat.15.df.RDS")
+#saveRDS(alldf, file="cat.1.df.RDS")
+
+
