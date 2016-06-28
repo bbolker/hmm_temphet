@@ -1,4 +1,4 @@
-- make weibull VN temp_het meta data
-
-- work on paper on saturday
+-fix the paper
+-make knee plots
+- add kbic to multimoddf
  
