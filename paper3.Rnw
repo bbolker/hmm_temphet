@@ -259,10 +259,10 @@ to test the relative penalized goodness of fit for
 models ranging from 2 to 6 latent states.
 In general, BIC values decreased as the number of states
 increased from 
-3 to 6 states,
-suggesting that the 6-state model was
+three to six states,
+suggesting that the six-state model was
 favoured statistically; however,
-the authors used 3-state models in most
+the authors used three-state models in most
 of their analyses for ease of biological interpretation.
 We follow \cite{kerk2015hidden} in using BIC-optimality (i.e., minimum
 BIC across a family of models) as the criterion for identifying
@@ -272,7 +272,7 @@ of underlying movement states.
 \todo{it occurs to me that we haven't really included any
 information about simulation testing in this version!
 We should probably add a short section; if don't, then we
-should delete following sentence}
+should delete following sentence }
 Using BIC also simplifies 
 evaluation of model selection procedures; 
 it is easier to test whether our model selection
@@ -314,7 +314,7 @@ The model contains three distinct components:
 \item[Emission probability] $P(\obs_{k} | \state_{k},\cov_{k})$: a vector of observations $\obs_{k}$ conditioned on covariates $\cov_{k}$ at state $\state_{k}$ at time $t=k$.  
 \end{description}
 
-\todo{maybe give the formula for number of parameters (constrained) for each model type here?}
+\todo{maybe give the formula for number of parameters (constrained) for each model type here?...ML: Sum(I+T+E), I=Prior=n(s-1) where n is the number of parameters for the prior complexity, T = ns(s-1), E=2s}
 
 Eq.~\ref{eq:HMMlik} gives the likelihood of the observed sequence 
 given (conditional on) a particular
@@ -371,7 +371,7 @@ estimated parameters, and estimate the most likely
 states with the Viterbi
 algorithm.
 
-We used three approaches to assess the fit of both time-homogeneous and time-inhomogeneous HMMs with 3 to 6 states to step-length data from the four of the thirteen Florida panthers with the most data (\todo{fill in value} $> ?? $ observations). (1) Comparing BICs to the optimal-BIC model within each type of transition complexity ($\dbic$ = BIC - min(BIC)) assesses the overall goodness of
+We used three approaches to assess the fit of both time-homogeneous and time-inhomogeneous HMMs with 3 to 6 states to step-length data from the four of the thirteen Florida panthers with the most data ($> 9000 $ observations). (1) Comparing BICs to the optimal-BIC model within each type of transition complexity ($\dbic$ = BIC - min(BIC)) assesses the overall goodness of
 fit of each model type.
 (2) Comparing average step-length by hour of day for the observed data and for data simulated from the models shows how well a particular class of models can capture the diurnal variation in behaviour.
 (3) Comparing temporal autocorrelations for the observed data and for data simulated from the models shows how well a particular class of models
@@ -383,11 +383,12 @@ because, while the computation is reasonably straightforward for FMMs, and manag
 \section{Results}
 
 <<BICred_plot,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#1.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
-L <- load("cat1allmod.RData")
-df2 <- transform(allmodsumdf,
-            distrib=ifelse(grepl("LN",model),"log-Normal","Weibull"),
-            turn_angle=ifelse(grepl("VM",model),"yes","no"),
-            homog=ifelse(grepl("HMM",model),"homogeneous HMM","time-heterogeneous HMM"))
+#L <- load("cat1allmod.RData")
+allmodsumdf2 <- readRDS("cat.1.df.RDS")$multimoddf
+df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
+            distrib=ifelse(grepl("W",model),"Weibull","log-Normal"),
+            turn_angle=ifelse(grepl("VM",as.character(model)),"yes","no"),
+            homog=ifelse(grepl("TH",type),"time-heterogeneous HMM","homogeneous HMM"))
 ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))+
     geom_line()+
     facet_wrap(~ homog)+
@@ -401,17 +402,21 @@ ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))+
     zmargin
 @
 
-Figure~\ref{fig:BICred_plot} shows that the BIC-optimal number of states for time homogenous models is consistent with \citeauthor{kerk2015hidden}'s results. 
+Figure~\ref{fig:BICred_plot} shows that the BIC-optimal number of states for time homogenous models is consistent with \citeauthor{kerk2015hidden}'s results (Weibull wrapped-Cauchy to Weibull von Mises, and Weibull von Mises to log Normal without turning angles) 
 \todo{is it \textbf{exactly} consistent? Weibull/vM/homog gets 5, not 6? Can we explain?}
-Furthermore, the BIC-optimal number of states does not depend on the model within the time-homogenous or time-heterogeneous frameworks, but time-heterogeneous models have the BIC-optimal number of states overall.\todo{?? clarify? do you mean time-het models have lower overall BIC (not shown in this graph)?}
 
 <<adj_BIC_comparisons, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall adjusted BIC comparisons among models, cat \\#1. \\textbf{todo: use dashed lines for FMMs (leadup to next figure)?}",fig.width=8>>=
-L <- load("cat1sumdat.RData")
-(adj_BIC_plot <- ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model))+
+#L <- load("cat1sumdat.RData")
+sumdat <- transform(readRDS("cat.1.df.RDS")$HMMsumdf,
+                    mod = ifelse(grepl("HMM",model),"no","yes")
+)
+linetypev <- c(rep(2,2),rep(1,5))
+(adj_BIC_plot <- ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model,linetype=model))+
     facet_wrap(~ type,ncol=4)+
     scale_size_continuous( name="# of parameters") +
     scale_x_continuous(expand=c(0,0.5),breaks=2:7)+
     geom_point(aes(size=parameters))+
+    scale_linetype_manual(values=linetypev)+
     scale_colour_brewer(palette="Dark2")+
     labs(y=expression(paste(Delta, "BIC")),
          x="Number of States") +
