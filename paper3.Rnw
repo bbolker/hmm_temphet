@@ -37,12 +37,14 @@ library("plyr")
 library("dplyr")
 library("reshape2")
 library("gridExtra")
+library("RColorBrewer")
 if (!require("ggalt")) {
     cat("installing ggalt from BB repo ...\n")
     library("devtools")
     install_github("bbolker/ggalt")
     library("ggalt")
 }
+# library("ggalt")
 @
 
 \begin{abstract}
@@ -384,7 +386,7 @@ because, while the computation is reasonably straightforward for FMMs, and manag
 
 <<BICred_plot,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#1.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
 #L <- load("cat1allmod.RData")
-allmodsumdf2 <- readRDS("cat.1.df.RDS")$multimoddf
+allmodsumdf2 <- readRDS("summary_stats/cat.1.df.RDS")$multimoddf
 df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
             distrib=ifelse(grepl("W",model),"Weibull","log-Normal"),
             turn_angle=ifelse(grepl("VM",as.character(model)),"yes","no"),
@@ -407,20 +409,24 @@ Figure~\ref{fig:BICred_plot} shows that the BIC-optimal number of states for tim
 
 <<adj_BIC_comparisons, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall adjusted BIC comparisons among models, cat \\#1. \\textbf{todo: use dashed lines for FMMs (leadup to next figure)?}",fig.width=8>>=
 #L <- load("cat1sumdat.RData")
-sumdat <- transform(readRDS("cat.1.df.RDS")$HMMsumdf,
+sumdat <- transform(readRDS("summary_stats/cat.1.df.RDS")$HMMsumdf,
                     mod = ifelse(grepl("HMM",model),"no","yes")
 )
 linetypev <- c(rep(2,2),rep(1,5))
-(adj_BIC_plot <- ggplot(sumdat, aes(x=nstates,y=deltaBIC,colour=model,linetype=model))+
-    facet_wrap(~ type,ncol=4)+
-    scale_size_continuous( name="# of parameters") +
-    scale_x_continuous(expand=c(0,0.5),breaks=2:7)+
-    geom_point(aes(size=parameters))+
-    scale_linetype_manual(values=linetypev)+
-    scale_colour_brewer(palette="Dark2")+
-    labs(y=expression(paste(Delta, "BIC")),
-         x="Number of States") +
-    geom_line() + zmargin)
+(adj_BIC_plot <- ggplot(sumdat, aes(x=nstates
+                                    , y=deltaBIC
+                                    , colour=model
+                                    , linetype=model))
+  + facet_wrap(~ type,ncol=4)
+  + scale_size_continuous( name="# of parameters")
+  + scale_x_continuous(expand=c(0,0.5),breaks=2:7)
+  + geom_point(aes(size=parameters))
+  + scale_linetype_manual(values=linetypev)
+  + scale_colour_brewer(palette="Dark2")
+  + labs(y=expression(paste(Delta, "BIC"))
+         , x="Number of States") 
+  + geom_line() 
+  + zmargin)
 @
 
 As a complement, we also fitted FMM and FMM with sinusoidal variation in state occupancy probabilities to compare the temporal effects in goodness of fit.
@@ -438,19 +444,51 @@ between the sinusoidal and quadratic models (both of which have 90
 parameters).
 
 <<avg_step_length_by_time, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="Average step length by time of day. \\textbf{todo: leave out hmm quad for clarity? fix factor labels; make y axis log-scale rather than showing log-step-length; make colours consistent with prev fig (may need scalecolourmanual [need underscores] with RColorBrewer::brewer.pal(10,'Dark2') or some such. Handle obs data as in Guelph talk. Make FMM lines dashed use manual linetype scale)})",fig.width=8>>=
-simdf <- simdat %>% dplyr::select(-obs) %>%
-    group_by(time) %>% summarise_each(funs(mean))
-obsdf <- simdat %>% dplyr::select(c(obs,time)) %>%
-    filter(!is.na(obs)) %>% group_by(time) %>%
-    summarise_each(funs(mean))
+# simdf <- simdat %>% dplyr::select(-obs) %>%
+#     group_by(time) %>% summarise_each(funs(mean))
+# obsdf <- simdat %>% dplyr::select(c(obs,time)) %>%
+#     filter(!is.na(obs)) %>% group_by(time) %>%
+#     summarise_each(funs(mean))
+# 
+# avgdf2 <- melt(simdf,'time')
+avgdf <- readRDS("summary_stats/cat.1.df.RDS")$avgplotdf
+obsdf <- (readRDS("summary_stats/cat.1.RDS") 
+  %>% dplyr::select(c(LogDist,Time)) 
+  %>% filter(!is.na(LogDist)) 
+  %>% group_by(Time) 
+  %>% summarise_each(funs(mean))
+  %>% transmute(time = Time, variable = "obs", value=LogDist)
+)
 
-avgdf2 <- melt(simdf,'time')
-ggplot(avgdf2,aes(x=time,y=value,colour=variable)) + 
-    geom_point() +geom_line()+ xlab("Time of Day") +
-    ylab("Step lengths (log10)")+
-    scale_x_continuous(breaks=0:23)+
-    geom_line(data=obsdf,
-              aes(y=obs),lwd=2.5,alpha=0.3,colour="black")
+mnames <- c("fmm5","fmmsin4","hmm6","hmmblock4","hmmhourly3",
+            "hmmquad5","hmmsin5","obs")
+mnames2 <- c("fmm-homogeneous  (n=5)"
+             , "fmm-sin (n=4)"
+             , "homogeneous (n=6)"
+             , "block (n=4)"
+             , "hourly (n=3)"
+             , "quadratic (n=5)"
+             , "sin (n=5)"
+             , "observed")
+
+combdf <- (rbind(avgdf,obsdf)
+           %>% transmute(time=time,model=variable,steplen=value)
+           %>% filter(model %in% mnames)
+           %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
+)
+linetypev <- rep(c(2,1),c(2,6))
+colvec <- c(brewer.pal(7,"Dark2"),"black")
+lwdvec <- rep(c(1,4),c(7,1))
+alphavec <- rep(c(1,0.2),c(7,1))
+(ggplot(combdf,aes(x=time,y=steplen,colour=model,lwd=model,alpha=model,linetype=model)) 
+  + geom_line()
+  + xlab("Time of Day") 
+  + ylab(expression('Mean step length'~(log[10]*m)))
+  + scale_color_manual(values=colvec)
+  + scale_alpha_manual(values=alphavec)
+  + scale_size_manual(values=lwdvec)
+  + scale_linetype_manual(values=linetypev)
+)
 @
 
 Figure~\ref{fig:avg_step_length_by_time} shows a clear diurnal pattern from the average hourly step lengths from the observed data. As expected, temporally homogeneous models (whether FMM or HMM) predict the same mean step length regardless of time of day, failing to capture the diurnal activity cycle. All of the models incorporating temporal heterogeneity, including the temporally heterogeneous FMM, can capture the observed patterns. However, the block model does markedly worse than the other temporal models (changing the block definitions might help), and the (overparameterized) hourly model does better than any other model at capturing the early-evening peak (but worse at capturing the mid-day trough).
@@ -461,9 +499,20 @@ acffun <- function(sim){
   df <- data.frame(ACF=c(a$acf),lag=a$lag)
   return(df)
 }
-temp <- simdat %>% dplyr::select(-time)%>%ldply(.,acffun)
-  ggplot(temp,aes(lag,ACF,colour=.id))+
-    geom_point()+geom_line()
+# temp <- simdat %>% dplyr::select(-time)%>%ldply(.,acffun)
+
+acfdf <- (readRDS("summary_stats/cat.1.df.RDS")$acfdf 
+          %>% mutate(model = .id)
+)
+(ggplot(acfdf,aes(x=lag,y=ACF,colour=model,lwd=model,alpha=model,linetype=model)) 
+  + geom_line()
+  + xlab("Lag") 
+  + ylab("Autocorrelation")
+  + scale_color_manual(values=colvec)
+  + scale_alpha_manual(values=alphavec)
+  + scale_size_manual(values=lwdvec)
+  + scale_linetype_manual(values=linetypev)
+)
 @
 
 Like the diurnal pattern shown in Figure~\ref{fig:avg_step_length_by_time},
