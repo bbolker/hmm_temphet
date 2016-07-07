@@ -38,12 +38,12 @@ library("dplyr")
 library("reshape2")
 library("gridExtra")
 library("RColorBrewer")
-if (!require("ggalt")) {
-    cat("installing ggalt from BB repo ...\n")
-    library("devtools")
-    install_github("bbolker/ggalt")
-    library("ggalt")
-}
+# if (!require("ggalt")) {
+#     cat("installing ggalt from BB repo ...\n")
+#     library("devtools")
+#     install_github("bbolker/ggalt")
+#     library("ggalt")
+# }
 # library("ggalt")
 @
 
@@ -340,6 +340,9 @@ As is standard for HMMs with covariates \citep{visser2010depmixs4}, we define th
 \end{split}
 \end{equation}
 
+Model complexity and the number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorporating temporal heterogeneity (Supplementary material, Table 1). The number of free parameters in an HMM can be generalize by summing up the number of free parameters of the three distinct components:
+
+
 We considered four different transition models for diurnal variation in behaviour, incorporating hour-of-day as a covariate following the general approach of \cite{morales_extracting_2004} of incorporating covariate dependence in the transition matrix.
 
 \begin{description}
@@ -361,8 +364,6 @@ $$
 \end{description}
 
 Other periodic functions, such as Fourier series (the sinusoidal transition model augmented by additional sinusoidal components at higher frequencies) or periodic splines\todo{citation?}, could be useful directions for future exploration.
-
-Model complexity and the number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorporating temporal heterogeneity (Supplementary material, Table 1).
 
 \subsection{Model evaluation}
 
@@ -555,13 +556,13 @@ all_cat_pars <- ldply(lme4:::namedList(1,2,14,15),get_cat_pars,.id="catID")
 @
 
 <<state_plots, warning=FALSE, message=FALSE, echo=FALSE, fig.cap="Step-length parameters (\\textbf{todo: change scales from log() to log-scale; need a real/more complete figure caption here; emphasize that dashes are for emphasis only; rename models (time-homog/heterog)}">>=
-g0 <- ggplot(all_cat_pars,aes(log_mean,log_sd,color=Model))+
-    geom_point()+geom_line() + facet_wrap(~catID,labeller=label_both)+zmargin
-(g0c <- g0 +
-    geom_encircle(data=subset(all_cat_pars,
-                              (catID=="15" & log_mean<1.5) |
-                              (catID!="15" & log_mean<1.8)),
-                  colour="black",linetype=2,expand=0.05))
+# g0 <- ggplot(all_cat_pars,aes(log_mean,log_sd,color=Model))+
+#     geom_point()+geom_line() + facet_wrap(~catID,labeller=label_both)+zmargin
+# (g0c <- g0 +
+#     geom_encircle(data=subset(all_cat_pars,
+#                               (catID=="15" & log_mean<1.5) |
+#                               (catID!="15" & log_mean<1.8)),
+#                   colour="black",linetype=2,expand=0.05))
 @
 
 \todo{in figure, maybe replace/also show HMM restricted to 3 states?}
@@ -769,34 +770,6 @@ ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))+
          x="Number of States")+
     geom_hline(yintercept=0,colour="gray")+
     zmargin
-@
-
-<<viterbi, warning=FALSE, message=FALSE, echo=FALSE >>=
-load("cat1.RData")
-load("cat1sumdat.RData")
-vitcat <- function(catt,mod){
-  params <- tail(getpars(mod),6)
-  vitdist <- numeric(ntimes(mod))
-  states <- viterbi(mod)$state
-  for(i in 1:ntimes(mod)){
-    if(states[i] == 1){
-      vitdist[i] <- rnorm(1,params[1],params[2])
-    }
-    if(states[i] == 2){
-      vitdist[i] <- rnorm(1,params[3],params[4])
-    }
-    if(states[i] == 3){
-      vitdist[i] <- rnorm(1,params[5],params[6])
-    }
-  }
-  dat <- data.frame(viterbi=vitdist,time=catt$Time, obs=catt$LogDist)
-  return(dat)
-}
-
-temp <- vitcat(cat,fithomo3s) %>% dplyr::select(-time)%>%ldply(.,acffun)
-ggplot(temp,aes(lag,ACF,colour=.id))+
-geom_point()+geom_line() +theme_bw() +
-ggtitle("ACF plot of BIC Selected Models")
 @
 
 
