@@ -343,7 +343,6 @@ As is standard for HMMs with covariates \citep{visser2010depmixs4}, we define th
 We considered four different transition models for diurnal variation in behaviour, incorporating hour-of-day as a covariate following the general approach of \cite{morales_extracting_2004} of incorporating covariate dependence in the transition matrix.
 
 \begin{description}
-\item[Hourly model] \todo{describe hourly model. Explain that it's included for comparative purposes, i.e. not really practical.  Explain that we only fitted up to 4 states (because too many parameters)}
 \item[Multiple block transition] Here we assume piecewise-constant transition probabilities. The transition probability $\pi_{ij}$ is a function of time (hour of day), where it is assigned to one of $M$ different time blocks:
 $$
 \eta_{ij}(t) = \sum_{m=1}^{M}a_{ijm} \delta_{m=t}
@@ -358,13 +357,11 @@ $$
 $$
 \eta_{ij}(t)= b_{ij1}+b_{ij2}\cos\left(\frac{2\pi t}{24}\right)+b_{ij3}\sin\left(\frac{2\pi t}{24}\right)
 $$
+
+\item[Hourly model] Lastly, we extended the multi-block approach and assign  a different transition matrix for every hour of the day. This model is included for comparative purposes due to the large number of parameters in the model which makes it not really practical. We only fitted up to four states using the hourly model.  
 \end{description}
 
 Other periodic functions, such as Fourier series (the sinusoidal transition model augmented by additional sinusoidal components at higher frequencies) or periodic splines\todo{citation?}, could be useful directions for future exploration.
-
-Model complexity and the number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorporating temporal heterogeneity (Supplementary material, Table 1). The number of free parameters in an HMM can be generalize by summing up the number of free parameters of the three distinct components. Let $n$ be the number of hidden states and $k_{I}, k_{t}, k,{e}$ be the parameters of the prior distribution, transition function and emission distributions. Then the number of free parameters of an HMM is:
-
-K = $$ k_{i} * (n-1) + k_{t}*n*(n-1) + k_{e}*n $$
 
 \subsection{Model evaluation}
 
@@ -381,26 +378,51 @@ fit of each model type.
 (3) Comparing temporal autocorrelations for the observed data and for data simulated from the models shows how well a particular class of models
 captures serial correlation at both short and long scales.
 
-\subsection{BICS}
-Model complexity and the number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorporating temporal heterogeneity (Supplementary material, Table 1). The number of free parameters in an HMM can be generalize by summing up the number of free parameters of the three distinct components. Let $n$ be the number of hidden states and $k_{I}, k_{t}, k,{e}$ be the parameters of the prior distribution, transition function and emission distributions. Then the number of free parameters of an HMM is:
+Model complexity and the number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorporating temporal heterogeneity. The number of free parameters in an HMM can be generalized by summing up the number of free parameters of the three distinct components. Let $n$ be the number of hidden states and $k_{i}, k_{t}, k_{e}$ be the parameters of the prior distribution, transition function and emission distributions. Then the number of free parameters of an HMM is:
 
-K = $$ k_{i} * (n-1) + k_{t}*n*(n-1) + k_{e}*n $$ ...
 
-\subsection{Comparing observed data against simulation and Viterbi predictions}
+\begin{equation}
+\underbrace{k_{i}*(n-1)}_{\text{Initial}} 
+{+} \underbrace{k_{t}*n*(n-1)}_{\text{Transition}}
+{+} \underbrace{ k_{e}*n}_{\text{Emission}}
+\label{eq:numparam}
+\end{equation}
+
+When increasing in number of states, the number of free parameters in time-homogeneous FMMs and HMMs and FMMs with temporal heterogenity will increase linearly, whereas, HMMs with temporal heterogenity will not by Eq.~\ref{eq:numparam}. When comparing BICs, it is important to account for the tradeoff between log-likelihood and number of states, but also log-likelihood and number of free parameters.
 
 We used simulations to predict hourly step length and ACF 
-because, while the computation is reasonably straightforward for FMMs, and manageable for homogeneous HMMs, the interaction between the geometric dwell time within each state and the temporally varying interaction probabilities makes it unreasonably complex.
-\todo{need to note here that using the Viterbi algorithm to simulate double-counts the data ...}
+because, while the computation is reasonably straightforward for FMMs, and manageable for homogeneous HMMs, the interaction between the geometric dwell time within each state and the temporally varying interaction probabilities makes it unreasonably complex. 
+We used this approach to validate our models and comparing these models with the observed movements instead of the standard Viterbi predictions by the Viterbi algorithm because Viterbi predictions \emph{double count} the observed data. The Viterbi algorithm solves/predicts for the most probable sequence of movement states based on the observations \citep{zucchini_hidden_2009,langrock_flexible_2012}. It is useful to predict missing data in the observation sequence, but because it is conditional on the observed values, it can not relibly evaluate goodness of fit for the different structral complexities of HMM models. 
 
 \section{Results}
 
+<<sim_results, warning=FALSE,echo=FALSE,message=FALSE>>=
+ICdat <- readRDS("./sim_results/ICdat.rds")
+aa <- readRDS("./sim_results/sim.101.RDS")
+
+ICdat <- mutate(ICdat,
+                model=factor(model,
+                         levels=c("HMM","HMMsin"),
+                         labels=c("homogeneous","heterogeneous"))) %>% filter(IC=="BIC")
+simplot <- ggplot(ICdat,aes(x=nstates,y=n,color=model,
+                            linetype=IC,shape=IC))+
+                        geom_point(size=3) +
+                        geom_line() +
+                        scale_colour_brewer(palette="Set1")+
+                        labs(y="counts",x="# latent states")
+print(simplot)
+
+@
+
+We simulated a two-state HMM with sinusoidal temporal transitions 100 times and fitted it with two to five state HMMs and without temporal transition.  Figure~\ref{fig:sim_results} shows heterogeneous transition models can always predict the correct number of states, whereas, can over estiate the number of states via BIC-optimal approach. 
+ 
 <<BICred_plot,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Change in BIC across models, cat \\#1.  $\\dbic$ is scaled individually per model, so that $\\dbic=0$ represents the BIC-optimal number of states for a particular model.",fig.width=6,fig.height=4>>=
 #L <- load("cat1allmod.RData")
 allmodsumdf2 <- readRDS("summary_stats/cat.1.df.RDS")$multimoddf
 df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
             distrib=ifelse(grepl("W",model),"Weibull","log-Normal"),
             turn_angle=ifelse(grepl("VM",as.character(model)),"yes","no"),
-            homog=ifelse(grepl("TH",type),"time-heterogeneous HMM","homogeneous HMM"))
+            homog=ifelse(grepl("TH",type),"time-geneous HMM","homogeneous HMM"))
 ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))+
     geom_line()+
     facet_wrap(~ homog)+
@@ -462,7 +484,7 @@ linetypev <- c(rep(2,2),rep(1,5))
 #   + zmargin)
 @
 
-As a complement, we also fitted FMM and FMM with sinusoidal variation in state occupancy probabilities to compare the temporal effects in goodness of fit.
+As a complement, we also fitted FMM and FMM with sinusoidal variation in state occupancy probabilities to compare the temporal effects in goodness of fit (dashed lines).
 \todo{I took out ``hourly HMM'' here - more coherent to describe it above} 
 As a reminder, FMMs assume that the latent state in each time step is 
 \emph{independent} of the latent state at the previous time step; 
@@ -530,7 +552,7 @@ alphavec <- c(rep(c(1,0.2),c(7,1)),1)
 ) + geom_point(data=vitdf,aes(y=viterbi),lwd=2.5,alpha=1,colour="black",shape=118)
 @
 
-Figure~\ref{fig:avg_step_length_by_time} shows a clear diurnal pattern from the average hourly step lengths from the observed data. As expected, temporally homogeneous models (whether FMM or HMM) predict the same mean step length regardless of time of day, failing to capture the diurnal activity cycle. All of the models incorporating temporal heterogeneity, including the temporally heterogeneous FMM, can capture the observed patterns. However, the block model does markedly worse than the other temporal models (changing the block definitions might help), and the (overparameterized) hourly model does better than any other model at capturing the early-evening peak (but worse at capturing the mid-day trough).
+Figure~\ref{fig:avg_step_length_by_time} shows a clear diurnal pattern from the average hourly step lengths from the observed data. As expected, temporally homogeneous models (whether FMM or HMM) predict the same mean step length regardless of time of day, failing to capture the diurnal activity cycle. All of the models incorporating temporal heterogeneity, including the temporally heterogeneous FMM, can capture the observed patterns. However, the block model does markedly worse than the other temporal models (changing the block definitions might help), and the (overparameterized) hourly model does better than any other model at capturing the early-evening peak (but worse at capturing the mid-day trough). We also included average hourly step lengths from three-state temporally homogeneous HMM Viterbi prediction (v points).
 
 <<acf_plot, message=FALSE, echo=FALSE, warning=FALSE, fig.cap="ACF \\textbf{fix similarly to Fig 3}">>=
 acffun <- function(sim){
@@ -629,12 +651,6 @@ picks up states with very short step lengths (questionable in any
 case because we have not taken any special efforts to account for
 GPS error).
 
-Thus,
-lower number of short step length states with higher variance can be
-equivalent or more realistic than multiple distinguishable short step
-length states with low variance.
-\todo{clarify this/do we still need this??}
-
 \section{Discussion}
 
 Identifying behavioural states based on observations is a
@@ -670,14 +686,7 @@ For some kinds of model predictions, the time homogeneous transition
 model can perform as good as the time inhomogeneous transition models
 in terms of predicting the states by the Viterbi algorithm (the
 tradition state prediction method) and can easily overlook more
-complicated models. The Viterbi algorithm solves/predicts for the most
-likely/probable sequence of movement states based on the observations
-\citep{zucchini_hidden_2009,langrock_flexible_2012}. This approach
-allows the time homogeneous transition model's prediction to capture
-the temporal heterogeneity from the observations. It is useful to
-predict missing data in the observation sequence, but because it is
-conditional on the observed values, it cannot predict future movements
-beyond the observation sequence. In general, the time homogeneous
+complicated models. This approach allows the time homogeneous transition model's prediction to capture the temporal heterogeneity from the observations. The limitation of the Viterbi appoach is that it cannot predict future movements beyond the observation sequence. In general, the time homogeneous
 transition model gives the broader scope of movement pattern where as
 the time inhomogeneous transitions models gives a more realistic
 movement structure and future predictions.
