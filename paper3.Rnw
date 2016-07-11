@@ -340,9 +340,6 @@ As is standard for HMMs with covariates \citep{visser2010depmixs4}, we define th
 \end{split}
 \end{equation}
 
-Model complexity and the number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorporating temporal heterogeneity (Supplementary material, Table 1). The number of free parameters in an HMM can be generalize by summing up the number of free parameters of the three distinct components:
-
-
 We considered four different transition models for diurnal variation in behaviour, incorporating hour-of-day as a covariate following the general approach of \cite{morales_extracting_2004} of incorporating covariate dependence in the transition matrix.
 
 \begin{description}
@@ -365,6 +362,10 @@ $$
 
 Other periodic functions, such as Fourier series (the sinusoidal transition model augmented by additional sinusoidal components at higher frequencies) or periodic splines\todo{citation?}, could be useful directions for future exploration.
 
+Model complexity and the number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorporating temporal heterogeneity (Supplementary material, Table 1). The number of free parameters in an HMM can be generalize by summing up the number of free parameters of the three distinct components. Let $n$ be the number of hidden states and $k_{I}, k_{t}, k,{e}$ be the parameters of the prior distribution, transition function and emission distributions. Then the number of free parameters of an HMM is:
+
+K = $$ k_{i} * (n-1) + k_{t}*n*(n-1) + k_{e}*n $$
+
 \subsection{Model evaluation}
 
 We used the {\tt depmixS4} package
@@ -378,7 +379,15 @@ We used three approaches to assess the fit of both time-homogeneous and time-inh
 fit of each model type.
 (2) Comparing average step-length by hour of day for the observed data and for data simulated from the models shows how well a particular class of models can capture the diurnal variation in behaviour.
 (3) Comparing temporal autocorrelations for the observed data and for data simulated from the models shows how well a particular class of models
-captures serial correlation at both short and long scales. 
+captures serial correlation at both short and long scales.
+
+\subsection{BICS}
+Model complexity and the number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorporating temporal heterogeneity (Supplementary material, Table 1). The number of free parameters in an HMM can be generalize by summing up the number of free parameters of the three distinct components. Let $n$ be the number of hidden states and $k_{I}, k_{t}, k,{e}$ be the parameters of the prior distribution, transition function and emission distributions. Then the number of free parameters of an HMM is:
+
+K = $$ k_{i} * (n-1) + k_{t}*n*(n-1) + k_{e}*n $$ ...
+
+\subsection{Comparing observed data against simulation and Viterbi predictions}
+
 We used simulations to predict hourly step length and ACF 
 because, while the computation is reasonably straightforward for FMMs, and manageable for homogeneous HMMs, the interaction between the geometric dwell time within each state and the temporally varying interaction probabilities makes it unreasonably complex.
 \todo{need to note here that using the Viterbi algorithm to simulate double-counts the data ...}
@@ -411,24 +420,46 @@ Figure~\ref{fig:BICred_plot} shows that the BIC-optimal number of states for tim
 <<adj_BIC_comparisons, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Overall adjusted BIC comparisons among models, cat \\#1. \\textbf{todo: use dashed lines for FMMs (leadup to next figure)?}",fig.width=8>>=
 #L <- load("cat1sumdat.RData")
 sumdat <- transform(readRDS("summary_stats/cat.1.df.RDS")$HMMsumdf,
-                    mod = ifelse(type=="HMM + TH","HMM + TH","FMMs and HMM")
+                    mod = ifelse(grepl("HMM",model),"no","yes")
 )
 linetypev <- c(rep(2,2),rep(1,5))
-(adj_BIC_plot <- ggplot(sumdat, aes(x=parameters
+(adj_BIC_plot <- ggplot(sumdat, aes(x=nstates
                                     , y=deltaBIC
                                     , colour=model
-                                    , linetype=model
-                                    , group=model))
-  + facet_wrap(~mod,ncol = 2,scales = "free_x")
-  + scale_size_continuous(name="# of states")
-  + scale_x_continuous(breaks=seq(0,300,by=10))
-  + geom_point(aes(shape=factor(nstates),size=1.5,alpha=nstates))
-  + scale_linetype_manual(values=linetypev)
-  + scale_colour_brewer(palette="Dark2")
-  + labs(y=expression(paste(Delta, "BIC"))
-         , x="Number of States") 
-  + geom_line()
-  + zmargin)
+                                    , linetype=model))
++ facet_wrap(~ type,ncol=4)
++ scale_size_continuous( name="# of parameters")
++ scale_x_continuous(expand=c(0,0.5),breaks=2:7)
++ geom_point(aes(size=parameters))
++ scale_linetype_manual(values=linetypev)
++ scale_colour_brewer(palette="Dark2")
++ labs(y=expression(paste(Delta, "BIC"))
+       , x="Number of States") 
++ geom_line() 
++ zmargin)
+
+
+### I want this picture but it is too big or something
+
+# sumdat <- transform(readRDS("summary_stats/cat.1.df.RDS")$HMMsumdf,
+#                     mod = ifelse(type=="HMM + TH","HMM + TH","FMMs and HMM")
+# )
+# linetypev <- c(rep(2,2),rep(1,5))
+# (adj_BIC_plot <- ggplot(sumdat, aes(x=parameters
+#                                     , y=deltaBIC
+#                                     , colour=model
+#                                     , linetype=model
+#                                     , group=model))
+#   + facet_wrap(~mod,ncol = 2,scales = "free_x")
+#   + scale_size_continuous(name="# of states")
+#   + scale_x_continuous(breaks=seq(0,300,by=10))
+#   + geom_point(aes(shape=factor(nstates),size=1.5,alpha=nstates))
+#   + scale_linetype_manual(values=linetypev)
+#   + scale_colour_brewer(palette="Dark2")
+#   + labs(y=expression(paste(Delta, "BIC"))
+#          , x="Number of States") 
+#   + geom_line()
+#   + zmargin)
 @
 
 As a complement, we also fitted FMM and FMM with sinusoidal variation in state occupancy probabilities to compare the temporal effects in goodness of fit.
