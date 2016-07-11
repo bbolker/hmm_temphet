@@ -396,7 +396,7 @@ We used this approach to validate our models and comparing these models with the
 
 \section{Results}
 
-<<sim_results, warning=FALSE,echo=FALSE,message=FALSE>>=
+<<sim_results, warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Simulation test for BIC-optimal approach",fig.width=6,fig.height=4>>=
 ICdat <- readRDS("./sim_results/ICdat.rds")
 aa <- readRDS("./sim_results/sim.101.RDS")
 
