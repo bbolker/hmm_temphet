@@ -41,13 +41,12 @@ library("dplyr")
 library("reshape2")
 library("gridExtra")
 library("RColorBrewer")
-# if (!require("ggalt")) {
+if (!require("ggalt") || length(find("geom_encircle"))==0) {
 #     cat("installing ggalt from BB repo ...\n")
-#     library("devtools")
-#     install_github("bbolker/ggalt")
-#     library("ggalt")
-# }
-library("ggalt")
+    try(detach("package:ggalt"),silent=TRUE)
+    devtools::install_github("hrbrmstr/ggalt")
+    library("ggalt")
+}
 @
 
 \begin{abstract}
