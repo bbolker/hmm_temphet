@@ -557,6 +557,8 @@ there are too many species)
 \begin{frame}
 \includegraphics[width=\textwidth]{pix/panther2.png}
 
+\url{http://tinyurl.com/panthermoves2}
+
 %\url{http://tinyurl.com/panthermoves}; 
 %{\small
 % \url{http://www.slideshare.net/bbolker/model-complexity-and-model-choice-for-animal-movement-models}}
