@@ -663,71 +663,18 @@ GPS error).
 
 \section{Discussion}
 
-Identifying behavioural states based solely on
-observations of movement behaviour is a
-common methodological problem in behavioural ecology; finding
-solutions that are both biologically interpretable
-and statistically defensible is challenging. 
-Models with large numbers of
-states fit the data well (even when model complexity
-is penalized) but are hard to interpret biologically,
-while models with fewer states
-that are biologically interpretable are not always statistically
-supported. While the HMM framework has been applied in many research
-areas, few studies have considered modeling with more than 3
-states. \todo{what is the rest of this paragraph supposed to get across?}
-HMM is a simple, straightforward framework, but HMM extensions
-of adding a small amount of complexity can complicate the model
-greatly and reveal deeper understanding. For example,
-\citet{kerk2015hidden} used 2 to 6 movement states HSMM to model
-Florida panthers, \citet{morales_extracting_2004} used habitat
-distance dependent transition HMM to model elk, and outside of
-ecology, \citet{raffa_multivariate_2015} used mixed effect transition
-and emission HMM in a smoking study.
+HMMs are widely used and flexible to model these type of movement data. With the increasing volumes and higher resolution data that are available, traditional HMMs will overfit with big data with large number of states that may not be feasible. Models with large numbers of states fit the data well (even when model complexity is penalized) but are hard to interpret biologically, while models with fewer states that are biologically interpretable are not always statistically supported. We need to work harder to make these models appropriate complex that can be both biologically interpretable and statistically defensible. 
 
 We have presented a relatively simple yet little-studied
 extension by covariate dependent HMM can overfit the number of true
 states in covariate dependent HMM (in our case, time-dependent
-transitions). HMM with more than three states are not biologically
+transitions) with simulations and with Florida panther data. HMM with more than three states are not biologically
 interpretable and often discarded, but we cannot ignore that
 increasing complexity (number of states) states can increase goodness
-of fit statistically. Our analyses revealed modeling temporal
-heterogeneity in HMM transition can reduce the number of states
-estimated in time homogeneous transitions HMM movement of Florida
-panthers and reduce the overall model complexity.
+of fit statistically. Our analyses revealed modelling with time-inhomogeneous transitions appear to offer a simple way to (1) reduce the selected number of states to a biologically interpretable level, (2) capture observed diurnal and autocorrelation patterns, (3) provide fitted models that are better (lower BIC)
+and, overall, less complex than time-homogeneous models. 
 
-For some kinds of model predictions, the time homogeneous transition
-model can perform as well as the time inhomogeneous transition models
-in terms of predicting the states by the Viterbi algorithm (the
-tradition state prediction method) and can easily overlook more
-complicated models. This approach allows the time homogeneous
-transition model's prediction to capture the temporal heterogeneity
-from the observations. The limitation of the Viterbi appoach is that
-it cannot predict future movements beyond the observation sequence. In
-general, the time homogeneous transition model gives the broader scope
-of movement pattern where as the time inhomogeneous transitions models
-gives a more realistic movement structure and future predictions.
-
-Models with time-inhomogeneous transitions appear to
-offer a simple way to (1) reduce the selected number of states to a biologically
-interpretable level, (2) capture observed diurnal and autocorrelation
-patterns, (3) provide fitted models that are better (lower BIC)
-and, overall, less complex than time-homogeneous models.
-However, several challenges must be overcome in order to maximize
-their potential. The current model is based on the reduced univariate
-step length response emission without fitting turning angles. Although
-turning angles are strongly correlated with step length, it does not
-affect the overall prediction on number of states. But movement
-trajectories predictions, and spatial models still require both step
-length and turning angles. Furthermore, modelling temporal
-heterogeneity only reduce the number of predicted states by 1
-resulting in 4/5 states might suggest (1) other factors such as
-spatial components that might also contribute to over predicting
-number of states, or (2) there really are 1 or 2 more different
-movement characteristics that are biologically unknown. Despite the
-challenges, our study provides an important extension in HMM modeling
-that has not been seen before and a real life-application to
-animal movement ecology.
+Incorportating temporal heterogenity in animal movement is definitely the right direction, but there are much more work to be done. From the ecological point of view, our model lacks association of behavioural and environmental features that can potentially improve goodness of fit, predictions, and reduce the number of states. It is really hard to optimize and allocate/distribute parameters when increasing model complexity by adding more predictors or adding more states, especially in HMMs where they are state dependent and may have non-linear relation between states and parameters. More diagnostics and tests are needed to identify features, patterns and mismatches in the data and to validate model fitting performance and predictability.       
 
 \newpage
 \section{Supplementary material}
