@@ -2,6 +2,7 @@
 \usepackage[sort]{natbib}
 \usepackage{amsmath}
 \usepackage{alltt}
+\usepackage{hyperref}
 \usepackage[utf8]{inputenc} % for accented characters
 %% stuff for editing
 %\usepackage[markup=nocolor,addedmarkup=bf,deletedmarkup=sout]{changes}
@@ -663,18 +664,77 @@ GPS error).
 
 \section{Discussion}
 
-HMMs are widely used and flexible to model these type of movement data. With the increasing volumes and higher resolution data that are available, traditional HMMs will overfit with big data with large number of states that may not be feasible. Models with large numbers of states fit the data well (even when model complexity is penalized) but are hard to interpret biologically, while models with fewer states that are biologically interpretable are not always statistically supported. We need to work harder to make these models appropriate complex that can be both biologically interpretable and statistically defensible. 
+%% notes from blackboard
+%% - HMMs are widely used; need to work harder to make them appropriately complex (*)
+%% - recapitulate problem: big data overfits/large number of states is problematic (*)
+%% - adding temphet goes in the right direction (i.e. sims work, model is better/lower BIC, fewer states, less complex/fewer parameters overall)
+%% - GOALS: identifying states and/or association of behaviour with environment
+%%   *or* prediction
+%% - need for more diagnostics (e.g. Potts et al 2014); identify mismatches
+%% - more flexible models
 
-We have presented a relatively simple yet little-studied
-extension by covariate dependent HMM can overfit the number of true
-states in covariate dependent HMM (in our case, time-dependent
-transitions) with simulations and with Florida panther data. HMM with more than three states are not biologically
-interpretable and often discarded, but we cannot ignore that
-increasing complexity (number of states) states can increase goodness
-of fit statistically. Our analyses revealed modelling with time-inhomogeneous transitions appear to offer a simple way to (1) reduce the selected number of states to a biologically interpretable level, (2) capture observed diurnal and autocorrelation patterns, (3) provide fitted models that are better (lower BIC)
-and, overall, less complex than time-homogeneous models. 
+HMMs are a widely used and flexible tool for modeling animal movement
+behaviour; we need to work harder to make sure they are both appropriately
+complex and biologically interpretable. 
+With the increasing volumes of movement data available,
+ecologists who naively use traditional homogeneous HMMs
+and standard information-theoretic criteria
+to estimate the number of behavioural states will generally
+overfit their data, in the sense of ``discovering'' large
+number of states that are difficult to interpret biologically.
 
-Incorportating temporal heterogenity in animal movement is definitely the right direction, but there are much more work to be done. From the ecological point of view, our model lacks association of behavioural and environmental features that can potentially improve goodness of fit, predictions, and reduce the number of states. It is really hard to optimize and allocate/distribute parameters when increasing model complexity by adding more predictors or adding more states, especially in HMMs where they are state dependent and may have non-linear relation between states and parameters. More diagnostics and tests are needed to identify features, patterns and mismatches in the data and to validate model fitting performance and predictability.       
+We have presented a relatively simple but little-used extension
+(time-dependent transitions) that partly resolves the problem.
+Time-dependent transitions appear to offer a simple way to (1) reduce
+the selected number of states closer to a biologically interpretable
+level; (2) capture observed diurnal and autocorrelation patterns in a
+predictive model; (3) improve overall model fit (i.e., lower BIC) and
+reduce the level of complexity (number of parameters) of the most
+parsimonious models. Simple simulations where the true number of
+states is known, and transitions among states vary over time, confirm
+that using BIC with homogeneous HMMs overestimates the number of
+behavioural states, while time-dependent HMMs correctly estimate
+the number.
+
+\textbf{BMB: I think we want one (or two?) paragraph(s) here that revisit(s)
+the deeper statistical issues of 
+\begin{enumerate}
+\item that different approaches are needed for prediction vs. state identification. If we're
+aiming for state identification it might be OK to pre-specify the
+number of states and, \emph{post hoc}, match (Viterbi-based) state
+estimates with environmental variation (à la Fryxell et al.). 
+If we have specific
+environmental covariates in mind, though, it might be better to
+fit a covariate-dependent model so that we can explicitly model
+the switching process \ldots  If we want to do prediction, we have
+to include the covariates, because Viterbi can only estimate
+state occupancy if observed movements are available \ldots
+\item prediction (of movements) vs estimation of number of states also
+represent two different questions; \citep{celeux_deviance_2006} (I haven't
+read it!) and \href{http://www.modulad.fr/archives/JPFenelon/Prog-JPF-2006/Celeux/CycleFenelon_Conference_Gilles_Celeux.pdf}{Celeux presentation} discuss this;
+BIC is good for prediction, but not necessarily for estimation of number
+of states.  We don't need to go into detail, but should point in this direction. Also perhaps hint a bit more above where we reference
+\citep{dean_behavioural_2013}.
+\end{enumerate}
+}
+
+Incorporating temporal heterogenity in animal movement is one step in
+the right direction, but much remains to be done. 
+Our model neglects other predictors, such as habitat type or
+location with respect to environmental features such as roads,
+that can potentially improve goodness of fit and predictions and 
+further reduce the estimated number of states. While adding
+more covariates is in principle straightforward using existing
+frameworks, including all possible biological complexities in 
+a HMM with state-dependent transitions may rapidly become intractable
+in terms of both computational time and complexity of choosing
+among possible reduced models and numbers of states.
+Better diagnostic procedures and tests are needed:
+these can both test overall
+goodness-of-fit \citep{potts_generalized_2014} and,
+more importantly, localize fitting problems to particular aspects of the
+data so that models can be constructed without needing to
+include all possible features of interest.
 
 \newpage
 \section{Supplementary material}
