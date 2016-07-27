@@ -711,19 +711,6 @@ to estimate the number of behavioural states will generally
 overfit their data, in the sense of ``discovering'' large
 number of states that are difficult to interpret biologically.
 
-We have presented a relatively simple but little-used extension
-(time-dependent transitions) that partly resolves the problem.
-Time-dependent transitions appear to offer a simple way to (1) reduce
-the selected number of states closer to a biologically interpretable
-level; (2) capture observed diurnal and autocorrelation patterns in a
-predictive model; (3) improve overall model fit (i.e., lower BIC) and
-reduce the level of complexity (number of parameters) of the most
-parsimonious models. Simple simulations where the true number of
-states is known, and transitions among states vary over time, confirm
-that using BIC with homogeneous HMMs overestimates the number of
-behavioural states, while time-dependent HMMs correctly estimate
-the number.
-
 \textbf{BMB: I think we want one (or two?) paragraph(s) here that revisit(s)
 the deeper statistical issues of 
 \begin{enumerate}
@@ -746,6 +733,22 @@ of states.  We don't need to go into detail, but should point in this direction.
 \end{enumerate}
 }
 
+On a broad spectrum, it really depends on what kind of question 
+that is being answered. On one side of the spectrum, if the goal is 
+to identify states, it might be sufficient to use a 
+simple/traditional HMM model and pre-specify the number of states and, post hoc, 
+match Viterbi-based states estimates with environmental variation 
+\citep{fryxell_multiple_2008}. On the other side of the 
+spectrum, if the goal of interest is to make predictions (out of sample), 
+it might be better to fit a covariate-dependent model so that we can explicitly
+model the switching process. In that case, fitting a covariate-dependent model is
+better for out of sample prediction because Viterbi can only estimate state 
+occupancy if observed movements are available (within sample preditions). 
+Finally, if we want to estimate the number of states, BIC is not necessarily 
+good for estimation of number of states \citep{biernacki2000assessing}, 
+but it can be useful as an approximate upper limit estimate. 
+
+
 Incorporating temporal heterogenity in animal movement is one step in
 the right direction, but much remains to be done. 
 Our model neglects other predictors, such as habitat type or
@@ -758,11 +761,27 @@ a HMM with state-dependent transitions may rapidly become intractable
 in terms of both computational time and complexity of choosing
 among possible reduced models and numbers of states.
 Better diagnostic procedures and tests are needed:
-these can both test overall
-goodness-of-fit \citep{potts_generalized_2014} and,
-more importantly, localize fitting problems to particular aspects of the
+these can both test overall goodness-of-fit \citep{potts_generalized_2014} 
+and, more importantly, localize fitting problems to particular aspects of the
 data so that models can be constructed without needing to
 include all possible features of interest.
+
+
+\section{Conclusion}
+
+We have presented a relatively simple but little-used extension
+(time-dependent transitions) that partly resolves the problem.
+Time-dependent transitions appear to offer a simple way to (1) reduce
+the selected number of states closer to a biologically interpretable
+level; (2) capture observed diurnal and autocorrelation patterns in a
+predictive model; (3) improve overall model fit (i.e., lower BIC) and
+reduce the level of complexity (number of parameters) of the most
+parsimonious models. Simple simulations where the true number of
+states is known, and transitions among states vary over time, confirm
+that using BIC with homogeneous HMMs overestimates the number of
+behavioural states, while time-dependent HMMs correctly estimate
+the number.
+
 
 \newpage
 \section{Supplementary material}
