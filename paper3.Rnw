@@ -480,8 +480,8 @@ linetypev <- c(rep(2,2),rep(1,5))
    + scale_size_continuous(name="# of states")
    + scale_x_continuous(breaks=seq(0,300,by=30))
    + geom_point(aes(shape=factor(nstates),alpha=nstates))
-   + scale_linetype_manual(values=linetypev)
-   + scale_colour_brewer(palette="Dark2")
+   + scale_linetype_manual(values=linetypev, name="Model")
+   + scale_colour_brewer(palette="Dark2", name="Model")
    + scale_shape_discrete(name="Number of states")
    + scale_alpha_continuous(name="Number of states")
    + labs(y=expression(paste(Delta, "BIC"))
@@ -527,8 +527,10 @@ vitdf <- (vit %>% dplyr::select(c(viterbi,time))
   %>% mutate(model="homogeneous (n=3)")
 )
 
+vitdf2 <- vitdf %>% transmute(time=time,variable="viterbi",value=viterbi)
+
 mnames <- c("fmm5","fmmsin4","hmm6","hmmblock4","hmmhourly3",
-            "hmmquad5","hmmsin5","obs")
+            "hmmquad5","hmmsin5","obs","viterbi")
 mnames2 <- c("fmm-homogeneous  (n=5)"
              , "fmm-sin (n=4)"
              , "homogeneous (n=6)"
@@ -536,27 +538,44 @@ mnames2 <- c("fmm-homogeneous  (n=5)"
              , "hourly (n=3)"
              , "quadratic (n=5)"
              , "sin (n=5)"
-             , "observed")
+             , "observed"
+             , "viterbi homogenous (n=3)")
 
-combdf <- (rbind(avgdf,obsdf)
+combdf <- (rbind(avgdf,obsdf,vitdf2)
            %>% transmute(time=time,model=variable,steplen=value)
            %>% filter(model %in% mnames)
            %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
 )
-linetypev <- c(rep(c(2,1),c(2,6)),1)
-colvec <- c(c(brewer.pal(7,"Dark2"),"black"),"black")
-lwdvec <- c(rep(c(1,4),c(7,1)),4)
-alphavec <- c(rep(c(1,0.2),c(7,1)),1)
-(ggplot(combdf,aes(x=time,y=steplen,colour=model,lwd=model,alpha=model,linetype=model)) 
+linetypev <- c(rep(c(2,1),c(2,6))
+                ,0
+               )
+colvec <- c(c(brewer.pal(7,"Dark2"),"black")
+             ,"black"
+            )
+lwdvec <- c(rep(c(1,4),c(7,1))
+             ,4
+            )
+alphavec <- c(rep(c(1,0.2),c(7,1))
+               ,1
+              )
+
+shapevec <- c(rep(32,8),118)
+
+(ggplot(combdf,aes(x=time,y=steplen,colour=model,
+                   lwd=model,
+                   alpha=model,linetype=model, shape=model))
+  + geom_point()
   + geom_line()
   + xlab("Time of Day") 
+  + scale_shape_manual(values=shapevec, name="Model")
   + ylab(expression('Mean step length'~(log[10]*m)))
-  + scale_colour_manual(values=colvec)
-  + scale_alpha_manual(values=alphavec)
-  + scale_size_manual(values=lwdvec)
-  + scale_linetype_manual(values=linetypev)
-) + geom_point(data=vitdf,aes(y=viterbi),
-               lwd=2.5,alpha=1,colour="black",shape=118,show.legend=FALSE)
+  + scale_colour_manual(values=colvec, name="Model")
+  + scale_alpha_manual(values=alphavec, name="Model")
+  + scale_size_manual(values=lwdvec, name="Model")
+  + scale_linetype_manual(values=linetypev, name="Model")
+ ) 
+# + geom_point(data=vitdf,aes(y=viterbi),
+               # lwd=2.5,alpha=1,colour="black",shape=118,show.legend=FALSE)
 ## adding geom_point() with vitdf screws up the legend ...
 @
 
@@ -574,17 +593,26 @@ vitacf <- (vit %>% dplyr::select(-c(time,obs))%>%ldply(.,acffun) %>% mutate(mode
 acfdf <- (readRDS("summary_stats/cat.1.df.RDS")$acfdf 
           %>% mutate(model = .id)
 )
-(ggplot(acfdf,aes(x=lag,y=ACF,colour=model,
-                  lwd=model,alpha=model,linetype=model)) 
+
+combacfdf <- (rbind(acfdf,vitacf)
+           %>% transmute(lag=lag,model=model,ACF=ACF)
+           %>% filter(model %in% mnames)
+           %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
+)
+
+(ggplot(combacfdf,aes(x=lag,y=ACF,colour=model,
+                  lwd=model,alpha=model,linetype=model,shape=model))
+  + geom_point()
   + geom_line()
   + xlab("Lag") 
   + ylab("Autocorrelation")
-  + scale_colour_manual(values=colvec)
-  + scale_alpha_manual(values=alphavec)
-  + scale_size_manual(values=lwdvec)
-  + scale_linetype_manual(values=linetypev)
-) + geom_point(data=vitacf,lwd=2.5,alpha=1,colour="black",shape=118,
-             )
+  + scale_shape_manual(values=shapevec, name="Model")
+  + scale_colour_manual(values=colvec, name="Model")
+  + scale_alpha_manual(values=alphavec, name="Model")
+  + scale_size_manual(values=lwdvec, name="Model")
+  + scale_linetype_manual(values=linetypev, name="Model")
+) 
+
 ## vitacf messes up legend ...
 @
 
