@@ -48,6 +48,7 @@
 
 %%% Load packages
 %\usepackage{amsthm,amsmath}
+\usepackage{amsmath}
 %\RequirePackage{natbib}
 %\RequirePackage[authoryear]{natbib}% uncomment this for author-year bibliography
 %\RequirePackage{hyperref}
@@ -269,6 +270,8 @@ Text for this section.
 
 \section*{Background}
 
+\
+
 Given a sequence of animal movements, movement models aim to find a parsimonious description
 that can be used to understand past movements and predict
 future movements. Ecologists have long considered the effects of
@@ -289,6 +292,8 @@ Conditional on the state occupied by an individual, HMMs typically
 assume that animals follow a standard correlated walk model
 \cite{okubo_diffusion_1980,turchin1998quantitative}.
 
+\
+
 Ever-increasing capabilities of remote
 sensors are making movement data available over an
 ever-wider range of time scales, at both higher resolution (e.g. hourly data
@@ -299,6 +304,8 @@ long-term data, ecologists will more
 often have to account for temporal variability in movement
 behaviour at diurnal and seasonal scales that were previously
 not captured in the data.
+
+\
 
 HMMs have typically been used to model movements over short time
 scales, where the probability of transitioning between movement states is
@@ -318,6 +325,8 @@ observation period, but
 in general ecologists have turned to other tools to describe behavioural
 changes over longer (diurnal, seasonal, or ontogenetic) time scales \cite{gurarie2009novel}.
 
+\
+
 For movement behaviours that change on a fast time scale, such
 that movement behaviours recorded
 at successive observations are effectively independent,
@@ -333,6 +342,8 @@ Thus FMMs and HMMs,
 with or without temporal variation in the occupancy or transition
 probabilities, form a useful family of models for capturing
 changes in movement behaviour over a range of time scales.
+
+\
 
 Our primary goal in this paper is to introduce the use of
 HMMs with temporally varying transition probabilities -- in particular,
@@ -351,6 +362,8 @@ behavioural states of Florida panthers (\emph{Puma concolor coryi}).
 % %%to analyze hourly movement data
 % %%from 18 Florida panthers (\emph{Puma concolor coryi}).
 % 
+\
+
 van de Kerk et al.\cite{kerk2015hidden} found that the best-fitting HSMMs
 incorporated a surprisingly large number of hidden
 behavioural states (as many as six for individuals with a large amount
@@ -371,6 +384,8 @@ repertoires with more than three distinct states are difficult to
 interpret --- one possible reason that other authors have not adopted
 van de Kerk et al.'s model-based approach to
 identifying the number of latent states.
+
+\
 
 Our second goal, therefore, is to explore whether
 van de Kerk et al.'s results on optimal
@@ -393,9 +408,15 @@ fit models to simulated data with varying numbers of latent states
 and degrees of temporal heterogeneity to test our conjecture that
 heterogeneity can be misidentified as behavioural complexity.
 
+\
+
 \section*{Methods}
 
+\
+
 \subsection*{Data and previous analyses}
+
+\
 
 GPS collars were fitted to 18 Florida panthers in 2005-2012 by Florida
 Fish and Wildlife and Conservation Commission staff using
@@ -412,6 +433,8 @@ contiguous sequences of hourly GPS coordinates into
 successive step lengths (in meters) and turning angles (in radians)
 \cite{turchin1998quantitative,kerk2015hidden}.
 
+\
+
 van de Kerk et al.\cite{kerk2015hidden} used hidden semi-Markov models (HSMM), 
 an extension of HMM that permits explicit modelling of dwell times 
 \cite{langrock_flexible_2012}, considering both Poisson and
@@ -424,6 +447,8 @@ intervals were not given), implying that a geometric distribution
 this suggests that we might not lose much accuracy by reverting to 
 a simpler HMM framework, which corresponds
 to making precisely this assumption.
+
+\
 
 van de Kerk et al.\cite{kerk2015hidden} considered time-homogeneous models with 
 a variety of candidate distributions %
@@ -448,6 +473,8 @@ treating step length and turning angle at a particular time
 as multivariate observations for the purpose of HMM
 analysis but neglecting possible correlations
 between the two measures.) 
+
+\
 
 van de Kerk et al.\cite{kerk2015hidden} used the Bayesian (Schwarz) information criterion (BIC)
 to test the relative penalized goodness of fit for
@@ -482,7 +509,11 @@ complicated than any candidate model \cite{BurnhamAnderson1998};
 we believe that the qualitative conclusions stated here
 for BIC-optimality will carry over to analyses using AIC instead.
 
+\
+
 \subsection*{Model description}
+
+\
 
 \newcommand{\obs}{\mathbf{y}}
 \newcommand{\cov}{\mathbf{x}}
@@ -491,23 +522,35 @@ for BIC-optimality will carry over to analyses using AIC instead.
 In a HMM, the joint likelihood of \emph{emissions} (i.e., direct observations) $ \mathbf Y = \obs_{1},..., \obs_{T}$ 
 and a hidden state sequence $\mathbf{Z}, \state_{t} \in \{1,...,n\}, t=1,...,T$, given model
 parameters \boldmath{$\theta$} and covariates $\mathbf{X}_{1:T} =\cov_{1},..., \cov_{T}$, can be written as:
-\begin{eqnarray}
-P(\mathbf{Y}_{1:T},\mathbf{Z}_{1:T} | \theta,\mathbf{X}_{1:T}) 
-&=& P(\state_{1} \mid \cov_{1})P(\obs_{1} | \state_{1}, \cov_{1}) \cdot \nonumber\\
-&& \quad \prod\limits_{k=2}^{T}P(\state_{k} | \state_{k-1}, \cov_{k})P(\obs_{k} | \state_{k},\cov_{k})
+
+\begin{equation}
+\begin{split}
+P(\mathbf{Y}_{1:T},\mathbf{Z}_{1:T}|\boldsymbol \theta,\mathbf{X}_{1:T}) & =
+P(\state_{1} \mid \cov_{1})P(\obs_{1} | \state_{1}, \cov_{1}) \cdot \\
+&  \quad \prod\limits_{k=2}^{T}P(\state_{k} | \state_{k-1}, \cov_{k})P(\obs_{k} | \state_{k},\cov_{k})
+\end{split}
 \label{eq:HMMlik}
-\end{eqnarray}
+\end{equation}
+
 
 The emissions $\obs_i$ are boldfaced to denote that we may have a vector of observations at each time point (e.g., step length and turning angle).
 The model contains three distinct components:
 
+\
+
 \begin{description}
 \item[Initial probability] $P(\state_{1} = i | \cov_{1}) P(\obs_{1} | \state_{1}, \cov_{1} )$: the probability of state $i$ at time $t=1$ where the covariate is $\cov_{1}$, times the vector of observations $\obs_{1}$ conditioned on covariates $\cov_{1}$ and state $\state_{1}$.
 
+\
+
 \item[Transition probability] $P(\state_{k}=j | \state_{k-1}=i,\cov_{k})$: the probability of a transition from state $i$ at time $t=k-1$ to state $j$ with covariate $\cov_{k}$ at time $t=k$.
+
+\
 
 \item[Emission probability] $P(\obs_{k} | \state_{k},\cov_{k})$: a vector of observations $\obs_{k}$ conditioned on covariates $\cov_{k}$ at state $\state_{k}$ at time $t=k$.  
 \end{description}
+
+\
 
 Eq.~\ref{eq:HMMlik} gives the likelihood of the observed sequence 
 given (conditional on) a particular
@@ -520,18 +563,94 @@ numerically estimating parameters \cite{zucchini_hidden_2009};
 we used those implemented in the \texttt{depmixS4} package for R
 \cite{visser2010depmixs4,R}.
 
+\
+
 For any $n$-state HMM, we need to define a $n \times n$ matrix that specifies the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$.  The FMM is a special case of HMM where the probabilities of \emph{entering} a given state are identical across all states --- i.e., the probability of occupying a state at the next time step is independent of the current state occupancy. It can be modelled in the HMM framework by setting the transition probabilities  $\pi_{ij} = \pi_{i*}$.
 
+\
 
 In any case, the transition matrix $\pi_{ij}$ must respect the constraints that (1) all probabilities are between 0 and 1 and (2) transition probabilities out of a given state sum to 1.
 As is standard for HMMs with covariates \cite{visser2010depmixs4}, we define this multinomial logistic model in terms of a linear predictor $\eta_{ij}$, where $\eta_{i1}$ is set to 1 without loss of generality (i.e. we have only $n \times (n-1)$ distinct parameters; we index $j$ from 2 to $n$ for notational clarity):
 
+\
 
-\begin{eqnarray}
+\begin{equation}
+\begin{split}
 \pi_{ij} & = \exp(\eta_{ij}(t))/\left(1+\sum_{j=2}^{n}\exp(\eta_{ij}(t))\right), \textrm{ for } j={2,...,n} \\
-\pi_{i1} & = 1 - \sum_{j=2}^{n}\pi_{ij} \nonumber
-\end{eqnarray}
+\pi_{i1} & = 1 - \sum_{j=2}^{n}\pi_{ij}
+\end{split}
+\end{equation}
 
+We considered four different transition models for diurnal variation in behaviour, incorporating hour-of-day as a covariate following the general approach of Morales et al.\cite{morales_extracting_2004} of incorporating covariate dependence in the transition matrix.
+
+\
+
+\begin{description}
+\item[Multiple block transition] Here we assume piecewise-constant transition probabilities. The transition probability $\pi_{ij}$ is a function of time (hour of day), where it is assigned to one of $M$ different time blocks:
+
+$$
+\eta_{ij}(t) = \sum_{m=1}^{M}a_{ijm} \delta_{m=t}
+$$
+where $a_{ijm}$ are parameters, and $\delta_{m=t}$ is a Kronecker delta ($\delta_{m=t}=1$ for the time block at the corresponding time $t$, and 0 otherwise). 
+
+\
+
+
+\item[Quadratic transition model] We assume the elements of the linear predictor
+are quadratic functions of hour. The quadratic model is not diurnally continuous, i.e. there is no constraint that forces $\eta_{ij}(0)=\eta_{ij}(24)$; imposing a diurnal continuity constraint would collapse the model to a constant.
+$$
+\eta_{ij}(t) = b_{ij1}+b_{ij2}\left(\frac{t}{24}\right)+b_{ij3}\left(\frac{t}{24}\right)^{2}
+$$
+
+\item[Sinusoidal transition model] A sinusoidal model with a period of 24 hours is identical in complexity to the quadratic model, but automatically satisfies the diurnal continuity constraint.
+$$
+\eta_{ij}(t)= b_{ij1}+b_{ij2}\cos\left(\frac{2\pi t}{24}\right)+b_{ij3}\sin\left(\frac{2\pi t}{24}\right)
+$$
+
+\item[Hourly model] Lastly, we extended the multi-block approach and assign  a different transition matrix for every hour of the day. This model is included for comparative purposes due to the large number of parameters in the model which makes it not really practical. We only fitted up to four states using the hourly model.  
+\end{description}
+
+\
+
+Other periodic functions, such as Fourier series (the sinusoidal transition model augmented by additional sinusoidal components at higher frequencies) or periodic splines, could be useful directions for future exploration.
+
+\
+
+\subsection{Model evaluation}
+
+\
+
+We used the {\tt depmixS4} package
+to fit covariate-dependent transition HMMs, 
+simulate states and step lengths using the
+estimated parameters, and estimate the most likely
+states with the Viterbi
+algorithm.
+
+\
+
+\newcommand{\dbic}{\ensuremath \Delta \textrm{BIC}}
+
+We used three approaches to assess the fit of both time-homogeneous and time-inhomogeneous 
+HMMs with 3 to 6 states to step-length data from the four of the thirteen Florida panthers 
+with the most data ($> 9000 $ observations). (1) Comparing BICs to the optimal-BIC model 
+within each type of transition complexity ($\dbic$ = BIC - min(BIC)) assesses the overall 
+goodness of fit of each model type. (2) Comparing average step-length by hour of day for the 
+observed data and for data simulated from the models shows how well a particular class of 
+models can capture the diurnal variation in behaviour. (3) Comparing temporal autocorrelations
+for the observed data and for data simulated from the models shows how well a particular class
+of models captures serial correlation at both short and long scales.
+
+\
+
+Model complexity and the number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorporating temporal heterogeneity. The number of free parameters in an HMM can be generalized by summing up the number of free parameters of the three distinct components. Let $n$ be the number of hidden states and $k_{i}, k_{t}, k_{e}$ be the number of parameters describing the covariate-dependence of the prior distribution, transition function and emission distributions; that is, for a homogeneous model, $k=1$, while a single numeric covariate or a categorical predictor with two levels would give $k=2$. Then the number of free parameters of an HMM is:
+
+\begin{equation}
+\underbrace{k_{i}\cdot (n-1)}_{\text{Initial}} 
+{+} \underbrace{k_{t}\cdot n\cdot (n-1)}_{\text{Transition}}
+{+} \underbrace{ k_{e}\cdot n}_{\text{Emission}}
+\label{eq:numparam}
+\end{equation}
 
 
 
