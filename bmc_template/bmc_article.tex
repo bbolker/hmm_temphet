@@ -652,7 +652,86 @@ Model complexity and the number of parameters increase as the number of latent s
 \label{eq:numparam}
 \end{equation}
 
+As the number of states increases, the number of free parameters in time-homogeneous FMMs and HMMs and FMMs with temporal heterogenity will increase linearly, whereas HMMs with temporal heterogenity will increase quadratically (Eq.~\ref{eq:numparam}). When comparing BICs, it is important to account for the tradeoff between log-likelihood and number of states, but also log-likelihood and number of free parameters.
 
+\
+
+We used simulations to predict hourly step length and ACF 
+because, while the computation is reasonably straightforward for FMMs, and manageable for homogeneous HMMs, the interaction between the geometric dwell time within each state and the temporally varying interaction probabilities makes it unreasonably complex. 
+We used this approach to validate our models and comparing these models with the observed movements instead of the standard Viterbi predictions by the Viterbi algorithm because Viterbi predictions, which use the most probable sequence of movement states based on the observations \cite{zucchini_hidden_2009,langrock_flexible_2012}, double-count the observed data. It is useful to predict missing data in the observation sequence, but because it is conditional on the observed values, it can not reliably evaluate goodness of fit for the different structural complexities of HMM models.
+
+\
+
+\section{Results}
+
+\
+
+We simulated a two-state HMM with sinusoidal temporal transitions 100 times and fitted it with two to five state HMMs and without temporal transition.  Fig. ~\ref{fig:sim_results} shows heterogeneous transition models can always predict the correct number of states, whereas, can overestimate the number of states via BIC-optimal approach. 
+
+\
+
+Fig. ~\ref{fig:BICred_plot} shows that the BIC-optimal number of states for time homogenous models is consistent with van de Kerk et al.'s \cite{kerk2015hidden} results (Weibull wrapped-Cauchy to Weibull von Mises, and Weibull von Mises to log Normal without turning angles) 
+
+\
+
+As a complement, we also fitted FMM and FMM with sinusoidal variation in state occupancy probabilities to compare the temporal effects in goodness of fit (dashed lines).
+% \todo{I took out ``hourly HMM'' here - more coherent to describe it above} 
+As a reminder, FMMs assume that the latent state in each time step is 
+\emph{independent} of the latent state at the previous time step; 
+time-varying FMMs can accurately describe movement when behaviour can
+change on a short time scale, but the average propensity for different
+behaviours changes over time.
+
+\
+
+Figure~\ref{fig:adj_BIC_comparisons} shows that models with temporal heterogenity are better (lower BIC) than homogeneous models in both FMM and HMM frameworks, but time-homogenous HMMs are better than FMMs with sinusoidal temporal heterogeneity. Turning to the temporally heterogeneous HMMs (right panel), we see that the model with different transition probabilities for each hour of the day (HMM + THhourly) is overparameterized; it underperforms homogeneous HMM with even 3 states, and gets much worse with 4 states. The multiple-block model approximately matches the homogeneous HMM, although it gives the BIC-optimal number of states as 4, in contrast to 6 for the homogeneous HMM.  Finally, the quadratic and sinusoidal models are considerably better than any other models tested; they both give the BIC-optimal number of states as 5, and they have similar goodness of fit.
+However, this similarity is somewhat overstated due to the very large variation in BIC (over thousands of units) across the full range of models; there is a difference of approximately 80 BIC units, which would
+normally be interpreted as an enormous difference in goodness of fit,
+between the sinusoidal and quadratic models (both of which have 90 
+parameters).
+
+\
+
+Fig. ~\ref{fig:avg_step_length_by_time} shows a clear diurnal pattern from the average hourly step lengths from the observed data. As expected, temporally homogeneous models (whether FMM or HMM) predict the same mean step length regardless of time of day, failing to capture the diurnal activity cycle. All of the models incorporating temporal heterogeneity, including the temporally heterogeneous FMM, can capture the observed patterns. However, the block model does markedly worse than the other temporal models (changing the block definitions might help), and the (overparameterized) hourly model does better than any other model at capturing the early-evening peak (but worse at capturing the mid-day trough). We also included average hourly step lengths from three-state temporally homogeneous HMM Viterbi prediction (v points).
+
+\
+
+Like the diurnal pattern shown in Fig. ~\ref{fig:avg_step_length_by_time},
+the strong autocorrelation of the observed step lengths at a 24-hour lag (Fig. ~\ref{fig:acf_plot}) shows the need to incorporate temporal heterogeneity in the model --- we could have reached this conclusion even without developing any of the temporal-heterogeneity machinery.
+Because there are a huge number of potential complexities that can be added to movement models (e.g. spatial/temporal/among-individual heterogeneity; effects of conspecific attraction or avoidance; memory or cognitive effects), each with associated costs in researcher and computational effort, such diagnostic plots are invaluable. In contrast to the hourly averages, the autocorrelation (ACF) captures both short- and long-term temporal effects. HMM without temporal heterogeneity captures the short-term autocorrelation, but misses the long-term autocorrelation beyond a 7-hour lag.
+Temporally homogeneous FMM, by definition, produces neither short- nor long-term autocorrelation. FMM without temporal heterogeneity, although it captures the diurnal pattern well, underpredicts the degree of short-term autocorrelation.
+
+\
+
+The hardest problem with multiple latent states is interpreting them
+biologically. We have no way of knowing what panthers are actually
+thinking (it is certainly more complex than being in one of a small
+number of discrete latent states); 
+we don't know the ``true'' number of latent states,
+nor are we able to observe them directly, although
+incorporating additional direct observations of 
+behaviour (if available) can at least partially
+address this problem \cite{fryxell_multiple_2008}.
+Three distinct
+movement states seem biologically interpretable for Florida panthers
+according to van de Kerk et al.\cite{kerk2015hidden}: Short step length suggests resting
+states, intermediate step length a foraging state, and long
+step length a traveling state. 
+% \todo{do we need this?}
+Figure~\ref{fig:state_plots} compares the estimated parameter values
+for several cats
+(mean and standard deviation of the step length in each state) between
+the time-homogeneous and time-heterogeneous models. 
+In general, the states with longer mean step lengths are relatively
+similar between model classes. For cats 14 and 15, the states with
+the longest or next-longest mean step lengths have similar means
+and standard deviations; for cats 1 and 2, three long-step states
+in the homogeneous HMM appear to divide two long-step states in 
+the heterogeneous HMM. For short-step states, the heterogeneous HMM
+tends to identify a high-variance state, while the homogeneous HMM
+picks up states with very short step lengths (questionable in any
+case because we have not taken any special efforts to account for
+GPS error).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
