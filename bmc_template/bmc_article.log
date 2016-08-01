@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  29 JUL 2016 13:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  31 JUL 2016 19:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -565,14 +565,18 @@ LaTeX Warning: Reference `fig:acf_plot' on page 8 undefined on input line 700.
 LaTeX Warning: Reference `fig:state_plots' on page 9 undefined on input line 72
 1.
 
-(./bmc_article.bbl
+[9] (./bmc_article.bbl
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <7> not available
 (Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 83.
 
-[9]) [10] 
+[10])
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[11] 
 AED: lastpage setting LastPage
-[11] (./bmc_article.aux)
+[12] (./bmc_article.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
@@ -585,10 +589,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 3073 strings out of 493014
- 37023 string characters out of 6133351
- 111620 words of memory out of 5000000
- 6600 multiletter control sequences out of 15000+600000
+ 3076 strings out of 493014
+ 37079 string characters out of 6133351
+ 114850 words of memory out of 5000000
+ 6603 multiletter control sequences out of 15000+600000
  16695 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  30i,13n,37p,924b,406s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -614,10 +618,10 @@ ocal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/loc
 al/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/loca
 l/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local
 /texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on bmc_article.pdf (11 pages, 258643 bytes).
+Output written on bmc_article.pdf (12 pages, 262035 bytes).
 PDF statistics:
- 128 PDF objects out of 1000 (max. 8388607)
- 92 compressed objects within 1 object stream
+ 131 PDF objects out of 1000 (max. 8388607)
+ 94 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

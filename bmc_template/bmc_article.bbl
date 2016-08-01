@@ -1,6 +1,6 @@
 %% BioMed_Central_Bib_Style_v1.01
 
-\begin{thebibliography}{24}
+\begin{thebibliography}{26}
 % BibTex style file: bmc-mathphys.bst (version 2.1), 2014-07-24
 \ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi
 \ifx \binits  \undefined \def \binits#1{#1}\fi
@@ -432,6 +432,38 @@ Accessed 2016-06-07
 \end{bbook}
 \endbibitem
 
+%%% 25
+\bibitem{biernacki2000assessing}
+\begin{barticle}
+\bauthor{\bsnm{Biernacki}, \binits{C.}},
+\bauthor{\bsnm{Celeux}, \binits{G.}},
+\bauthor{\bsnm{Govaert}, \binits{G.}}:
+\batitle{Assessing a mixture model for clustering with the integrated completed
+  likelihood}.
+\bjtitle{IEEE transactions on pattern analysis and machine intelligence}
+\bvolume{22}(\bissue{7}),
+\bfpage{719}--\blpage{725}
+(\byear{2000})
+\end{barticle}
+\endbibitem
+
+%%% 26
+\bibitem{potts_generalized_2014}
+\begin{barticle}
+\bauthor{\bsnm{Potts}, \binits{J.R.}},
+\bauthor{\bsnm{Auger-Méthé}, \binits{M.}},
+\bauthor{\bsnm{Mokross}, \binits{K.}},
+\bauthor{\bsnm{Lewis}, \binits{M.A.}}:
+\batitle{A generalized residual technique for analysing complex movement models
+  using earth mover's distance}.
+\bjtitle{Methods in Ecology and Evolution}
+\bvolume{5}(\bissue{10}),
+\bfpage{1012}--\blpage{1022}
+(\byear{2014}).
+Accessed 2016-06-07
+\end{barticle}
+\endbibitem
+
 \end{thebibliography}
 
 \newcommand{\BMCxmlcomment}[1]{}
@@ -836,6 +868,42 @@ Accessed 2016-06-07
   <publisher>Vienna, Austria</publisher>
   <pubdate>2015</pubdate>
   <url>https://www.R-project.org/</url>
+</bibl>
+
+<bibl id="B25">
+  <title><p>Assessing a mixture model for clustering with the integrated
+  completed likelihood</p></title>
+  <aug>
+    <au><snm>Biernacki</snm><fnm>C</fnm></au>
+    <au><snm>Celeux</snm><fnm>G</fnm></au>
+    <au><snm>Govaert</snm><fnm>G</fnm></au>
+  </aug>
+  <source>IEEE transactions on pattern analysis and machine
+  intelligence</source>
+  <publisher>IEEE</publisher>
+  <pubdate>2000</pubdate>
+  <volume>22</volume>
+  <issue>7</issue>
+  <fpage>719</fpage>
+  <lpage>-725</lpage>
+</bibl>
+
+<bibl id="B26">
+  <title><p>A generalized residual technique for analysing complex movement
+  models using earth mover's distance</p></title>
+  <aug>
+    <au><snm>Potts</snm><fnm>JR</fnm></au>
+    <au><snm>Auger Méthé</snm><fnm>M</fnm></au>
+    <au><snm>Mokross</snm><fnm>K</fnm></au>
+    <au><snm>Lewis</snm><fnm>MA</fnm></au>
+  </aug>
+  <source>Methods in Ecology and Evolution</source>
+  <pubdate>2014</pubdate>
+  <volume>5</volume>
+  <issue>10</issue>
+  <fpage>1012</fpage>
+  <lpage>-1022</lpage>
+  <url>http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12253/full</url>
 </bibl>
 
 </refgrp>
