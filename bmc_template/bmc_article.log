@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  31 JUL 2016 19:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  1 AUG 2016 13:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -133,10 +133,31 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 635.
 LaTeX Info: Redefining \[ on input line 2739.
 LaTeX Info: Redefining \] on input line 2740.
 )
+(/usr/local/texlive/2016/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/lineno/lineno.sty
+Package: lineno 2005/11/02 line numbers on paragraphs v4.41
+\linenopenalty=\count104
+\output=\toks22
+\linenoprevgraf=\count105
+\linenumbersep=\dimen114
+\linenumberwidth=\dimen115
+\c@linenumber=\count106
+\c@pagewiselinenumber=\count107
+\c@LN@truepage=\count108
+\c@internallinenumber=\count109
+\c@internallinenumbers=\count110
+\quotelinenumbersep=\dimen116
+\bframerule=\dimen117
+\bframesep=\dimen118
+\bframebox=\box32
+LaTeX Info: Redefining \\ on input line 3056.
+)
 (/usr/local/texlive/2016/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2015/03/17 v1.2c Input encoding file
-\inpenc@prehook=\toks22
-\inpenc@posthook=\toks23
+\inpenc@prehook=\toks23
+\inpenc@posthook=\toks24
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/base/utf8.def
 File: utf8.def 2016/02/28 v1.1s UTF-8 support for inputenc
@@ -450,76 +471,80 @@ Now handling font encoding U ...
 (./bmc_article.aux)
 \openout1 = `bmc_article.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 91.
+LaTeX Font Info:    ... okay on input line 91.
 
 (/usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count104
-\scratchdimen=\dimen114
-\scratchbox=\box32
-\nofMPsegments=\count105
-\nofMParguments=\count106
-\everyMPshowfont=\toks24
-\MPscratchCnt=\count107
-\MPscratchDim=\dimen115
-\MPnumerator=\count108
-\makeMPintoPDFobject=\count109
-\everyMPtoPDFconversion=\toks25
+\scratchcounter=\count111
+\scratchdimen=\dimen119
+\scratchbox=\box33
+\nofMPsegments=\count112
+\nofMParguments=\count113
+\everyMPshowfont=\toks25
+\MPscratchCnt=\count114
+\MPscratchDim=\dimen120
+\MPnumerator=\count115
+\makeMPintoPDFobject=\count116
+\everyMPtoPDFconversion=\toks26
 )
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
-(lastpage)             ! on input line 87.
+(lastpage)             ! on input line 91.
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/bx/n' in size <13> not available
-(Font)              size <12> substituted on input line 93.
+(Font)              size <12> substituted on input line 97.
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <24> not available
-(Font)              size <24.88> substituted on input line 101.
+(Font)              size <24.88> substituted on input line 105.
 
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 120.
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 124.
 
 LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 120.
+(Font)              size <5> substituted on input line 124.
 
 
 LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <5.5> not available
-(Font)              size <5> substituted on input line 120.
+(Font)              size <5> substituted on input line 124.
 
 
 LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 120.
+(Font)              size <5> substituted on input line 124.
 
-\address@aff1=\toks26
-\address@aff2=\toks27
-LaTeX Font Info:    Try loading font information for OMS+cmss on input line 164
+\address@aff1=\toks27
+\address@aff2=\toks28
+LaTeX Font Info:    Try loading font information for OMS+cmss on input line 168
 .
-LaTeX Font Info:    No file OMScmss.fd. on input line 164.
+LaTeX Font Info:    No file OMScmss.fd. on input line 168.
 
 LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textdagger' on input line 164.
+(Font)              for symbol `textdagger' on input line 168.
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <10> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 190.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 194.
+
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <8> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 307.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 275.
 
 
 
@@ -530,53 +555,84 @@ Overfull \hbox (1.0pt too wide) has occurred while \output is active
 [1{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 ]
-[2]
+Underfull \vbox (badness 6032) has occurred while \output is active []
 
-LaTeX Warning: Reference `fig:BICred_plot' on page 3 undefined on input line 46
-9.
+ [2]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[3] [4] [5] [6]
+ [3]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: Reference `fig:sim_results' on page 7 undefined on input line 66
-9.
+ [4]
+[5]
 
-
-LaTeX Warning: Reference `fig:BICred_plot' on page 7 undefined on input line 67
+LaTeX Warning: Reference `fig:BICred_plot' on page 6 undefined on input line 47
 3.
 
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6]
 [7]
+Underfull \vbox (badness 3792) has occurred while \output is active []
 
-LaTeX Warning: Reference `fig:adj_BIC_comparisons' on page 8 undefined on input
- line 687.
+ [8]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [9]
+[10]
+Underfull \vbox (badness 5064) has occurred while \output is active []
+
+ [11]
+
+LaTeX Warning: Reference `fig:sim_results' on page 12 undefined on input line 6
+73.
 
 
-LaTeX Warning: Reference `fig:avg_step_length_by_time' on page 8 undefined on i
-nput line 695.
+LaTeX Warning: Reference `fig:BICred_plot' on page 12 undefined on input line 6
+77.
 
 
-LaTeX Warning: Reference `fig:avg_step_length_by_time' on page 8 undefined on i
-nput line 699.
+LaTeX Warning: Reference `fig:adj_BIC_comparisons' on page 12 undefined on inpu
+t line 691.
+
+[12]
+
+LaTeX Warning: Reference `fig:avg_step_length_by_time' on page 13 undefined on 
+input line 699.
 
 
-LaTeX Warning: Reference `fig:acf_plot' on page 8 undefined on input line 700.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[8]
+ [13]
 
-LaTeX Warning: Reference `fig:state_plots' on page 9 undefined on input line 72
-1.
+LaTeX Warning: Reference `fig:avg_step_length_by_time' on page 14 undefined on 
+input line 703.
 
-[9] (./bmc_article.bbl
+
+LaTeX Warning: Reference `fig:acf_plot' on page 14 undefined on input line 704.
+
+
+
+LaTeX Warning: Reference `fig:state_plots' on page 14 undefined on input line 7
+25.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [14]
+[15] [16] (./bmc_article.bbl
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <7> not available
 (Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 83.
 
-[10])
+[17])
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+ [18]
 
-[11] 
 AED: lastpage setting LastPage
-[12] (./bmc_article.aux)
+[19] (./bmc_article.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
@@ -589,13 +645,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 3076 strings out of 493014
- 37079 string characters out of 6133351
- 114850 words of memory out of 5000000
- 6603 multiletter control sequences out of 15000+600000
- 16695 words of font info for 59 fonts, out of 8000000 for 9000
+ 3311 strings out of 493014
+ 40724 string characters out of 6133351
+ 113819 words of memory out of 5000000
+ 6829 multiletter control sequences out of 15000+600000
+ 16993 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 30i,13n,37p,924b,406s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 30i,13n,37p,924b,430s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pf
 b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy
 7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10
@@ -618,10 +674,10 @@ ocal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/loc
 al/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/loca
 l/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local
 /texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on bmc_article.pdf (12 pages, 262035 bytes).
+Output written on bmc_article.pdf (19 pages, 268097 bytes).
 PDF statistics:
- 131 PDF objects out of 1000 (max. 8388607)
- 94 compressed objects within 1 object stream
+ 155 PDF objects out of 1000 (max. 8388607)
+ 110 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

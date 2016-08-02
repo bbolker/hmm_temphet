@@ -1,0 +1,555 @@
+\documentclass{article}
+
+\begin{document}
+
+<<pkgs,message=FALSE,warning=FALSE,echo=FALSE>>=
+library("ggplot2"); theme_set(theme_bw())
+scale_colour_discrete <- function(...,palette="Set1")
+    scale_colour_brewer(...,palette=palette)
+scale_fill_discrete <- function(...,palette="Set1")
+    scale_fill_brewer(...,palette=palette)
+zmargin <- theme(panel.margin=grid::unit(0,"lines"))
+library("knitr")
+opts_chunk$set(fig.width=6,fig.height=4)
+## fix complaints about "incompatible color definition" from xcolor ...
+## http://tex.stackexchange.com/questions/148188/knitr-xcolor-incompatible-color-definition
+knit_hooks$set(document = function(x) {sub('\\usepackage[]{color}', '\\usepackage{xcolor}', x, fixed = TRUE)})
+library("depmixS4")
+library("plyr")
+library("dplyr")
+library("reshape2")
+library("gridExtra")
+library("RColorBrewer")
+if (!require("ggalt") || length(find("geom_encircle"))==0) {
+#     cat("installing ggalt from BB repo ...\n")
+    try(detach("package:ggalt"),silent=TRUE)
+    devtools::install_github("hrbrmstr/ggalt")
+    library("ggalt")
+}
+@
+
+
+<<sim_results, warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Simulation test for BIC-optimal approach",fig.width=6,fig.height=4>>=
+ICdat <- readRDS("../sim_results/ICdat.rds")
+aa <- readRDS("../sim_results/sim.101.RDS")
+
+ICdat <- mutate(ICdat,
+                model=factor(model,
+                         levels=c("HMM","HMMsin"),
+                         labels=c("homogeneous","heterogeneous"))) %>% filter(IC=="BIC")
+simplot <- ggplot(ICdat,aes(x=nstates,y=n,color=model,
+                            linetype=IC,shape=IC))+
+                        geom_point(size=3) +
+                        geom_line() +
+                        scale_colour_brewer(palette="Set1")+
+                        labs(y="counts",x="# latent states")
+print(simplot)
+
+@
+
+
+\clearpage
+
+
+<<BICred_plot,warning=FALSE,echo=FALSE,message=FALSE,fig.width=6,fig.height=4>>=
+allmodsumdf2 <- readRDS("../summary_stats/cat.1.df.RDS")$multimoddf
+df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
+            distrib=ifelse(grepl("W",model),"Weibull","log-Normal"),
+            turn_angle=ifelse(grepl("VM",as.character(model)),"yes","no"),
+            homog=ifelse(grepl("TH",type),"time-geneous HMM","homogeneous HMM"))
+(ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))
+    + geom_line()
+    + facet_wrap(~ homog)
+    + scale_colour_brewer(name="step length\ndistribution",palette="Set1")
+    ## scale_size_continuous( name="# parameters") +
+    #    geom_point(aes(size=parameters))+
+    + scale_linetype(name="von Mises\nturning angle?")
+    + labs(y=expression(Delta*"BIC"),
+         x="Number of States")
+    + geom_hline(yintercept=0,colour="gray")
+    + zmargin)
+@
+
+
+\clearpage
+
+<<adj_BIC_comparisons, warning=FALSE, echo=FALSE, message=FALSE,,fig.width=8>>=
+#L <- load("cat1sumdat.RData")
+
+linetypev <- c(rep(2,2),rep(1,5))
+sumdat <- transform(readRDS("../summary_stats/cat.1.df.RDS")$HMMsumdf,
+                     mod = ifelse(type=="HMM + TH","HMM + TH","FMMs and HMM")
+)
+linetypev <- c(rep(2,2),rep(1,5))
+(adj_BIC_plot <- ggplot(sumdat, aes(x=parameters
+                                  , y=deltaBIC
+                                  , colour=model
+                                  , linetype=model
+                                  , group=model))
+   + facet_wrap(~mod,ncol = 2,scales = "free_x")
+   + scale_size_continuous(name="# of states")
+   + scale_x_continuous(breaks=seq(0,300,by=30))
+   + geom_point(aes(shape=factor(nstates),alpha=nstates))
+   + scale_linetype_manual(values=linetypev, name="Model")
+   + scale_colour_brewer(palette="Dark2", name="Model")
+   + scale_shape_discrete(name="Number of states")
+   + scale_alpha_continuous(name="Number of states")
+   + labs(y=expression(paste(Delta, "BIC"))
+          , x="Number of parameters") 
+   + geom_line()
+   + zmargin)
+@
+
+\clearpage
+
+<<avg_step_length_by_time, message=FALSE, echo=FALSE, warning=FALSE,fig.width=8>>=
+
+avgdf <- readRDS("../summary_stats/cat.1.df.RDS")$avgplotdf
+obsdf <- (readRDS("../summary_stats/cat.1.RDS") 
+  %>% dplyr::select(c(LogDist,Time)) 
+  %>% filter(!is.na(LogDist)) 
+  %>% group_by(Time) 
+  %>% summarise_each(funs(mean))
+  %>% transmute(time = Time, variable = "obs", value=LogDist)
+)
+vit <- readRDS("../summary_stats/cat.1.vit.RDS")
+vitdf <- (vit %>% dplyr::select(c(viterbi,time))
+  %>% group_by(time)
+  %>% summarise_each(funs(mean))
+  %>% mutate(model="homogeneous (n=3)")
+)
+
+vitdf2 <- vitdf %>% transmute(time=time,variable="viterbi",value=viterbi)
+
+mnames <- c("fmm5","fmmsin4","hmm6","hmmblock4","hmmhourly3",
+            "hmmquad5","hmmsin5","obs","viterbi")
+mnames2 <- c("fmm-homogeneous  (n=5)"
+             , "fmm-sin (n=4)"
+             , "homogeneous (n=6)"
+             , "block (n=4)"
+             , "hourly (n=3)"
+             , "quadratic (n=5)"
+             , "sin (n=5)"
+             , "observed"
+             , "viterbi homogenous (n=3)")
+
+combdf <- (rbind(avgdf,obsdf,vitdf2)
+           %>% transmute(time=time,model=variable,steplen=value)
+           %>% filter(model %in% mnames)
+           %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
+)
+linetypev <- c(rep(c(2,1),c(2,6))
+                ,0
+               )
+colvec <- c(c(brewer.pal(7,"Dark2"),"black")
+             ,"black"
+            )
+lwdvec <- c(rep(c(1,4),c(7,1))
+             ,4
+            )
+alphavec <- c(rep(c(1,0.2),c(7,1))
+               ,1
+              )
+
+shapevec <- c(rep(32,8),118)
+
+(ggplot(combdf,aes(x=time,y=steplen,colour=model,
+                   lwd=model,
+                   alpha=model,linetype=model, shape=model))
+  + geom_point()
+  + geom_line()
+  + xlab("Time of Day") 
+  + scale_shape_manual(values=shapevec, name="Model")
+  + ylab(expression('Mean step length'~(log[10]*m)))
+  + scale_colour_manual(values=colvec, name="Model")
+  + scale_alpha_manual(values=alphavec, name="Model")
+  + scale_size_manual(values=lwdvec, name="Model")
+  + scale_linetype_manual(values=linetypev, name="Model")
+ ) 
+@
+
+\clearpage
+
+<<acf_plot, message=FALSE, echo=FALSE, warning=FALSE>>=
+acffun <- function(sim){
+  a <- acf(sim,na.action=na.pass,plot=FALSE)
+  df <- data.frame(ACF=c(a$acf),lag=a$lag)
+  return(df)
+}
+vitacf <- (vit %>% dplyr::select(-c(time,obs))%>%ldply(.,acffun) %>% mutate(model=.id)
+)
+
+acfdf <- (readRDS("../summary_stats/cat.1.df.RDS")$acfdf 
+          %>% mutate(model = .id)
+)
+
+combacfdf <- (rbind(acfdf,vitacf)
+           %>% transmute(lag=lag,model=model,ACF=ACF)
+           %>% filter(model %in% mnames)
+           %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
+)
+
+(ggplot(combacfdf,aes(x=lag,y=ACF,colour=model,
+                  lwd=model,alpha=model,linetype=model,shape=model))
+  + geom_point()
+  + geom_line()
+  + xlab("Lag") 
+  + ylab("Autocorrelation")
+  + scale_shape_manual(values=shapevec, name="Model")
+  + scale_colour_manual(values=colvec, name="Model")
+  + scale_alpha_manual(values=alphavec, name="Model")
+  + scale_size_manual(values=lwdvec, name="Model")
+  + scale_linetype_manual(values=linetypev, name="Model")
+) 
+
+## vitacf messes up legend ...
+@
+
+\clearpage
+
+<<r msdlist>>=
+get_cat_pars2 <- function(catid){
+  templist <- readRDS(paste("../summary_stats/cat.",catid,".df.RDS",sep=""))
+  moddf <- templist$msdlist
+  
+  df <- data.frame(catID = catid
+          , log_mean = c(unlist(moddf[1]),unlist(moddf[3]))
+          , log_sd = c(unlist(moddf[2]),unlist(moddf[4]))
+          , Model = c(rep("HMM",length(unlist(moddf[1]))),rep("HMM+TH(sin)",length(unlist(moddf[3]))))
+  )
+  return(df)
+}
+
+all_cat_pars2 <- ldply(lme4:::namedList(1,22,14,15),get_cat_pars2)
+
+g0 <- ggplot(all_cat_pars2,aes(log_mean,log_sd,color=Model))+
+     geom_point()+geom_line() + facet_wrap(~catID,labeller=label_both)+zmargin
+ (g0c <- g0 +
+     geom_encircle(data=subset(all_cat_pars2,
+                               (catID=="15" & log_mean<1.5) |
+                               (catID!="15" & log_mean<1.8)),
+                   colour="black",linetype=2,expand=0.05))
+
+@
+
+\clearpage
+
+\section{sup}
+
+
+<<BICred_plot2,warning=FALSE,echo=FALSE,message=FALSE,fig.width=6,fig.height=4>>=
+
+allmodsumdf2 <- readRDS("../summary_stats/cat.2.df.RDS")$multimoddf
+df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
+            distrib=ifelse(grepl("W",model),"Weibull","log-Normal"),
+            turn_angle=ifelse(grepl("VM",as.character(model)),"yes","no"),
+            homog=ifelse(grepl("TH",type),"time-geneous HMM","homogeneous HMM"))
+(ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))
+    + geom_line()
+    + facet_wrap(~ homog)
+    + scale_colour_brewer(name="step length\ndistribution",palette="Set1")
+    ## scale_size_continuous( name="# parameters") +
+    #    geom_point(aes(size=parameters))+
+    + scale_linetype(name="von Mises\nturning angle?")
+    + labs(y=expression(Delta*"BIC"),
+         x="Number of States")
+    + geom_hline(yintercept=0,colour="gray")
+    + zmargin)
+@
+
+
+\clearpage
+
+
+<<adj_BIC_comparisons2, warning=FALSE, echo=FALSE, message=FALSE,,fig.width=8>>=
+#L <- load("cat1sumdat.RData")
+
+linetypev <- c(rep(2,2),rep(1,5))
+sumdat <- transform(readRDS("../summary_stats/cat.2.df.RDS")$HMMsumdf,
+                     mod = ifelse(type=="HMM + TH","HMM + TH","FMMs and HMM")
+)
+linetypev <- c(rep(2,2),rep(1,5))
+(adj_BIC_plot <- ggplot(sumdat, aes(x=parameters
+                                  , y=deltaBIC
+                                  , colour=model
+                                  , linetype=model
+                                  , group=model))
+   + facet_wrap(~mod,ncol = 2,scales = "free_x")
+   + scale_size_continuous(name="# of states")
+   + scale_x_continuous(breaks=seq(0,300,by=30))
+   + geom_point(aes(shape=factor(nstates),alpha=nstates))
+   + scale_linetype_manual(values=linetypev, name="Model")
+   + scale_colour_brewer(palette="Dark2", name="Model")
+   + scale_shape_discrete(name="Number of states")
+   + scale_alpha_continuous(name="Number of states")
+   + labs(y=expression(paste(Delta, "BIC"))
+          , x="Number of parameters") 
+   + geom_line()
+   + zmargin)
+@
+
+\clearpage
+
+<<avg_step_length_by_time2, message=FALSE, echo=FALSE, warning=FALSE,fig.width=8>>=
+
+avgdf <- readRDS("../summary_stats/cat.2.df.RDS")$avgplotdf
+obsdf <- (readRDS("../summary_stats/cat.2.RDS") 
+  %>% dplyr::select(c(LogDist,Time)) 
+  %>% filter(!is.na(LogDist)) 
+  %>% group_by(Time) 
+  %>% summarise_each(funs(mean))
+  %>% transmute(time = Time, variable = "obs", value=LogDist)
+)
+vit <- readRDS("../summary_stats/cat.2.vit.RDS")
+vitdf <- (vit %>% dplyr::select(c(viterbi,time))
+  %>% group_by(time)
+  %>% summarise_each(funs(mean))
+  %>% mutate(model="homogeneous (n=3)")
+)
+
+vitdf2 <- vitdf %>% transmute(time=time,variable="viterbi",value=viterbi)
+
+mnames <- c("fmm4","fmmsin4","hmm5","hmmblock4","hmmhourly3",
+            "hmmquad4","hmmsin4","obs","viterbi")
+mnames2 <- c("fmm-homogeneous  (n=4)"
+             , "fmm-sin (n=4)"
+             , "homogeneous (n=5)"
+             , "block (n=4)"
+             , "hourly (n=3)"
+             , "quadratic (n=4)"
+             , "sin (n=4)"
+             , "observed"
+             , "viterbi homogenous (n=3)")
+
+combdf <- (rbind(avgdf,obsdf,vitdf2)
+           %>% transmute(time=time,model=variable,steplen=value)
+           %>% filter(model %in% mnames)
+           %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
+)
+linetypev <- c(rep(c(2,1),c(2,6))
+                ,0
+               )
+colvec <- c(c(brewer.pal(7,"Dark2"),"black")
+             ,"black"
+            )
+lwdvec <- c(rep(c(1,4),c(7,1))
+             ,4
+            )
+alphavec <- c(rep(c(1,0.2),c(7,1))
+               ,1
+              )
+
+shapevec <- c(rep(32,8),118)
+
+(ggplot(combdf,aes(x=time,y=steplen,colour=model,
+                   lwd=model,
+                   alpha=model,linetype=model, shape=model))
+  + geom_point()
+  + geom_line()
+  + xlab("Time of Day") 
+  + scale_shape_manual(values=shapevec, name="Model")
+  + ylab(expression('Mean step length'~(log[10]*m)))
+  + scale_colour_manual(values=colvec, name="Model")
+  + scale_alpha_manual(values=alphavec, name="Model")
+  + scale_size_manual(values=lwdvec, name="Model")
+  + scale_linetype_manual(values=linetypev, name="Model")
+ ) 
+@
+
+\clearpage
+
+<<acf_plot2, message=FALSE, echo=FALSE, warning=FALSE>>=
+acffun <- function(sim){
+  a <- acf(sim,na.action=na.pass,plot=FALSE)
+  df <- data.frame(ACF=c(a$acf),lag=a$lag)
+  return(df)
+}
+vitacf <- (vit %>% dplyr::select(-c(time,obs))%>%ldply(.,acffun) %>% mutate(model=.id)
+)
+
+acfdf <- (readRDS("../summary_stats/cat.2.df.RDS")$acfdf 
+          %>% mutate(model = .id)
+)
+
+combacfdf <- (rbind(acfdf,vitacf)
+           %>% transmute(lag=lag,model=model,ACF=ACF)
+           %>% filter(model %in% mnames)
+           %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
+)
+
+(ggplot(combacfdf,aes(x=lag,y=ACF,colour=model,
+                  lwd=model,alpha=model,linetype=model,shape=model))
+  + geom_point()
+  + geom_line()
+  + xlab("Lag") 
+  + ylab("Autocorrelation")
+  + scale_shape_manual(values=shapevec, name="Model")
+  + scale_colour_manual(values=colvec, name="Model")
+  + scale_alpha_manual(values=alphavec, name="Model")
+  + scale_size_manual(values=lwdvec, name="Model")
+  + scale_linetype_manual(values=linetypev, name="Model")
+) 
+
+## vitacf messes up legend ...
+@
+
+
+\clearpage
+%cat14
+
+<<BICred_plot14,warning=FALSE,echo=FALSE,message=FALSE,fig.width=6,fig.height=4>>=
+
+allmodsumdf2 <- readRDS("../summary_stats/cat.14.df2.RDS")$multimoddf
+df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
+            distrib=ifelse(grepl("W",model),"Weibull","log-Normal"),
+            turn_angle=ifelse(grepl("VM",as.character(model)),"yes","no"),
+            homog=ifelse(grepl("TH",type),"time-geneous HMM","homogeneous HMM"))
+(ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))
+    + geom_line()
+    + facet_wrap(~ homog)
+    + scale_colour_brewer(name="step length\ndistribution",palette="Set1")
+    ## scale_size_continuous( name="# parameters") +
+    #    geom_point(aes(size=parameters))+
+    + scale_linetype(name="von Mises\nturning angle?")
+    + labs(y=expression(Delta*"BIC"),
+         x="Number of States")
+    + geom_hline(yintercept=0,colour="gray")
+    + zmargin)
+@
+
+
+\clearpage
+
+<<adj_BIC_comparisons14, warning=FALSE, echo=FALSE, message=FALSE,,fig.width=8>>=
+#L <- load("cat1sumdat.RData")
+
+linetypev <- c(rep(2,2),rep(1,5))
+sumdat <- transform(readRDS("../summary_stats/cat.14.df2.RDS")$HMMsumdf,
+                     mod = ifelse(type=="HMM + TH","HMM + TH","FMMs and HMM")
+)
+linetypev <- c(rep(2,2),rep(1,5))
+(adj_BIC_plot <- ggplot(sumdat, aes(x=parameters
+                                  , y=deltaBIC
+                                  , colour=model
+                                  , linetype=model
+                                  , group=model))
+   + facet_wrap(~mod,ncol = 2,scales = "free_x")
+   + scale_size_continuous(name="# of states")
+   + scale_x_continuous(breaks=seq(0,300,by=30))
+   + geom_point(aes(shape=factor(nstates),alpha=nstates))
+   + scale_linetype_manual(values=linetypev, name="Model")
+   + scale_colour_brewer(palette="Dark2", name="Model")
+   + scale_shape_discrete(name="Number of states")
+   + scale_alpha_continuous(name="Number of states")
+   + labs(y=expression(paste(Delta, "BIC"))
+          , x="Number of parameters") 
+   + geom_line()
+   + zmargin)
+@
+
+\clearpage
+
+<<avg_step_length_by_time14, message=FALSE, echo=FALSE, warning=FALSE,fig.width=8>>=
+
+avgdf <- readRDS("../summary_stats/cat.14.df2.RDS")$avgplotdf
+obsdf <- (readRDS("../summary_stats/cat.14.RDS") 
+  %>% dplyr::select(c(LogDist,Time)) 
+  %>% filter(!is.na(LogDist)) 
+  %>% group_by(Time) 
+  %>% summarise_each(funs(mean))
+  %>% transmute(time = Time, variable = "obs", value=LogDist)
+)
+vit <- readRDS("../summary_stats/cat.14.vit.RDS")
+vitdf <- (vit %>% dplyr::select(c(viterbi,time))
+  %>% group_by(time)
+  %>% summarise_each(funs(mean))
+  %>% mutate(model="homogeneous (n=3)")
+)
+
+vitdf2 <- vitdf %>% transmute(time=time,variable="viterbi",value=viterbi)
+
+mnames <- c("fmm4","fmmsin4","hmm5","hmmblock4","hmmhourly3",
+            "hmmquad4","hmmsin4","obs","viterbi")
+mnames2 <- c("fmm-homogeneous  (n=4)"
+             , "fmm-sin (n=4)"
+             , "homogeneous (n=5)"
+             , "block (n=4)"
+             , "hourly (n=3)"
+             , "quadratic (n=4)"
+             , "sin (n=4)"
+             , "observed"
+             , "viterbi homogenous (n=3)")
+
+combdf <- (rbind(avgdf,obsdf,vitdf2)
+           %>% transmute(time=time,model=variable,steplen=value)
+           %>% filter(model %in% mnames)
+           %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
+)
+linetypev <- c(rep(c(2,1),c(2,6))
+                ,0
+               )
+colvec <- c(c(brewer.pal(7,"Dark2"),"black")
+             ,"black"
+            )
+lwdvec <- c(rep(c(1,4),c(7,1))
+             ,4
+            )
+alphavec <- c(rep(c(1,0.2),c(7,1))
+               ,1
+              )
+
+shapevec <- c(rep(32,8),118)
+
+(ggplot(combdf,aes(x=time,y=steplen,colour=model,
+                   lwd=model,
+                   alpha=model,linetype=model, shape=model))
+  + geom_point()
+  + geom_line()
+  + xlab("Time of Day") 
+  + scale_shape_manual(values=shapevec, name="Model")
+  + ylab(expression('Mean step length'~(log[10]*m)))
+  + scale_colour_manual(values=colvec, name="Model")
+  + scale_alpha_manual(values=alphavec, name="Model")
+  + scale_size_manual(values=lwdvec, name="Model")
+  + scale_linetype_manual(values=linetypev, name="Model")
+ ) 
+@
+
+\clearpage
+
+<<acf_plot14, message=FALSE, echo=FALSE, warning=FALSE>>=
+acffun <- function(sim){
+  a <- acf(sim,na.action=na.pass,plot=FALSE)
+  df <- data.frame(ACF=c(a$acf),lag=a$lag)
+  return(df)
+}
+vitacf <- (vit %>% dplyr::select(-c(time,obs))%>%ldply(.,acffun) %>% mutate(model=.id)
+)
+
+acfdf <- (readRDS("../summary_stats/cat.14.df.RDS")$acfdf 
+          %>% mutate(model = .id)
+)
+
+combacfdf <- (rbind(acfdf,vitacf)
+           %>% transmute(lag=lag,model=model,ACF=ACF)
+           %>% filter(model %in% mnames)
+           %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
+)
+
+(ggplot(combacfdf,aes(x=lag,y=ACF,colour=model,
+                  lwd=model,alpha=model,linetype=model,shape=model))
+  + geom_point()
+  + geom_line()
+  + xlab("Lag") 
+  + ylab("Autocorrelation")
+  + scale_shape_manual(values=shapevec, name="Model")
+  + scale_colour_manual(values=colvec, name="Model")
+  + scale_alpha_manual(values=alphavec, name="Model")
+  + scale_size_manual(values=lwdvec, name="Model")
+  + scale_linetype_manual(values=linetypev, name="Model")
+) 
+
+## vitacf messes up legend ...
+@
+
+\end{document}
