@@ -1,0 +1,910 @@
+%% BioMed_Central_Bib_Style_v1.01
+
+\begin{thebibliography}{26}
+% BibTex style file: bmc-mathphys.bst (version 2.1), 2014-07-24
+\ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi
+\ifx \binits  \undefined \def \binits#1{#1}\fi
+\ifx \bauthor  \undefined \def \bauthor#1{#1}\fi
+\ifx \batitle  \undefined \def \batitle#1{#1}\fi
+\ifx \bjtitle  \undefined \def \bjtitle#1{#1}\fi
+\ifx \bvolume  \undefined \def \bvolume#1{\textbf{#1}}\fi
+\ifx \byear  \undefined \def \byear#1{#1}\fi
+\ifx \bissue  \undefined \def \bissue#1{#1}\fi
+\ifx \bfpage  \undefined \def \bfpage#1{#1}\fi
+\ifx \blpage  \undefined \def \blpage #1{#1}\fi
+\ifx \burl  \undefined \def \burl#1{\textsf{#1}}\fi
+\ifx \doiurl  \undefined \def \doiurl#1{\textsf{#1}}\fi
+\ifx \betal  \undefined \def \betal{\textit{et al.}}\fi
+\ifx \binstitute  \undefined \def \binstitute#1{#1}\fi
+\ifx \binstitutionaled  \undefined \def \binstitutionaled#1{#1}\fi
+\ifx \bctitle  \undefined \def \bctitle#1{#1}\fi
+\ifx \beditor  \undefined \def \beditor#1{#1}\fi
+\ifx \bpublisher  \undefined \def \bpublisher#1{#1}\fi
+\ifx \bbtitle  \undefined \def \bbtitle#1{#1}\fi
+\ifx \bedition  \undefined \def \bedition#1{#1}\fi
+\ifx \bseriesno  \undefined \def \bseriesno#1{#1}\fi
+\ifx \blocation  \undefined \def \blocation#1{#1}\fi
+\ifx \bsertitle  \undefined \def \bsertitle#1{#1}\fi
+\ifx \bsnm \undefined \def \bsnm#1{#1}\fi
+\ifx \bsuffix \undefined \def \bsuffix#1{#1}\fi
+\ifx \bparticle \undefined \def \bparticle#1{#1}\fi
+\ifx \barticle \undefined \def \barticle#1{#1}\fi
+\ifx \bconfdate \undefined \def \bconfdate #1{#1}\fi
+\ifx \botherref \undefined \def \botherref #1{#1}\fi
+\ifx \url \undefined \def \url#1{\textsf{#1}}\fi
+\ifx \bchapter \undefined \def \bchapter#1{#1}\fi
+\ifx \bbook \undefined \def \bbook#1{#1}\fi
+\ifx \bcomment \undefined \def \bcomment#1{#1}\fi
+\ifx \oauthor \undefined \def \oauthor#1{#1}\fi
+\ifx \citeauthoryear \undefined \def \citeauthoryear#1{#1}\fi
+\ifx \endbibitem  \undefined \def \endbibitem {}\fi
+\ifx \bconflocation  \undefined \def \bconflocation#1{#1}\fi
+\ifx \arxivurl  \undefined \def \arxivurl#1{\textsf{#1}}\fi
+\csname PreBibitemsHook\endcsname
+
+%%% 1
+\bibitem{patterson2008state}
+\begin{barticle}
+\bauthor{\bsnm{Patterson}, \binits{T.A.}},
+\bauthor{\bsnm{Thomas}, \binits{L.}},
+\bauthor{\bsnm{Wilcox}, \binits{C.}},
+\bauthor{\bsnm{Ovaskainen}, \binits{O.}},
+\bauthor{\bsnm{Matthiopoulos}, \binits{J.}}:
+\batitle{State--space models of individual animal movement}.
+\bjtitle{Trends in Ecology \& Evolution}
+\bvolume{23}(\bissue{2}),
+\bfpage{87}--\blpage{94}
+(\byear{2008})
+\end{barticle}
+\endbibitem
+
+%%% 2
+\bibitem{mckenzie2009first}
+\begin{barticle}
+\bauthor{\bsnm{McKenzie}, \binits{H.W.}},
+\bauthor{\bsnm{Lewis}, \binits{M.A.}},
+\bauthor{\bsnm{Merrill}, \binits{E.H.}}:
+\batitle{First passage time analysis of animal movement and insights into the
+  functional response}.
+\bjtitle{Bulletin of Mathematical Biology}
+\bvolume{71}(\bissue{1}),
+\bfpage{107}--\blpage{129}
+(\byear{2009})
+\end{barticle}
+\endbibitem
+
+%%% 3
+\bibitem{pal1998dispersal}
+\begin{barticle}
+\bauthor{\bsnm{Pal}, \binits{S.}},
+\bauthor{\bsnm{Ghosh}, \binits{B.}},
+\bauthor{\bsnm{Roy}, \binits{S.}}:
+\batitle{Dispersal behaviour of free-ranging dogs ({{\em Canis familiaris}}) in
+  relation to age, sex, season and dispersal distance}.
+\bjtitle{Applied Animal Behaviour Science}
+\bvolume{61}(\bissue{2}),
+\bfpage{123}--\blpage{132}
+(\byear{1998})
+\end{barticle}
+\endbibitem
+
+%%% 4
+\bibitem{firle_influence_1998}
+\begin{barticle}
+\bauthor{\bsnm{Firle}, \binits{S.}},
+\bauthor{\bsnm{Bommarco}, \binits{R.}},
+\bauthor{\bsnm{Ekbom}, \binits{B.}},
+\bauthor{\bsnm{Natiello}, \binits{M.}}:
+\batitle{The influence of movement and resting behavior on the range of three
+  carabid beetles}.
+\bjtitle{Ecology}
+\bvolume{79}(\bissue{6}),
+\bfpage{2113}--\blpage{2122}
+(\byear{1998}).
+doi:\doiurl{10.1890/0012-9658(1998)079[2113:TIOMAR]2.0.CO;2}.
+Accessed 2015-04-14
+\end{barticle}
+\endbibitem
+
+%%% 5
+\bibitem{nathan_movement_2008}
+\begin{barticle}
+\bauthor{\bsnm{Nathan}, \binits{R.}},
+\bauthor{\bsnm{Getz}, \binits{W.M.}},
+\bauthor{\bsnm{Revilla}, \binits{E.}},
+\bauthor{\bsnm{Holyoak}, \binits{M.}},
+\bauthor{\bsnm{Kadmon}, \binits{R.}},
+\bauthor{\bsnm{Saltz}, \binits{D.}},
+\bauthor{\bsnm{Smouse}, \binits{P.E.}}:
+\batitle{A movement ecology paradigm for unifying organismal movement
+  research}.
+\bjtitle{Proceedings of the National Academy of Sciences}
+\bvolume{105}(\bissue{49}),
+\bfpage{19052}--\blpage{19059}
+(\byear{2008}).
+doi:\doiurl{10.1073/pnas.0800375105}.
+Accessed 2015-04-29
+\end{barticle}
+\endbibitem
+
+%%% 6
+\bibitem{langrock_flexible_2012}
+\begin{barticle}
+\bauthor{\bsnm{Langrock}, \binits{R.}},
+\bauthor{\bsnm{King}, \binits{R.}},
+\bauthor{\bsnm{Matthiopoulos}, \binits{J.}},
+\bauthor{\bsnm{Thomas}, \binits{L.}},
+\bauthor{\bsnm{Fortin}, \binits{D.}},
+\bauthor{\bsnm{Morales}, \binits{J.M.}}:
+\batitle{Flexible and practical modeling of animal telemetry data: hidden
+  {Markov} models and extensions}.
+\bjtitle{Ecology}
+\bvolume{93}(\bissue{11}),
+\bfpage{2336}--\blpage{2342}
+(\byear{2012}).
+doi:\doiurl{10.1890/11-2241.1}.
+Accessed 2013-10-24
+\end{barticle}
+\endbibitem
+
+%%% 7
+\bibitem{fryxell_multiple_2008}
+\begin{barticle}
+\bauthor{\bsnm{Fryxell}, \binits{J.M.}},
+\bauthor{\bsnm{Hazell}, \binits{M.}},
+\bauthor{\bsnm{Börger}, \binits{L.}},
+\bauthor{\bsnm{Dalziel}, \binits{B.D.}},
+\bauthor{\bsnm{Haydon}, \binits{D.T.}},
+\bauthor{\bsnm{Morales}, \binits{J.M.}},
+\bauthor{\bsnm{McIntosh}, \binits{T.}},
+\bauthor{\bsnm{Rosatte}, \binits{R.C.}}:
+\batitle{Multiple movement modes by large herbivores at multiple spatiotemporal
+  scales}.
+\bjtitle{Proceedings of the National Academy of Sciences}
+\bvolume{105}(\bissue{49}),
+\bfpage{19114}--\blpage{19119}
+(\byear{2008}).
+doi:\doiurl{10.1073/pnas.0801737105}.
+Accessed 2013-04-09
+\end{barticle}
+\endbibitem
+
+%%% 8
+\bibitem{okubo_diffusion_1980}
+\begin{botherref}
+\oauthor{\bsnm{Okubo}, \binits{A.}}:
+Diffusion and {Ecological} {Problems}: {Mathematical} {Models}
+(1980)
+\end{botherref}
+\endbibitem
+
+%%% 9
+\bibitem{turchin1998quantitative}
+\begin{bbook}
+\bauthor{\bsnm{Turchin}, \binits{P.}}:
+\bbtitle{Quantitative Analysis of Movement: Measuring and Modeling Population
+  Redistribution in Animals and Plants}.
+\bpublisher{Sinauer Associates},
+\blocation{Sunderland, MA, USA}
+(\byear{1998})
+\end{bbook}
+\endbibitem
+
+%%% 10
+\bibitem{patterson_classifying_2009}
+\begin{barticle}
+\bauthor{\bsnm{Patterson}, \binits{T.A.}},
+\bauthor{\bsnm{Basson}, \binits{M.}},
+\bauthor{\bsnm{Bravington}, \binits{M.V.}},
+\bauthor{\bsnm{Gunn}, \binits{J.S.}}:
+\batitle{Classifying movement behaviour in relation to environmental conditions
+  using hidden {Markov} models}.
+\bjtitle{Journal of Animal Ecology}
+\bvolume{78}(\bissue{6}),
+\bfpage{1113}--\blpage{1123}
+(\byear{2009})
+\end{barticle}
+\endbibitem
+
+%%% 11
+\bibitem{schliehe-diecks_application_2012}
+\begin{barticle}
+\bauthor{\bsnm{Schliehe-Diecks}, \binits{S.}},
+\bauthor{\bsnm{Kappeler}, \binits{P.M.}},
+\bauthor{\bsnm{Langrock}, \binits{R.}}:
+\batitle{On the application of mixed hidden {Markov} models to multiple
+  behavioural time series}.
+\bjtitle{Interface Focus}
+\bvolume{2}(\bissue{2}),
+\bfpage{180}--\blpage{189}
+(\byear{2012}).
+doi:\doiurl{10.1098/rsfs.2011.0077}.
+Accessed 2014-05-02
+\end{barticle}
+\endbibitem
+
+%%% 12
+\bibitem{gurarie2009novel}
+\begin{barticle}
+\bauthor{\bsnm{Gurarie}, \binits{E.}},
+\bauthor{\bsnm{Andrews}, \binits{R.D.}},
+\bauthor{\bsnm{Laidre}, \binits{K.L.}}:
+\batitle{A novel method for identifying behavioural changes in animal movement
+  data}.
+\bjtitle{Ecology Letters}
+\bvolume{12}(\bissue{5}),
+\bfpage{395}--\blpage{408}
+(\byear{2009})
+\end{barticle}
+\endbibitem
+
+%%% 13
+\bibitem{tracey_mapping_2012}
+\begin{barticle}
+\bauthor{\bsnm{Tracey}, \binits{J.A.}},
+\bauthor{\bsnm{Zhu}, \binits{J.}},
+\bauthor{\bsnm{Boydston}, \binits{E.}},
+\bauthor{\bsnm{Lyren}, \binits{L.}},
+\bauthor{\bsnm{Fisher}, \binits{R.N.}},
+\bauthor{\bsnm{Crooks}, \binits{K.R.}}:
+\batitle{Mapping behavioral landscapes for animal movement: a finite mixture
+  modeling approach}.
+\bjtitle{Ecological Applications}
+\bvolume{23}(\bissue{3}),
+\bfpage{654}--\blpage{669}
+(\byear{2012}).
+doi:\doiurl{10.1890/12-0687.1}.
+Accessed 2015-04-20
+\end{barticle}
+\endbibitem
+
+%%% 14
+\bibitem{kerk2015hidden}
+\begin{barticle}
+\bauthor{\bsnm{{van de Kerk}}, \binits{M.}},
+\bauthor{\bsnm{Onorato}, \binits{D.P.}},
+\bauthor{\bsnm{Criffield}, \binits{M.A.}},
+\bauthor{\bsnm{Bolker}, \binits{B.M.}},
+\bauthor{\bsnm{Augustine}, \binits{B.C.}},
+\bauthor{\bsnm{McKinley}, \binits{S.A.}},
+\bauthor{\bsnm{Oli}, \binits{M.K.}}:
+\batitle{Hidden semi-{Markov} models reveal multiphasic movement of the
+  endangered {Florida} panther}.
+\bjtitle{Journal of Animal Ecology}
+\bvolume{84}(\bissue{2}),
+\bfpage{576}--\blpage{585}
+(\byear{2015})
+\end{barticle}
+\endbibitem
+
+%%% 15
+\bibitem{mckellar_using_2014}
+\begin{botherref}
+\oauthor{\bsnm{McKellar}, \binits{A.E.}},
+\oauthor{\bsnm{Langrock}, \binits{R.}},
+\oauthor{\bsnm{Walters}, \binits{J.R.}},
+\oauthor{\bsnm{Kesler}, \binits{D.C.}}:
+Using mixed hidden {Markov} models to examine behavioral states in a
+  cooperatively breeding bird.
+Behavioral Ecology,
+171
+(2014).
+doi:\doiurl{10.1093/beheco/aru171}.
+Accessed 2015-04-21
+\end{botherref}
+\endbibitem
+
+%%% 16
+\bibitem{dean2012behavioural}
+\begin{botherref}
+\oauthor{\bsnm{Dean}, \binits{B.}},
+\oauthor{\bsnm{Freeman}, \binits{R.}},
+\oauthor{\bsnm{Kirk}, \binits{H.}},
+\oauthor{\bsnm{Leonard}, \binits{K.}},
+\oauthor{\bsnm{Phillips}, \binits{R.A.}},
+\oauthor{\bsnm{Perrins}, \binits{C.M.}},
+\oauthor{\bsnm{Guilford}, \binits{T.}}:
+Behavioural mapping of a pelagic seabird: combining multiple sensors and a
+  hidden {Markov} model reveals the distribution of at-sea behaviour.
+Journal of the Royal Society Interface,
+20120570
+(2012)
+\end{botherref}
+\endbibitem
+
+%%% 17
+\bibitem{morales_extracting_2004}
+\begin{barticle}
+\bauthor{\bsnm{Morales}, \binits{J.M.}},
+\bauthor{\bsnm{Haydon}, \binits{D.T.}},
+\bauthor{\bsnm{Frair}, \binits{J.}},
+\bauthor{\bsnm{Holsinger}, \binits{K.E.}},
+\bauthor{\bsnm{Fryxell}, \binits{J.M.}}:
+\batitle{Extracting more out of relocation data: building movement models as
+  mixtures of random walks}.
+\bjtitle{Ecology}
+\bvolume{85}(\bissue{9}),
+\bfpage{2436}--\blpage{2445}
+(\byear{2004})
+\end{barticle}
+\endbibitem
+
+%%% 18
+\bibitem{franke_prediction_2006}
+\begin{barticle}
+\bauthor{\bsnm{Franke}, \binits{A.}},
+\bauthor{\bsnm{Caelli}, \binits{T.}},
+\bauthor{\bsnm{Kuzyk}, \binits{G.}},
+\bauthor{\bsnm{Hudson}, \binits{R.J.}}:
+\batitle{Prediction of wolf ({{\em Canis lupus}}) kill-sites using hidden
+  {Markov} models}.
+\bjtitle{Ecological Modelling}
+\bvolume{197}(\bissue{1–2}),
+\bfpage{237}--\blpage{246}
+(\byear{2006}).
+doi:\doiurl{10.1016/j.ecolmodel.2006.02.043}.
+Accessed 2015-04-29
+\end{barticle}
+\endbibitem
+
+%%% 19
+\bibitem{dean_behavioural_2013}
+\begin{barticle}
+\bauthor{\bsnm{Dean}, \binits{B.}},
+\bauthor{\bsnm{Freeman}, \binits{R.}},
+\bauthor{\bsnm{Kirk}, \binits{H.}},
+\bauthor{\bsnm{Leonard}, \binits{K.}},
+\bauthor{\bsnm{Phillips}, \binits{R.A.}},
+\bauthor{\bsnm{Perrins}, \binits{C.M.}},
+\bauthor{\bsnm{Guilford}, \binits{T.}}:
+\batitle{Behavioural mapping of a pelagic seabird: combining multiple sensors
+  and a hidden {Markov} model reveals the distribution of at-sea behaviour}.
+\bjtitle{Journal of The Royal Society Interface}
+\bvolume{10}(\bissue{78}),
+\bfpage{20120570}
+(\byear{2013}).
+doi:\doiurl{10.1098/rsif.2012.0570}.
+Accessed 2016-06-07
+\end{barticle}
+\endbibitem
+
+%%% 20
+\bibitem{Richards2005}
+\begin{barticle}
+\bauthor{\bsnm{Richards}, \binits{S.A.}}:
+\batitle{Testing ecological theory using the information-theoretic approach:
+  examples and cautionary results}.
+\bjtitle{Ecology}
+\bvolume{86}(\bissue{10}),
+\bfpage{2805}--\blpage{2814}
+(\byear{2005})
+\end{barticle}
+\endbibitem
+
+%%% 21
+\bibitem{BurnhamAnderson1998}
+\begin{bbook}
+\bauthor{\bsnm{Burnham}, \binits{K.P.}},
+\bauthor{\bsnm{Anderson}, \binits{D.R.}}:
+\bbtitle{Model Selection and Inference: A Practical Information-Theoretic
+  Approach}.
+\bpublisher{Springer},
+\blocation{New York}
+(\byear{1998})
+\end{bbook}
+\endbibitem
+
+%%% 22
+\bibitem{zucchini_hidden_2009}
+\begin{bbook}
+\bauthor{\bsnm{Zucchini}, \binits{W.}},
+\bauthor{\bsnm{MacDonald}, \binits{I.L.}}:
+\bbtitle{Hidden {Markov} {Models} for {Time} {Series}: {An} {Introduction}
+  {Using} {R}}.
+\bpublisher{CRC Press}, \blocation{???}
+(\byear{2009})
+\end{bbook}
+\endbibitem
+
+%%% 23
+\bibitem{visser2010depmixs4}
+\begin{barticle}
+\bauthor{\bsnm{Visser}, \binits{I.}},
+\bauthor{\bsnm{Speekenbrink}, \binits{M.}}:
+\batitle{{{\tt depmixS4}}: An {R} package for hidden {Markov} models}.
+\bjtitle{Journal of Statistical Software}
+\bvolume{36}(\bissue{7}),
+\bfpage{1}--\blpage{21}
+(\byear{2010})
+\end{barticle}
+\endbibitem
+
+%%% 24
+\bibitem{R}
+\begin{bbook}
+\bauthor{\bsnm{{R Core Team}}}:
+\bbtitle{R: A Language and Environment for Statistical Computing}.
+\bpublisher{R Foundation for Statistical Computing},
+\blocation{Vienna, Austria}
+(\byear{2015}).
+\bcomment{R Foundation for Statistical Computing}.
+\burl{https://www.R-project.org/}
+\end{bbook}
+\endbibitem
+
+%%% 25
+\bibitem{biernacki2000assessing}
+\begin{barticle}
+\bauthor{\bsnm{Biernacki}, \binits{C.}},
+\bauthor{\bsnm{Celeux}, \binits{G.}},
+\bauthor{\bsnm{Govaert}, \binits{G.}}:
+\batitle{Assessing a mixture model for clustering with the integrated completed
+  likelihood}.
+\bjtitle{IEEE transactions on pattern analysis and machine intelligence}
+\bvolume{22}(\bissue{7}),
+\bfpage{719}--\blpage{725}
+(\byear{2000})
+\end{barticle}
+\endbibitem
+
+%%% 26
+\bibitem{potts_generalized_2014}
+\begin{barticle}
+\bauthor{\bsnm{Potts}, \binits{J.R.}},
+\bauthor{\bsnm{Auger-Méthé}, \binits{M.}},
+\bauthor{\bsnm{Mokross}, \binits{K.}},
+\bauthor{\bsnm{Lewis}, \binits{M.A.}}:
+\batitle{A generalized residual technique for analysing complex movement models
+  using earth mover's distance}.
+\bjtitle{Methods in Ecology and Evolution}
+\bvolume{5}(\bissue{10}),
+\bfpage{1012}--\blpage{1022}
+(\byear{2014}).
+Accessed 2016-06-07
+\end{barticle}
+\endbibitem
+
+\end{thebibliography}
+
+\newcommand{\BMCxmlcomment}[1]{}
+
+\BMCxmlcomment{
+
+<refgrp>
+
+<bibl id="B1">
+  <title><p>State--space models of individual animal movement</p></title>
+  <aug>
+    <au><snm>Patterson</snm><fnm>TA</fnm></au>
+    <au><snm>Thomas</snm><fnm>L</fnm></au>
+    <au><snm>Wilcox</snm><fnm>C</fnm></au>
+    <au><snm>Ovaskainen</snm><fnm>O</fnm></au>
+    <au><snm>Matthiopoulos</snm><fnm>J</fnm></au>
+  </aug>
+  <source>Trends in Ecology \& Evolution</source>
+  <publisher>Elsevier</publisher>
+  <pubdate>2008</pubdate>
+  <volume>23</volume>
+  <issue>2</issue>
+  <fpage>87</fpage>
+  <lpage>-94</lpage>
+</bibl>
+
+<bibl id="B2">
+  <title><p>First passage time analysis of animal movement and insights into
+  the functional response</p></title>
+  <aug>
+    <au><snm>McKenzie</snm><fnm>HW</fnm></au>
+    <au><snm>Lewis</snm><fnm>MA</fnm></au>
+    <au><snm>Merrill</snm><fnm>EH</fnm></au>
+  </aug>
+  <source>Bulletin of Mathematical Biology</source>
+  <publisher>Springer</publisher>
+  <pubdate>2009</pubdate>
+  <volume>71</volume>
+  <issue>1</issue>
+  <fpage>107</fpage>
+  <lpage>-129</lpage>
+</bibl>
+
+<bibl id="B3">
+  <title><p>Dispersal behaviour of free-ranging dogs ({{\em Canis familiaris}})
+  in relation to age, sex, season and dispersal distance</p></title>
+  <aug>
+    <au><snm>Pal</snm><fnm>SK</fnm></au>
+    <au><snm>Ghosh</snm><fnm>B</fnm></au>
+    <au><snm>Roy</snm><fnm>S</fnm></au>
+  </aug>
+  <source>Applied Animal Behaviour Science</source>
+  <publisher>Elsevier</publisher>
+  <pubdate>1998</pubdate>
+  <volume>61</volume>
+  <issue>2</issue>
+  <fpage>123</fpage>
+  <lpage>-132</lpage>
+</bibl>
+
+<bibl id="B4">
+  <title><p>The influence of movement and resting behavior on the range of
+  three carabid beetles</p></title>
+  <aug>
+    <au><snm>Firle</snm><fnm>S</fnm></au>
+    <au><snm>Bommarco</snm><fnm>R</fnm></au>
+    <au><snm>Ekbom</snm><fnm>B</fnm></au>
+    <au><snm>Natiello</snm><fnm>M</fnm></au>
+  </aug>
+  <source>Ecology</source>
+  <pubdate>1998</pubdate>
+  <volume>79</volume>
+  <issue>6</issue>
+  <fpage>2113</fpage>
+  <lpage>-2122</lpage>
+  <url>http://www.esajournals.org/doi/full/10.1890/0012-9658%281998%29079%5B2113%3ATIOMAR%5D2.0.CO%3B2</url>
+</bibl>
+
+<bibl id="B5">
+  <title><p>A movement ecology paradigm for unifying organismal movement
+  research</p></title>
+  <aug>
+    <au><snm>Nathan</snm><fnm>R</fnm></au>
+    <au><snm>Getz</snm><fnm>WM</fnm></au>
+    <au><snm>Revilla</snm><fnm>E</fnm></au>
+    <au><snm>Holyoak</snm><fnm>M</fnm></au>
+    <au><snm>Kadmon</snm><fnm>R</fnm></au>
+    <au><snm>Saltz</snm><fnm>D</fnm></au>
+    <au><snm>Smouse</snm><fnm>PE</fnm></au>
+  </aug>
+  <source>Proceedings of the National Academy of Sciences</source>
+  <pubdate>2008</pubdate>
+  <volume>105</volume>
+  <issue>49</issue>
+  <fpage>19052</fpage>
+  <lpage>-19059</lpage>
+  <url>http://www.pnas.org/content/105/49/19052</url>
+</bibl>
+
+<bibl id="B6">
+  <title><p>Flexible and practical modeling of animal telemetry data: hidden
+  {Markov} models and extensions</p></title>
+  <aug>
+    <au><snm>Langrock</snm><fnm>R</fnm></au>
+    <au><snm>King</snm><fnm>R</fnm></au>
+    <au><snm>Matthiopoulos</snm><fnm>J</fnm></au>
+    <au><snm>Thomas</snm><fnm>L</fnm></au>
+    <au><snm>Fortin</snm><fnm>D</fnm></au>
+    <au><snm>Morales</snm><fnm>JM</fnm></au>
+  </aug>
+  <source>Ecology</source>
+  <pubdate>2012</pubdate>
+  <volume>93</volume>
+  <issue>11</issue>
+  <fpage>2336</fpage>
+  <lpage>-2342</lpage>
+  <url>http://www.esajournals.org/doi/abs/10.1890/11-2241.1</url>
+</bibl>
+
+<bibl id="B7">
+  <title><p>Multiple movement modes by large herbivores at multiple
+  spatiotemporal scales</p></title>
+  <aug>
+    <au><snm>Fryxell</snm><fnm>JM</fnm></au>
+    <au><snm>Hazell</snm><fnm>M</fnm></au>
+    <au><snm>Börger</snm><fnm>L</fnm></au>
+    <au><snm>Dalziel</snm><fnm>BD</fnm></au>
+    <au><snm>Haydon</snm><fnm>DT</fnm></au>
+    <au><snm>Morales</snm><fnm>JM</fnm></au>
+    <au><snm>McIntosh</snm><fnm>T</fnm></au>
+    <au><snm>Rosatte</snm><fnm>RC</fnm></au>
+  </aug>
+  <source>Proceedings of the National Academy of Sciences</source>
+  <pubdate>2008</pubdate>
+  <volume>105</volume>
+  <issue>49</issue>
+  <fpage>19114</fpage>
+  <lpage>-19119</lpage>
+  <url>http://www.pnas.org/content/105/49/19114</url>
+</bibl>
+
+<bibl id="B8">
+  <title><p>Diffusion and {Ecological} {Problems}: {Mathematical}
+  {Models}</p></title>
+  <aug>
+    <au><snm>Okubo</snm><fnm>A</fnm></au>
+  </aug>
+  <pubdate>1980</pubdate>
+  <volume>book</volume>
+</bibl>
+
+<bibl id="B9">
+  <title><p>Quantitative analysis of movement: measuring and modeling
+  population redistribution in animals and plants</p></title>
+  <aug>
+    <au><snm>Turchin</snm><fnm>P</fnm></au>
+  </aug>
+  <publisher>Sunderland, MA, USA: Sinauer Associates</publisher>
+  <pubdate>1998</pubdate>
+</bibl>
+
+<bibl id="B10">
+  <title><p>Classifying movement behaviour in relation to environmental
+  conditions using hidden {Markov} models</p></title>
+  <aug>
+    <au><snm>Patterson</snm><fnm>TA</fnm></au>
+    <au><snm>Basson</snm><fnm>M</fnm></au>
+    <au><snm>Bravington</snm><fnm>MV</fnm></au>
+    <au><snm>Gunn</snm><fnm>JS</fnm></au>
+  </aug>
+  <source>Journal of Animal Ecology</source>
+  <pubdate>2009</pubdate>
+  <volume>78</volume>
+  <issue>6</issue>
+  <fpage>1113</fpage>
+  <lpage>-1123</lpage>
+  <url>http://resolver.scholarsportal.info/resolve/00218790/v78i0006/1113_cmbirtecuhmm.xml</url>
+</bibl>
+
+<bibl id="B11">
+  <title><p>On the application of mixed hidden {Markov} models to multiple
+  behavioural time series</p></title>
+  <aug>
+    <au><snm>Schliehe Diecks</snm><fnm>S.</fnm></au>
+    <au><snm>Kappeler</snm><fnm>P. M.</fnm></au>
+    <au><snm>Langrock</snm><fnm>R.</fnm></au>
+  </aug>
+  <source>Interface Focus</source>
+  <pubdate>2012</pubdate>
+  <volume>2</volume>
+  <issue>2</issue>
+  <fpage>180</fpage>
+  <lpage>-189</lpage>
+  <url>http://rsfs.royalsocietypublishing.org/content/2/2/180</url>
+</bibl>
+
+<bibl id="B12">
+  <title><p>A novel method for identifying behavioural changes in animal
+  movement data</p></title>
+  <aug>
+    <au><snm>Gurarie</snm><fnm>E</fnm></au>
+    <au><snm>Andrews</snm><fnm>RD</fnm></au>
+    <au><snm>Laidre</snm><fnm>KL</fnm></au>
+  </aug>
+  <source>Ecology Letters</source>
+  <publisher>Wiley Online Library</publisher>
+  <pubdate>2009</pubdate>
+  <volume>12</volume>
+  <issue>5</issue>
+  <fpage>395</fpage>
+  <lpage>-408</lpage>
+</bibl>
+
+<bibl id="B13">
+  <title><p>Mapping behavioral landscapes for animal movement: a finite mixture
+  modeling approach</p></title>
+  <aug>
+    <au><snm>Tracey</snm><fnm>JA</fnm></au>
+    <au><snm>Zhu</snm><fnm>J</fnm></au>
+    <au><snm>Boydston</snm><fnm>E</fnm></au>
+    <au><snm>Lyren</snm><fnm>L</fnm></au>
+    <au><snm>Fisher</snm><fnm>RN</fnm></au>
+    <au><snm>Crooks</snm><fnm>KR</fnm></au>
+  </aug>
+  <source>Ecological Applications</source>
+  <pubdate>2012</pubdate>
+  <volume>23</volume>
+  <issue>3</issue>
+  <fpage>654</fpage>
+  <lpage>-669</lpage>
+  <url>http://www.esajournals.org.libaccess.lib.mcmaster.ca/doi/full/10.1890/12-0687.1</url>
+</bibl>
+
+<bibl id="B14">
+  <title><p>Hidden semi-{Markov} models reveal multiphasic movement of the
+  endangered {Florida} panther</p></title>
+  <aug>
+    <au><snm>{van de Kerk}</snm><fnm>M</fnm></au>
+    <au><snm>Onorato</snm><fnm>DP</fnm></au>
+    <au><snm>Criffield</snm><fnm>MA</fnm></au>
+    <au><snm>Bolker</snm><fnm>BM</fnm></au>
+    <au><snm>Augustine</snm><fnm>BC</fnm></au>
+    <au><snm>McKinley</snm><fnm>SA</fnm></au>
+    <au><snm>Oli</snm><fnm>MK</fnm></au>
+  </aug>
+  <source>Journal of Animal Ecology</source>
+  <publisher>Wiley Online Library</publisher>
+  <pubdate>2015</pubdate>
+  <volume>84</volume>
+  <issue>2</issue>
+  <fpage>576</fpage>
+  <lpage>-585</lpage>
+</bibl>
+
+<bibl id="B15">
+  <title><p>Using mixed hidden {Markov} models to examine behavioral states in
+  a cooperatively breeding bird</p></title>
+  <aug>
+    <au><snm>McKellar</snm><fnm>AE</fnm></au>
+    <au><snm>Langrock</snm><fnm>R</fnm></au>
+    <au><snm>Walters</snm><fnm>JR</fnm></au>
+    <au><snm>Kesler</snm><fnm>DC</fnm></au>
+  </aug>
+  <source>Behavioral Ecology</source>
+  <pubdate>2014</pubdate>
+  <fpage>aru171</fpage>
+  <url>http://beheco.oxfordjournals.org/content/early/2014/09/29/beheco.aru171</url>
+</bibl>
+
+<bibl id="B16">
+  <title><p>Behavioural mapping of a pelagic seabird: combining multiple
+  sensors and a hidden {Markov} model reveals the distribution of at-sea
+  behaviour</p></title>
+  <aug>
+    <au><snm>Dean</snm><fnm>B</fnm></au>
+    <au><snm>Freeman</snm><fnm>R</fnm></au>
+    <au><snm>Kirk</snm><fnm>H</fnm></au>
+    <au><snm>Leonard</snm><fnm>K</fnm></au>
+    <au><snm>Phillips</snm><fnm>RA</fnm></au>
+    <au><snm>Perrins</snm><fnm>CM</fnm></au>
+    <au><snm>Guilford</snm><fnm>T</fnm></au>
+  </aug>
+  <source>Journal of the Royal Society Interface</source>
+  <publisher>The Royal Society</publisher>
+  <pubdate>2012</pubdate>
+  <fpage>rsif20120570</fpage>
+</bibl>
+
+<bibl id="B17">
+  <title><p>Extracting more out of relocation data: building movement models as
+  mixtures of random walks</p></title>
+  <aug>
+    <au><snm>Morales</snm><fnm>JM</fnm></au>
+    <au><snm>Haydon</snm><fnm>DT</fnm></au>
+    <au><snm>Frair</snm><fnm>J</fnm></au>
+    <au><snm>Holsinger</snm><fnm>KE</fnm></au>
+    <au><snm>Fryxell</snm><fnm>JM</fnm></au>
+  </aug>
+  <source>Ecology</source>
+  <pubdate>2004</pubdate>
+  <volume>85</volume>
+  <issue>9</issue>
+  <fpage>2436</fpage>
+  <lpage>-2445</lpage>
+</bibl>
+
+<bibl id="B18">
+  <title><p>Prediction of wolf ({{\em Canis lupus}}) kill-sites using hidden
+  {Markov} models</p></title>
+  <aug>
+    <au><snm>Franke</snm><fnm>A</fnm></au>
+    <au><snm>Caelli</snm><fnm>T</fnm></au>
+    <au><snm>Kuzyk</snm><fnm>G</fnm></au>
+    <au><snm>Hudson</snm><fnm>RJ</fnm></au>
+  </aug>
+  <source>Ecological Modelling</source>
+  <pubdate>2006</pubdate>
+  <volume>197</volume>
+  <issue>1–2</issue>
+  <fpage>237</fpage>
+  <lpage>-246</lpage>
+  <url>http://www.sciencedirect.com/science/article/pii/S0304380006001104</url>
+</bibl>
+
+<bibl id="B19">
+  <title><p>Behavioural mapping of a pelagic seabird: combining multiple
+  sensors and a hidden {Markov} model reveals the distribution of at-sea
+  behaviour</p></title>
+  <aug>
+    <au><snm>Dean</snm><fnm>B</fnm></au>
+    <au><snm>Freeman</snm><fnm>R</fnm></au>
+    <au><snm>Kirk</snm><fnm>H</fnm></au>
+    <au><snm>Leonard</snm><fnm>K</fnm></au>
+    <au><snm>Phillips</snm><fnm>RA</fnm></au>
+    <au><snm>Perrins</snm><fnm>CM</fnm></au>
+    <au><snm>Guilford</snm><fnm>T</fnm></au>
+  </aug>
+  <source>Journal of The Royal Society Interface</source>
+  <pubdate>2013</pubdate>
+  <volume>10</volume>
+  <issue>78</issue>
+  <fpage>20120570</fpage>
+  <url>http://rsif.royalsocietypublishing.org/content/10/78/20120570</url>
+</bibl>
+
+<bibl id="B20">
+  <title><p>Testing ecological theory using the information-theoretic approach:
+  examples and cautionary results</p></title>
+  <aug>
+    <au><snm>Richards</snm><fnm>SA</fnm></au>
+  </aug>
+  <source>Ecology</source>
+  <pubdate>2005</pubdate>
+  <volume>86</volume>
+  <issue>10</issue>
+  <fpage>2805</fpage>
+  <lpage>2814</lpage>
+</bibl>
+
+<bibl id="B21">
+  <title><p>Model Selection and Inference: A Practical Information-Theoretic
+  Approach</p></title>
+  <aug>
+    <au><snm>Burnham</snm><fnm>KP</fnm></au>
+    <au><snm>Anderson</snm><fnm>DR</fnm></au>
+  </aug>
+  <publisher>New York: Springer</publisher>
+  <pubdate>1998</pubdate>
+</bibl>
+
+<bibl id="B22">
+  <title><p>Hidden {Markov} {Models} for {Time} {Series}: {An} {Introduction}
+  {Using} {R}</p></title>
+  <aug>
+    <au><snm>Zucchini</snm><fnm>W</fnm></au>
+    <au><snm>MacDonald</snm><fnm>IL</fnm></au>
+  </aug>
+  <publisher>CRC Press</publisher>
+  <pubdate>2009</pubdate>
+</bibl>
+
+<bibl id="B23">
+  <title><p>{{\tt depmixS4}}: An {R} package for hidden {Markov}
+  models</p></title>
+  <aug>
+    <au><snm>Visser</snm><fnm>I</fnm></au>
+    <au><snm>Speekenbrink</snm><fnm>M</fnm></au>
+  </aug>
+  <source>Journal of Statistical Software</source>
+  <pubdate>2010</pubdate>
+  <volume>36</volume>
+  <issue>7</issue>
+  <fpage>1</fpage>
+  <lpage>-21</lpage>
+</bibl>
+
+<bibl id="B24">
+  <title><p>R: A Language and Environment for Statistical Computing</p></title>
+  <aug>
+    <au><cnm>{R Core Team}</cnm></au>
+  </aug>
+  <publisher>Vienna, Austria</publisher>
+  <pubdate>2015</pubdate>
+  <url>https://www.R-project.org/</url>
+</bibl>
+
+<bibl id="B25">
+  <title><p>Assessing a mixture model for clustering with the integrated
+  completed likelihood</p></title>
+  <aug>
+    <au><snm>Biernacki</snm><fnm>C</fnm></au>
+    <au><snm>Celeux</snm><fnm>G</fnm></au>
+    <au><snm>Govaert</snm><fnm>G</fnm></au>
+  </aug>
+  <source>IEEE transactions on pattern analysis and machine
+  intelligence</source>
+  <publisher>IEEE</publisher>
+  <pubdate>2000</pubdate>
+  <volume>22</volume>
+  <issue>7</issue>
+  <fpage>719</fpage>
+  <lpage>-725</lpage>
+</bibl>
+
+<bibl id="B26">
+  <title><p>A generalized residual technique for analysing complex movement
+  models using earth mover's distance</p></title>
+  <aug>
+    <au><snm>Potts</snm><fnm>JR</fnm></au>
+    <au><snm>Auger Méthé</snm><fnm>M</fnm></au>
+    <au><snm>Mokross</snm><fnm>K</fnm></au>
+    <au><snm>Lewis</snm><fnm>MA</fnm></au>
+  </aug>
+  <source>Methods in Ecology and Evolution</source>
+  <pubdate>2014</pubdate>
+  <volume>5</volume>
+  <issue>10</issue>
+  <fpage>1012</fpage>
+  <lpage>-1022</lpage>
+  <url>http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12253/full</url>
+</bibl>
+
+</refgrp>
+} % end of \BMCxmlcomment
