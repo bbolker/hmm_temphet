@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  3 AUG 2016 12:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  3 AUG 2016 15:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -177,80 +177,50 @@ File: figure/BICred_plot-1.pdf Graphic file (type pdf)
 <use figure/BICred_plot-1.pdf>
 Package pdftex.def Info: figure/BICred_plot-1.pdf used on input line 71.
 (pdftex.def)             Requested size: 345.0pt x 230.01158pt.
-
-Overfull \hbox (15.0pt too wide) in paragraph at lines 71--72
-[][] 
- []
-
-[2
-
-
- <./figure/BICred_plot-1.pdf>]
+ [2 <./figure/BICred_plot-1.pdf>]
 <figure/adj_BIC_comparisons-1.pdf, id=23, 578.16pt x 289.08pt>
 File: figure/adj_BIC_comparisons-1.pdf Graphic file (type pdf)
 
 <use figure/adj_BIC_comparisons-1.pdf>
-Package pdftex.def Info: figure/adj_BIC_comparisons-1.pdf used on input line 80
+Package pdftex.def Info: figure/adj_BIC_comparisons-1.pdf used on input line 82
 .
 (pdftex.def)             Requested size: 345.0pt x 172.49655pt.
-
-Overfull \hbox (15.0pt too wide) in paragraph at lines 80--81
-[][] 
- []
-
-[3
-
- <./figure/adj_BIC_comparisons-1.pdf>]
-<figure/avg_step_length_by_time-1.pdf, id=39, 578.16pt x 289.08pt>
+ [3 <./figure/adj_BIC_comparisons-1.pdf>] <figure/avg_step_length_by_time-1.pdf
+, id=39, 578.16pt x 289.08pt>
 File: figure/avg_step_length_by_time-1.pdf Graphic file (type pdf)
 
 <use figure/avg_step_length_by_time-1.pdf>
 Package pdftex.def Info: figure/avg_step_length_by_time-1.pdf used on input lin
-e 88.
+e 92.
 (pdftex.def)             Requested size: 345.0pt x 172.49655pt.
-
-Overfull \hbox (15.0pt too wide) in paragraph at lines 88--89
-[][] 
- []
-
-[4
-
- <./figure/avg_step_length_by_time-1.pdf>]
-<figure/acf_plot-1.pdf, id=53, 433.62pt x 289.08pt>
+ [4 <./figure/avg_step_length_by_time-1.pdf>] <figure/acf_plot-1.pdf, id=53, 43
+3.62pt x 289.08pt>
 File: figure/acf_plot-1.pdf Graphic file (type pdf)
 
 <use figure/acf_plot-1.pdf>
-Package pdftex.def Info: figure/acf_plot-1.pdf used on input line 96.
+Package pdftex.def Info: figure/acf_plot-1.pdf used on input line 102.
 (pdftex.def)             Requested size: 345.0pt x 230.01158pt.
-
-Overfull \hbox (15.0pt too wide) in paragraph at lines 96--97
-[][] 
- []
-
-[5
-
- <./figure/acf_plot-1.pdf>]
+ [5 <./figure/acf_plot-1.pdf>]
 <figure/r_msdlist-1.pdf, id=66, 433.62pt x 289.08pt>
 File: figure/r_msdlist-1.pdf Graphic file (type pdf)
 
 <use figure/r_msdlist-1.pdf>
-Package pdftex.def Info: figure/r_msdlist-1.pdf used on input line 104.
+Package pdftex.def Info: figure/r_msdlist-1.pdf used on input line 112.
 (pdftex.def)             Requested size: 345.0pt x 230.01158pt.
-
-Overfull \hbox (15.0pt too wide) in paragraph at lines 104--105
-[][] 
- []
-
-[6
-
- <./figure/r_msdlist-1.pdf>]
+ [6 <./figure/r_msdlist-1.pdf>]
 <figure/BICred_plot2-1.pdf, id=75, 433.62pt x 289.08pt>
 File: figure/BICred_plot2-1.pdf Graphic file (type pdf)
 
 <use figure/BICred_plot2-1.pdf>
-Package pdftex.def Info: figure/BICred_plot2-1.pdf used on input line 115.
+Package pdftex.def Info: figure/BICred_plot2-1.pdf used on input line 125.
 (pdftex.def)             Requested size: 345.0pt x 230.01158pt.
  [7
+
+
+
+
+
+
 
  <./figure/BICred_plot2-1.pdf>]
 <figure/adj_BIC_comparisons2-1.pdf, id=87, 578.16pt x 289.08pt>
@@ -258,10 +228,10 @@ File: figure/adj_BIC_comparisons2-1.pdf Graphic file (type pdf)
 
 <use figure/adj_BIC_comparisons2-1.pdf>
 Package pdftex.def Info: figure/adj_BIC_comparisons2-1.pdf used on input line 1
-25.
+35.
 (pdftex.def)             Requested size: 345.0pt x 172.49655pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 125--126
+Overfull \hbox (15.0pt too wide) in paragraph at lines 135--136
 [][] 
  []
 
@@ -273,10 +243,10 @@ File: figure/avg_step_length_by_time2-1.pdf Graphic file (type pdf)
 
 <use figure/avg_step_length_by_time2-1.pdf>
 Package pdftex.def Info: figure/avg_step_length_by_time2-1.pdf used on input li
-ne 133.
+ne 143.
 (pdftex.def)             Requested size: 345.0pt x 172.49655pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 133--134
+Overfull \hbox (15.0pt too wide) in paragraph at lines 143--144
 [][] 
  []
 
@@ -287,10 +257,10 @@ Overfull \hbox (15.0pt too wide) in paragraph at lines 133--134
 File: figure/acf_plot2-1.pdf Graphic file (type pdf)
 
 <use figure/acf_plot2-1.pdf>
-Package pdftex.def Info: figure/acf_plot2-1.pdf used on input line 141.
+Package pdftex.def Info: figure/acf_plot2-1.pdf used on input line 151.
 (pdftex.def)             Requested size: 345.0pt x 230.01158pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 141--142
+Overfull \hbox (15.0pt too wide) in paragraph at lines 151--152
 [][] 
  []
 
@@ -301,10 +271,10 @@ Overfull \hbox (15.0pt too wide) in paragraph at lines 141--142
 File: figure/BICred_plot14-1.pdf Graphic file (type pdf)
 
 <use figure/BICred_plot14-1.pdf>
-Package pdftex.def Info: figure/BICred_plot14-1.pdf used on input line 151.
+Package pdftex.def Info: figure/BICred_plot14-1.pdf used on input line 161.
 (pdftex.def)             Requested size: 345.0pt x 230.01158pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 151--152
+Overfull \hbox (15.0pt too wide) in paragraph at lines 161--162
 [][] 
  []
 
@@ -316,10 +286,10 @@ File: figure/adj_BIC_comparisons14-1.pdf Graphic file (type pdf)
 
 <use figure/adj_BIC_comparisons14-1.pdf>
 Package pdftex.def Info: figure/adj_BIC_comparisons14-1.pdf used on input line 
-160.
+170.
 (pdftex.def)             Requested size: 345.0pt x 172.49655pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 160--161
+Overfull \hbox (15.0pt too wide) in paragraph at lines 170--171
 [][] 
  []
 
@@ -331,10 +301,10 @@ File: figure/avg_step_length_by_time14-1.pdf Graphic file (type pdf)
 
 <use figure/avg_step_length_by_time14-1.pdf>
 Package pdftex.def Info: figure/avg_step_length_by_time14-1.pdf used on input l
-ine 168.
+ine 178.
 (pdftex.def)             Requested size: 345.0pt x 172.49655pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 168--169
+Overfull \hbox (15.0pt too wide) in paragraph at lines 178--179
 [][] 
  []
 
@@ -345,10 +315,10 @@ Overfull \hbox (15.0pt too wide) in paragraph at lines 168--169
 File: figure/acf_plot14-1.pdf Graphic file (type pdf)
 
 <use figure/acf_plot14-1.pdf>
-Package pdftex.def Info: figure/acf_plot14-1.pdf used on input line 176.
+Package pdftex.def Info: figure/acf_plot14-1.pdf used on input line 186.
 (pdftex.def)             Requested size: 345.0pt x 230.01158pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 176--177
+Overfull \hbox (15.0pt too wide) in paragraph at lines 186--187
 [][] 
  []
 
@@ -359,10 +329,10 @@ Overfull \hbox (15.0pt too wide) in paragraph at lines 176--177
 File: figure/BICred_plot15-1.pdf Graphic file (type pdf)
 
 <use figure/BICred_plot15-1.pdf>
-Package pdftex.def Info: figure/BICred_plot15-1.pdf used on input line 185.
+Package pdftex.def Info: figure/BICred_plot15-1.pdf used on input line 195.
 (pdftex.def)             Requested size: 345.0pt x 230.01158pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 185--186
+Overfull \hbox (15.0pt too wide) in paragraph at lines 195--196
 [][] 
  []
 
@@ -374,10 +344,10 @@ File: figure/adj_BIC_comparisons15-1.pdf Graphic file (type pdf)
 
 <use figure/adj_BIC_comparisons15-1.pdf>
 Package pdftex.def Info: figure/adj_BIC_comparisons15-1.pdf used on input line 
-194.
+204.
 (pdftex.def)             Requested size: 345.0pt x 172.49655pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 194--195
+Overfull \hbox (15.0pt too wide) in paragraph at lines 204--205
 [][] 
  []
 
@@ -389,10 +359,10 @@ File: figure/avg_step_length_by_time15-1.pdf Graphic file (type pdf)
 
 <use figure/avg_step_length_by_time15-1.pdf>
 Package pdftex.def Info: figure/avg_step_length_by_time15-1.pdf used on input l
-ine 202.
+ine 212.
 (pdftex.def)             Requested size: 345.0pt x 172.49655pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 202--203
+Overfull \hbox (15.0pt too wide) in paragraph at lines 212--213
 [][] 
  []
 
@@ -403,10 +373,10 @@ Overfull \hbox (15.0pt too wide) in paragraph at lines 202--203
 File: figure/acf_plot15-1.pdf Graphic file (type pdf)
 
 <use figure/acf_plot15-1.pdf>
-Package pdftex.def Info: figure/acf_plot15-1.pdf used on input line 210.
+Package pdftex.def Info: figure/acf_plot15-1.pdf used on input line 220.
 (pdftex.def)             Requested size: 345.0pt x 230.01158pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 210--211
+Overfull \hbox (15.0pt too wide) in paragraph at lines 220--221
 [][] 
  []
 
@@ -414,17 +384,17 @@ Overfull \hbox (15.0pt too wide) in paragraph at lines 210--211
 
  <./figure/acf_plot15-1.pdf>] (./figures.aux) ) 
 Here is how much of TeX's memory you used:
- 2116 strings out of 493014
- 30712 string characters out of 6133351
- 90045 words of memory out of 5000000
- 5640 multiletter control sequences out of 15000+600000
+ 2121 strings out of 493014
+ 30812 string characters out of 6133351
+ 90085 words of memory out of 5000000
+ 5645 multiletter control sequences out of 15000+600000
  4245 words of font info for 16 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,6n,35p,284b,254s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,6n,35p,590b,254s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2016/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2016/texmf-di
 st/fonts/type1/public/amsfonts/cm/cmr10.pfb>
-Output written on figures.pdf (18 pages, 151161 bytes).
+Output written on figures.pdf (18 pages, 157756 bytes).
 PDF statistics:
  247 PDF objects out of 1000 (max. 8388607)
  187 compressed objects within 2 object streams
