@@ -1,49 +1,3 @@
-%% BioMed_Central_Tex_Template_v1.06
-%%                                      %
-%  bmc_article.tex            ver: 1.06 %
-%                                       %
-
-%%IMPORTANT: do not delete the first line of this template
-%%It must be present to enable the BMC Submission system to
-%%recognise this template!!
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                                     %%
-%%  LaTeX template for BioMed Central  %%
-%%     journal article submissions     %%
-%%                                     %%
-%%          <8 June 2012>              %%
-%%                                     %%
-%%                                     %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                                                                 %%
-%% For instructions on how to fill out this Tex template           %%
-%% document please refer to Readme.html and the instructions for   %%
-%% authors page on the biomed central website                      %%
-%% http://www.biomedcentral.com/info/authors/                      %%
-%%                                                                 %%
-%% Please do not use \input{...} to include other tex files.       %%
-%% Submit your LaTeX manuscript as one .tex document.              %%
-%%                                                                 %%
-%% All additional figures and files should be attached             %%
-%% separately and not embedded in the \TeX\ document itself.       %%
-%%                                                                 %%
-%% BioMed Central currently use the MikTex distribution of         %%
-%% TeX for Windows) of TeX and LaTeX.  This is available from      %%
-%% http://www.miktex.org                                           %%
-%%                                                                 %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%% additional documentclass options:
-%  [doublespacing]
-%  [linenumbers]   - put the line numbers on margins
-
-%%% loading packages, author definitions
-
-%\documentclass[twocolumn]{bmcart}% uncomment this for twocolumn layout and comment line below
 \documentclass{bmcart}
 
 %%% Load packages
@@ -59,36 +13,20 @@
 \usepackage[utf8]{inputenc} %unicode support
 %\usepackage[applemac]{inputenc} %applemac support if unicode package fails
 %\usepackage[latin1]{inputenc} %UNIX support if unicode package fails
+\usepackage{graphicx}
+% \def\includegraphic{}
+% \def\includegraphics{}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                                             %%
-%%  If you wish to display your graphics for   %%
-%%  your own use using includegraphic or       %%
-%%  includegraphics, then comment out the      %%
-%%  following two lines of code.               %%
-%%  NB: These line *must* be included when     %%
-%%  submitting to BMC.                         %%
-%%  All figure files must be submitted as      %%
-%%  separate graphics through the BMC          %%
-%%  submission process, not included in the    %%
-%%  submitted article.                         %%
-%%                                             %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\def\includegraphic{}
-\def\includegraphics{}
-
-
-
-%%% Put your definitions there:
 \startlocaldefs
 \endlocaldefs
 
 
 %%% Begin ...
 \begin{document}
+
+\titlepage
+\
 
 %%% Start of article front matter
 \begin{frontmatter}
@@ -452,7 +390,7 @@ the three candidate step-length distributions and the effects
 of considering multivariate (i.e., step length plus turning angle)
 observations.  However, we do briefly compare log-Normal and Weibull
 step-length distributions, with and without 
-a von Mises-distributed turning angle included in the model (Figure~\ref{fig:BICred_plot}).
+a von Mises-distributed turning angle included in the model (Figure 2).
 (Note that most movement analyses, including van de Kerk et al.
 \cite{kerk2015hidden}, are only partially multivariate, 
 treating step length and turning angle at a particular time
@@ -756,7 +694,7 @@ the number.
   Florida Wildlife and Fisheries?
 
 \section{Data accessibility}
-Hourly step lengths and turning angles of male and female Florida pan- thers available at: http://ufdc.ufl.edu//IR00004241/00001.
+Hourly step lengths and turning angles of male and female Florida panthers available at: http://ufdc.ufl.edu//IR00004241/00001.
 
 \section*{Author's contributions}
     Equally contributed.
@@ -764,24 +702,11 @@ Hourly step lengths and turning angles of male and female Florida pan- thers ava
 
 \section*{Competing interests}
   The authors declare that they have no competing interests.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                  The Bibliography                       %%
-%%                                                         %%
-%%  Bmc_mathpys.bst  will be used to                       %%
-%%  create a .BBL file for submission.                     %%
-%%  After submission of the .TEX file,                     %%
-%%  you will be prompted to submit your .BBL file.         %%
-%%                                                         %%
-%%                                                         %%
-%%  Note that the displayed Bibliography will not          %%
-%%  necessarily be rendered by Latex exactly as specified  %%
-%%  in the online Instructions for Authors.                %%
-%%                                                         %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 % if your bibliography is in bibtex format, use those commands:
 \bibliographystyle{bmc-mathphys} % Style BST file (bmc-mathphys, vancouver, spbasic).
-\bibliography{bmc_article}      % Bibliography file (usually '*.bib' )
+\bibliography{panthers}      % Bibliography file (usually '*.bib' )
 % for author-year bibliography (bmc-mathphys or spbasic)
 % a) write to bib file (bmc-mathphys only)
 % @settings{label, options="nameyear"}
