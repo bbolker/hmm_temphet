@@ -121,7 +121,8 @@
 \author[
    addressref={aff1},                   % id's of addresses, e.g. {aff1,aff2}         
    email={lim88@mcmaster.ca}   % email address
-]{\inits{ML}\fnm{Michael} \snm{Li}}
+]
+{\inits{ML}\fnm{Michael} \snm{Li}}
 \author[
    addressref={aff1,aff2},
    email={bolker@mcmaster.ca}
@@ -185,6 +186,13 @@
 
 %% need to break into background, 
 
+% More generally, we point out that model misspecification
+% (omitting important sources of variation) can lead to overfitting,
+% and as a corollary that incorporating previously neglected
+% structure in statistical models can allow more
+% accurate assessment of appropriate model complexity.
+
+\parttitle{Background} %if any
 Clustering time-series data into discrete groups can improve 
 prediction and provide insight into the nature of underlying,
 unobservable states of the system. However, temporal variation in the
@@ -196,21 +204,17 @@ Allowing for temporal heterogeneity in transition probabilities, a straightforwa
 but little-used extension of the standard HMM framework, 
 resolves some shortcomings of current
 models and clarifies the behavioural patterns of
-panthers. More generally, we point out that model misspecification
-(omitting important sources of variation) can lead to overfitting,
-and as a corollary that incorporating previously neglected
-structure in statistical models can allow more
-accurate assessment of appropriate model complexity.
-
-\parttitle{Background} %if any
-Text for this section.
+panthers.
 
 \parttitle{Results} %if any
-Text for this section.
-
+Simulations and Florida panthers data showed model misspecification (omitting important 
+sources of variation) can lead to overfitting and over-estimating number of behavioural states. Models incorporating temporal heterogeneity have lower number of states with slightly higher variation in short movement states, and able to make out of sample predictions that captures observed diurnal and autocorrelation patterns exhibited by Florida panthers.     
 
 \parttitle{Conclusion} %if any
-Text for this section.
+Incorportating temporal heterogeneity reduce the selected number of behavioural states closer 
+to a biologically interpretable level, improved goodness of fit and predictability. Our 
+suggest that incorporating previously neglected structure in statistical models can
+allow more accurate assessment of appropriate model complexity.
 
 \end{abstract}
 
@@ -650,7 +654,7 @@ of models captures serial correlation at both short and long scales.
 Model complexity and the number of parameters increase as the number of latent states increase, FMM to HMM, and lastly, FMM and HMM incorporating temporal heterogeneity. The number of free parameters in an HMM can be generalized by summing up the number of free parameters of the three distinct components. Let $n$ be the number of hidden states and $k_{i}, k_{t}, k_{e}$ be the number of parameters describing the covariate-dependence of the prior distribution, transition function and emission distributions; that is, for a homogeneous model, $k=1$, while a single numeric covariate or a categorical predictor with two levels would give $k=2$. Then the number of free parameters of an HMM is:
 
 \begin{equation}
-\underbrace{k_{i}\cdot (n-1)}_{\text{Initial}} 
+\textrm{Number of Free Parameter}=\underbrace{k_{i}\cdot (n-1)}_{\text{Initial}} 
 {+} \underbrace{k_{t}\cdot n\cdot (n-1)}_{\text{Transition}}
 {+} \underbrace{ k_{e}\cdot n}_{\text{Emission}}
 \label{eq:numparam}
@@ -816,16 +820,22 @@ the number.
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Declarations}
+
 \begin{backmatter}
+
+\section*{Acknowledgements}
+  Florida Wildlife and Fisheries?
+
+\section{Data accessibility}
+Hourly step lengths and turning angles of male and female Florida pan- thers available at: http://ufdc.ufl.edu//IR00004241/00001.
+
+\section*{Author's contributions}
+    Equally contributed.
+
 
 \section*{Competing interests}
   The authors declare that they have no competing interests.
-
-\section*{Author's contributions}
-    Text for this section \ldots
-
-\section*{Acknowledgements}
-  Text for this section \ldots
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                  The Bibliography                       %%
 %%                                                         %%
@@ -871,6 +881,7 @@ the number.
 
 \section*{Figures}
   \begin{figure}[h!]
+  \includegraphics[width=\maxwidth]{figure/sim_results-1}
   \caption{\csentence{Sample figure title.}
       A short description of the figure content
       should go here.}

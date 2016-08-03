@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  2 AUG 2016 16:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  3 AUG 2016 12:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -510,32 +510,32 @@ LaTeX Font Warning: Font shape `OT1/cmss/bx/n' in size <13> not available
 LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <24> not available
 (Font)              size <24.88> substituted on input line 105.
 
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 124.
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 125.
 
 LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 124.
+(Font)              size <5> substituted on input line 125.
 
 
 LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <5.5> not available
-(Font)              size <5> substituted on input line 124.
+(Font)              size <5> substituted on input line 125.
 
 
 LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 124.
+(Font)              size <5> substituted on input line 125.
 
 \address@aff1=\toks27
 \address@aff2=\toks28
-LaTeX Font Info:    Try loading font information for OMS+cmss on input line 168
+LaTeX Font Info:    Try loading font information for OMS+cmss on input line 169
 .
-LaTeX Font Info:    No file OMScmss.fd. on input line 168.
+LaTeX Font Info:    No file OMScmss.fd. on input line 169.
 
 LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textdagger' on input line 168.
+(Font)              for symbol `textdagger' on input line 169.
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <10> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 194.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 202.
 
 
 
@@ -544,7 +544,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <8> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 275.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 247.
 
 
 
@@ -552,12 +552,10 @@ Overfull \hbox (1.0pt too wide) has occurred while \output is active
  [] 
  []
 
-[1{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+[1
 
-]
-Underfull \vbox (badness 6032) has occurred while \output is active []
-
- [2]
+{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+[2]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [3]
@@ -567,72 +565,157 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [5]
 
 LaTeX Warning: Reference `fig:BICred_plot' on page 6 undefined on input line 47
-3.
+7.
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 6032) has occurred while \output is active []
 
  [6]
-[7]
-Underfull \vbox (badness 3792) has occurred while \output is active []
-
- [8]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
+ [7]
+[8]
+Underfull \vbox (badness 7576) has occurred while \output is active []
+
  [9]
-[10]
-Underfull \vbox (badness 5064) has occurred while \output is active []
+[10] [11]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [11]
+ [12]
 
-LaTeX Warning: Reference `fig:sim_results' on page 12 undefined on input line 6
-73.
-
-
-LaTeX Warning: Reference `fig:BICred_plot' on page 12 undefined on input line 6
+LaTeX Warning: Reference `fig:sim_results' on page 13 undefined on input line 6
 77.
 
 
-LaTeX Warning: Reference `fig:adj_BIC_comparisons' on page 12 undefined on inpu
-t line 691.
-
-[12]
-
-LaTeX Warning: Reference `fig:avg_step_length_by_time' on page 13 undefined on 
-input line 699.
+LaTeX Warning: Reference `fig:BICred_plot' on page 13 undefined on input line 6
+81.
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+LaTeX Warning: Reference `fig:adj_BIC_comparisons' on page 13 undefined on inpu
+t line 695.
 
- [13]
+[13]
 
 LaTeX Warning: Reference `fig:avg_step_length_by_time' on page 14 undefined on 
 input line 703.
 
 
-LaTeX Warning: Reference `fig:acf_plot' on page 14 undefined on input line 704.
+LaTeX Warning: Reference `fig:avg_step_length_by_time' on page 14 undefined on 
+input line 707.
 
 
+LaTeX Warning: Reference `fig:acf_plot' on page 14 undefined on input line 708.
 
-LaTeX Warning: Reference `fig:state_plots' on page 14 undefined on input line 7
-25.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [14]
-[15] [16] (./manuscript.bbl
+
+LaTeX Warning: Reference `fig:state_plots' on page 15 undefined on input line 7
+29.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [15]
+[16]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [17]
+(./manuscript.bbl
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <7> not available
 (Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 83.
 
-[17])
+[18])
+! Undefined control sequence.
+l.884   \includegraphics[width=\maxwidth
+                                        ]{figure/sim_results-1}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.884 ...ludegraphics[width=\maxwidth]{figure/sim_
+                                                  results-1}
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+l.884 ...cs[width=\maxwidth]{figure/sim_results-1}
+                                                  
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.887       should go here.}
+                            
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: Not in outer par mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.888       \end{figure}
+                        
+You've lost some text.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Undefined control sequence.
+\latex@xfloat ...vf \fi \global \setbox \@currbox 
+                                                  \color@vbox \normalcolor \...
+l.888       \end{figure}
+                        
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing number, treated as zero.
+<to be read again> 
+                   \vbox 
+l.888       \end{figure}
+                        
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.888       \end{figure}
+                        
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [18]
+ [19]
 
 AED: lastpage setting LastPage
-[19] (./manuscript.aux)
+[20] (./manuscript.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
@@ -645,13 +728,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 3311 strings out of 493014
- 40713 string characters out of 6133351
- 113818 words of memory out of 5000000
- 6829 multiletter control sequences out of 15000+600000
+ 3310 strings out of 493014
+ 40697 string characters out of 6133351
+ 113639 words of memory out of 5000000
+ 6828 multiletter control sequences out of 15000+600000
  16993 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 30i,13n,37p,923b,430s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 30i,13n,37p,923b,439s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pf
 b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy
 7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10
@@ -674,10 +757,10 @@ ocal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/loc
 al/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/loca
 l/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local
 /texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on manuscript.pdf (19 pages, 268097 bytes).
+Output written on manuscript.pdf (20 pages, 268550 bytes).
 PDF statistics:
- 155 PDF objects out of 1000 (max. 8388607)
- 110 compressed objects within 2 object streams
+ 158 PDF objects out of 1000 (max. 8388607)
+ 112 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
