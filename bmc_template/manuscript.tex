@@ -718,13 +718,33 @@ Hourly step lengths and turning angles of male and female Florida panthers avail
 
 \section*{Figures}
   \begin{figure}[h!]
-  % \includegraphics[width=\maxwidth]{figure/acf_plot15-1}
+   \includegraphics[width=5in]{figure/sim_results-1}
   \caption{\csentence{Simulation Results} BIC-optimal state frequency for 2-6 state HMMs with and without covariate transition on 100 two-state hidden Markov models with covariate transitioning simulations.}
       \end{figure}
 
+  \begin{figure}[h!]
+   \includegraphics[width=5in]{figure/BICred_plot-1}
+  \caption{\csentence{Adjusted BIC Emission Distribution Comparison} Adjusted Bayesian information criterion values for 3-7 state HMMs with different step-length distributions, with and without temporal transitions and turning angles.}
+      \end{figure}
+      
+  \begin{figure}[h!]
+   \includegraphics[width=5in]{figure/adj_BIC_comparisons-1}
+  \caption{\csentence{Adjusted BIC Transition Comparison} Adjusted BIC by number of free parameters for HMM model types. The left panel shows FMM, FMM with a sin prior and HMM. The right panel shows HMMs with different temporal transitions.}
+      \end{figure}
+      
 \begin{figure}[h!]
-  \caption{\csentence{Sample figure title.}
-      Figure legend text.}
+   \includegraphics[width=5in]{figure/avg_step_length_by_time-1}
+  \caption{\csentence{Diurnal Step Lengths Plot} Average step length by time of day observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states.}
+      \end{figure}
+      
+\begin{figure}[h!]
+   \includegraphics[width=5in]{figure/acf_plot-1}
+  \caption{\csentence{Autocorrelation Plot} Autocorrelation of observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states.}
+      \end{figure}
+      
+\begin{figure}[h!]
+   \includegraphics[width=5in]{figure/r_msdlist-1}
+  \caption{\csentence{State Identification Plot} Log mean and standard deviation of BIC-optimal HMM and HMM with sinusoidal transition.}
       \end{figure}
       
 \section*{Tables}

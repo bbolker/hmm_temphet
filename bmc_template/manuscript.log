@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  3 AUG 2016 17:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  3 AUG 2016 17:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -659,13 +659,97 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <7> not available
 (Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 83.
 
-[17])
+[17]) <figure/sim_results-1.pdf, id=77, 433.62pt x 289.08pt>
+File: figure/sim_results-1.pdf Graphic file (type pdf)
+
+<use figure/sim_results-1.pdf>
+Package pdftex.def Info: figure/sim_results-1.pdf used on input line 721.
+(pdftex.def)             Requested size: 361.34999pt x 240.91116pt.
+
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 721--722
+ [][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<figure/BICred_plot-1.pdf, id=78, 433.62pt x 289.08pt>
+File: figure/BICred_plot-1.pdf Graphic file (type pdf)
+
+<use figure/BICred_plot-1.pdf>
+Package pdftex.def Info: figure/BICred_plot-1.pdf used on input line 726.
+(pdftex.def)             Requested size: 361.34999pt x 240.91116pt.
+
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 726--727
+ [][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<figure/adj_BIC_comparisons-1.pdf, id=79, 578.16pt x 289.08pt>
+File: figure/adj_BIC_comparisons-1.pdf Graphic file (type pdf)
+
+<use figure/adj_BIC_comparisons-1.pdf>
+Package pdftex.def Info: figure/adj_BIC_comparisons-1.pdf used on input line 73
+1.
+(pdftex.def)             Requested size: 361.34999pt x 180.67455pt.
+
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 731--732
+ [][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<figure/avg_step_length_by_time-1.pdf, id=80, 578.16pt x 289.08pt>
+File: figure/avg_step_length_by_time-1.pdf Graphic file (type pdf)
+
+<use figure/avg_step_length_by_time-1.pdf>
+Package pdftex.def Info: figure/avg_step_length_by_time-1.pdf used on input lin
+e 736.
+(pdftex.def)             Requested size: 361.34999pt x 180.67455pt.
+
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 736--737
+ [][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<figure/acf_plot-1.pdf, id=81, 433.62pt x 289.08pt>
+File: figure/acf_plot-1.pdf Graphic file (type pdf)
+
+<use figure/acf_plot-1.pdf>
+Package pdftex.def Info: figure/acf_plot-1.pdf used on input line 741.
+(pdftex.def)             Requested size: 361.34999pt x 240.91116pt.
+
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 741--742
+ [][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<figure/r_msdlist-1.pdf, id=82, 433.62pt x 289.08pt>
+File: figure/r_msdlist-1.pdf Graphic file (type pdf)
+
+<use figure/r_msdlist-1.pdf>
+Package pdftex.def Info: figure/r_msdlist-1.pdf used on input line 746.
+(pdftex.def)             Requested size: 361.34999pt x 240.91116pt.
+
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 746--747
+ [][] 
+ []
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 AED: lastpage setting LastPage
-[18] [19] (./manuscript.aux)
+[18] [19 <./figure/sim_results-1.pdf> <./figure/BICred_plot-1.pdf>] [20 <./figu
+re/adj_BIC_comparisons-1.pdf> <./figure/avg_step_length_by_time-1.pdf>]
+[21 <./figure/acf_plot-1.pdf> <./figure/r_msdlist-1.pdf>] (./manuscript.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
@@ -675,10 +759,10 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 3814 strings out of 493014
- 49294 string characters out of 6133351
- 123543 words of memory out of 5000000
- 7289 multiletter control sequences out of 15000+600000
+ 3846 strings out of 493014
+ 50172 string characters out of 6133351
+ 126543 words of memory out of 5000000
+ 7313 multiletter control sequences out of 15000+600000
  16993 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  37i,13n,37p,860b,437s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -704,10 +788,10 @@ ocal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/loc
 al/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/loca
 l/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local
 /texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on manuscript.pdf (19 pages, 269205 bytes).
+Output written on manuscript.pdf (21 pages, 312228 bytes).
 PDF statistics:
- 155 PDF objects out of 1000 (max. 8388607)
- 110 compressed objects within 2 object streams
+ 214 PDF objects out of 1000 (max. 8388607)
+ 155 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
