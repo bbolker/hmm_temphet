@@ -4,10 +4,10 @@
 %\usepackage{amsthm,amsmath}
 \usepackage{amsmath}
 \usepackage{setspace}
-\doublespacing
 \usepackage{lineno}
+\usepackage{url}
 \linenumbers
-%\RequirePackage{natbib}
+\RequirePackage[sort]{natbib}
 %\RequirePackage[authoryear]{natbib}% uncomment this for author-year bibliography
 %\RequirePackage{hyperref}
 \usepackage[utf8]{inputenc} %unicode support
@@ -25,14 +25,18 @@
 %%% Begin ...
 \begin{document}
 
-\titlepage
-\
+%\setcounter{page}{0}  %% ugh, article template assumes starting on odd page!
+% \newpage
 
 %%% Start of article front matter
 \begin{frontmatter}
 
 \begin{fmbox}
 \dochead{Research}
+
+%% TO DO
+% author references (maybe fix programmatically?)
+% acknowledgments
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -100,8 +104,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{artnotes}
- \note{Sample of title note}     % note to the article
- \note[id=n1]{Equal contributor} % note, connected to author
+% \note{Sample of title note}     % note to the article
+% \note[id=n1]{Equal contributor} % note, connected to author
 \end{artnotes}
 
 \end{fmbox}% comment this for two column layout
@@ -149,7 +153,7 @@ Simulations and Florida panthers data showed model misspecification (omitting im
 sources of variation) can lead to overfitting and over-estimating number of behavioural states. Models incorporating temporal heterogeneity have lower number of states with slightly higher variation in short movement states, and able to make out of sample predictions that captures observed diurnal and autocorrelation patterns exhibited by Florida panthers.     
 
 \parttitle{Conclusion} %if any
-Incorportating temporal heterogeneity reduce the selected number of behavioural states closer 
+Incorporating temporal heterogeneity reduce the selected number of behavioural states closer 
 to a biologically interpretable level, improved goodness of fit and predictability. Our 
 suggest that incorporating previously neglected structure in statistical models can
 allow more accurate assessment of appropriate model complexity.
@@ -213,6 +217,8 @@ allow more accurate assessment of appropriate model complexity.
 %%
 % \section*{Content}
 % Text and results for this section, as per the individual journal's instructions for authors. %\cite{koon,oreg,khar,zvai,xjon,schn,pond,smith,marg,hunn,advi,koha,mouse}
+
+\doublespacing
 
 \section*{Background}
 
@@ -291,14 +297,14 @@ transition probabilities that follow a diurnal cycle -- for modeling
 animal movement recorded over long time scales.  
 In addition to simulation-based examples,
 we also re-analyze data from 
-van de Kerk et al.\cite{kerk2015hidden}, who used temporally homogeneous hidden semi-Markov
+van de Kerk et al. \cite{kerk2015hidden}, who used temporally homogeneous hidden semi-Markov
 models (HSMMs: an extension of HMMs that allow
 flexible modelling of the distribution of \emph{dwell times}, the 
 lengths of consecutive occupancy of a behavioural state) to
 describe the movement and putative underlying
 behavioural states of Florida panthers (\emph{Puma concolor coryi}).
 
-van de Kerk et al.\cite{kerk2015hidden} found that the best-fitting HSMMs
+van de Kerk et al. \cite{kerk2015hidden} found that the best-fitting HSMMs
 incorporated a surprisingly large number of hidden
 behavioural states (as many as six for individuals with a large amount
 of available data); for reasons of computational 
@@ -347,7 +353,7 @@ heterogeneity can be misidentified as behavioural complexity.
 GPS collars were fitted to 18 Florida panthers in 2005-2012 by Florida
 Fish and Wildlife and Conservation Commission staff using
 trained hounds and houndsmen. Of these animals, 13 had 
-sufficient data to be used by van de Kerk et al.\cite{kerk2015hidden}.
+sufficient data to be used by van de Kerk et al. \cite{kerk2015hidden}.
 Here we focus on the four cats with the most data (all with approximately 10,000-15,000
 observations: see Table~1), 
 in part because our goal is to understand
@@ -360,11 +366,11 @@ successive step lengths (in meters) and turning angles (in radians)
 \cite{turchin1998quantitative,kerk2015hidden}.
 
 
-van de Kerk et al.\cite{kerk2015hidden} used hidden semi-Markov models (HSMM), 
+van de Kerk et al. \cite{kerk2015hidden} used hidden semi-Markov models (HSMM), 
 an extension of HMM that permits explicit modelling of dwell times 
 \cite{langrock_flexible_2012}, considering both Poisson and
 negative binomial distributions for dwell times.  As shown 
-by van de Kerk et al.\cite{kerk2015hidden} (Figure S3b, top row, middle panel),
+by van de Kerk et al. \cite{kerk2015hidden} (Figure S3b, top row, middle panel),
 the estimated shape parameter of the negative binomial dwell time
 distribution was typically close to 1 ($\approx 0.4-1.6$; confidence
 intervals were not given), implying that a geometric distribution
@@ -374,7 +380,7 @@ a simpler HMM framework, which corresponds
 to making precisely this assumption.
 
 
-van de Kerk et al.\cite{kerk2015hidden} considered time-homogeneous models with 
+van de Kerk et al. \cite{kerk2015hidden} considered time-homogeneous models with 
 a variety of candidate distributions %
 --- log-Normal, Gamma, and Weibull distributions for step lengths
 and von Mises and wrapped Cauchy distributions for the turning angle --- %
@@ -399,7 +405,7 @@ analysis but neglecting possible correlations
 between the two measures.) 
 
 
-van de Kerk et al.\cite{kerk2015hidden} used the Bayesian (Schwarz) information criterion (BIC)
+van de Kerk et al. \cite{kerk2015hidden} used the Bayesian (Schwarz) information criterion (BIC)
 to test the relative penalized goodness of fit for
 models ranging from 2 to 6 latent states.
 In general, BIC values decreased as the number of states
@@ -409,7 +415,7 @@ suggesting that the six-state model was
 favoured statistically; however,
 the authors used three-state models in most
 of their analyses for ease of biological interpretation.
-We follow van de Kerk et al.\cite{kerk2015hidden} in using BIC-optimality (i.e., minimum
+We follow van de Kerk et al. \cite{kerk2015hidden} in using BIC-optimality (i.e., minimum
 BIC across a family of models) as the criterion for identifying
 the best model, because we are interested in explaining the 
 data generation process by identifying the ``true'' number 
@@ -437,7 +443,7 @@ for BIC-optimality will carry over to analyses using AIC instead.
 
 In a HMM, the joint likelihood of \emph{emissions} (i.e., direct observations) $ \mathbf Y = \obs_{1},..., \obs_{T}$ 
 and a hidden state sequence $\mathbf{Z}, \state_{t} \in \{1,...,n\}, t=1,...,T$, given model
-parameters \boldmath{$\theta$} and covariates $\mathbf{X}_{1:T} =\cov_{1},..., \cov_{T}$, can be written as:
+parameters {\boldmath $\theta$} and covariates $\mathbf{X}_{1:T} =\cov_{1},..., \cov_{T}$, can be written as:
 
 \begin{equation}
 \begin{split}
@@ -484,7 +490,7 @@ As is standard for HMMs with covariates \cite{visser2010depmixs4}, we define thi
 \end{split}
 \end{equation}
 
-We considered four different transition models for diurnal variation in behaviour, incorporating hour-of-day as a covariate following the general approach of Morales et al.\cite{morales_extracting_2004} of incorporating covariate dependence in the transition matrix.
+We considered four different transition models for diurnal variation in behaviour, incorporating hour-of-day as a covariate following the general approach of Morales et al. \cite{morales_extracting_2004} of incorporating covariate dependence in the transition matrix.
 
 \begin{description}
 
@@ -547,7 +553,7 @@ Model complexity and the number of parameters increase as the number of latent s
 \label{eq:numparam}
 \end{equation}
 
-As the number of states increases, the number of free parameters in time-homogeneous FMMs and HMMs and FMMs with temporal heterogenity will increase linearly, whereas HMMs with temporal heterogenity will increase quadratically (Eq.~\ref{eq:numparam}). When comparing BICs, it is important to account for the tradeoff between log-likelihood and number of states, but also log-likelihood and number of free parameters.
+As the number of states increases, the number of free parameters in time-homogeneous FMMs and HMMs and FMMs with temporal heterogeneity will increase linearly, whereas HMMs with temporal heterogeneity will increase quadratically (Eq.~\ref{eq:numparam}). When comparing BICs, it is important to account for the tradeoff between log-likelihood and number of states, but also log-likelihood and number of free parameters.
 
 We used simulations to predict hourly step length and ACF 
 because, while the computation is reasonably straightforward for FMMs, and manageable for homogeneous HMMs, the interaction between the geometric dwell time within each state and the temporally varying interaction probabilities makes it unreasonably complex. 
@@ -561,7 +567,7 @@ We simulated a two-state HMM with sinusoidal temporal transitions 100 times and 
 
 %% fig 2 goes somewhere here
 
-The BIC-optimal number of states for time homogenous models is consistent with van de Kerk et al.'s \cite{kerk2015hidden} results (Weibull wrapped-Cauchy to Weibull von Mises, and Weibull von Mises to log Normal without turning angles; Figure 2) 
+The BIC-optimal number of states for time homogeneous models is consistent with van de Kerk et al.'s \cite{kerk2015hidden} results (Weibull wrapped-Cauchy to Weibull von Mises, and Weibull von Mises to log Normal without turning angles; Figure 2) 
 
 As a complement, we also fitted FMM and FMM with sinusoidal variation in state occupancy probabilities to compare the temporal effects in goodness of fit (dashed lines).
 % \todo{I took out ``hourly HMM'' here - more coherent to describe it above} 
@@ -573,7 +579,7 @@ behaviours changes over time.
 
 %% fig 3 goes somewhere here
 
-Models with temporal heterogenity are better (lower BIC) than homogeneous models in both FMM and HMM frameworks, but time-homogenous HMMs are better than FMMs with sinusoidal temporal heterogeneity (Figure 3). Turning to the temporally heterogeneous HMMs (right panel), we see that the model with different transition probabilities for each hour of the day (HMM + THhourly) is overparameterized; it underperforms homogeneous HMM with even 3 states, and gets much worse with 4 states. The multiple-block model approximately matches the homogeneous HMM, although it gives the BIC-optimal number of states as 4, in contrast to 6 for the homogeneous HMM.  Finally, the quadratic and sinusoidal models are considerably better than any other models tested; they both give the BIC-optimal number of states as 5, and they have similar goodness of fit.
+Models with temporal heterogeneity are better (lower BIC) than homogeneous models in both FMM and HMM frameworks, but time-homogeneous HMMs are better than FMMs with sinusoidal temporal heterogeneity (Figure 3). Turning to the temporally heterogeneous HMMs (right panel), we see that the model with different transition probabilities for each hour of the day (HMM + THhourly) is overparameterized; it underperforms homogeneous HMM with even 3 states, and gets much worse with 4 states. The multiple-block model approximately matches the homogeneous HMM, although it gives the BIC-optimal number of states as 4, in contrast to 6 for the homogeneous HMM.  Finally, the quadratic and sinusoidal models are considerably better than any other models tested; they both give the BIC-optimal number of states as 5, and they have similar goodness of fit.
 However, this similarity is somewhat overstated due to the very large variation in BIC (over thousands of units) across the full range of models; there is a difference of approximately 80 BIC units, which would
 normally be interpreted as an enormous difference in goodness of fit,
 between the sinusoidal and quadratic models (both of which have 90 
@@ -599,7 +605,7 @@ behaviour (if available) can at least partially
 address this problem \cite{fryxell_multiple_2008}.
 Three distinct
 movement states seem biologically interpretable for Florida panthers
-according to van de Kerk et al.\cite{kerk2015hidden}: Short step length suggests resting
+according to van de Kerk et al. \cite{kerk2015hidden}: Short step length suggests resting
 states, intermediate step length a foraging state, and long
 step length a traveling state. 
 
@@ -641,12 +647,12 @@ spectrum, if the goal of interest is to make predictions (out of sample),
 it might be better to fit a covariate-dependent model so that we can explicitly
 model the switching process. In that case, fitting a covariate-dependent model is
 better for out of sample prediction because Viterbi can only estimate state 
-occupancy if observed movements are available (within sample preditions). 
+occupancy if observed movements are available (within sample predictions). 
 Finally, if we want to estimate the number of states, BIC is not necessarily 
 good for estimation of number of states \cite{biernacki2000assessing}, 
 but it can be useful as an approximate upper limit estimate. 
 
-Incorporating temporal heterogenity in animal movement is one step in
+Incorporating temporal heterogeneity in animal movement is one step in
 the right direction, but much remains to be done. 
 Our model neglects other predictors, such as habitat type or
 location with respect to environmental features such as roads,
@@ -686,25 +692,34 @@ the number.
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section*{Declarations}
-
 \begin{backmatter}
 
 \section*{Acknowledgements}
-  Florida Wildlife and Fisheries?
+
+We would like to thank Madelon van de Kerk, Madan Oli, and David Onorato ... 
+Florida Wildlife and Fisheries
+
+\section*{Ethics approval}
+
+All data used are secondary, drawn from an existing institutional
+data repository.
+
+\section*{Consent for publication}
+
+Not applicable.
   
 \section*{Funding}
- NSERC? 
+
+This study was funded by NSERC Discovery Grant 386590-2010 to BMB.
 
 \section{Data accessibility}
-Hourly step lengths and turning angles of male and female Florida panthers available at: http://ufdc.ufl.edu//IR00004241/00001.
+Hourly step lengths and turning angles of male and female Florida panthers available at: \url{http://ufdc.ufl.edu//IR00004241/00001}.
 
-\section*{Author's contributions}
-    Equally contributed.
-
+\section*{Authors' contributions}
+ML designed analyses and simulations; ran analyses and simulations; and co-wrote the text of the paper.  BMB designed analyses and simulations and co-wrote the text of the paper.
 
 \section*{Competing interests}
-  The authors declare that they have no competing interests.
+The authors declare that they have no competing interests.
 
 
 % if your bibliography is in bibtex format, use those commands:
@@ -715,6 +730,20 @@ Hourly step lengths and turning angles of male and female Florida panthers avail
 % @settings{label, options="nameyear"}
 % b) uncomment next line
 %\nocite{label}
+
+\section*{Tables}
+\begin{table}[h!]
+\caption{Cat ID}
+      \begin{tabular}{cccc}
+        \hline
+           & van de Kerk 2015  & IR@UF   & Number of Observations\\ \hline
+         & 130 & 1 & 10286\\
+         & 131 & 2  & 9458\\
+         & 48 & 14  & 14645\\
+         & 94  & 15   & 10250\\ \hline
+      \end{tabular}
+\end{table}
+
 
 \section*{Figures}
   \begin{figure}[h!]
@@ -747,18 +776,5 @@ Hourly step lengths and turning angles of male and female Florida panthers avail
   \caption{\csentence{State Identification Plot} Log mean and standard deviation of BIC-optimal HMM and HMM with sinusoidal transition.}
       \end{figure}
       
-\section*{Tables}
-\begin{table}[h!]
-\caption{Cat ID}
-      \begin{tabular}{cccc}
-        \hline
-           & van de Kerk 2015  & IR@UF   & Number of Observations\\ \hline
-         & 130 & 1 & 10286\\
-         & 131 & 2  & 9458\\
-         & 48 & 14  & 14645\\
-         & 94  & 15   & 10250\\ \hline
-      \end{tabular}
-\end{table}
-
 \end{backmatter}
 \end{document}
