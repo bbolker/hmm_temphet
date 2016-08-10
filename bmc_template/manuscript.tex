@@ -586,12 +586,18 @@ can you look these up and see if that approach suffers from the same issues as V
 
 %% fig 1 goes somewhere here
 
-We simulated a two-state HMM with sinusoidal temporal transitions 100 times and fitted it with two to five state HMMs and without temporal transition. Heterogeneous transition models can always predict the correct number of states, whereas, can overestimate the number of states via BIC-optimal approach (Figure 1). 
+\bmb{first sentence belongs in ``Methods'', with a few more words of motivation/description. I know that makes the Results for this part very short, but that's OK}
+
+We simulated 100 realizations of a two-state HMM with sinusoidal temporal transitions and fitted it with 2- to 5-state HMMs with and without temporal heterogeneity in the transition probabilities. Heterogeneous transition models can always predict the correct number of states, whereas the temporally homogeneous models overestimate the number of states (based on BIC-optimality: Figure 1). 
 
 %% fig 2 goes somewhere here
 
-The BIC-optimal number of states for time homogeneous models is consistent with van de Kerk et al.'s \cite{kerk2015hidden} results (Weibull wrapped-Cauchy to Weibull von Mises, and Weibull von Mises to log Normal without turning angles; Figure 2) 
+The BIC-optimal number of states for time homogeneous models is consistent with van de Kerk et al.'s \cite{kerk2015hidden} results (Weibull wrapped-Cauchy to Weibull von Mises, and Weibull von Mises to log Normal without turning angles; Figure 2).
+\bmb{Clarify parenthetical clause here. Also, more discussion: in particular, discuss/clarify the points that the homogeneous-HMM models do vary a bit among models
+(log-Normal vs Weibull, with/without turning angles) in how many states they identify, but the heterogeneous-HMM ones don't ---
+which is more important for our conclusions here}
 
+\bmb{doesn't this para. belong in methods??}
 As a complement, we also fitted FMM and FMM with sinusoidal variation in state occupancy probabilities to compare the temporal effects in goodness of fit (dashed lines).
 % \todo{I took out ``hourly HMM'' here - more coherent to describe it above} 
 As a reminder, FMMs assume that the latent state in each time step is 
@@ -602,7 +608,7 @@ behaviours changes over time.
 
 %% fig 3 goes somewhere here
 
-Models with temporal heterogeneity are better (lower BIC) than homogeneous models in both FMM and HMM frameworks, but time-homogeneous HMMs are better than FMMs with sinusoidal temporal heterogeneity (Figure 3). Turning to the temporally heterogeneous HMMs (right panel), we see that the model with different transition probabilities for each hour of the day (HMM + THhourly) is overparameterized; it underperforms homogeneous HMM with even 3 states, and gets much worse with 4 states. The multiple-block model approximately matches the homogeneous HMM, although it gives the BIC-optimal number of states as 4, in contrast to 6 for the homogeneous HMM.  Finally, the quadratic and sinusoidal models are considerably better than any other models tested; they both give the BIC-optimal number of states as 5, and they have similar goodness of fit.
+Models with temporal heterogeneity are better (lower BIC) than homogeneous models in both FMM and HMM frameworks, but time-homogeneous HMMs are better than FMMs with sinusoidal temporal heterogeneity (Figure 3). Turning to the temporally heterogeneous HMMs (Figure 3, right panel), we see that the model with different transition probabilities for each hour of the day (HMM + THhourly) is overparameterized; it underperforms homogeneous HMM with even 3 states, and gets much worse with 4 states. The multiple-block model approximately matches the homogeneous HMM, although it gives the BIC-optimal number of states as 4, in contrast to 6 for the homogeneous HMM.  Finally, the quadratic and sinusoidal models are considerably better than any other models tested; they both give the BIC-optimal number of states as 5, and they have similar goodness of fit.
 However, this similarity is overstated due to the very large variation in BIC (over thousands of units) across the full range of models; there is a difference of approximately 80 BIC units, which would
 normally be interpreted as an enormous difference in goodness of fit,
 between the sinusoidal and quadratic models (both of which have 90 
@@ -612,7 +618,7 @@ The average hourly step lengths from the observed panther data exhibit a clear d
 
 Like the diurnal pattern (Figure 4),
 the strong autocorrelation of the observed step lengths at a 24-hour lag (Figure 5) shows the need to incorporate temporal heterogeneity in the model --- we could have reached this conclusion even without developing any of the temporal-heterogeneity machinery.
-Because there are a huge number of potential complexities that can be added to movement models (e.g. spatial/temporal/among-individual heterogeneity; effects of conspecific attraction or avoidance; memory or cognitive effects), each with associated costs in researcher and computational effort, such diagnostic plots are invaluable. In contrast to the hourly averages, the autocorrelation (ACF) captures both short- and long-term temporal effects. HMM without temporal heterogeneity captures the short-term autocorrelation, but misses the long-term autocorrelation beyond a 7-hour lag.
+Because there are a huge number of potential complexities that can be added to movement models (e.g. spatial/temporal/among-individual heterogeneity; effects of conspecific attraction or avoidance; memory or cognitive effects), each with associated costs in researcher and computational effort, such diagnostic plots are invaluable. \bmb{move prev sentence to Discussion??} In contrast to the hourly averages, the autocorrelation (ACF) captures both short- and long-term temporal effects. HMM without temporal heterogeneity captures the short-term autocorrelation, but misses the long-term autocorrelation beyond a 7-hour lag.
 Temporally homogeneous FMM, by definition, produces neither short- nor long-term autocorrelation. FMM without temporal heterogeneity, although it captures the diurnal pattern well, underpredicts the degree of short-term autocorrelation.
 
 The hardest problem with multiple latent states is interpreting them
