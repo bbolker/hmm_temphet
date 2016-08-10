@@ -598,7 +598,7 @@ The BIC-optimal number of states for time homogeneous models is consistent with 
 which is more important for our conclusions here}
 
 \bmb{doesn't this para. belong in methods??}
-As a complement, we also fitted FMM and FMM with sinusoidal variation in state occupancy probabilities to compare the temporal effects in goodness of fit (dashed lines).
+As a complement, we also fitted FMM and FMM with priors on state occupancy that varied sinusoidally over time to compare the temporal effects in goodness of fit (dashed lines).
 % \todo{I took out ``hourly HMM'' here - more coherent to describe it above} 
 As a reminder, FMMs assume that the latent state in each time step is 
 \emph{independent} of the latent state at the previous time step; 
@@ -608,7 +608,7 @@ behaviours changes over time.
 
 %% fig 3 goes somewhere here
 
-Models with temporal heterogeneity are better (lower BIC) than homogeneous models in both FMM and HMM frameworks, but time-homogeneous HMMs are better than FMMs with sinusoidal temporal heterogeneity (Figure 3). Turning to the temporally heterogeneous HMMs (Figure 3, right panel), we see that the model with different transition probabilities for each hour of the day (HMM + THhourly) is overparameterized; it underperforms homogeneous HMM with even 3 states, and gets much worse with 4 states. The multiple-block model approximately matches the homogeneous HMM, although it gives the BIC-optimal number of states as 4, in contrast to 6 for the homogeneous HMM.  Finally, the quadratic and sinusoidal models are considerably better than any other models tested; they both give the BIC-optimal number of states as 5, and they have similar goodness of fit.
+Models with temporal heterogeneity are better (lower BIC) than homogeneous models in both FMM and HMM frameworks, but time-homogeneous HMMs are better than FMMs with sinusoidal temporal heterogeneity (Figure 3). Turning to the temporally heterogeneous HMMs (Figure 3, right panel), we see that the model with different transition probabilities for each hour of the day (HMM + THhourly) is overparameterized; it underperforms homogeneous HMM with even 3 states, and gets much worse with 4 states. The multiple-block model gives approximately the same BIC as the homogeneous HMM, although it gives the BIC-optimal number of states as 4, in contrast to 6 for the homogeneous HMM.  Finally, the quadratic and sinusoidal models are the best models tested by far; they both give the BIC-optimal number of states as 5, and they have similar goodness of fit.
 However, this similarity is overstated due to the very large variation in BIC (over thousands of units) across the full range of models; there is a difference of approximately 80 BIC units, which would
 normally be interpreted as an enormous difference in goodness of fit,
 between the sinusoidal and quadratic models (both of which have 90 
@@ -619,8 +619,9 @@ The average hourly step lengths from the observed panther data exhibit a clear d
 Like the diurnal pattern (Figure 4),
 the strong autocorrelation of the observed step lengths at a 24-hour lag (Figure 5) shows the need to incorporate temporal heterogeneity in the model --- we could have reached this conclusion even without developing any of the temporal-heterogeneity machinery.
 Because there are a huge number of potential complexities that can be added to movement models (e.g. spatial/temporal/among-individual heterogeneity; effects of conspecific attraction or avoidance; memory or cognitive effects), each with associated costs in researcher and computational effort, such diagnostic plots are invaluable. \bmb{move prev sentence to Discussion??} In contrast to the hourly averages, the autocorrelation (ACF) captures both short- and long-term temporal effects. HMM without temporal heterogeneity captures the short-term autocorrelation, but misses the long-term autocorrelation beyond a 7-hour lag.
-Temporally homogeneous FMM, by definition, produces neither short- nor long-term autocorrelation. FMM without temporal heterogeneity, although it captures the diurnal pattern well, underpredicts the degree of short-term autocorrelation.
+Temporally homogeneous FMMs, by definition, produce no autocorrelation (neither short- nor long-term autocorrelation). FMMs without temporal heterogeneity, although they capture the diurnal pattern well, underpredict the degree of short-term autocorrelation.
 
+\bmb{next para might belong in Discussion?}
 The hardest problem with multiple latent states is interpreting them
 biologically. We have no way of knowing what panthers are actually
 thinking (it is certainly more complex than being in one of a small
@@ -637,12 +638,12 @@ states, intermediate step length a foraging state, and long
 step length a traveling state. 
 
 
-The estimated parameter values
-for several cats
-(mean and standard deviation of the step length in each state) between
-the time-homogeneous and time-heterogeneous models are similar across all cats (Figure 7). 
-In general, the states with longer mean step lengths are relatively
-similar between model classes. For cats 14 and 15, the states with
+The estimated emission parameter values
+(mean and standard deviation of the step length in each state)
+are similar, for both homogeneous and heterogeneous
+models, across all cats (Figure 7 shows a subset of cats). 
+In general, the states with longer mean step lengths are
+similar between homogeneous and heterogeneous models. For cats 14 and 15, the states with
 the longest or next-longest mean step lengths have similar means
 and standard deviations; for cats 1 and 2, three long-step states
 in the homogeneous HMM appear to divide two long-step states in 
@@ -696,6 +697,9 @@ and, more importantly, localize fitting problems to particular aspects of the
 data so that models can be constructed without needing to
 include all possible features of interest.
 
+\bmb{where did the BIC stuff (Celeux, finding the ``knee point''
+à la Dean et al., etc.) go? I think we really have to mention this
+(maybe not until discussion)}
 \section*{Conclusion}
 
 We have presented a relatively simple but little-used extension
@@ -739,14 +743,13 @@ Not applicable.
 This study was funded by NSERC Discovery Grant 386590-2010 to BMB.
 
 \section{Data accessibility}
-Hourly step lengths and turning angles of male and female Florida panthers available at: \url{http://ufdc.ufl.edu//IR00004241/00001}.
+Hourly step lengths and turning angles of male and female Florida panthers available at \url{http://ufdc.ufl.edu//IR00004241/00001}.
 
 \section*{Authors' contributions}
 ML designed analyses and simulations; ran analyses and simulations; and co-wrote the text of the paper.  BMB designed analyses and simulations and co-wrote the text of the paper.
 
 \section*{Competing interests}
 The authors declare that they have no competing interests.
-
 
 % if your bibliography is in bibtex format, use those commands:
 \bibliographystyle{bmc-mathphys} % Style BST file (bmc-mathphys, vancouver, spbasic).
@@ -760,16 +763,16 @@ The authors declare that they have no competing interests.
 \section*{Tables}
 \begin{table}[h!]
 \caption{Cat ID and number of observations; ID numbers are given matching
-those shown by van de Kerk et al. 2014 and those 
+those shown by van de Kerk et al. 2015 and those 
 in the data located at the UF Institutional repository (IR@UF).}
-      \begin{tabular}{cccc}
-        \hline
-           & van de Kerk 2015  & IR@UF   & Number of Observations\\ \hline
-         & 130 & 1 & 10286\\
-         & 131 & 2  & 9458\\
-         & 48 & 14  & 14645\\
-         & 94  & 15   & 10250\\ \hline
-      \end{tabular}
+\begin{tabular}{cccc}
+  \hline
+  & van de Kerk 2015  & IR@UF   & Number of Observations\\ \hline
+  & 130 & 1 & 10286\\
+  & 131 & 2  & 9458\\
+  & 48 & 14  & 14645\\
+  & 94  & 15   & 10250\\ \hline
+\end{tabular}
 \end{table}
 
 
@@ -786,7 +789,7 @@ in the data located at the UF Institutional repository (IR@UF).}
       
   \begin{figure}[h!]
    \includegraphics[width=5in]{figure/adj_BIC_comparisons-1}
-  \caption{\csentence{Adjusted BIC Transition Comparison} Adjusted BIC by number of free parameters for HMM model types. The left panel shows FMM, FMM with a sin prior and HMM. The right panel shows HMMs with different temporal transitions.}
+  \caption{\csentence{Adjusted BICs Across All Models} Adjusted BIC by number of free parameters for HMM model types. The left panel shows homogeneous FMM, heterogeneous FMM (with a sinusoidal prior) and homogeneous HMM. The right panel shows HMMs with different temporal transitions.}
       \end{figure}
       
 \begin{figure}[h!]
@@ -801,7 +804,7 @@ in the data located at the UF Institutional repository (IR@UF).}
       
 \begin{figure}[h!]
    \includegraphics[width=5in]{figure/r_msdlist-1}
-  \caption{\csentence{State Identification Plot} Log mean and standard deviation of BIC-optimal HMM and HMM with sinusoidal transition.}
+  \caption{\csentence{State Identification Plot} Mean and standard deviation of  step length by state for BIC-optimal HMMs (homogeneous and heterogeneous with sinusoidal transition). \bmb{do I need to explain transformation of LN SD ?}}
       \end{figure}
       
 \end{backmatter}

@@ -401,7 +401,8 @@ Accessed 2016-06-07
 \bauthor{\bsnm{MacDonald}, \binits{I.L.}}:
 \bbtitle{Hidden {Markov} {Models} for {Time} {Series}: {An} {Introduction}
   {Using} {R}}.
-\bpublisher{CRC Press}, \blocation{???}
+\bpublisher{CRC Press},
+\blocation{Boca Raton, FL, USA}
 (\byear{2009})
 \end{bbook}
 \endbibitem
@@ -841,7 +842,7 @@ Accessed 2016-06-07
     <au><snm>Zucchini</snm><fnm>W</fnm></au>
     <au><snm>MacDonald</snm><fnm>IL</fnm></au>
   </aug>
-  <publisher>CRC Press</publisher>
+  <publisher>Boca Raton, FL, USA: CRC Press</publisher>
   <pubdate>2009</pubdate>
 </bibl>
 

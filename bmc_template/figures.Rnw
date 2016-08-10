@@ -37,11 +37,12 @@ ICdat <- mutate(ICdat,
                 model=factor(model,
                          levels=c("HMM","HMMsin"),
                          labels=c("Homogeneous","Heterogeneous"))) %>% filter(IC=="BIC")
-simplot <- ggplot(ICdat,aes(x=nstates,y=n,color=model))+
-                        geom_point(size=3) +
-                        geom_line() +
-                        scale_colour_brewer(palette="Set1")+
-                        labs(y="Counts",x="BIC-optimal States")
+simplot <- ggplot(ICdat,aes(x=nstates,y=n,color=model,shape=model))+
+    geom_line() +
+    geom_point(size=3,bg="white") +
+    scale_shape_manual(values=c(21,16))+
+    scale_colour_brewer(palette="Set1")+
+    labs(y="Counts",x="BIC-optimal number of states")
 print(simplot)
 
 @
@@ -55,11 +56,14 @@ allmodsumdf2 <- readRDS("../summary_stats/cat.1.df.RDS")$multimoddf
 df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
             distrib=ifelse(grepl("W",model),"Weibull","log-Normal"),
             turn_angle=ifelse(grepl("VM",as.character(model)),"yes","no"),
-            homog=ifelse(grepl("TH",type),"Time-inhomogeneous HMM","Homogeneous HMM"))
-(ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))
+            homog=ifelse(grepl("TH",type),"Time-heterogeneous","Homogeneous"))
+slname <- "Step-length\ndistribution"
+(ggplot(df2, aes(x=nstates,y=deltaBIC,size=distrib,
+                 colour=distrib,lty=turn_angle))
     + geom_line()
     + facet_wrap(~ homog)
-    + scale_colour_brewer(name="Step-length\ndistribution",palette="Set1")
+    + scale_colour_brewer(name=slname,palette="Set1")
+    + scale_size_manual(name=slname,values=c(1.75,0.75))
     ## scale_size_continuous( name="# parameters") +
     #    geom_point(aes(size=parameters))+
     + scale_linetype(name="von Mises\nturning angle?")
@@ -72,7 +76,7 @@ df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
 
 \clearpage
 
-<<adj_BIC_comparisons, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Adjusted BIC by number of free parameters for HMM model types. The left panel shows FMM, FMM with a sin prior and HMM. The right panel shows HMMs with different temporal transitions.",fig.width=8>>=
+<<adj_BIC_comparisons, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Adjusted BIC by number of free parameters for HMM model types. The left panel shows FMM, temporally heterogeneous FMM with a sinusoidal prior and HMM. The right panel shows HMMs with different temporal transitions.",fig.width=8>>=
 #L <- load("cat1sumdat.RData")
 
 linetypev <- c(rep(2,2),rep(1,5))
@@ -122,13 +126,13 @@ vitdf2 <- vitdf %>% transmute(time=time,variable="viterbi",value=viterbi)
 
 mnames <- c("fmm5","fmmsin4","hmm6","hmmblock4","hmmhourly3",
             "hmmquad5","hmmsin5","obs","viterbi")
-mnames2 <- c("fmm-homogeneous  (n=5)"
-             , "fmm-sin (n=4)"
-             , "homogeneous (n=6)"
-             , "block (n=4)"
-             , "hourly (n=3)"
-             , "quadratic (n=5)"
-             , "sin (n=5)"
+mnames2 <- c("FMM-homogeneous  (n=5)"
+             , "FMM-sin (n=4)"
+             , "HMM-homogeneous (n=6)"
+             , "HMM-block (n=4)"
+             , "HMM-hourly (n=3)"
+             , "HMM-quadratic (n=5)"
+             , "HMM-sin (n=5)"
              , "observed"
              , "viterbi homogenous (n=3)")
 
@@ -220,15 +224,21 @@ get_cat_pars2 <- function(catid){
 }
 
 all_cat_pars2 <- ldply(lme4:::namedList(1,2,14,15),get_cat_pars2)
-
-g0 <- ggplot(all_cat_pars2,aes(log_mean,log_sd,color=Model))+
-     geom_point()+geom_line() + facet_wrap(~catID,labeller=label_both)+zmargin
+levels(all_cat_pars2$Model) <- c("homogeneous","heterogeneous (sin)")
+g0 <- ggplot(all_cat_pars2,
+             aes(10^log_mean,log_sd*10^log_mean,color=Model,shape=Model))+
+    scale_x_log10()+scale_y_log10()+
+    labs(x="mean step length (m)",y="sd of step length (m)")+
+    scale_shape_manual(values=c(21,16)) +
+    geom_line() +
+    geom_point(bg="white")+
+    facet_wrap(~catID,labeller=label_both)+zmargin
  (g0c <- g0 +
      geom_encircle(data=subset(all_cat_pars2,
                                (catID=="15" & log_mean<1.5) |
                                (catID!="15" & log_mean<1.8)),
-                   colour="black",linetype=2,expand=0.05))
-
+                   colour="black",linetype=2,expand=0.05,
+                   group=1))
 @
 
 \clearpage
