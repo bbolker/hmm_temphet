@@ -326,7 +326,7 @@ contrast, most studies using HMM have chosen the
 number of underlying states \emph{a priori}, typically using either two
 \cite{schliehe-diecks_application_2012,mckellar_using_2014,langrock_flexible_2012,fryxell_multiple_2008}, or three states
 \cite{dean2012behavioural,morales_extracting_2004,franke_prediction_2006}. 
-In contrast, Dean et al.~\cite{dean_behavioural_2013} evaluated models with up to 10
+In contrast, Dean et al.~\cite{dean2012behavioural} evaluated models with up to 10
 states, but like van de Kerk et al. they chose to consider only 
 models with three states. 
 As van de Kerk et al. \cite{kerk2015hidden} comment, and as
@@ -564,7 +564,7 @@ For a fixed number of states homogeneous FMMs are simplest, followed by homogene
 \label{eq:numparam}
 \end{equation}
 
-As the number of states increases, the number of free parameters in (homogeneous or heterogenous) FMMs and time-homogeneous HMMs will increase linearly, whereas for HMMs with temporal heterogeneity (or covariate-dependent transitions more generally) the number increases quadratically (Eq.~\ref{eq:numparam}). When comparing BICs, it is important to account for the tradeoff between log-likelihood and number of states, but also log-likelihood and number of free parameters.
+As the number of states increases, the number of free parameters in (homogeneous or heterogeneous) FMMs and time-homogeneous HMMs will increase linearly, whereas for HMMs with temporal heterogeneity (or covariate-dependent transitions more generally) the number increases quadratically (Eq.~\ref{eq:numparam}). When comparing BICs, it is important to account for the tradeoff between log-likelihood and number of states, but also log-likelihood and number of free parameters.
 
 
 
@@ -591,11 +591,7 @@ The simulation agrees with our hypothesis that homogeneous transition HMMs can o
 
 %% fig 2 goes somewhere here
 
-The BIC-optimal number of states for time homogeneous models is consistent with van de Kerk et al.'s \cite{kerk2015hidden} results (Weibull wrapped-Cauchy to Weibull von Mises, and Weibull von Mises to log Normal without turning angles; Figure 2).
-\bmb{Clarify parenthetical clause here. Also, more discussion: in particular, discuss/clarify the points that the homogeneous-HMM models do vary a bit among models
-(log-Normal vs Weibull, with/without turning angles) in how many states they identify, but the heterogeneous-HMM ones don't ---
-which is more important for our conclusions here}
-
+The BIC-optimal number of states for time homogeneous models is consistent with van de Kerk et al.'s \cite{kerk2015hidden} results. For time homogeneous models, the Weibull-wrapped-Cauchy \cite{kerk2015hidden}, Weibull von Mises, and log Normal without turning angles all identify the same BIC-optimal number of states. Furthermore, the homogeneous-HMM models do vary among models (different step-length distributions, with/without turning angles) in how many states they identify, whereas, the heterogeneous-HMM models are consistent among models (Figure 2).
 
 %% fig 3 goes somewhere here
 
@@ -605,28 +601,12 @@ normally be interpreted as an enormous difference in goodness of fit,
 between the sinusoidal and quadratic models (both of which have 90 
 parameters).
 
-The average hourly step lengths from the observed panther data exhibit a clear diurnal pattern (Figure 4). As expected, temporally homogeneous models (whether FMM or HMM) predict the same mean step length regardless of time of day, failing to capture the diurnal activity cycle. All of the models incorporating temporal heterogeneity, including the temporally heterogeneous FMM, can capture the observed patterns. However, the block model does markedly worse than the other temporal models (changing the block definitions might help \bmb{clarify?}), and the (overparameterized) hourly model does better than any other model at capturing the early-evening peak (but worse at capturing the mid-day trough). We also included average hourly step lengths from three-state temporally homogeneous HMM Viterbi prediction (v points \bmb{clarify?}).
+The average hourly step lengths from the observed panther data exhibit a clear diurnal pattern (Figure 4). As expected, temporally homogeneous models (whether FMM or HMM) predict the same mean step length regardless of time of day, failing to capture the diurnal activity cycle. All of the models incorporating temporal heterogeneity, including the temporally heterogeneous FMM, can capture the observed patterns. However, the block model does markedly worse than the other temporal models (changing the block definitions might help by re-clustering/grouping different hours or increasing the number of blocks), and the (overparameterized) hourly model does better than any other model at capturing the early-evening peak (but worse at capturing the mid-day trough). We also included average hourly step lengths from three-state temporally homogeneous HMM Viterbi prediction to illustrate within sample predictions can capture the diurnal patterns, but fail to capture out of sample predictions.
 
 Like the diurnal pattern (Figure 4),
 the strong autocorrelation of the observed step lengths at a 24-hour lag (Figure 5) shows the need to incorporate temporal heterogeneity in the model --- we could have reached this conclusion even without developing any of the temporal-heterogeneity machinery.
-Because there are a huge number of potential complexities that can be added to movement models (e.g. spatial/temporal/among-individual heterogeneity; effects of conspecific attraction or avoidance; memory or cognitive effects), each with associated costs in researcher and computational effort, such diagnostic plots are invaluable. \bmb{move prev sentence to Discussion??} In contrast to the hourly averages, the autocorrelation (ACF) captures both short- and long-term temporal effects. HMM without temporal heterogeneity captures the short-term autocorrelation, but misses the long-term autocorrelation beyond a 7-hour lag.
+In contrast to the hourly averages, the autocorrelation (ACF) captures both short- and long-term temporal effects. HMM without temporal heterogeneity captures the short-term autocorrelation, but misses the long-term autocorrelation beyond a 7-hour lag.
 Temporally homogeneous FMMs, by definition, produce no autocorrelation (neither short- nor long-term autocorrelation). FMMs without temporal heterogeneity, although they capture the diurnal pattern well, underpredict the degree of short-term autocorrelation.
-
-\bmb{next para might belong in Discussion?}
-The hardest problem with multiple latent states is interpreting them
-biologically. We have no way of knowing what panthers are actually
-thinking (it is certainly more complex than being in one of a small
-number of discrete latent states); 
-we don't know the ``true'' number of latent states,
-nor are we able to observe them directly, although
-incorporating additional direct observations of 
-behaviour (if available) can at least partially
-address this problem \cite{fryxell_multiple_2008}.
-Three distinct
-movement states seem biologically interpretable for Florida panthers
-according to van de Kerk et al. \cite{kerk2015hidden}: Short step length suggests resting
-states, intermediate step length a foraging state, and long
-step length a traveling state. 
 
 
 The estimated emission parameter values
@@ -656,20 +636,37 @@ to estimate the number of behavioural states will generally
 overfit their data, in the sense of ``discovering'' large
 number of states that are difficult to interpret biologically.
 
+
 On a broad spectrum, it really depends on what kind of question 
 that is being answered. On one side of the spectrum, if the goal is 
 to identify states, it might be sufficient to use a 
 simple/traditional HMM model and pre-specify the number of states and, post hoc, 
 match Viterbi-based states estimates with environmental variation 
-\cite{fryxell_multiple_2008}. On the other side of the 
+\cite{fryxell_multiple_2008}. In our panther study, it is really hard to interpret multiple latent states biologically.
+We have no way of knowing what panthers are actually
+thinking (it is certainly more complex than being in one of a small
+number of discrete latent states); 
+we don't know the ``true'' number of latent states,
+nor are we able to observe them directly, although
+incorporating additional direct observations of 
+behaviour (if available) can at least partially
+address this problem \cite{fryxell_multiple_2008}.
+Three distinct
+movement states seem biologically interpretable for Florida panthers
+according to van de Kerk et al. \cite{kerk2015hidden}: Short step length suggests resting
+states, intermediate step length a foraging state, and long
+step length a traveling state. 
+
+On the other side of the 
 spectrum, if the goal of interest is to make predictions (out of sample), 
 it might be better to fit a covariate-dependent model so that we can explicitly
 model the switching process. In that case, fitting a covariate-dependent model is
 better for out of sample prediction because Viterbi can only estimate state 
 occupancy if observed movements are available (within sample predictions). 
+
 Finally, if we want to estimate the number of states, BIC is not necessarily 
 good for estimation of number of states \cite{biernacki2000assessing}, 
-but it can be useful as an approximate upper limit estimate. 
+but it can be useful as an approximate upper limit estimate. This is a common problem when using BICs, thus, the "knee point" (jump point) was proposed for BIC in partitioning based clustering via angle-based method \cite{zhao_knee_2008}. A similar method was used with likelihood \cite{dean2012behavioural} where both are applicable in our case, and suggest fewer number of states, but we do not know the reliability when fitting more complex models (ie. the shape of the BIC curve can be affected by the non-linear increase of parameters with every additional state).
 
 Incorporating temporal heterogeneity in animal movement is one step in
 the right direction, but much remains to be done. 
@@ -686,11 +683,9 @@ Better diagnostic procedures and tests are needed:
 these can both test overall goodness-of-fit \cite{potts_generalized_2014} 
 and, more importantly, localize fitting problems to particular aspects of the
 data so that models can be constructed without needing to
-include all possible features of interest.
+include all possible features of interest. Because there are a huge number of potential complexities that can be added to movement models (e.g. spatial/temporal/among-individual heterogeneity; effects of conspecific attraction or avoidance; memory or cognitive effects), each with associated costs in researcher and computational effort, such diagnostic plots are invaluable.
 
-\bmb{where did the BIC stuff (Celeux, finding the ``knee point''
-à la Dean et al., etc.) go? I think we really have to mention this
-(maybe not until discussion)}
+
 \section*{Conclusion}
 
 We have presented a relatively simple but little-used extension

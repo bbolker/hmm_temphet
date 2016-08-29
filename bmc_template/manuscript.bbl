@@ -348,27 +348,6 @@ Accessed 2015-04-29
 \endbibitem
 
 %%% 19
-\bibitem{dean_behavioural_2013}
-\begin{barticle}
-\bauthor{\bsnm{Dean}, \binits{B.}},
-\bauthor{\bsnm{Freeman}, \binits{R.}},
-\bauthor{\bsnm{Kirk}, \binits{H.}},
-\bauthor{\bsnm{Leonard}, \binits{K.}},
-\bauthor{\bsnm{Phillips}, \binits{R.A.}},
-\bauthor{\bsnm{Perrins}, \binits{C.M.}},
-\bauthor{\bsnm{Guilford}, \binits{T.}}:
-\batitle{Behavioural mapping of a pelagic seabird: combining multiple sensors
-  and a hidden {Markov} model reveals the distribution of at-sea behaviour}.
-\bjtitle{Journal of The Royal Society Interface}
-\bvolume{10}(\bissue{78}),
-\bfpage{20120570}
-(\byear{2013}).
-doi:\doiurl{10.1098/rsif.2012.0570}.
-Accessed 2016-06-07
-\end{barticle}
-\endbibitem
-
-%%% 20
 \bibitem{Richards2005}
 \begin{barticle}
 \bauthor{\bsnm{Richards}, \binits{S.A.}}:
@@ -381,7 +360,7 @@ Accessed 2016-06-07
 \end{barticle}
 \endbibitem
 
-%%% 21
+%%% 20
 \bibitem{BurnhamAnderson1998}
 \begin{bbook}
 \bauthor{\bsnm{Burnham}, \binits{K.P.}},
@@ -394,7 +373,7 @@ Accessed 2016-06-07
 \end{bbook}
 \endbibitem
 
-%%% 22
+%%% 21
 \bibitem{zucchini_hidden_2009}
 \begin{bbook}
 \bauthor{\bsnm{Zucchini}, \binits{W.}},
@@ -407,7 +386,7 @@ Accessed 2016-06-07
 \end{bbook}
 \endbibitem
 
-%%% 23
+%%% 22
 \bibitem{visser2010depmixs4}
 \begin{barticle}
 \bauthor{\bsnm{Visser}, \binits{I.}},
@@ -420,7 +399,7 @@ Accessed 2016-06-07
 \end{barticle}
 \endbibitem
 
-%%% 24
+%%% 23
 \bibitem{R}
 \begin{bbook}
 \bauthor{\bsnm{{R Core Team}}}:
@@ -433,7 +412,7 @@ Accessed 2016-06-07
 \end{bbook}
 \endbibitem
 
-%%% 25
+%%% 24
 \bibitem{biernacki2000assessing}
 \begin{barticle}
 \bauthor{\bsnm{Biernacki}, \binits{C.}},
@@ -446,6 +425,22 @@ Accessed 2016-06-07
 \bfpage{719}--\blpage{725}
 (\byear{2000})
 \end{barticle}
+\endbibitem
+
+%%% 25
+\bibitem{zhao_knee_2008}
+\begin{bchapter}
+\bauthor{\bsnm{Zhao}, \binits{Q.}},
+\bauthor{\bsnm{Xu}, \binits{M.}},
+\bauthor{\bsnm{Fränti}, \binits{P.}}:
+\bctitle{Knee {Point} {Detection} on {Bayesian} {Information} {Criterion}},
+pp. \bfpage{431}--\blpage{438}.
+\bpublisher{IEEE}, \blocation{???}
+(\byear{2008}).
+doi:\doiurl{10.1109/ICTAI.2008.154}.
+\burl{http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=4669805}
+Accessed 2016-06-21
+\end{bchapter}
 \endbibitem
 
 %%% 26
@@ -790,27 +785,6 @@ Accessed 2016-06-07
 </bibl>
 
 <bibl id="B19">
-  <title><p>Behavioural mapping of a pelagic seabird: combining multiple
-  sensors and a hidden {Markov} model reveals the distribution of at-sea
-  behaviour</p></title>
-  <aug>
-    <au><snm>Dean</snm><fnm>B</fnm></au>
-    <au><snm>Freeman</snm><fnm>R</fnm></au>
-    <au><snm>Kirk</snm><fnm>H</fnm></au>
-    <au><snm>Leonard</snm><fnm>K</fnm></au>
-    <au><snm>Phillips</snm><fnm>RA</fnm></au>
-    <au><snm>Perrins</snm><fnm>CM</fnm></au>
-    <au><snm>Guilford</snm><fnm>T</fnm></au>
-  </aug>
-  <source>Journal of The Royal Society Interface</source>
-  <pubdate>2013</pubdate>
-  <volume>10</volume>
-  <issue>78</issue>
-  <fpage>20120570</fpage>
-  <url>http://rsif.royalsocietypublishing.org/content/10/78/20120570</url>
-</bibl>
-
-<bibl id="B20">
   <title><p>Testing ecological theory using the information-theoretic approach:
   examples and cautionary results</p></title>
   <aug>
@@ -824,7 +798,7 @@ Accessed 2016-06-07
   <lpage>2814</lpage>
 </bibl>
 
-<bibl id="B21">
+<bibl id="B20">
   <title><p>Model Selection and Inference: A Practical Information-Theoretic
   Approach</p></title>
   <aug>
@@ -835,7 +809,7 @@ Accessed 2016-06-07
   <pubdate>1998</pubdate>
 </bibl>
 
-<bibl id="B22">
+<bibl id="B21">
   <title><p>Hidden {Markov} {Models} for {Time} {Series}: {An} {Introduction}
   {Using} {R}</p></title>
   <aug>
@@ -846,7 +820,7 @@ Accessed 2016-06-07
   <pubdate>2009</pubdate>
 </bibl>
 
-<bibl id="B23">
+<bibl id="B22">
   <title><p>{{\tt depmixS4}}: An {R} package for hidden {Markov}
   models</p></title>
   <aug>
@@ -861,7 +835,7 @@ Accessed 2016-06-07
   <lpage>-21</lpage>
 </bibl>
 
-<bibl id="B24">
+<bibl id="B23">
   <title><p>R: A Language and Environment for Statistical Computing</p></title>
   <aug>
     <au><cnm>{R Core Team}</cnm></au>
@@ -871,7 +845,7 @@ Accessed 2016-06-07
   <url>https://www.R-project.org/</url>
 </bibl>
 
-<bibl id="B25">
+<bibl id="B24">
   <title><p>Assessing a mixture model for clustering with the integrated
   completed likelihood</p></title>
   <aug>
@@ -887,6 +861,21 @@ Accessed 2016-06-07
   <issue>7</issue>
   <fpage>719</fpage>
   <lpage>-725</lpage>
+</bibl>
+
+<bibl id="B25">
+  <title><p>Knee {Point} {Detection} on {Bayesian} {Information}
+  {Criterion}</p></title>
+  <aug>
+    <au><snm>Zhao</snm><fnm>Q</fnm></au>
+    <au><snm>Xu</snm><fnm>M</fnm></au>
+    <au><snm>Fränti</snm><fnm>P</fnm></au>
+  </aug>
+  <publisher>IEEE</publisher>
+  <pubdate>2008</pubdate>
+  <fpage>431</fpage>
+  <lpage>-438</lpage>
+  <url>http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=4669805</url>
 </bibl>
 
 <bibl id="B26">
