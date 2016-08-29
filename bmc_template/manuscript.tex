@@ -542,15 +542,17 @@ estimated parameters, and estimate the most likely
 states with the Viterbi
 algorithm.
 
+A simple simulation was conducted to to see whether fitting homogeneous transition probability HMMs to heterogeneous transitions simulated data will over estimate the number of states and estimate the correct number of states using the heterogeneous transitioning model. We used 100 realizations of a two-state HMM with sinusoidal temporal transitions and fitted it with 2- to 5-state HMMs with and without temporal heterogeneity in the transition probabilities.  
+
 We used three approaches to assess the fit of both time-homogeneous and time-inhomogeneous 
 HMMs with 3 to 6 states to step-length data from the four of the thirteen Florida panthers 
-with the most data ($> 9000 $ observations). (1) Comparing BICs to the optimal-BIC model 
-within each type of transition complexity \bmb{clarify?} ($\dbic$ = BIC - min(BIC)) assesses the overall 
-goodness of fit of each model type. (2) Comparing average step-length by hour of day for the 
+with the most data ($> 9000 $ observations). (1) BIC was used to compare the goodness of fit of each model type. The model with the lowest BIC was selected to be the optimal-BIC model and all BICs were adjusted to $\dbic$ based on the optimal-BIC model ($\dbic$ = BIC - min(BIC)) . (2) Comparing average step-length by hour of day for the 
 observed data and for data simulated from the models shows how well a particular class of 
 models can capture diurnal variation in behaviour. (3) Comparing temporal autocorrelations
 for the observed data and for data simulated from the models shows how well a particular class
-of models can capture serial correlation at both short and long time scales.
+of models can capture serial correlation at both short and long time scales. As a complement, we also fitted FMM and FMM with priors on state occupancy that varied sinusoidally over time to compare the temporal effects in goodness of fit As a reminder, FMMs assume that the latent state in each time step is \emph{independent} of the latent state at the previous time step; time-varying FMMs can accurately describe movement when behaviour can
+change on a short time scale, but the average propensity for different
+behaviours changes over time.
 
 Model complexity and the number of parameters increase as the number of latent states increase.
 For a fixed number of states homogeneous FMMs are simplest, followed by homogeneous HMMs and finally by FMMs and HMMs incorporating temporal heterogeneity. In general, the number of free parameters in an HMM is the sum of the number of free parameters for each of the three model components. Let $n$ be the number of hidden states and $k_{i}, k_{t}, k_{e}$ be the number of parameters describing the covariate-dependence of the prior distribution, transition function and emission distributions; that is, for a homogeneous model, $k=1$, while a single numeric covariate or a categorical predictor with two levels would give $k=2$. Then the number of free parameters of an HMM is:
@@ -562,7 +564,9 @@ For a fixed number of states homogeneous FMMs are simplest, followed by homogene
 \label{eq:numparam}
 \end{equation}
 
-As the number of states increases, the number of free parameters in (homogeneous or heterogenous) FMMs and time-homogeneous HMMs will increase linearly, whereas for HMMs with temporal heterogeneity (or covariate-dependent transitions more generally) the number increases quadratically (Eq.~\ref{eq:numparam}). When comparing BICs, it is important to account for the tradeoff between log-likelihood and number of states, but also log-likelihood and number of free parameters. \bmb{what does last sentence mean?? delete?}
+As the number of states increases, the number of free parameters in (homogeneous or heterogenous) FMMs and time-homogeneous HMMs will increase linearly, whereas for HMMs with temporal heterogeneity (or covariate-dependent transitions more generally) the number increases quadratically (Eq.~\ref{eq:numparam}). When comparing BICs, it is important to account for the tradeoff between log-likelihood and number of states, but also log-likelihood and number of free parameters.
+
+
 
 We used simulations to predict expected hourly step lengths and
 autocorrelation functions (ACF).  While the computation of expected
@@ -573,22 +577,17 @@ makes it infeasible for more complex models.  We used this approach to
 validate our models, comparing our simulated predictions with the
 observed movements.  The more usual approach, generating predictions
 from the expected step lengths conditional on the most likely state
-sequence predicted by the Viterbi algorithm \cite{zucchini_hidden_2009,langrock_flexible_2012}, is somewhat problematic
-because the states predicted by the Viterbi algorithm already rely on the observed data. This approach is useful to predict
+sequence predicted by the Viterbi algorithm or pseduo-residuals \cite{zucchini_hidden_2009,langrock_flexible_2012}, is somewhat problematic
+because the predictions by these methods rely on the observed data. These approach is useful to predict
 missing data in the observation sequence, but because it is
 conditional on the observed values, it can not reliably evaluate
 goodness of fit for the different structural complexities of HMM
 models.
-\bmb{we might need to be more careful here. Apparently Zucchini/Langrock et al also define ``pseudo-residuals'';
-can you look these up and see if that approach suffers from the same issues as Viterbi ... ?}
 
 \section*{Results}
 
 %% fig 1 goes somewhere here
-
-\bmb{first sentence belongs in ``Methods'', with a few more words of motivation/description. I know that makes the Results for this part very short, but that's OK}
-
-We simulated 100 realizations of a two-state HMM with sinusoidal temporal transitions and fitted it with 2- to 5-state HMMs with and without temporal heterogeneity in the transition probabilities. Heterogeneous transition models can always predict the correct number of states, whereas the temporally homogeneous models overestimate the number of states (based on BIC-optimality: Figure 1). 
+The simulation agrees with our hypothesis that homogeneous transition HMMs can over estimate the number of hidden states. Heterogeneous transition models can always predict the correct number of states, whereas the temporally homogeneous models overestimate the number of states (based on BIC-optimality: Figure 1). 
 
 %% fig 2 goes somewhere here
 
@@ -597,14 +596,6 @@ The BIC-optimal number of states for time homogeneous models is consistent with 
 (log-Normal vs Weibull, with/without turning angles) in how many states they identify, but the heterogeneous-HMM ones don't ---
 which is more important for our conclusions here}
 
-\bmb{doesn't this para. belong in methods??}
-As a complement, we also fitted FMM and FMM with priors on state occupancy that varied sinusoidally over time to compare the temporal effects in goodness of fit (dashed lines).
-% \todo{I took out ``hourly HMM'' here - more coherent to describe it above} 
-As a reminder, FMMs assume that the latent state in each time step is 
-\emph{independent} of the latent state at the previous time step; 
-time-varying FMMs can accurately describe movement when behaviour can
-change on a short time scale, but the average propensity for different
-behaviours changes over time.
 
 %% fig 3 goes somewhere here
 
