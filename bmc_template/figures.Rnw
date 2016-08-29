@@ -2,6 +2,13 @@
 
 \begin{document}
 
+\section*{Additional files}
+
+  In the main text of this manuscript, we showed the fitting and simulating results for Cat 1. Here, we have the adjusted BIC emission distribution comparisons, adjusted BIC across all FMM and HMM models, diurnal step lengths and autocorrelation plots for Cat 2, 14, and 15. Given we have not account for sex, we can see in that our fitting and predictions are better for male cats (Cat 1 and 2) than female cats (Cat 14, 15). 
+  
+\newpage
+
+
 <<pkgs,message=FALSE,warning=FALSE,echo=FALSE>>=
 library("ggplot2"); theme_set(theme_bw())
 scale_colour_discrete <- function(...,palette="Set1")
@@ -28,8 +35,7 @@ if (!require("ggalt") || length(find("geom_encircle"))==0) {
 }
 @
 
-
-<<sim_results, warning=FALSE,echo=FALSE,message=FALSE,fig.cap="BIC-optimal state frequency for 2-6 state HMMs with and without covariate transition on 100 two-state hidden Markov models with covariate transitioning simulations.",fig.width=6,fig.height=4>>=
+<<sim_results, warning=FALSE,echo=FALSE,message=FALSE,fig.cap="BIC-optimal state frequency for 2-6 state HMMs with and without covariate transition on 100 two-state hidden Markov models with covariate transitioning simulations.",fig.width=6,fig.height=4,eval=FALSE>>=
 ICdat <- readRDS("../sim_results/ICdat.rds")
 aa <- readRDS("../sim_results/sim.101.RDS")
 
@@ -43,15 +49,11 @@ simplot <- ggplot(ICdat,aes(x=nstates,y=n,color=model,shape=model))+
     scale_shape_manual(values=c(21,16))+
     scale_colour_brewer(palette="Set1")+
     labs(y="Counts",x="BIC-optimal number of states")
-print(simplot)
+# print(simplot)
 
 @
 
-
-\clearpage
-
-
-<<BICred_plot,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Adjusted Bayesian information criterion values for 3-7 state HMMs with different step-length distributions, with and without temporal transitions and turning angles.",fig.width=6,fig.height=4>>=
+<<BICred_plot,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Adjusted Bayesian information criterion values for 3-7 state HMMs with different step-length distributions, with and without temporal transitions and turning angles.",fig.width=6,fig.height=4,eval=FALSE>>=
 allmodsumdf2 <- readRDS("../summary_stats/cat.1.df.RDS")$multimoddf
 df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
             distrib=ifelse(grepl("W",model),"Weibull","log-Normal"),
@@ -73,10 +75,7 @@ slname <- "Step-length\ndistribution"
     + zmargin)
 @
 
-
-\clearpage
-
-<<adj_BIC_comparisons, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Adjusted BIC by number of free parameters for HMM model types. The left panel shows FMM, temporally heterogeneous FMM with a sinusoidal prior and HMM. The right panel shows HMMs with different temporal transitions.",fig.width=8>>=
+<<adj_BIC_comparisons, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Adjusted BIC by number of free parameters for HMM model types. The left panel shows FMM, temporally heterogeneous FMM with a sinusoidal prior and HMM. The right panel shows HMMs with different temporal transitions.",fig.width=8,eval=FALSE>>=
 #L <- load("cat1sumdat.RData")
 
 linetypev <- c(rep(2,2),rep(1,5))
@@ -101,11 +100,11 @@ linetypev <- c(rep(2,2),rep(1,5))
           , x="Number of parameters") 
    + geom_line()
    + zmargin)
+
+# print(adj_BIC_plot)
 @
 
-\clearpage
-
-<<avg_step_length_by_time, message=FALSE, echo=FALSE, warning=FALSE,fig.cap="Average step length by time of day observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states.",fig.width=8>>=
+<<avg_step_length_by_time, message=FALSE, echo=FALSE, warning=FALSE,fig.cap="Average step length by time of day observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states.",fig.width=8,eval=FALSE>>=
 
 avgdf <- readRDS("../summary_stats/cat.1.df.RDS")$avgplotdf
 obsdf <- (readRDS("../summary_stats/cat.1.RDS") 
@@ -156,7 +155,7 @@ alphavec <- c(rep(c(1,0.2),c(7,1))
 
 shapevec <- c(rep(32,8),118)
 
-(ggplot(combdf,aes(x=time,y=steplen,colour=model,
+(avg_plot <- ggplot(combdf,aes(x=time,y=steplen,colour=model,
                    lwd=model,
                    alpha=model,linetype=model, shape=model))
   + geom_point()
@@ -169,11 +168,12 @@ shapevec <- c(rep(32,8),118)
   + scale_size_manual(values=lwdvec, name="Model")
   + scale_linetype_manual(values=linetypev, name="Model")
  ) 
+
+# print(avg_plot)
 @
 
-\clearpage
 
-<<acf_plot, message=FALSE, echo=FALSE, warning=FALSE,fig.cap="Autocorrelation of observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states ">>=
+<<acf_plot, message=FALSE, echo=FALSE, warning=FALSE,fig.cap="Autocorrelation of observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states ",eval=FALSE>>=
 acffun <- function(sim){
   a <- acf(sim,na.action=na.pass,plot=FALSE)
   df <- data.frame(ACF=c(a$acf),lag=a$lag)
@@ -192,7 +192,7 @@ combacfdf <- (rbind(acfdf,vitacf)
            %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
 )
 
-(ggplot(combacfdf,aes(x=lag,y=ACF,colour=model,
+(acf_plot <- ggplot(combacfdf,aes(x=lag,y=ACF,colour=model,
                   lwd=model,alpha=model,linetype=model,shape=model))
   + geom_point()
   + geom_line()
@@ -204,13 +204,11 @@ combacfdf <- (rbind(acfdf,vitacf)
   + scale_size_manual(values=lwdvec, name="Model")
   + scale_linetype_manual(values=linetypev, name="Model")
 ) 
-
+# print(acf_plot)
 ## vitacf messes up legend ...
 @
 
-\clearpage
-
-<<r msdlist,message=FALSE, echo=FALSE, fig.cap="State identification plot with log mean and standard deviation of BIC-optimal HMM and HMM with sinusoidal transition.", warning=FALSE>>=
+<<r msdlist,message=FALSE, echo=FALSE, fig.cap="State identification plot with log mean and standard deviation of BIC-optimal HMM and HMM with sinusoidal transition.", warning=FALSE,eval=FALSE>>=
 get_cat_pars2 <- function(catid){
   templist <- readRDS(paste("../summary_stats/cat.",catid,".df.RDS",sep=""))
   moddf <- templist$msdlist
@@ -233,30 +231,31 @@ g0 <- ggplot(all_cat_pars2,
     geom_line() +
     geom_point(bg="white")+
     facet_wrap(~catID,labeller=label_both)+zmargin
- (g0c <- g0 +
+(all_msd_plot <- g0 +
      geom_encircle(data=subset(all_cat_pars2,
                                (catID=="15" & log_mean<1.5) |
                                (catID!="15" & log_mean<1.8)),
                    colour="black",linetype=2,expand=0.05,
                    group=1))
+
+# print(all_msd_plot)
 @
 
-\clearpage
 
-\section{Additional files}
-
-
-<<BICred_plot2,warning=FALSE,echo=FALSE,message=FALSE,fig.width=6,fig.height=4>>=
+<<BICred_plot2,warning=FALSE,echo=FALSE,message=FALSE,fig.width=6,fig.height=4,fig.cap="Adjusted BIC Emission Distribution Comparison for Cat 2">>=
 
 allmodsumdf2 <- readRDS("../summary_stats/cat.2.df.RDS")$multimoddf
 df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
             distrib=ifelse(grepl("W",model),"Weibull","log-Normal"),
             turn_angle=ifelse(grepl("VM",as.character(model)),"yes","no"),
-            homog=ifelse(grepl("TH",type),"time-geneous HMM","homogeneous HMM"))
-(ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))
+            homog=ifelse(grepl("TH",type),"Time-heterogeneous","Homogeneous"))
+slname <- "Step-length\ndistribution"
+(ggplot(df2, aes(x=nstates,y=deltaBIC,size=distrib,
+                 colour=distrib,lty=turn_angle))
     + geom_line()
     + facet_wrap(~ homog)
-    + scale_colour_brewer(name="step length\ndistribution",palette="Set1")
+    + scale_colour_brewer(name=slname,palette="Set1")
+    + scale_size_manual(name=slname,values=c(1.75,0.75))
     ## scale_size_continuous( name="# parameters") +
     #    geom_point(aes(size=parameters))+
     + scale_linetype(name="von Mises\nturning angle?")
@@ -266,11 +265,8 @@ df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
     + zmargin)
 @
 
-
 \clearpage
-
-
-<<adj_BIC_comparisons2, warning=FALSE, echo=FALSE, message=FALSE,,fig.width=8>>=
+<<adj_BIC_comparisons2, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Adjusted BICs Across All Models for Cat 2",fig.width=8>>=
 #L <- load("cat1sumdat.RData")
 
 linetypev <- c(rep(2,2),rep(1,5))
@@ -299,7 +295,7 @@ linetypev <- c(rep(2,2),rep(1,5))
 
 \clearpage
 
-<<avg_step_length_by_time2, message=FALSE, echo=FALSE, warning=FALSE,fig.width=8>>=
+<<avg_step_length_by_time2, message=FALSE, echo=FALSE, warning=FALSE,fig.width=8,fig.cap="Diurnal Step Lengths Plot for Cat 2">>=
 
 avgdf <- readRDS("../summary_stats/cat.2.df.RDS")$avgplotdf
 obsdf <- (readRDS("../summary_stats/cat.2.RDS") 
@@ -367,7 +363,7 @@ shapevec <- c(rep(32,8),118)
 
 \clearpage
 
-<<acf_plot2, message=FALSE, echo=FALSE, warning=FALSE>>=
+<<acf_plot2, message=FALSE, echo=FALSE, warning=FALSE,fig.cap="Autocorrelation Plot for Cat 2">>=
 acffun <- function(sim){
   a <- acf(sim,na.action=na.pass,plot=FALSE)
   df <- data.frame(ACF=c(a$acf),lag=a$lag)
@@ -406,17 +402,20 @@ combacfdf <- (rbind(acfdf,vitacf)
 \clearpage
 %cat14
 
-<<BICred_plot14,warning=FALSE,echo=FALSE,message=FALSE,fig.width=6,fig.height=4>>=
+<<BICred_plot14,warning=FALSE,echo=FALSE,message=FALSE,fig.width=6,fig.height=4,fig.cap="Adjusted BIC Emission Distribution Comparison for Cat 14">>=
 
 allmodsumdf2 <- readRDS("../summary_stats/cat.14.df.RDS")$multimoddf
 df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
             distrib=ifelse(grepl("W",model),"Weibull","log-Normal"),
             turn_angle=ifelse(grepl("VM",as.character(model)),"yes","no"),
-            homog=ifelse(grepl("TH",type),"time-geneous HMM","homogeneous HMM"))
-(ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))
+            homog=ifelse(grepl("TH",type),"Time-heterogeneous","Homogeneous"))
+slname <- "Step-length\ndistribution"
+(ggplot(df2, aes(x=nstates,y=deltaBIC,size=distrib,
+                 colour=distrib,lty=turn_angle))
     + geom_line()
     + facet_wrap(~ homog)
-    + scale_colour_brewer(name="step length\ndistribution",palette="Set1")
+    + scale_colour_brewer(name=slname,palette="Set1")
+    + scale_size_manual(name=slname,values=c(1.75,0.75))
     ## scale_size_continuous( name="# parameters") +
     #    geom_point(aes(size=parameters))+
     + scale_linetype(name="von Mises\nturning angle?")
@@ -429,7 +428,7 @@ df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
 
 \clearpage
 
-<<adj_BIC_comparisons14, warning=FALSE, echo=FALSE, message=FALSE,,fig.width=8>>=
+<<adj_BIC_comparisons14, warning=FALSE, echo=FALSE, message=FALSE,,fig.width=8,fig.cap="Adjusted BICs Across All Models for Cat 14">>=
 #L <- load("cat1sumdat.RData")
 
 linetypev <- c(rep(2,2),rep(1,5))
@@ -458,7 +457,7 @@ linetypev <- c(rep(2,2),rep(1,5))
 
 \clearpage
 
-<<avg_step_length_by_time14, message=FALSE, echo=FALSE, warning=FALSE,fig.width=8>>=
+<<avg_step_length_by_time14, message=FALSE, echo=FALSE, warning=FALSE,fig.width=8,fig.cap="Diurnal Step Lengths Plot for Cat 14">>=
 
 avgdf <- readRDS("../summary_stats/cat.14.df.RDS")$avgplotdf
 obsdf <- (readRDS("../summary_stats/cat.14.RDS") 
@@ -526,7 +525,7 @@ shapevec <- c(rep(32,8),118)
 
 \clearpage
 
-<<acf_plot14, message=FALSE, echo=FALSE, warning=FALSE>>=
+<<acf_plot14, message=FALSE, echo=FALSE, warning=FALSE,fig.cap="Autocorrelation Plot for Cat 14">>=
 acffun <- function(sim){
   a <- acf(sim,na.action=na.pass,plot=FALSE)
   df <- data.frame(ACF=c(a$acf),lag=a$lag)
@@ -564,17 +563,20 @@ combacfdf <- (rbind(acfdf,vitacf)
 \clearpage
 %cat15
 
-<<BICred_plot15,warning=FALSE,echo=FALSE,message=FALSE,fig.width=6,fig.height=4>>=
+<<BICred_plot15,warning=FALSE,echo=FALSE,message=FALSE,fig.width=6,fig.height=4,fig.cap="Adjusted BIC Emission Distribution Comparison for Cat 15">>=
 
 allmodsumdf2 <- readRDS("../summary_stats/cat.15.df.RDS")$multimoddf
 df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
             distrib=ifelse(grepl("W",model),"Weibull","log-Normal"),
             turn_angle=ifelse(grepl("VM",as.character(model)),"yes","no"),
-            homog=ifelse(grepl("TH",type),"time-geneous HMM","homogeneous HMM"))
-(ggplot(df2, aes(x=nstates,y=deltaBIC,colour=distrib,lty=turn_angle))
+            homog=ifelse(grepl("TH",type),"Time-heterogeneous","Homogeneous"))
+slname <- "Step-length\ndistribution"
+(ggplot(df2, aes(x=nstates,y=deltaBIC,size=distrib,
+                 colour=distrib,lty=turn_angle))
     + geom_line()
     + facet_wrap(~ homog)
-    + scale_colour_brewer(name="step length\ndistribution",palette="Set1")
+    + scale_colour_brewer(name=slname,palette="Set1")
+    + scale_size_manual(name=slname,values=c(1.75,0.75))
     ## scale_size_continuous( name="# parameters") +
     #    geom_point(aes(size=parameters))+
     + scale_linetype(name="von Mises\nturning angle?")
@@ -587,7 +589,7 @@ df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
 
 \clearpage
 
-<<adj_BIC_comparisons15, warning=FALSE, echo=FALSE, message=FALSE,,fig.width=8>>=
+<<adj_BIC_comparisons15, warning=FALSE, echo=FALSE, message=FALSE,,fig.width=8, fig.cap="Adjusted BICs Across All Models for Cat 15">>=
 #L <- load("cat1sumdat.RData")
 
 linetypev <- c(rep(2,2),rep(1,5))
@@ -616,7 +618,7 @@ linetypev <- c(rep(2,2),rep(1,5))
 
 \clearpage
 
-<<avg_step_length_by_time15, message=FALSE, echo=FALSE, warning=FALSE,fig.width=8>>=
+<<avg_step_length_by_time15, message=FALSE, echo=FALSE, warning=FALSE,fig.width=8,fig.cap="Diurnal Step Lengths Plot for Cat 15">>=
 
 avgdf <- readRDS("../summary_stats/cat.15.df.RDS")$avgplotdf
 obsdf <- (readRDS("../summary_stats/cat.15.RDS") 
@@ -684,7 +686,7 @@ shapevec <- c(rep(32,8),118)
 
 \clearpage
 
-<<acf_plot15, message=FALSE, echo=FALSE, warning=FALSE>>=
+<<acf_plot15, message=FALSE, echo=FALSE, warning=FALSE,fig.cap="Autocorrelation Plot for Cat 15">>=
 acffun <- function(sim){
   a <- acf(sim,na.action=na.pass,plot=FALSE)
   df <- data.frame(ACF=c(a$acf),lag=a$lag)

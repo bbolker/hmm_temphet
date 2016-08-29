@@ -51,55 +51,41 @@
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
+\section*{Additional files}
+
+  In the main text of this manuscript, we showed the fitting and simulating results for Cat 1. Here, we have the adjusted BIC emission distribution comparisons, adjusted BIC across all FMM and HMM models, diurnal step lengths and autocorrelation plots for Cat 2, 14, and 15. Given we have not account for sex, we can see in that our fitting and predictions are better for male cats (Cat 1 and 2) than female cats (Cat 14, 15). 
+  
+\newpage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/sim_results-1} \caption[BIC-optimal state frequency for 2-6 state HMMs with and without covariate transition on 100 two-state hidden Markov models with covariate transitioning simulations]{BIC-optimal state frequency for 2-6 state HMMs with and without covariate transition on 100 two-state hidden Markov models with covariate transitioning simulations.}\label{fig:sim_results}
-\end{figure}
-
-
-\end{knitrout}
-
-
-\clearpage
-
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/BICred_plot-1} \caption[Adjusted Bayesian information criterion values for 3-7 state HMMs with different step-length distributions, with and without temporal transitions and turning angles]{Adjusted Bayesian information criterion values for 3-7 state HMMs with different step-length distributions, with and without temporal transitions and turning angles.}\label{fig:BICred_plot}
-\end{figure}
-
-
-\end{knitrout}
-
-
-\clearpage
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/adj_BIC_comparisons-1} \caption[Adjusted BIC by number of free parameters for HMM model types]{Adjusted BIC by number of free parameters for HMM model types. The left panel shows FMM, temporally heterogeneous FMM with a sinusoidal prior and HMM. The right panel shows HMMs with different temporal transitions.}\label{fig:adj_BIC_comparisons}
-\end{figure}
-
-
-\end{knitrout}
-
-\clearpage
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/avg_step_length_by_time-1} \caption[Average step length by time of day observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states]{Average step length by time of day observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states.}\label{fig:avg_step_length_by_time}
+\includegraphics[width=\maxwidth]{figure/BICred_plot2-1} \caption[Adjusted BIC Emission Distribution Comparison for Cat 2]{Adjusted BIC Emission Distribution Comparison for Cat 2}\label{fig:BICred_plot2}
 \end{figure}
 
 
 \end{knitrout}
 
 \clearpage
-
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/acf_plot-1} \caption[Autocorrelation of observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states ]{Autocorrelation of observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states }\label{fig:acf_plot}
+\includegraphics[width=\maxwidth]{figure/adj_BIC_comparisons2-1} \caption[Adjusted BICs Across All Models for Cat 2]{Adjusted BICs Across All Models for Cat 2}\label{fig:adj_BIC_comparisons2}
 \end{figure}
 
 
@@ -109,7 +95,7 @@
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/r_msdlist-1} \caption[State identification plot with log mean and standard deviation of BIC-optimal HMM and HMM with sinusoidal transition]{State identification plot with log mean and standard deviation of BIC-optimal HMM and HMM with sinusoidal transition.}\label{fig:r msdlist}
+\includegraphics[width=\maxwidth]{figure/avg_step_length_by_time2-1} \caption[Diurnal Step Lengths Plot for Cat 2]{Diurnal Step Lengths Plot for Cat 2}\label{fig:avg_step_length_by_time2}
 \end{figure}
 
 
@@ -117,38 +103,11 @@
 
 \clearpage
 
-\section{Additional files}
-
-
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/BICred_plot2-1} 
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/acf_plot2-1} \caption[Autocorrelation Plot for Cat 2]{Autocorrelation Plot for Cat 2}\label{fig:acf_plot2}
+\end{figure}
 
-\end{knitrout}
-
-
-\clearpage
-
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/adj_BIC_comparisons2-1} 
-
-\end{knitrout}
-
-\clearpage
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/avg_step_length_by_time2-1} 
-
-\end{knitrout}
-
-\clearpage
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/acf_plot2-1} 
 
 \end{knitrout}
 
@@ -157,8 +116,10 @@
 %cat14
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/BICred_plot14-1} 
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/BICred_plot14-1} \caption[Adjusted BIC Emission Distribution Comparison for Cat 14]{Adjusted BIC Emission Distribution Comparison for Cat 14}\label{fig:BICred_plot14}
+\end{figure}
+
 
 \end{knitrout}
 
@@ -166,24 +127,30 @@
 \clearpage
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/adj_BIC_comparisons14-1} 
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/adj_BIC_comparisons14-1} \caption[Adjusted BICs Across All Models for Cat 14]{Adjusted BICs Across All Models for Cat 14}\label{fig:adj_BIC_comparisons14}
+\end{figure}
+
 
 \end{knitrout}
 
 \clearpage
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/avg_step_length_by_time14-1} 
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/avg_step_length_by_time14-1} \caption[Diurnal Step Lengths Plot for Cat 14]{Diurnal Step Lengths Plot for Cat 14}\label{fig:avg_step_length_by_time14}
+\end{figure}
+
 
 \end{knitrout}
 
 \clearpage
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/acf_plot14-1} 
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/acf_plot14-1} \caption[Autocorrelation Plot for Cat 14]{Autocorrelation Plot for Cat 14}\label{fig:acf_plot14}
+\end{figure}
+
 
 \end{knitrout}
 
@@ -191,8 +158,10 @@
 %cat15
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/BICred_plot15-1} 
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/BICred_plot15-1} \caption[Adjusted BIC Emission Distribution Comparison for Cat 15]{Adjusted BIC Emission Distribution Comparison for Cat 15}\label{fig:BICred_plot15}
+\end{figure}
+
 
 \end{knitrout}
 
@@ -200,24 +169,30 @@
 \clearpage
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/adj_BIC_comparisons15-1} 
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/adj_BIC_comparisons15-1} \caption[Adjusted BICs Across All Models for Cat 15]{Adjusted BICs Across All Models for Cat 15}\label{fig:adj_BIC_comparisons15}
+\end{figure}
+
 
 \end{knitrout}
 
 \clearpage
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/avg_step_length_by_time15-1} 
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/avg_step_length_by_time15-1} \caption[Diurnal Step Lengths Plot for Cat 15]{Diurnal Step Lengths Plot for Cat 15}\label{fig:avg_step_length_by_time15}
+\end{figure}
+
 
 \end{knitrout}
 
 \clearpage
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/acf_plot15-1} 
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/acf_plot15-1} \caption[Autocorrelation Plot for Cat 15]{Autocorrelation Plot for Cat 15}\label{fig:acf_plot15}
+\end{figure}
+
 
 \end{knitrout}
 
