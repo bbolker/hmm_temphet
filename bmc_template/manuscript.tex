@@ -535,9 +535,16 @@ $$
 
 Other periodic functions, such as Fourier series (i.e., the sinusoidal transition model augmented by additional sinusoidal components at higher frequencies) or periodic splines, could also be considered.
 
+Model complexity and the number of parameters increase as the number of latent states increase.
+For a fixed number of states homogeneous FMMs are simplest, followed by homogeneous HMMs and finally by FMMs and HMMs incorporating temporal heterogeneity. In general, the number of free parameters in an HMM is the sum of the number of free parameters for each of the three model components (initial states, transition probabilities, and emissions). Let $n$ be the number of hidden states and $k_{i}, k_{t}, k_{e}$ be the number of parameters describing the covariate-dependence of the prior distribution, transition function and emission distributions; that is, for a homogeneous model, $k=1$, while a single numeric covariate or a categorical predictor with two levels would give $k=2$. Then the number of free parameters of an HMM is:
+[\emph{Initial states}] $k_{i}\cdot (n-1)$ 
++ [\emph{Transition probabilities}] $k_{t}\cdot n\cdot (n-1)$ 
++ [\emph{Emission parameters}] $k_{e}\cdot n$.
+As the number of states increases, the number of free parameters in (homogeneous or heterogeneous) FMMs and time-homogeneous HMMs increases linearly, whereas for HMMs with temporal heterogeneity (or covariate-dependent transitions more generally) the number increases quadratically.
+
 \subsection*{Model evaluation}
 
-We used the {\tt depmixS4} package
+We used the {\tt depmixS4} package \cite{visser2010depmixs4}
 to fit covariate-dependent transition HMMs, 
 simulate states and step lengths using the
 estimated parameters, and estimate the most likely
@@ -566,13 +573,6 @@ of models can capture serial correlation at both short and long time scales. As 
 change on a short time scale, but the average propensity for different
 behaviours changes over time.
 
-Model complexity and the number of parameters increase as the number of latent states increase.
-For a fixed number of states homogeneous FMMs are simplest, followed by homogeneous HMMs and finally by FMMs and HMMs incorporating temporal heterogeneity. In general, the number of free parameters in an HMM is the sum of the number of free parameters for each of the three model components. Let $n$ be the number of hidden states and $k_{i}, k_{t}, k_{e}$ be the number of parameters describing the covariate-dependence of the prior distribution, transition function and emission distributions; that is, for a homogeneous model, $k=1$, while a single numeric covariate or a categorical predictor with two levels would give $k=2$. Then the number of free parameters of an HMM is:
-$k_{i}\cdot (n-1)$ (\emph{Initial states})
-$+ k_{t}\cdot n\cdot (n-1)$ (\emph{Transition probabilities})
-$+ k_{e}\cdot n$ (\emph{Emission parameters}).
-As the number of states increases, the number of free parameters in (homogeneous or heterogeneous) FMMs and time-homogeneous HMMs increases linearly, whereas for HMMs with temporal heterogeneity (or covariate-dependent transitions more generally) the number increases quadratically. When comparing BICs, it is important to account for the tradeoff between log-likelihood and number of states, but also log-likelihood and number of free parameters.
-
 We used simulations to predict expected hourly step lengths and
 autocorrelation functions (ACF).  While the computation of expected
 step length and ACF is straightforward for FMMs, and feasible for
@@ -582,7 +582,7 @@ makes it infeasible for more complex models.  We used this approach to
 validate our models, comparing our simulated predictions with the
 observed movements.  The more usual approach, generating predictions
 from the expected step lengths conditional on the most likely state
-sequence predicted by the Viterbi algorithm or pseudo-residuals \cite{zucchini_hidden_2009,langrock_flexible_2012}, is somewhat problematic
+sequence predicted by the Viterbi algorithm or pseudo-residuals \cite{zucchini_hidden_2009,langrock_flexible_2012}, is problematic
 because the predictions by these methods rely on the observed data. 
 This approach is useful to predict
 missing data in the observation sequence, but because it is
@@ -593,23 +593,63 @@ different degrees of structural complexity.
 \section*{Results}
 
 %% fig 1 goes somewhere here
-The simulation supports our hypothesis that homogeneous transition HMMs can overestimate the number of hidden states. Heterogeneous transition models can always predict the correct number of states, whereas the temporally homogeneous models overestimate the number of states (based on BIC-optimality: Figure 1). 
+The simulation experiment supports our hypothesis that homogeneous transition HMMs can overestimate the number of hidden states (Figure~1). Heterogeneous transition models can always predict the correct number of states (in 100/100 simulations, BIC correctly identifies $n=2$ as the number of states) whereas the temporally homogeneous models overestimate the number of states (the correct value, $n=2$, is chosen most often, but in fewer than half of the simulations; values up to $n=5$ are frequently chosen).
 
-\bmb{need to describe in words what the figure says}
+\bmb{caption needs a little work}
 
 %% fig 2 goes somewhere here
 
-The BIC-optimal number of states for time homogeneous models is consistent with van de Kerk et al.'s \cite{kerk2015hidden} results. For time homogeneous models, the Weibull-wrapped-Cauchy \cite{kerk2015hidden}, Weibull von Mises, and log Normal without turning angles all identify the same BIC-optimal number of states. Furthermore, the homogeneous-HMM models do vary among models (different step-length distributions, with/without turning angles) in how many states they identify, whereas, the heterogeneous-HMM models are consistent among models (Figure 2).
+The BIC-optimal number of states for time-homogeneous models is
+consistent with van de Kerk et al.'s \cite{kerk2015hidden}
+results. For time-homogeneous models, the Weibull-wrapped-Cauchy
+\cite{kerk2015hidden}, Weibull-von Mises, and log Normal without
+turning angles all identify the same BIC-optimal number of
+states. While the number of states identified
+by homogeneous-HMM models varies according to the emissions
+distributions chosen, ranging from $n=5$ for Weibull
+steps alone to $n=7$ for the log Normal-von Mises emissions
+model, the number of states identified
+by heterogeneous-HMM models
+is consistent among emissions models ($n=5$: Figure 2).
 
 %% fig 3 goes somewhere here
 
-Models with temporal heterogeneity are better (lower BIC) than homogeneous models in both FMM and HMM frameworks, but time-homogeneous HMMs are better than FMMs with sinusoidal temporal heterogeneity (Figure 3). Turning to the temporally heterogeneous HMMs (Figure 3, right panel), we see that the model with different transition probabilities for each hour of the day (HMM + THhourly) is overparameterized; it underperforms homogeneous HMM with even 3 states, and gets much worse with 4 states. The multiple-block model gives approximately the same BIC as the homogeneous HMM, although it gives the BIC-optimal number of states as 4, in contrast to 6 for the homogeneous HMM.  Finally, the quadratic and sinusoidal models are the best models tested by far; they both give the BIC-optimal number of states as 5, and they have similar goodness of fit.
-However, this similarity is overstated due to the very large variation in BIC (over thousands of units) across the full range of models; there is a difference of approximately 80 BIC units, which would
-normally be interpreted as an enormous difference in goodness of fit,
-between the sinusoidal and quadratic models (both of which have 90 
-parameters).
+Models with temporal heterogeneity provide better fits to the data
+(lower BIC) than homogeneous models in both FMM and HMM frameworks,
+but time-homogeneous HMMs are better than FMMs with sinusoidal
+temporal heterogeneity (Figure 3). Turning to the temporally
+heterogeneous HMMs (Figure 3, right panel), we see that the model with
+different transition probabilities for each hour of the day (HMM +
+THhourly) is overparameterized; it underperforms homogeneous HMM with
+even 3 states, and gets much worse with 4 states. The multiple-block
+model gives approximately the same BIC as the homogeneous HMM,
+although it gives the BIC-optimal number of states as 4, in contrast
+to 6 for the homogeneous HMM.  Finally, the quadratic and sinusoidal
+models are the best models tested by far; they both give the
+BIC-optimal number of states as 5, and they have similar goodness of
+fit.  However, the similarity between the quadratic 
+and sinusoidal models may be overstated in Figure~3 due to the very large
+variation in BIC (over thousands of units) across the full range of
+models; the best-fit sinusoidal ($n=5$) model is approximately 80 BIC units
+better than the best quadratic model (also $n=5$), which
+would normally be interpreted as an enormous improvement in goodness of
+fit (both models have 90 parameters).
 
-The average hourly step lengths from the observed panther data exhibit a clear diurnal pattern (Figure 4). As expected, temporally homogeneous models (whether FMM or HMM) predict the same mean step length regardless of time of day, failing to capture the diurnal activity cycle. All of the models incorporating temporal heterogeneity, including the temporally heterogeneous FMM, can capture the observed patterns. However, the block model does markedly worse than the other temporal models (changing the block definitions might help by re-clustering/grouping different hours or increasing the number of blocks), and the (overparameterized) hourly model does better than any other model at capturing the early-evening peak (but worse at capturing the mid-day trough). We also included average hourly step lengths from three-state temporally homogeneous HMM Viterbi prediction to illustrate within sample predictions can capture the diurnal patterns, but fail to capture out of sample predictions.
+The average hourly step lengths from the observed panther data exhibit
+a clear diurnal pattern (Figure 4). As expected, temporally
+homogeneous models (whether FMM or HMM) predict the same mean step
+length regardless of time of day, failing to capture the diurnal
+activity cycle. All of the models incorporating temporal
+heterogeneity, including the temporally heterogeneous FMM, can capture
+the observed patterns. However, the block model does markedly worse
+than the other temporal models (changing the block definitions might
+help by re-clustering/grouping different hours or increasing the
+number of blocks), and the (overparameterized) hourly model does
+better than any other model at capturing the early-evening peak (but
+worse at capturing the mid-day trough). We also included average
+hourly step lengths from three-state temporally homogeneous HMM
+Viterbi prediction to illustrate within sample predictions can capture
+the diurnal patterns, but fail to capture out of sample predictions.
 
 Like the diurnal pattern (Figure 4),
 the strong autocorrelation of the observed step lengths at a 24-hour lag (Figure 5) shows the need to incorporate temporal heterogeneity in the model --- we could have reached this conclusion even without developing any of the temporal-heterogeneity machinery.
@@ -640,58 +680,102 @@ With the increasing volumes of movement data available,
 ecologists who naively use traditional homogeneous HMMs
 and standard information-theoretic criteria
 to estimate the number of behavioural states will generally
-overfit their data, in the sense of ``discovering'' large
+overfit their data, i.e. they will ``discover'' large
 number of states that are difficult to interpret biologically.
 
+As usual, the appropriate approach depends on the goal of the
+analysis.  If ecologists simply want to identify states
+and associate them with environmental characteristics, it might be
+sufficient to use a simple (homogeneous) HMM model, pre-specifying the
+number of states to a biologically sensible value, and then match
+\emph{post hoc} Viterbi estimates of state occupancy with
+environmental variation in space and time \cite{fryxell_multiple_2008}.  
 
-On a broad spectrum, it really depends on what kind of question 
-that is being answered. On one side of the spectrum, if the goal is 
-to identify states, it might be sufficient to use a 
-simple/traditional HMM model and pre-specify the number of states and, post hoc, 
-match Viterbi-based states estimates with environmental variation 
-\cite{fryxell_multiple_2008}. In our panther study, it is really hard to interpret multiple latent states biologically.
-We have no way of knowing what panthers are actually
-thinking (it is certainly more complex than being in one of a small
-number of discrete latent states); 
-we don't know the ``true'' number of latent states,
-nor are we able to observe them directly, although
-incorporating additional direct observations of 
-behaviour (if available) can at least partially
-address this problem \cite{fryxell_multiple_2008}.
-Three distinct
-movement states seem biologically interpretable for Florida panthers
-according to van de Kerk et al. \cite{kerk2015hidden}: Short step length suggests resting
-states, intermediate step length a foraging state, and long
-step length a traveling state. 
+%% In our panther
+%% study, it is really hard to interpret multiple latent states
+%% biologically.  We have no way of knowing what panthers are actually
+%% thinking (it is certainly more complex than being in one of a small
+%% number of discrete latent states); we don't know the ``true'' number
+%% of latent states, nor are we able to observe them directly, although
+%% incorporating additional direct observations of behaviour (if
+%% available) can at least partially address this problem
+%% \cite{fryxell_multiple_2008}.  Three distinct movement states seem
+%% biologically interpretable for Florida panthers according to van de
+%% Kerk et al. \cite{kerk2015hidden}: Short step length suggests resting
+%% states, intermediate step length a foraging state, and long step
+%% length a traveling state.
 
-On the other side of the 
-spectrum, if the goal of interest is to make predictions (out of sample), 
-it might be better to fit a covariate-dependent model so that we can explicitly
-model the switching process. In that case, fitting a covariate-dependent model is
-better for out of sample prediction because Viterbi can only estimate state 
-occupancy if observed movements are available (within sample predictions). 
+On the other hand, if the goal of analysis is to make out-of-sample
+predictions about animal behaviour, such as in a management context,
+it is necessary to fit a covariate-dependent model that
+explicitly incorporates the switching process.
+While the Viterbi algorithm can be applied to
+work backward from observed behaviour
+to variations in state occupancy with environmental conditions
+even when using a homogeneous model,
+a homogeneous model 
+can never \emph{predict} behaviour that varies 
+with environmental conditions.
 
-Finally, if we want to estimate the number of states, BIC is not necessarily 
-good for estimation of number of states \cite{biernacki2000assessing}, 
-but it can be useful as an approximate upper limit estimate. This is a common problem when using BICs, thus, the "knee point" (jump point) was proposed for BIC in partitioning based clustering via angle-based method \cite{zhao_knee_2008}. A similar method was used with likelihood \cite{dean2012behavioural} where both are applicable in our case, and suggest fewer number of states, but we do not know the reliability when fitting more complex models (IA. the shape of the BIC curve can be affected by the non-linear increase of parameters with every additional state).
+Finally, if our goal is actually to estimate the number of discrete
+behavioural modes underlying observed behaviour --- keeping in mind
+that these discrete behavioural states are certainly an oversimplified
+representation of animals' real internal states --- then, as we have
+shown above, covariate-dependent models will generally be required to
+avoid overestimating the number of states.  We note that researchers
+in cluster analysis (of which HMMs are a special case) have shown that
+the technical conditions required for BIC to apply may be violated
+\cite{biernacki2000assessing}; however, BIC can be useful as an
+approximate \emph{upper} limit on the number of states. Various
+solutions to this problem have been proposed, including the
+``integrated classification likelihood''
+\cite{biernacki2000assessing}, as well as a simpler ``knee point''
+method \cite{zhao_knee_2008} that looks for the cluster size that
+corresponds to the largest change in BIC rather than to the smallest
+overall BIC.  \cite{dean2012behavioural} took a similar approach, but
+based on the log-likelihood curve rather than the BIC.
+However, at least in our simulations the BIC does correctly identify
+the number of states when appropriate heterogeneity is included
+in the model; the best practical criterion for identifying 
+numbers of states underlying animal movement data is an open question.
 
-Incorporating temporal heterogeneity in animal movement is one step in
-the right direction, but much remains to be done. 
-Our model neglects other predictors, such as sex, habitat type or
-location with respect to environmental features such as roads,
-that can potentially improve goodness of fit and predictions and 
+\bmb{mike, can we take a quick try at computing ICL for our data/sims?}
+
+\begin{equation*}
+\begin{split}
+ICL(m,K) & = \underbrace{\max_{a} \log f(x|\bar z, m, K, a)}_{\textrm{max log-likelihood}} - \frac{\lambda_m,K}{2} \log n \\
+ & + \log \Gamma(K/2) + \sum_{k=1}^{K} \log \Gamma(\bar n_k + 1/2) \\
+ & - K \log \Gamma(1/2) - \log \Gamma(n + K/2)
+\end{split}
+\end{equation*}
+
+($K$=number of clusters; $n$=number of obs.; $\lambda_{m,K}$ is ``the
+number of free components in $a$'' (i.e., number of free parameters:
+p. 8); $\bar n_k$ is, I think, the number of data points which have
+their max. probability of being in cluster $k$ [i.e., we should be
+  able to get this at least approximately from Viterbi, although I'm
+  not sure whether it's more appropriate to use Viterbi or an
+  ``instantaneous'' max probability]). The {\tt rebmix} package has an
+ICL criterion for its particular objects ({\tt
+  sos::findFn("\{integrated classification likelihood\}"}), but I
+don't know if it'll be useful.  I think Raftery and Fraley also have a
+modified IC for clusters?
+
+We have shown the value of incorporating temporal heterogeneity in 
+animal movement models, but much remains to be done. 
+Our model neglects other predictors --- such as sex, habitat type or
+location with respect to environmental features such as roads --- %
+that can potentially improve predictive accuracy and 
 further reduce the estimated number of states. While adding
-more covariates is in principle straightforward using existing
-frameworks, including all possible biological complexities in 
-a HMM with state-dependent transitions may rapidly become intractable
-in terms of both computational time and complexity of choosing
-among possible reduced models and numbers of states.
+more covariates is in principle straightforward, 
+including even a reasonable range of biological complexity in 
+a HMM with state-dependent transitions rapidly becomes intractable
+in both computational time and the complexity of model selection.
 Better diagnostic procedures and tests are needed:
 these can both test overall goodness-of-fit \cite{potts_generalized_2014} 
 and, more importantly, localize fitting problems to particular aspects of the
 data so that models can be constructed without needing to
 include all possible features of interest. Because there are a huge number of potential complexities that can be added to movement models (e.g. spatial/temporal/among-individual heterogeneity; effects of conspecific attraction or avoidance; memory or cognitive effects), each with associated costs in researcher and computational effort, such diagnostic plots are invaluable.
-
 
 \section*{Conclusion}
 
@@ -707,8 +791,6 @@ states is known, and transitions among states vary over time, confirm
 that using BIC with homogeneous HMMs overestimates the number of
 behavioural states, while time-dependent HMMs correctly estimate
 the number.
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
