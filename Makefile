@@ -4,20 +4,23 @@ R := /usr/bin/env Rscript
 
 current:  paper3.pdf.now
 
-cat.%.df: dataframe.R ArchivePantherData.csv %.cat
-	$(R) $^
+#cat.%.df: dataframe.R ArchivePantherData.csv %.cat
+#	$(R) $^
 
-cat.1.%: ./models/%.R cat.1.RDS mikesim.R 
-	$(R) $^ 
+cat.%.df.Rout: dataframe.R ArchivePantherData.csv
+	$(run-R)
 
-cat.2.%: ./models/%.R cat.2.RDS mikesim.R 
-	$(R) $^ 
+cat.1.%.Rout: cat.1.df.Rout cat.1.RDS mikesim.R ./models/%.R 
+	$(run-R) 
 
-cat.14.%: ./models/%.R cat.14.RDS mikesim.R 
-	$(R) $^ 
+cat.2.%.Rout: cat.2.df.Rout cat.2.RDS mikesim.R ./models/%.R 
+	$(run-R) 
 
-cat.15.%: ./models/%.R cat.15.RDS mikesim.R 
-	$(R) $^ 
+cat.14.%.Rout: cat.14.df.Rout cat.14.RDS mikesim.R ./models/%.R 
+	$(run-R) 
+
+cat.15.%.Rout: cat.15.df.Rout cat.15.RDS mikesim.R ./models/%.R 
+	$(run-R) 
 
 
 %.fit.Rout: %.df.Rout fitfunctions.R mikesim.R simfunctions.R %seeds.R

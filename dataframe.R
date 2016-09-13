@@ -1,9 +1,11 @@
 library(depmixS4)
 library(dplyr)
 
-files <- commandArgs(trailingOnly = TRUE)
-catid <- unlist(strsplit(files[2],split="[.]"))[1]
-rawdat <- read.csv(files[1])
+# files <- commandArgs(trailingOnly = TRUE)
+# catid <- unlist(strsplit(files[2],split="[.]"))[1]
+rawdat <- read.csv(input_files)
+catid <- unlist(strsplit(rtargetname,split="[.]"))[2]
+
 
 block <- function(t){
   if(t %in% 7:16)return("block2")
