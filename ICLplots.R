@@ -1,9 +1,9 @@
 library(ggplot2)
 library(reshape2)
 library(dplyr)
-# 
-# simfiles <- list.files(pattern="RDS")
 
+# simfiles <- list.files(pattern="RDS")
+# 
 # group_dat <- data.frame()
 # for(i in simfiles){
 #   seednum <-unlist(strsplit(i,split="[.]"))[2]

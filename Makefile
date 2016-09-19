@@ -53,7 +53,7 @@ cat.15.%.Rout: cat.15.df.Rout cat.15.RDS mikesim.R ./models/%.R
 simtest.Rout: mikesim.R simfunctions.R simtest.R 101.txt
 	$(run-R)
 
-sim.%.Rout: mikesim.R simfunctions.R simtest.R
+sim.%.Rout: mikesim.R simfunctions.R ICLsims.R
 	$(run-R)
 
 plotsimtest.Rout: plotsimtest.R

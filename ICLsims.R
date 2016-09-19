@@ -104,35 +104,30 @@ system.time(hmm5s <- fit(hmm5,verbose=TRUE))
 v1 <- function(mod){
   vit <- viterbi(mod)
   vs <- sum(vit$state == 1)
-  if(vs == 0){vs=1/2}
   return(vs)
 }
 
 v2 <- function(mod){
   vit <- viterbi(mod)
   vs <- sum(vit$state == 2)
-  if(vs == 0){vs=1/2}
   return(vs)
 }
 
 v3 <- function(mod){
   vit <- viterbi(mod)
   vs <- sum(vit$state == 3)
-  if(vs == 0){vs=1/2}
   return(vs)
 }
 
 v4 <- function(mod){
   vit <- viterbi(mod)
   vs <- sum(vit$state == 4)
-  if(vs == 0){vs=1/2}
   return(vs)
 }
 
 v5 <- function(mod){
   vit <- viterbi(mod)
   vs <- sum(vit$state == 5)
-  if(vs == 0){vs=1/2}
   return(vs)
 }
 sumdf <- function(lst){
