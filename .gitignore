@@ -22,6 +22,7 @@ cache/
 *.toc
 *.snm
 *.wrapR.*
+*.RDS
 
 texput.log
 
