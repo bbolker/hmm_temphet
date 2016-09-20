@@ -4,7 +4,7 @@ library(dplyr)
 library(reshape2)
 library(ggplot2)
 
-load('.cat.15.hmm.RData')
+load('.cat.1.hmm.RData')
 
 source("stateseqLL.R")
 
@@ -17,7 +17,7 @@ sumdf <- function(lst){
   nstates <-ldply(lst,nstates)
   para <- ldply(lst,freepars)
   n <- ldply(lst,ntimes)
-  model <- c('HMM','HMM','HMM','HMM','HMM'
+  model <- c('HMM','HMM','HMM','HMM','HMM','HMM'
              # ,'HMMsin','HMMsin','HMMsin','HMMsin'
   )
   temp <- data.frame(LL=LL$V1
@@ -34,7 +34,7 @@ sumdf <- function(lst){
 
 }
 
-fitlist <- list(fithmm3s,fithmm4s,fithmm5s,fithmm6s,fithmm7s
+fitlist <- list(fithmm2s,fithmm3s,fithmm4s,fithmm5s,fithmm6s,fithmm7s
                 # ,hmmsin2s,hmmsin3s,hmmsin4s,hmmsin5s
 )
 

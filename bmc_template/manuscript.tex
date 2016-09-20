@@ -728,38 +728,25 @@ the technical conditions required for BIC to apply may be violated
 \cite{biernacki2000assessing}; however, BIC can be useful as an
 approximate \emph{upper} limit on the number of states. Various
 solutions to this problem have been proposed, including the
-``integrated classification likelihood''
+``integrated classification likelihood'' (ICL)
 \cite{biernacki2000assessing}, as well as a simpler ``knee point''
 method \cite{zhao_knee_2008} that looks for the cluster size that
 corresponds to the largest change in BIC rather than to the smallest
 overall BIC.  \cite{dean2012behavioural} took a similar approach, but
-based on the log-likelihood curve rather than the BIC.
-However, at least in our simulations the BIC does correctly identify
+based on the log-likelihood curve rather than the BIC. However, HMMs are 
+a special case even for the various solutions. ICL uses the likelihood of the 
+most probable state sequence via the Viterbi algorithm to account for relative 
+state occupancies between hidden states as a penalizing factor \cite{celeux2008selecting}, but it does
+not have the same properties as the overall unconditional likelihood, such as, 
+monotonic increase in likelihood as the number of hidden states increase. Furthermore, 
+both log-likelihood and BIC based ``knee point'' methods look at the changes correponding to
+a ``linear'' increase in number of states rather than the non-linear increase in parameters
+corresponding to the linear increase in states. 
+Nevertheless, at least in our simulations the BIC does correctly identify
 the number of states when appropriate heterogeneity is included
 in the model; the best practical criterion for identifying 
 numbers of states underlying animal movement data is an open question.
 
-\bmb{mike, can we take a quick try at computing ICL for our data/sims?}
-
-\begin{equation*}
-\begin{split}
-ICL(m,K) & = \underbrace{\max_{a} \log f(x|\bar z, m, K, a)}_{\textrm{max log-likelihood}} - \frac{\lambda_m,K}{2} \log n \\
- & + \log \Gamma(K/2) + \sum_{k=1}^{K} \log \Gamma(\bar n_k + 1/2) \\
- & - K \log \Gamma(1/2) - \log \Gamma(n + K/2)
-\end{split}
-\end{equation*}
-
-($K$=number of clusters; $n$=number of obs.; $\lambda_{m,K}$ is ``the
-number of free components in $a$'' (i.e., number of free parameters:
-p. 8); $\bar n_k$ is, I think, the number of data points which have
-their max. probability of being in cluster $k$ [i.e., we should be
-  able to get this at least approximately from Viterbi, although I'm
-  not sure whether it's more appropriate to use Viterbi or an
-  ``instantaneous'' max probability]). The {\tt rebmix} package has an
-ICL criterion for its particular objects ({\tt
-  sos::findFn("\{integrated classification likelihood\}"}), but I
-don't know if it'll be useful.  I think Raftery and Fraley also have a
-modified IC for clusters?
 
 We have shown the value of incorporating temporal heterogeneity in 
 animal movement models, but much remains to be done. 

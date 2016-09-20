@@ -1,6 +1,6 @@
 %% BioMed_Central_Bib_Style_v1.01
 
-\begin{thebibliography}{26}
+\begin{thebibliography}{27}
 % BibTex style file: bmc-mathphys.bst (version 2.1), 2014-07-24
 \ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi
 \ifx \binits  \undefined \def \binits#1{#1}\fi
@@ -444,6 +444,20 @@ Accessed 2016-06-21
 \endbibitem
 
 %%% 26
+\bibitem{celeux2008selecting}
+\begin{barticle}
+\bauthor{\bsnm{Celeux}, \binits{G.}},
+\bauthor{\bsnm{Durand}, \binits{J.-B.}}:
+\batitle{Selecting hidden markov model state number with cross-validated
+  likelihood}.
+\bjtitle{Computational Statistics}
+\bvolume{23}(\bissue{4}),
+\bfpage{541}--\blpage{564}
+(\byear{2008})
+\end{barticle}
+\endbibitem
+
+%%% 27
 \bibitem{potts_generalized_2014}
 \begin{barticle}
 \bauthor{\bsnm{Potts}, \binits{J.R.}},
@@ -879,6 +893,22 @@ Accessed 2016-06-07
 </bibl>
 
 <bibl id="B26">
+  <title><p>Selecting hidden Markov model state number with cross-validated
+  likelihood</p></title>
+  <aug>
+    <au><snm>Celeux</snm><fnm>G</fnm></au>
+    <au><snm>Durand</snm><fnm>JB</fnm></au>
+  </aug>
+  <source>Computational Statistics</source>
+  <publisher>Springer</publisher>
+  <pubdate>2008</pubdate>
+  <volume>23</volume>
+  <issue>4</issue>
+  <fpage>541</fpage>
+  <lpage>-564</lpage>
+</bibl>
+
+<bibl id="B27">
   <title><p>A generalized residual technique for analysing complex movement
   models using earth mover's distance</p></title>
   <aug>
