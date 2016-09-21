@@ -428,6 +428,20 @@ Accessed 2015-04-29
 \endbibitem
 
 %%% 25
+\bibitem{celeux2008selecting}
+\begin{barticle}
+\bauthor{\bsnm{Celeux}, \binits{G.}},
+\bauthor{\bsnm{Durand}, \binits{J.-B.}}:
+\batitle{Selecting hidden markov model state number with cross-validated
+  likelihood}.
+\bjtitle{Computational Statistics}
+\bvolume{23}(\bissue{4}),
+\bfpage{541}--\blpage{564}
+(\byear{2008})
+\end{barticle}
+\endbibitem
+
+%%% 26
 \bibitem{zhao_knee_2008}
 \begin{bchapter}
 \bauthor{\bsnm{Zhao}, \binits{Q.}},
@@ -441,20 +455,6 @@ doi:\doiurl{10.1109/ICTAI.2008.154}.
 \burl{http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=4669805}
 Accessed 2016-06-21
 \end{bchapter}
-\endbibitem
-
-%%% 26
-\bibitem{celeux2008selecting}
-\begin{barticle}
-\bauthor{\bsnm{Celeux}, \binits{G.}},
-\bauthor{\bsnm{Durand}, \binits{J.-B.}}:
-\batitle{Selecting hidden markov model state number with cross-validated
-  likelihood}.
-\bjtitle{Computational Statistics}
-\bvolume{23}(\bissue{4}),
-\bfpage{541}--\blpage{564}
-(\byear{2008})
-\end{barticle}
 \endbibitem
 
 %%% 27
@@ -878,21 +878,6 @@ Accessed 2016-06-07
 </bibl>
 
 <bibl id="B25">
-  <title><p>Knee {Point} {Detection} on {Bayesian} {Information}
-  {Criterion}</p></title>
-  <aug>
-    <au><snm>Zhao</snm><fnm>Q</fnm></au>
-    <au><snm>Xu</snm><fnm>M</fnm></au>
-    <au><snm>Fränti</snm><fnm>P</fnm></au>
-  </aug>
-  <publisher>IEEE</publisher>
-  <pubdate>2008</pubdate>
-  <fpage>431</fpage>
-  <lpage>-438</lpage>
-  <url>http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=4669805</url>
-</bibl>
-
-<bibl id="B26">
   <title><p>Selecting hidden Markov model state number with cross-validated
   likelihood</p></title>
   <aug>
@@ -906,6 +891,21 @@ Accessed 2016-06-07
   <issue>4</issue>
   <fpage>541</fpage>
   <lpage>-564</lpage>
+</bibl>
+
+<bibl id="B26">
+  <title><p>Knee {Point} {Detection} on {Bayesian} {Information}
+  {Criterion}</p></title>
+  <aug>
+    <au><snm>Zhao</snm><fnm>Q</fnm></au>
+    <au><snm>Xu</snm><fnm>M</fnm></au>
+    <au><snm>Fränti</snm><fnm>P</fnm></au>
+  </aug>
+  <publisher>IEEE</publisher>
+  <pubdate>2008</pubdate>
+  <fpage>431</fpage>
+  <lpage>-438</lpage>
+  <url>http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=4669805</url>
 </bibl>
 
 <bibl id="B27">
