@@ -593,7 +593,7 @@ different degrees of structural complexity.
 \section*{Results}
 
 %% fig 1 goes somewhere here
-The simulation experiment supports our hypothesis that homogeneous transition HMMs can overestimate the number of hidden states (Figure~1). Heterogeneous transition models can always predict the correct number of states (in 100/100 simulations, BIC correctly identifies $n=2$ as the number of states) whereas the temporally homogeneous models overestimate the number of states (the correct value, $n=2$, is chosen most often, but in fewer than half of the simulations; values up to $n=5$ are frequently chosen).
+The simulation experiment supports our hypothesis that homogeneous transition HMMs overestimate the number of hidden states when the model is misspecified (Figure~1). Heterogeneous transition models can always predict the correct number of states (in 100/100 simulations, BIC correctly identifies $n=2$ as the number of states), whereas the temporally homogeneous models overestimate the number of states (the correct value, $n=2$, is chosen most often, but in fewer than half of the simulations; values up to $n=5$ are frequently chosen).
 
 \bmb{caption needs a little work}
 
@@ -729,24 +729,18 @@ the technical conditions required for BIC to apply may be violated
 approximate \emph{upper} limit on the number of states. Various
 solutions to this problem have been proposed, including the
 ``integrated classification likelihood'' (ICL)
-\cite{biernacki2000assessing}, as well as a simpler ``knee point''
+\cite{biernacki2000assessing,celeux2008selecting}, as well as a simpler ``knee point''
 method \cite{zhao_knee_2008} that looks for the cluster size that
 corresponds to the largest change in BIC rather than to the smallest
-overall BIC.  \cite{dean2012behavioural} took a similar approach, but
+overall BIC.  Dean \emph{et al.} \cite{dean2012behavioural} took a similar approach, but
 based on the log-likelihood curve rather than the BIC. However, HMMs are 
-a special case even for the various solutions. ICL uses the likelihood of the 
-most probable state sequence via the Viterbi algorithm to account for relative 
-state occupancies between hidden states as a penalizing factor \cite{celeux2008selecting}, but it does
-not have the same properties as the overall unconditional likelihood, such as, 
-monotonic increase in likelihood as the number of hidden states increase. Furthermore, 
-both log-likelihood and BIC based ``knee point'' methods look at the changes correponding to
-a ``linear'' increase in number of states rather than the non-linear increase in parameters
-corresponding to the linear increase in states. 
-Nevertheless, at least in our simulations the BIC does correctly identify
+a special case even for the various solutions. 
+% ICL uses the likelihood of the  most probable state sequence via the Viterbi algorithm to account for relative  state occupancies between hidden states as a penalizing factor \cite{celeux2008selecting}, but it does not have the same properties as the overall unconditional likelihood, such as,  monotonic increase in likelihood as the number of hidden states increase. Furthermore,  both log-likelihood and BIC based ``knee point'' methods look at the changes corresponding to a ``linear'' increase in number of states rather than the non-linear increase in parameters corresponding to the linear increase in states. 
+
+Nevertheless, in our simulations the BIC does correctly identify
 the number of states when appropriate heterogeneity is included
 in the model; the best practical criterion for identifying 
-numbers of states underlying animal movement data is an open question.
-
+numbers of states underlying animal movement data remains an open question.
 
 We have shown the value of incorporating temporal heterogeneity in 
 animal movement models, but much remains to be done. 
@@ -876,7 +870,7 @@ in the data located at the UF Institutional repository (IR@UF).}
       
 \begin{figure}[h!]
    \includegraphics[width=5in]{figure/r_msdlist-1}
-  \caption{\csentence{State Identification Plot} Mean and standard deviation of  step length by state for BIC-optimal HMMs (homogeneous and heterogeneous with sinusoidal transition). \bmb{do I need to explain transformation of LN SD ?}}
+  \caption{\csentence{State Identification Plot} Mean and standard deviation of  step length by state for BIC-optimal HMMs (homogeneous and heterogeneous with sinusoidal transition).
       \end{figure}
       
 \end{backmatter}
