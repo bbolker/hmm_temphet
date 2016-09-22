@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  21 SEP 2016 19:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  22 SEP 2016 11:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -639,145 +639,153 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [9]
-[10] <figure/sim_results-1.pdf, id=50, 433.62pt x 289.08pt>
-File: figure/sim_results-1.pdf Graphic file (type pdf)
+[10]
+Underfull \vbox (badness 2050) has occurred while \output is active []
 
-<use figure/sim_results-1.pdf>
-Package pdftex.def Info: figure/sim_results-1.pdf used on input line 596.
-(pdftex.def)             Requested size: 361.34999pt x 240.91116pt.
-
-Overfull \hbox (12.84999pt too wide) in paragraph at lines 596--597
- [] 
- []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<figure/BICred_plot-1.pdf, id=51, 433.62pt x 289.08pt>
+ [11]
+<figure/BICred_plot-1.pdf, id=53, 433.62pt x 289.08pt>
 File: figure/BICred_plot-1.pdf Graphic file (type pdf)
 
 <use figure/BICred_plot-1.pdf>
-Package pdftex.def Info: figure/BICred_plot-1.pdf used on input line 603.
+Package pdftex.def Info: figure/BICred_plot-1.pdf used on input line 608.
 (pdftex.def)             Requested size: 361.34999pt x 240.91116pt.
 
-Overfull \hbox (12.84999pt too wide) in paragraph at lines 603--604
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 608--609
  [][] 
  []
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[11] <figure/adj_BIC_comparisons-1.pdf, id=55, 578.16pt x 289.08pt>
+<figure/adj_BIC_comparisons-1.pdf, id=54, 578.16pt x 289.08pt>
 File: figure/adj_BIC_comparisons-1.pdf Graphic file (type pdf)
 
 <use figure/adj_BIC_comparisons-1.pdf>
 Package pdftex.def Info: figure/adj_BIC_comparisons-1.pdf used on input line 62
-1.
+6.
 (pdftex.def)             Requested size: 361.34999pt x 180.67455pt.
 
-Overfull \hbox (12.84999pt too wide) in paragraph at lines 621--622
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 626--627
  [][] 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[12 <./figure/sim_results-1.pdf>]
-Underfull \vbox (badness 3291) has occurred while \output is active []
 
- [13 <./figure/BICred_plot-1.pdf> <./figure/adj_BIC_comparisons-1.pdf>]
-<figure/avg_step_length_by_time-1.pdf, id=86, 578.16pt x 289.08pt>
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [12 <./figure/BICred_plot-1.pdf>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [13 <./figure/adj_BIC_comparisons-1.pdf>]
+<figure/avg_step_length_by_time-1.pdf, id=80, 578.16pt x 289.08pt>
 File: figure/avg_step_length_by_time-1.pdf Graphic file (type pdf)
 
 <use figure/avg_step_length_by_time-1.pdf>
 Package pdftex.def Info: figure/avg_step_length_by_time-1.pdf used on input lin
-e 648.
+e 653.
 (pdftex.def)             Requested size: 361.34999pt x 180.67455pt.
 
-Overfull \hbox (12.84999pt too wide) in paragraph at lines 648--649
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 653--654
  [][] 
  []
 
-[14 <./figure/avg_step_length_by_time-1.pdf>]
-<figure/acf_plot-1.pdf, id=100, 433.62pt x 289.08pt>
+<figure/acf_plot-1.pdf, id=81, 433.62pt x 289.08pt>
 File: figure/acf_plot-1.pdf Graphic file (type pdf)
 
 <use figure/acf_plot-1.pdf>
-Package pdftex.def Info: figure/acf_plot-1.pdf used on input line 669.
+Package pdftex.def Info: figure/acf_plot-1.pdf used on input line 674.
 (pdftex.def)             Requested size: 361.34999pt x 240.91116pt.
 
-Overfull \hbox (12.84999pt too wide) in paragraph at lines 669--670
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 674--675
  [][] 
  []
 
 
-Underfull \vbox (badness 6141) has occurred while \output is active []
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
- [15 <./figure/acf_plot-1.pdf>] <figure/r_msdlist-1.pdf, id=113, 433.62pt x 289
-.08pt>
+
+Underfull \vbox (badness 3623) has occurred while \output is active []
+
+ [14 <./figure/avg_step_length_by_time-1.pdf>]
+<figure/r_msdlist-1.pdf, id=95, 433.62pt x 289.08pt>
 File: figure/r_msdlist-1.pdf Graphic file (type pdf)
 
 <use figure/r_msdlist-1.pdf>
-Package pdftex.def Info: figure/r_msdlist-1.pdf used on input line 679.
+Package pdftex.def Info: figure/r_msdlist-1.pdf used on input line 684.
 (pdftex.def)             Requested size: 361.34999pt x 240.91116pt.
 
-Overfull \hbox (12.84999pt too wide) in paragraph at lines 679--681
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 684--686
  [][] 
  []
 
-[16 <./figure/r_msdlist-1.pdf>]
+LaTeX Font Info:    Try loading font information for OML+cmss on input line 686
+.
+LaTeX Font Info:    No file OMLcmss.fd. on input line 686.
+
+LaTeX Font Warning: Font shape `OML/cmss/m/n' undefined
+(Font)              using `OML/cmm/m/it' instead
+(Font)              for symbol `textless' on input line 686.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[15 <./figure/acf_plot-1.pdf>] [16 <./figure/r_msdlist-1.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [17]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [18]
-(./manuscript.bbl
-Underfull \vbox (badness 1019) has occurred while \output is active []
-
- [19]
+[18] (./manuscript.bbl [19]
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <7> not available
 (Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 83.
 
-[20]) 
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [20])
+
 AED: lastpage setting LastPage
 [21] (./manuscript.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
  ) 
 Here is how much of TeX's memory you used:
- 4289 strings out of 493014
- 56436 string characters out of 6133351
- 131092 words of memory out of 5000000
- 7751 multiletter control sequences out of 15000+600000
- 16676 words of font info for 59 fonts, out of 8000000 for 9000
+ 4292 strings out of 493014
+ 56391 string characters out of 6133351
+ 130484 words of memory out of 5000000
+ 7753 multiletter control sequences out of 15000+600000
+ 16976 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,13n,37p,754b,499s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,13n,37p,754b,511s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
 </usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
-/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></u
-sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></u
-sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
-/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/lo
-cal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/loc
-al/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/loca
-l/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/
-texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local
-/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local
-/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/local/
-texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/t
-exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/tex
-live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texl
-ive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texli
-ve/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on manuscript.pdf (21 pages, 288689 bytes).
+/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></u
+sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
+/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/l
+ocal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/l
+ocal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loc
+al/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/
+texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/tex
+live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texliv
+e/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive
+/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/local/texlive/
+2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/20
+16/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2
+016/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local/texlive/2
+016/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/local/texlive/20
+16/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/201
+6/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2016/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2016/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2016/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
+Output written on manuscript.pdf (21 pages, 315289 bytes).
 PDF statistics:
- 198 PDF objects out of 1000 (max. 8388607)
- 143 compressed objects within 2 object streams
+ 208 PDF objects out of 1000 (max. 8388607)
+ 151 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

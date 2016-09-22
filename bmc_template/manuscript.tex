@@ -592,16 +592,21 @@ different degrees of structural complexity.
 
 \section*{Results}
 
-  \begin{figure}[h!]
-   \includegraphics[width=5in]{figure/sim_results-1}
-  \caption{\csentence{Frequency of choosing BIC-optimal state on simulated data.} 45 out of 100 sets of simulated data from a 2-state HMM with BIC-optimal state frequency for 2-6 state HMMs with and without covariate transition on 100 two-state hidden Markov models with covariate transitioning simulations.}
-      \end{figure}
+
+\begin{table}[h!]
+\caption{Frequency of choosing BIC-optimal state on simulated data.}
+\begin{tabular}{ccccccc}
+  & BIC-Optimal States       & \bf{2}  & \bf{3}  & \bf{4} & \bf{5} & \bf{6} \\ \hline
+  & Homogeneous Transition   & 45 & 21 & 20 & 14 & 0 \\ \hline
+  & Heterogeneous Transition & 100 & 0 & 0 & 0 & 0 \\ \hline
+\end{tabular}
+\end{table}
       
-The simulation experiment supports our hypothesis that homogeneous transition HMMs can overestimate the number of hidden states when the model is misspecified (Figure~1). Heterogeneous transition models can always predict the correct number of states (in 100/100 simulations, BIC correctly identifies $n=2$ as the number of states), whereas the temporally homogeneous models overestimate the number of states (the correct value, $n=2$, is chosen most often, but in fewer than half of the simulations; values up to $n=5$ are frequently chosen).
+The simulation experiment supports our hypothesis that homogeneous transition HMMs can overestimate the number of hidden states when the model is misspecified (Table~1). Heterogeneous transition models can always predict the correct number of states (in 100/100 simulations, BIC correctly identifies $n=2$ as the number of states), whereas the temporally homogeneous models overestimate the number of states (the correct value, $n=2$, is chosen most often, but in fewer than half of the simulations; values up to $n=5$ are frequently chosen).
 
   \begin{figure}[h!]
    \includegraphics[width=5in]{figure/BICred_plot-1}
-  \caption{\csentence{Adjusted BIC Emission Distribution Comparison} Adjusted Bayesian information criterion values for 3-7 state HMMs with different step-length distributions, with and without temporal transitions and turning angles.}
+  \caption{Comparison of BIC-optimal state predictions for homogeneous transition HMMs (left panel) and and heterogeneous transition HMMs (right panel) with different emission complexities on panther data. Solid line represents univariate response/emission HMMs (without turning angles) and dotted line represents multivariate response HMMs (including turning angles with von-Mises distribution). Red lines represents log-normal step-length distribution and blue lines represents Weibull step-length distribution. }
       \end{figure}
 
 The BIC-optimal number of states for time-homogeneous models is
@@ -619,7 +624,7 @@ is consistent among emissions models ($n=5$: Figure 2).
 
   \begin{figure}[h!]
    \includegraphics[width=5in]{figure/adj_BIC_comparisons-1}
-  \caption{\csentence{Adjusted BICs Across All Models} Adjusted BIC by number of free parameters for HMM model types. The left panel shows homogeneous FMM, heterogeneous FMM (with a sinusoidal prior) and homogeneous HMM. The right panel shows HMMs with different temporal transitions.}
+  \caption{Comparison of adjusted BIC for all HMM transition complexities. The left panel shows homogeneous FMM, heterogeneous FMM (with a sinusoidal prior) and homogeneous HMM. The right panel shows HMMs with different temporal transitions. Dashed lines represents FMMs and solid lines represents HMMs.}
       \end{figure}
       
 
@@ -646,7 +651,7 @@ fit (both models have 90 parameters).
 
 \begin{figure}[h!]
    \includegraphics[width=5in]{figure/avg_step_length_by_time-1}
-  \caption{\csentence{Diurnal Step Lengths Plot} Average step length by time of day observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states.}
+  \caption{Comparison of average step-length by time of day out of sample predictions for BIC-optimal state FMMs (dashed line) and HMMs (solid lines) of different transition complexities. Gray highlight indicate the observed average step length from panther and "V" points represents Viterbi predictions (within sample) of a three-state homogeneous transition HMM.}
       \end{figure}
 
 The average hourly step lengths from the observed panther data exhibit
@@ -667,7 +672,7 @@ the diurnal patterns, but fail to capture out of sample predictions.
 
 \begin{figure}[h!]
    \includegraphics[width=5in]{figure/acf_plot-1}
-  \caption{\csentence{Autocorrelation Plot} Autocorrelation of observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states.}
+  \caption{Comparison of out of sample predictions autocorrelations for BIC-optimal state FMMs (dashed line) and HMMs (solid lines) of different transition complexities. Gray highlight indicate the observed average step length from panther and "V" points represents Viterbi predictions (within sample) of a three-state homogeneous transition HMM.}
       \end{figure}
 
 Like the diurnal pattern (Figure 4),
@@ -677,7 +682,7 @@ Temporally homogeneous FMMs, by definition, produce no autocorrelation (neither 
 
 \begin{figure}[h!]
    \includegraphics[width=5in]{figure/r_msdlist-1}
-  \caption{\csentence{State Identification Plot} Mean and standard deviation of  step length by state for BIC-optimal HMMs (homogeneous and heterogeneous with sinusoidal transition).
+  \caption{State identification of BIC-optimal HMMs for all panthers. Mean (x-axis) and standard deviation (y-axis) of step length by state $\textrm{log}_{10} m$ for BIC-optimal homogeneous HMMs (red line) and heterogeneous HMMs with sinusoidal transition (blue line). Short movement states (step-length \textless $10^{1.5}$m) are circled together.   
   }
       \end{figure}
 
