@@ -1,0 +1,51 @@
+\documentclass[10pt]{letter}
+
+\usepackage{graphicx}
+\usepackage{times}
+%\usepackage[sort&compress]{natbib}
+
+\bibliographystyle{abbrv}
+
+\makeatletter
+% http://tex.stackexchange.com/questions/18033/using-bibtex-with-letter-class
+\newenvironment{thebibliography}[1]
+     {\list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\newcommand\newblock{\hskip .11em\@plus.33em\@minus.07em}
+\makeatother
+
+\begin{document}
+
+\date{\today}
+
+\begin{letter}{
+} 
+
+\opening{To the editor,}
+
+We (Michael Li and Ben Bolker) are submitting our manuscript, ``Incorporating Periodic Variability in Hidden Markov Models for Animal Movement'', for consideration for publication in \emph{Movement Ecology}. Using high resolution movement data from Florida panthers, our study explore the uncertainty of identifying unobservable behavioural states and forcasting using different complexities of finite mixture and hidden Markov models (HMMs). Allowing for temporal heterogeneity in transition probabilities, a straightforward 
+but little-used extension of the standard HMM framework, 
+resolves some shortcomings of current
+models and clarifies the behavioural patterns of
+panthers. 
+
+
+
+\closing{Sincerely,}
+
+
+\end{letter}
+\end{document}
