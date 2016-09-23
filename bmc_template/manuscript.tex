@@ -39,9 +39,6 @@
 \begin{fmbox}
 \dochead{Research}
 
-%% TO DO
-% author references (maybe fix programmatically?)
-% acknowledgments
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -409,7 +406,7 @@ observations.  To check that this simplification
 does not distort our conclusions
 we do briefly compare log-Normal and Weibull
 step-length distributions, with and without 
-a von Mises-distributed turning angle included in the model (Figure 2).
+a von Mises-distributed turning angle included in the model (Figure 1).
 (Note that most movement analyses, including van de Kerk et al.
 \cite{kerk2015hidden}, are only partially multivariate, 
 treating step length and turning angle at a particular time
@@ -488,10 +485,18 @@ numerically estimating parameters \cite{zucchini_hidden_2009};
 we used those implemented in the \texttt{depmixS4} package for R
 \cite{visser2010depmixs4,R}.
 
-For an $n$-state HMM, we need to define an $n \times n$ matrix that specifies the probabilities $\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$.  The FMM is a special case of HMM where the probabilities of \emph{entering} a given state are identical across all states --- i.e., the probability of occupying a state at the next time step is independent of the current state occupancy. It can be modelled in the HMM framework by setting the transition probabilities  $\pi_{ij} = \pi_{i*}$.
+For an $n$-state HMM, we need to define an $n \times n$ matrix that specifies the probabilities
+$\pi_{ij}$ of being in movement states $j$ at time $t+1$ given that the individual is in state $i$. The FMM is a special case of HMM where the probabilities of \emph{entering} a given state are 
+identical across all states --- i.e., the probability of occupying a state at the next time step 
+is independent of the current state occupancy. It can be modelled in the HMM framework by setting 
+the transition probabilities  $\pi_{ij} = \pi_{i*}$.
 
-In any case, the transition matrix $\pi_{ij}$ must respect the constraints that (1) all probabilities are between 0 and 1 and (2) transition probabilities out of a given state sum to 1.
-As is standard for HMMs with covariates \cite{visser2010depmixs4}, we define this multinomial logistic model in terms of a linear predictor $\eta_{ij}$, where $\eta_{i1}$ is set to 1 without loss of generality (i.e. we have only $n \times (n-1)$ distinct parameters; we index $j$ from 2 to $n$ for notational clarity):
+In any case, the transition matrix $\pi_{ij}$ must respect the constraints that (1) all 
+probabilities are between 0 and 1 and (2) transition probabilities out of a given state sum to 1.
+As is standard for HMMs with covariates \cite{visser2010depmixs4}, we define this multinomial 
+logistic model in terms of a linear predictor $\eta_{ij}$, where $\eta_{i1}$ is set to 1 without 
+loss of generality (i.e. we have only $n \times (n-1)$ distinct parameters; we index $j$ from 2 to 
+$n$ for notational clarity):
 
 \begin{equation}
 \begin{split}
@@ -500,7 +505,9 @@ As is standard for HMMs with covariates \cite{visser2010depmixs4}, we define thi
 \end{split}
 \end{equation}
 
-We considered four different transition models for diurnal variation in behaviour, incorporating hour-of-day as a covariate following the general approach of Morales et al. \cite{morales_extracting_2004} of incorporating covariate dependence in the transition matrix.
+We considered four different transition models for diurnal variation in behaviour, incorporating 
+hour-of-day as a covariate following the general approach of Morales et al. 
+\cite{morales_extracting_2004} of incorporating covariate dependence in the transition matrix.
 
 \begin{description}
 
@@ -530,17 +537,31 @@ $$
 \eta_{ij}(t)= b_{ij1}+b_{ij2}\cos\left(\frac{2\pi t}{24}\right)+b_{ij3}\sin\left(\frac{2\pi t}{24}\right) .
 $$
 
-\item[Hourly model] Lastly, we extended the multi-block approach and assign  a different transition matrix for every hour of the day. This model is included for comparative purposes; due to the large number of parameters in the model (more than $24n(n-1)$ for a HMM with $n$ states), it is not really practical. We only fitted up to four states using the hourly model.  
+\item[Hourly model] Lastly, we extended the multi-block approach and assign  a different 
+transition matrix for every hour of the day. This model is included for comparative purposes; due 
+to the large number of parameters in the model (more than $24n(n-1)$ for a HMM with $n$ states), 
+it is not really practical. We only fitted up to four states using the hourly model.  
 \end{description}
 
-Other periodic functions, such as Fourier series (i.e., the sinusoidal transition model augmented by additional sinusoidal components at higher frequencies) or periodic splines, could also be considered.
+Other periodic functions, such as Fourier series (i.e., the sinusoidal transition model augmented 
+by additional sinusoidal components at higher frequencies) or periodic splines, could also be 
+considered.
 
 Model complexity and the number of parameters increase as the number of latent states increase.
-For a fixed number of states homogeneous FMMs are simplest, followed by homogeneous HMMs and finally by FMMs and HMMs incorporating temporal heterogeneity. In general, the number of free parameters in an HMM is the sum of the number of free parameters for each of the three model components (initial states, transition probabilities, and emissions). Let $n$ be the number of hidden states and $k_{i}, k_{t}, k_{e}$ be the number of parameters describing the covariate-dependence of the prior distribution, transition function and emission distributions; that is, for a homogeneous model, $k=1$, while a single numeric covariate or a categorical predictor with two levels would give $k=2$. Then the number of free parameters of an HMM is:
+For a fixed number of states homogeneous FMMs are simplest, followed by homogeneous HMMs and 
+finally by FMMs and HMMs incorporating temporal heterogeneity. In general, the number of free 
+parameters in an HMM is the sum of the number of free parameters for each of the three model 
+components (initial states, transition probabilities, and emissions). Let $n$ be the number of 
+hidden states and $k_{i}, k_{t}, k_{e}$ be the number of parameters describing the 
+covariate-dependence of the prior distribution, transition function and emission distributions; 
+that is, for a homogeneous model, $k=1$, while a single numeric covariate or a categorical 
+predictor with two levels would give $k=2$. Then the number of free parameters of an HMM is:
 [\emph{Initial states}] $k_{i}\cdot (n-1)$ 
 + [\emph{Transition probabilities}] $k_{t}\cdot n\cdot (n-1)$ 
 + [\emph{Emission parameters}] $k_{e}\cdot n$.
-As the number of states increases, the number of free parameters in (homogeneous or heterogeneous) FMMs and time-homogeneous HMMs increases linearly, whereas for HMMs with temporal heterogeneity (or covariate-dependent transitions more generally) the number increases quadratically.
+As the number of states increases, the number of free parameters in (homogeneous or heterogeneous) 
+FMMs and time-homogeneous HMMs increases linearly, whereas for HMMs with temporal heterogeneity 
+(or covariate-dependent transitions more generally) the number increases quadratically.
 
 \subsection*{Model evaluation}
 
@@ -565,11 +586,18 @@ without temporal heterogeneity in the transition probabilities.
 
 We used three approaches to assess the fit of both time-homogeneous and time-inhomogeneous 
 HMMs with 3 to 6 states to step-length data from the four of the thirteen Florida panthers 
-with the most data ($> 9000 $ observations). (1) BIC was used to compare the goodness of fit of each model type. The model with the lowest BIC was selected to be the optimal-BIC model and all BICs were adjusted to $\dbic$ based on the optimal-BIC model ($\dbic$ = BIC - min(BIC)) . (2) Comparing average step-length by hour of day for the 
+with the most data ($> 9000 $ observations). (1) BIC was used to compare the goodness of fit of 
+each model type. The model with the lowest BIC was selected to be the optimal-BIC model and all 
+BICs were adjusted to $\dbic$ based on the optimal-BIC model ($\dbic$ = BIC - min(BIC)) . (2) 
+Comparing average step-length by hour of day for the 
 observed data and for data simulated from the models shows how well a particular class of 
 models can capture diurnal variation in behaviour. (3) Comparing temporal autocorrelations
 for the observed data and for data simulated from the models shows how well a particular class
-of models can capture serial correlation at both short and long time scales. As a complement, we also fitted FMM and FMM with priors on state occupancy that varied sinusoidally over time to compare the temporal effects in goodness of fit As a reminder, FMMs assume that the latent state in each time step is \emph{independent} of the latent state at the previous time step; time-varying FMMs can accurately describe movement when behaviour can
+of models can capture serial correlation at both short and long time scales. As a complement, we 
+also fitted FMM and FMM with priors on state occupancy that varied sinusoidally over time to 
+compare the temporal effects in goodness of fit As a reminder, FMMs assume that the latent state 
+in each time step is \emph{independent} of the latent state at the previous time step; 
+time-varying FMMs can accurately describe movement when behaviour can
 change on a short time scale, but the average propensity for different
 behaviours changes over time.
 
@@ -591,23 +619,13 @@ goodness of fit for HMM models with
 different degrees of structural complexity.
 
 \section*{Results}
-
-
-\begin{table}[h!]
-\caption{Frequency of choosing BIC-optimal state on simulated data.}
-\begin{tabular}{ccccccc}
-  & BIC-Optimal States       & \bf{2}  & \bf{3}  & \bf{4} & \bf{5} & \bf{6} \\ \hline
-  & Homogeneous Transition   & 45 & 21 & 20 & 14 & 0 \\ \hline
-  & Heterogeneous Transition & 100 & 0 & 0 & 0 & 0 \\ \hline
-\end{tabular}
-\end{table}
       
-The simulation experiment supports our hypothesis that homogeneous transition HMMs can overestimate the number of hidden states when the model is misspecified (Table~1). Heterogeneous transition models can always predict the correct number of states (in 100/100 simulations, BIC correctly identifies $n=2$ as the number of states), whereas the temporally homogeneous models overestimate the number of states (the correct value, $n=2$, is chosen most often, but in fewer than half of the simulations; values up to $n=5$ are frequently chosen).
-
-  \begin{figure}[h!]
-   \includegraphics[width=5in]{figure/BICred_plot-1}
-  \caption{Comparison of BIC-optimal state predictions for homogeneous transition HMMs (left panel) and and heterogeneous transition HMMs (right panel) with different emission complexities on panther data. Solid line represents univariate response/emission HMMs (without turning angles) and dotted line represents multivariate response HMMs (including turning angles with von-Mises distribution). Red lines represents log-normal step-length distribution and blue lines represents Weibull step-length distribution. }
-      \end{figure}
+The simulation experiment supports our hypothesis that homogeneous transition HMMs can 
+overestimate the number of hidden states when the model is misspecified (Table~1). Heterogeneous 
+transition models can always predict the correct number of states (in 100/100 simulations, BIC 
+correctly identifies $n=2$ as the number of states), whereas the temporally homogeneous models 
+overestimate the number of states (the correct value, $n=2$, is chosen most often, but in fewer 
+than half of the simulations; values up to $n=5$ are frequently chosen).
 
 The BIC-optimal number of states for time-homogeneous models is
 consistent with van de Kerk et al.'s \cite{kerk2015hidden}
@@ -620,19 +638,14 @@ distributions chosen, ranging from $n=5$ for Weibull
 steps alone to $n=7$ for the log Normal-von Mises emissions
 model, the number of states identified
 by heterogeneous-HMM models
-is consistent among emissions models ($n=5$: Figure 2).
+is consistent among emissions models ($n=5$: Figure 1).
 
-  \begin{figure}[h!]
-   \includegraphics[width=5in]{figure/adj_BIC_comparisons-1}
-  \caption{Comparison of adjusted BIC for all HMM transition complexities. The left panel shows homogeneous FMM, heterogeneous FMM (with a sinusoidal prior) and homogeneous HMM. The right panel shows HMMs with different temporal transitions. Dashed lines represents FMMs and solid lines represents HMMs.}
-      \end{figure}
-      
 
 Models with temporal heterogeneity provide better fits to the data
 (lower BIC) than homogeneous models in both FMM and HMM frameworks,
 but time-homogeneous HMMs are better than FMMs with sinusoidal
-temporal heterogeneity (Figure 3). Turning to the temporally
-heterogeneous HMMs (Figure 3, right panel), we see that the model with
+temporal heterogeneity (Figure 2). Turning to the temporally
+heterogeneous HMMs (Figure 2, right panel), we see that the model with
 different transition probabilities for each hour of the day (HMM +
 THhourly) is overparameterized; it underperforms homogeneous HMM with
 even 3 states, and gets much worse with 4 states. The multiple-block
@@ -642,20 +655,15 @@ to 6 for the homogeneous HMM.  Finally, the quadratic and sinusoidal
 models are the best models tested by far; they both give the
 BIC-optimal number of states as 5, and they have similar goodness of
 fit.  However, the similarity between the quadratic 
-and sinusoidal models may be overstated in Figure~3 due to the very large
+and sinusoidal models may be overstated in Figure~2 due to the very large
 variation in BIC (over thousands of units) across the full range of
 models; the best-fit sinusoidal ($n=5$) model is approximately 80 BIC units
 better than the best quadratic model (also $n=5$), which
 would normally be interpreted as an enormous improvement in goodness of
 fit (both models have 90 parameters).
 
-\begin{figure}[h!]
-   \includegraphics[width=5in]{figure/avg_step_length_by_time-1}
-  \caption{Comparison of average step-length by time of day out of sample predictions for BIC-optimal state FMMs (dashed line) and HMMs (solid lines) of different transition complexities. Gray highlight indicate the observed average step length from panther and "V" points represents Viterbi predictions (within sample) of a three-state homogeneous transition HMM.}
-      \end{figure}
-
 The average hourly step lengths from the observed panther data exhibit
-a clear diurnal pattern (Figure 4). As expected, temporally
+a clear diurnal pattern (Figure 3). As expected, temporally
 homogeneous models (whether FMM or HMM) predict the same mean step
 length regardless of time of day, failing to capture the diurnal
 activity cycle. All of the models incorporating temporal
@@ -670,26 +678,15 @@ hourly step lengths from three-state temporally homogeneous HMM
 Viterbi prediction to illustrate within sample predictions can capture
 the diurnal patterns, but fail to capture out of sample predictions.
 
-\begin{figure}[h!]
-   \includegraphics[width=5in]{figure/acf_plot-1}
-  \caption{Comparison of out of sample predictions autocorrelations for BIC-optimal state FMMs (dashed line) and HMMs (solid lines) of different transition complexities. Gray highlight indicate the observed average step length from panther and "V" points represents Viterbi predictions (within sample) of a three-state homogeneous transition HMM.}
-      \end{figure}
-
-Like the diurnal pattern (Figure 4),
-the strong autocorrelation of the observed step lengths at a 24-hour lag (Figure 5) shows the need to incorporate temporal heterogeneity in the model --- we could have reached this conclusion even without developing any of the temporal-heterogeneity machinery.
+Like the diurnal pattern (Figure 3),
+the strong autocorrelation of the observed step lengths at a 24-hour lag (Figure 4) shows the need to incorporate temporal heterogeneity in the model --- we could have reached this conclusion even without developing any of the temporal-heterogeneity machinery.
 In contrast to the hourly averages, the autocorrelation (ACF) captures both short- and long-term temporal effects. HMM without temporal heterogeneity captures the short-term autocorrelation, but misses the long-term autocorrelation beyond a 7-hour lag.
 Temporally homogeneous FMMs, by definition, produce no autocorrelation (neither short- nor long-term autocorrelation). FMMs without temporal heterogeneity, although they capture the diurnal pattern well, underpredict the degree of short-term autocorrelation.
-
-\begin{figure}[h!]
-   \includegraphics[width=5in]{figure/r_msdlist-1}
-  \caption{State identification of BIC-optimal HMMs for all panthers. Mean (x-axis) and standard deviation (y-axis) of step length by state $\textrm{log}_{10} m$ for BIC-optimal homogeneous HMMs (red line) and heterogeneous HMMs with sinusoidal transition (blue line). Short movement states (step-length \textless $10^{1.5}$m) are circled together.   
-  }
-      \end{figure}
 
 The estimated emission parameter values
 (mean and standard deviation of the step length in each state)
 are similar, for both homogeneous and heterogeneous
-models, across all cats (Figure 6 shows a subset of cats). 
+models, across all cats (Figure 5 shows a subset of cats). 
 In general, the states with longer mean step lengths are
 similar between homogeneous and heterogeneous models. For cats 14 and 15, the states with
 the longest or next-longest mean step lengths have similar means
@@ -813,7 +810,7 @@ Not applicable.
 
 This study was funded by NSERC Discovery Grant 386590-2010 to BMB.
 
-\section{Data accessibility}
+\section*{Data accessibility}
 Hourly step lengths and turning angles of male and female Florida panthers available at \url{http://ufdc.ufl.edu//IR00004241/00001}.
 
 \section*{Authors' contributions}
@@ -821,6 +818,8 @@ ML designed analyses and simulations; ran analyses and simulations; and co-wrote
 
 \section*{Competing interests}
 The authors declare that they have no competing interests.
+
+\end{backmatter}
 
 % if your bibliography is in bibtex format, use those commands:
 \bibliographystyle{bmc-mathphys} % Style BST file (bmc-mathphys, vancouver, spbasic).
@@ -832,19 +831,54 @@ The authors declare that they have no competing interests.
 %\nocite{label}
 
 \section*{Tables}
+
 \begin{table}[h!]
-\caption{Cat ID and number of observations; ID numbers are given matching
-those shown by van de Kerk et al. 2015 and those 
-in the data located at the UF Institutional repository (IR@UF).}
-\begin{tabular}{cccc}
-  \hline
-  & van de Kerk 2015  & IR@UF   & Number of Observations\\ \hline
-  & 130 & 1 & 10286\\
-  & 131 & 2  & 9458\\
-  & 48 & 14  & 14645\\
-  & 94  & 15   & 10250\\ \hline
+\caption{Frequency of choosing BIC-optimal state on simulated data.}
+\begin{tabular}{ccccccc}
+  & BIC-Optimal States       & \bf{2}  & \bf{3}  & \bf{4} & \bf{5} & \bf{6} \\ \hline
+  & Homogeneous Transition   & 45 & 21 & 20 & 14 & 0 \\ \hline
+  & Heterogeneous Transition & 100 & 0 & 0 & 0 & 0 \\ \hline
 \end{tabular}
 \end{table}
+
+\clearpage
+
+\section*{Figures}
+  \begin{figure}[h!]
+   \includegraphics[width=5in]{figure/Figure-1}
+  \caption{Comparison of BIC-optimal state predictions for homogeneous transition HMMs (left panel) and heterogeneous transition HMMs (right panel) with different emission complexities on panther data. Solid line represents univariate response/emission HMMs (without turning angles) and dotted line represents multivariate response HMMs (including turning angles with von-Mises distribution). Red lines represents log-normal step-length distribution and blue lines represents Weibull step-length distribution. }
+      \end{figure}
       
-\end{backmatter}
+\clearpage
+
+  \begin{figure}[h!]
+   \includegraphics[width=5in]{figure/Figure-2}
+  \caption{Comparison of adjusted BIC for all HMM transition complexities. The left panel shows homogeneous FMM, heterogeneous FMM (with a sinusoidal prior) and homogeneous HMM. The right panel shows HMMs with different temporal transitions. Dashed lines represents FMMs and solid lines represents HMMs.}
+      \end{figure}
+      
+      
+\clearpage
+      
+\begin{figure}[h!]
+   \includegraphics[width=5in]{figure/Figure-3}
+  \caption{Comparison of average step-length by time of day out of sample predictions for BIC-optimal state FMMs (dashed line) and HMMs (solid lines) of different transition complexities. Gray highlight indicate the observed average step length from panther and "V" points represents Viterbi predictions (within sample) of a three-state homogeneous transition HMM.}
+      \end{figure}
+
+\clearpage
+
+\begin{figure}[h!]
+   \includegraphics[width=5in]{figure/Figure-4}
+  \caption{Comparison of out of sample predictions autocorrelations for BIC-optimal state FMMs (dashed line) and HMMs (solid lines) of different transition complexities. Gray highlight indicate the observed average step length from panther and "V" points represents Viterbi predictions (within sample) of a three-state homogeneous transition HMM.}
+      \end{figure}
+
+      
+\clearpage
+
+
+\begin{figure}[h!]
+   \includegraphics[width=5in]{figure/Figure-5}
+  \caption{State identification of BIC-optimal HMMs for all panthers. Mean (x-axis) and standard deviation (y-axis) of step length by state $\textrm{log}_{10} m$ for BIC-optimal homogeneous HMMs (red line) and heterogeneous HMMs with sinusoidal transition (blue line). Short movement states (step-length \textless $10^{1.5}$m) are circled together.   
+  }
+      \end{figure}
+      
 \end{document}

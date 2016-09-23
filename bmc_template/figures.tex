@@ -1,7 +1,13 @@
 \documentclass{article}\usepackage[]{graphicx}\usepackage{xcolor}
+\usepackage{lineno}
+\linenumbers
+
 %% maxwidth is the original width if it is less than linewidth
 %% otherwise use linewidth (to make sure the graphics do not exceed the margin)
 \makeatletter
+\renewcommand{\thetable}{A\arabic{table}}
+
+\renewcommand{\thefigure}{A\arabic{figure}}
 \def\maxwidth{ %
   \ifdim\Gin@nat@width>\linewidth
     \linewidth
@@ -53,7 +59,22 @@
 
 \section*{Additional files}
 
-  In the main text of this manuscript, we showed the fitting and simulating results for Cat 1. Here, we have the adjusted BIC emission distribution comparisons, adjusted BIC across all FMM and HMM models, diurnal step lengths and autocorrelation plots for Cat 2, 14, and 15. Given we have not account for sex, we can see in that our fitting and predictions are better for male cats (Cat 1 and 2) than female cats (Cat 14, 15). 
+  In the main text of this manuscript, we showed the fitting and simulating results for Cat 1. Here, we have the adjusted BIC emission distribution comparisons, adjusted BIC across all FMM and HMM models, diurnal step lengths and autocorrelation plots for Cat 2, 14, and 15. Table A1 gives the name of panther ID (Cat ID) in Institutional Repository at the University of Florida (IR@UF), \cite{kerk2015hidden}, and number of observations for each panther. 
+  
+  
+\begin{table}[h!]
+\caption{Cat ID and number of observations; ID numbers are given matching
+those shown by van de Kerk et al. 2015 and those 
+in the data located at the UF Institutional repository (IR@UF).}
+\begin{tabular}{cccc}
+  \hline
+  & van de Kerk 2015  & IR@UF   & Number of Observations\\ \hline
+  & 130 & 1 & 10286\\
+  & 131 & 2  & 9458\\
+  & 48 & 14  & 14645\\
+  & 94  & 15   & 10250\\ \hline
+\end{tabular}
+\end{table}
   
 \newpage
 
@@ -76,7 +97,8 @@
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/BICred_plot2-1} \caption[Adjusted BIC Emission Distribution Comparison for Cat 2]{Adjusted BIC Emission Distribution Comparison for Cat 2}\label{fig:BICred_plot2}
+\includegraphics[width=\maxwidth]{figure/BICred_plot2-1} \caption{Cat 2: Comparison of BIC-optimal state predictions for homogeneous transition HMMs (left panel) and heterogeneous transition HMMs (right panel) with different emission complexities on panther data. Solid line represents univariate response/emission HMMs (without turning angles) and dotted line represents multivariate response HMMs (including turning angles with von-Mises distribution). Red lines represents log-normal step-length distribution and blue lines represents Weibull step-length distribution.}
+\label{fig:BICred_plot2}
 \end{figure}
 
 
@@ -85,17 +107,7 @@
 \clearpage
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/adj_BIC_comparisons2-1} \caption[Adjusted BICs Across All Models for Cat 2]{Adjusted BICs Across All Models for Cat 2}\label{fig:adj_BIC_comparisons2}
-\end{figure}
-
-
-\end{knitrout}
-
-\clearpage
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/avg_step_length_by_time2-1} \caption[Diurnal Step Lengths Plot for Cat 2]{Diurnal Step Lengths Plot for Cat 2}\label{fig:avg_step_length_by_time2}
+\includegraphics[width=\maxwidth]{figure/adj_BIC_comparisons2-1} \caption{Cat 2: Comparison of adjusted BIC for all HMM transition complexities. The left panel shows homogeneous FMM, heterogeneous FMM (with a sinusoidal prior) and homogeneous HMM. The right panel shows HMMs with different temporal transitions. Dashed lines represents FMMs and solid lines represents HMMs.}\label{fig:adj_BIC_comparisons2}
 \end{figure}
 
 
@@ -105,7 +117,17 @@
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/acf_plot2-1} \caption[Autocorrelation Plot for Cat 2]{Autocorrelation Plot for Cat 2}\label{fig:acf_plot2}
+\includegraphics[width=\maxwidth]{figure/avg_step_length_by_time2-1} \caption{Cat 2: Comparison of average step-length by time of day out of sample predictions for BIC-optimal state FMMs (dashed line) and HMMs (solid lines) of different transition complexities. Gray highlight indicate the observed average step length from panther and "V" points represents Viterbi predictions (within sample) of a three-state homogeneous transition HMM.}\label{fig:avg_step_length_by_time2}
+\end{figure}
+
+
+\end{knitrout}
+
+\clearpage
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
+\includegraphics[width=\maxwidth]{figure/acf_plot2-1} \caption{Cat 2: Comparison of out of sample predictions autocorrelations for BIC-optimal state FMMs (dashed line) and HMMs (solid lines) of different transition complexities. Gray highlight indicate the observed average step length from panther and "V" points represents Viterbi predictions (within sample) of a three-state homogeneous transition HMM.}
 \end{figure}
 
 
@@ -117,7 +139,7 @@
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/BICred_plot14-1} \caption[Adjusted BIC Emission Distribution Comparison for Cat 14]{Adjusted BIC Emission Distribution Comparison for Cat 14}\label{fig:BICred_plot14}
+\includegraphics[width=\maxwidth]{figure/BICred_plot14-1} \caption{This figure mataches Figure A1, but for Cat 14.}\label{fig:BICred_plot14}
 \end{figure}
 
 
@@ -128,7 +150,7 @@
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/adj_BIC_comparisons14-1} \caption[Adjusted BICs Across All Models for Cat 14]{Adjusted BICs Across All Models for Cat 14}\label{fig:adj_BIC_comparisons14}
+\includegraphics[width=\maxwidth]{figure/adj_BIC_comparisons14-1} \caption{This figure mataches Figure A2, but for Cat 14.}\label{fig:adj_BIC_comparisons14}
 \end{figure}
 
 
@@ -138,7 +160,7 @@
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/avg_step_length_by_time14-1} \caption[Diurnal Step Lengths Plot for Cat 14]{Diurnal Step Lengths Plot for Cat 14}\label{fig:avg_step_length_by_time14}
+\includegraphics[width=\maxwidth]{figure/avg_step_length_by_time14-1} \caption{This figure mataches Figure A3, but for Cat 14.}\label{fig:avg_step_length_by_time14}
 \end{figure}
 
 
@@ -148,7 +170,7 @@
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/acf_plot14-1} \caption[Autocorrelation Plot for Cat 14]{Autocorrelation Plot for Cat 14}\label{fig:acf_plot14}
+\includegraphics[width=\maxwidth]{figure/acf_plot14-1} \caption{This figure mataches Figure A4, but for Cat 14.}\label{fig:acf_plot14}
 \end{figure}
 
 
@@ -159,7 +181,7 @@
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/BICred_plot15-1} \caption[Adjusted BIC Emission Distribution Comparison for Cat 15]{Adjusted BIC Emission Distribution Comparison for Cat 15}\label{fig:BICred_plot15}
+\includegraphics[width=\maxwidth]{figure/BICred_plot15-1} \caption{This figure mataches Figure A1, but for Cat 15.}\label{fig:BICred_plot15}
 \end{figure}
 
 
@@ -170,7 +192,7 @@
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/adj_BIC_comparisons15-1} \caption[Adjusted BICs Across All Models for Cat 15]{Adjusted BICs Across All Models for Cat 15}\label{fig:adj_BIC_comparisons15}
+\includegraphics[width=\maxwidth]{figure/adj_BIC_comparisons15-1} \caption{This figure mataches Figure A2, but for Cat 15.}\label{fig:adj_BIC_comparisons15}
 \end{figure}
 
 
@@ -180,7 +202,7 @@
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/avg_step_length_by_time15-1} \caption[Diurnal Step Lengths Plot for Cat 15]{Diurnal Step Lengths Plot for Cat 15}\label{fig:avg_step_length_by_time15}
+\includegraphics[width=\maxwidth]{figure/avg_step_length_by_time15-1} \caption{This figure mataches Figure A3, but for Cat 15.}\label{fig:avg_step_length_by_time15}
 \end{figure}
 
 
@@ -190,10 +212,13 @@
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/acf_plot15-1} \caption[Autocorrelation Plot for Cat 15]{Autocorrelation Plot for Cat 15}\label{fig:acf_plot15}
+\includegraphics[width=\maxwidth]{figure/acf_plot15-1} \caption{This figure mataches Figure A4, but for Cat 15.}\label{fig:acf_plot15}
 \end{figure}
 
+\clearpage
 
 \end{knitrout}
+\bibliographystyle{bmc-mathphys} % Style BST file (bmc-mathphys, vancouver, spbasic).
+\bibliography{panthers}
 
 \end{document}

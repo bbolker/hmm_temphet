@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  22 SEP 2016 12:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  23 SEP 2016 14:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -582,31 +582,31 @@ LaTeX Font Warning: Font shape `OT1/cmss/bx/n' in size <13> not available
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <24> not available
-(Font)              size <24.88> substituted on input line 52.
+(Font)              size <24.88> substituted on input line 49.
 
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 72.
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 69.
 
 LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 72.
+(Font)              size <5> substituted on input line 69.
 
 
 LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <5.5> not available
-(Font)              size <5> substituted on input line 72.
+(Font)              size <5> substituted on input line 69.
 
 
 LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <5.5> not available
-(Font)              size <5> substituted on input line 72.
+(Font)              size <5> substituted on input line 69.
 
 \address@aff1=\toks27
 \address@aff2=\toks28
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <10> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 149.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 146.
 
 
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <8> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 259.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 256.
 
 
 
@@ -639,111 +639,98 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [9]
-[10]
-Underfull \vbox (badness 2050) has occurred while \output is active []
-
- [11]
-<figure/BICred_plot-1.pdf, id=53, 433.62pt x 289.08pt>
-File: figure/BICred_plot-1.pdf Graphic file (type pdf)
-
-<use figure/BICred_plot-1.pdf>
-Package pdftex.def Info: figure/BICred_plot-1.pdf used on input line 608.
-(pdftex.def)             Requested size: 361.34999pt x 240.91116pt.
-
-Overfull \hbox (12.84999pt too wide) in paragraph at lines 608--609
- [][] 
- []
-
-<figure/adj_BIC_comparisons-1.pdf, id=54, 578.16pt x 289.08pt>
-File: figure/adj_BIC_comparisons-1.pdf Graphic file (type pdf)
-
-<use figure/adj_BIC_comparisons-1.pdf>
-Package pdftex.def Info: figure/adj_BIC_comparisons-1.pdf used on input line 62
-6.
-(pdftex.def)             Requested size: 361.34999pt x 180.67455pt.
-
-Overfull \hbox (12.84999pt too wide) in paragraph at lines 626--627
- [][] 
- []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
+[10] [11]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [12 <./figure/BICred_plot-1.pdf>]
+ [12]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [13 <./figure/adj_BIC_comparisons-1.pdf>]
-<figure/avg_step_length_by_time-1.pdf, id=80, 578.16pt x 289.08pt>
-File: figure/avg_step_length_by_time-1.pdf Graphic file (type pdf)
-
-<use figure/avg_step_length_by_time-1.pdf>
-Package pdftex.def Info: figure/avg_step_length_by_time-1.pdf used on input lin
-e 653.
-(pdftex.def)             Requested size: 361.34999pt x 180.67455pt.
-
-Overfull \hbox (12.84999pt too wide) in paragraph at lines 653--654
- [][] 
- []
-
-<figure/acf_plot-1.pdf, id=81, 433.62pt x 289.08pt>
-File: figure/acf_plot-1.pdf Graphic file (type pdf)
-
-<use figure/acf_plot-1.pdf>
-Package pdftex.def Info: figure/acf_plot-1.pdf used on input line 674.
-(pdftex.def)             Requested size: 361.34999pt x 240.91116pt.
-
-Overfull \hbox (12.84999pt too wide) in paragraph at lines 674--675
- [][] 
- []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-Underfull \vbox (badness 3623) has occurred while \output is active []
-
- [14 <./figure/avg_step_length_by_time-1.pdf>]
-<figure/r_msdlist-1.pdf, id=95, 433.62pt x 289.08pt>
-File: figure/r_msdlist-1.pdf Graphic file (type pdf)
-
-<use figure/r_msdlist-1.pdf>
-Package pdftex.def Info: figure/r_msdlist-1.pdf used on input line 684.
-(pdftex.def)             Requested size: 361.34999pt x 240.91116pt.
-
-Overfull \hbox (12.84999pt too wide) in paragraph at lines 684--686
- [][] 
- []
-
-LaTeX Font Info:    Try loading font information for OML+cmss on input line 686
-.
-LaTeX Font Info:    No file OMLcmss.fd. on input line 686.
-
-LaTeX Font Warning: Font shape `OML/cmss/m/n' undefined
-(Font)              using `OML/cmm/m/it' instead
-(Font)              for symbol `textless' on input line 686.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[15 <./figure/acf_plot-1.pdf>] [16 <./figure/r_msdlist-1.pdf>]
+ [13]
+[14]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [17]
-[18] (./manuscript.bbl [19]
+ [15]
+[16] (./manuscript.bbl
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <7> not available
 (Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 83.
 
+[17]) [18] <figure/Figure-1.pdf, id=77, 433.62pt x 289.08pt>
+File: figure/Figure-1.pdf Graphic file (type pdf)
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+<use figure/Figure-1.pdf>
+Package pdftex.def Info: figure/Figure-1.pdf used on input line 848.
+(pdftex.def)             Requested size: 361.34999pt x 240.91116pt.
 
- [20])
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 848--849
+ [] 
+ []
+
+[19
+
+ <./figure/Figure-1.pdf>] <figure/Figure-2.pdf, id=88, 578.16pt x 289.08pt>
+File: figure/Figure-2.pdf Graphic file (type pdf)
+
+<use figure/Figure-2.pdf>
+Package pdftex.def Info: figure/Figure-2.pdf used on input line 855.
+(pdftex.def)             Requested size: 361.34999pt x 180.67455pt.
+
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 855--856
+ [][] 
+ []
+
+[20
+
+ <./figure/Figure-2.pdf>]
+<figure/Figure-3.pdf, id=104, 578.16pt x 289.08pt>
+File: figure/Figure-3.pdf Graphic file (type pdf)
+ <use figure/Figure-3.pdf>
+Package pdftex.def Info: figure/Figure-3.pdf used on input line 863.
+(pdftex.def)             Requested size: 361.34999pt x 180.67455pt.
+
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 863--864
+ [][] 
+ []
+
+[21
+
+ <./figure/Figure-3.pdf>]
+<figure/Figure-4.pdf, id=118, 433.62pt x 289.08pt>
+File: figure/Figure-4.pdf Graphic file (type pdf)
+ <use figure/Figure-4.pdf>
+Package pdftex.def Info: figure/Figure-4.pdf used on input line 870.
+(pdftex.def)             Requested size: 361.34999pt x 240.91116pt.
+
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 870--871
+ [][] 
+ []
+
+[22
+
+ <./figure/Figure-4.pdf>]
+<figure/Figure-5.pdf, id=131, 433.62pt x 289.08pt>
+File: figure/Figure-5.pdf Graphic file (type pdf)
+ <use figure/Figure-5.pdf>
+Package pdftex.def Info: figure/Figure-5.pdf used on input line 879.
+(pdftex.def)             Requested size: 361.34999pt x 240.91116pt.
+
+Overfull \hbox (12.84999pt too wide) in paragraph at lines 879--881
+ [][] 
+ []
+
+LaTeX Font Info:    Try loading font information for OML+cmss on input line 881
+.
+LaTeX Font Info:    No file OMLcmss.fd. on input line 881.
+
+LaTeX Font Warning: Font shape `OML/cmss/m/n' undefined
+(Font)              using `OML/cmm/m/it' instead
+(Font)              for symbol `textless' on input line 881.
+
 
 AED: lastpage setting LastPage
-[21] (./manuscript.aux)
+[23
+
+ <./figure/Figure-5.pdf>] (./manuscript.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
@@ -754,12 +741,12 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
  ) 
 Here is how much of TeX's memory you used:
  4292 strings out of 493014
- 56391 string characters out of 6133351
- 130484 words of memory out of 5000000
+ 56191 string characters out of 6133351
+ 131223 words of memory out of 5000000
  7753 multiletter control sequences out of 15000+600000
  16976 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,13n,37p,754b,511s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,13n,37p,615b,434s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
 </usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
@@ -782,10 +769,10 @@ e/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive
 texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2016/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2016/te
 xmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on manuscript.pdf (21 pages, 315289 bytes).
+Output written on manuscript.pdf (23 pages, 314045 bytes).
 PDF statistics:
- 208 PDF objects out of 1000 (max. 8388607)
- 151 compressed objects within 2 object streams
+ 214 PDF objects out of 1000 (max. 8388607)
+ 155 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

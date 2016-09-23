@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  29 AUG 2016 19:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  23 SEP 2016 14:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -72,13 +72,31 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 )
+(/usr/local/texlive/2016/texmf-dist/tex/latex/lineno/lineno.sty
+Package: lineno 2005/11/02 line numbers on paragraphs v4.41
+\linenopenalty=\count88
+\output=\toks15
+\linenoprevgraf=\count89
+\linenumbersep=\dimen105
+\linenumberwidth=\dimen106
+\c@linenumber=\count90
+\c@pagewiselinenumber=\count91
+\c@LN@truepage=\count92
+\c@internallinenumber=\count93
+\c@internallinenumbers=\count94
+\quotelinenumbersep=\dimen107
+\bframerule=\dimen108
+\bframesep=\dimen109
+\bframebox=\box26
+LaTeX Info: Redefining \\ on input line 3056.
+)
 (/usr/local/texlive/2016/texmf-dist/tex/latex/framed/framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \OuterFrameSep=\skip43
-\fb@frw=\dimen105
-\fb@frh=\dimen106
-\FrameRule=\dimen107
-\FrameSep=\dimen108
+\fb@frw=\dimen110
+\fb@frh=\dimen111
+\FrameRule=\dimen112
+\FrameSep=\dimen113
 )
 (/usr/local/texlive/2016/texmf-dist/tex/latex/base/alltt.sty
 Package: alltt 1997/06/16 v2.0g defines alltt environment
@@ -90,32 +108,32 @@ tim
 (./figures.aux)
 \openout1 = `figures.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 52.
-LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 58.
+LaTeX Font Info:    ... okay on input line 58.
 
 (/usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count88
-\scratchdimen=\dimen109
-\scratchbox=\box26
-\nofMPsegments=\count89
-\nofMParguments=\count90
-\everyMPshowfont=\toks15
-\MPscratchCnt=\count91
-\MPscratchDim=\dimen110
-\MPnumerator=\count92
-\makeMPintoPDFobject=\count93
-\everyMPtoPDFconversion=\toks16
+\scratchcounter=\count95
+\scratchdimen=\dimen114
+\scratchbox=\box27
+\nofMPsegments=\count96
+\nofMParguments=\count97
+\everyMPshowfont=\toks16
+\MPscratchCnt=\count98
+\MPscratchDim=\dimen115
+\MPnumerator=\count99
+\makeMPintoPDFobject=\count100
+\everyMPtoPDFconversion=\toks17
 ) (/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2016/05/10 v0.21 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -163,114 +181,135 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 69.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 69.
+
 [1
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<figure/BICred_plot2-1.pdf, id=8, 433.62pt x 289.08pt>
+<figure/BICred_plot2-1.pdf, id=9, 433.62pt x 289.08pt>
 File: figure/BICred_plot2-1.pdf Graphic file (type pdf)
 
 <use figure/BICred_plot2-1.pdf>
-Package pdftex.def Info: figure/BICred_plot2-1.pdf used on input line 79.
+Package pdftex.def Info: figure/BICred_plot2-1.pdf used on input line 100.
 (pdftex.def)             Requested size: 345.0pt x 230.01158pt.
  [2 <./figure/BICred_plot2-1.pdf>]
-<figure/adj_BIC_comparisons2-1.pdf, id=18, 578.16pt x 289.08pt>
+<figure/adj_BIC_comparisons2-1.pdf, id=19, 578.16pt x 289.08pt>
 File: figure/adj_BIC_comparisons2-1.pdf Graphic file (type pdf)
 
 <use figure/adj_BIC_comparisons2-1.pdf>
-Package pdftex.def Info: figure/adj_BIC_comparisons2-1.pdf used on input line 8
-8.
+Package pdftex.def Info: figure/adj_BIC_comparisons2-1.pdf used on input line 1
+10.
 (pdftex.def)             Requested size: 345.0pt x 172.49655pt.
  [3 <./figure/adj_BIC_comparisons2-1.pdf>] <figure/avg_step_length_by_time2-1.p
-df, id=34, 578.16pt x 289.08pt>
+df, id=35, 578.16pt x 289.08pt>
 File: figure/avg_step_length_by_time2-1.pdf Graphic file (type pdf)
 
 <use figure/avg_step_length_by_time2-1.pdf>
 Package pdftex.def Info: figure/avg_step_length_by_time2-1.pdf used on input li
-ne 98.
+ne 120.
 (pdftex.def)             Requested size: 345.0pt x 172.49655pt.
- [4 <./figure/avg_step_length_by_time2-1.pdf>] <figure/acf_plot2-1.pdf, id=48, 
+ [4 <./figure/avg_step_length_by_time2-1.pdf>] <figure/acf_plot2-1.pdf, id=49, 
 433.62pt x 289.08pt>
 File: figure/acf_plot2-1.pdf Graphic file (type pdf)
 
 <use figure/acf_plot2-1.pdf>
-Package pdftex.def Info: figure/acf_plot2-1.pdf used on input line 108.
+Package pdftex.def Info: figure/acf_plot2-1.pdf used on input line 130.
 (pdftex.def)             Requested size: 345.0pt x 230.01158pt.
  [5 <./figure/acf_plot2-1.pdf>]
-<figure/BICred_plot14-1.pdf, id=61, 433.62pt x 289.08pt>
+<figure/BICred_plot14-1.pdf, id=62, 433.62pt x 289.08pt>
 File: figure/BICred_plot14-1.pdf Graphic file (type pdf)
 
 <use figure/BICred_plot14-1.pdf>
-Package pdftex.def Info: figure/BICred_plot14-1.pdf used on input line 120.
+Package pdftex.def Info: figure/BICred_plot14-1.pdf used on input line 142.
 (pdftex.def)             Requested size: 345.0pt x 230.01158pt.
  [6 <./figure/BICred_plot14-1.pdf>]
-<figure/adj_BIC_comparisons14-1.pdf, id=71, 578.16pt x 289.08pt>
+<figure/adj_BIC_comparisons14-1.pdf, id=72, 578.16pt x 289.08pt>
 File: figure/adj_BIC_comparisons14-1.pdf Graphic file (type pdf)
 
 <use figure/adj_BIC_comparisons14-1.pdf>
 Package pdftex.def Info: figure/adj_BIC_comparisons14-1.pdf used on input line 
-131.
+153.
 (pdftex.def)             Requested size: 345.0pt x 172.49655pt.
  [7 <./figure/adj_BIC_comparisons14-1.pdf>] <figure/avg_step_length_by_time14-1
-.pdf, id=88, 578.16pt x 289.08pt>
+.pdf, id=89, 578.16pt x 289.08pt>
 File: figure/avg_step_length_by_time14-1.pdf Graphic file (type pdf)
 
 <use figure/avg_step_length_by_time14-1.pdf>
 Package pdftex.def Info: figure/avg_step_length_by_time14-1.pdf used on input l
-ine 141.
+ine 163.
 (pdftex.def)             Requested size: 345.0pt x 172.49655pt.
  [8 <./figure/avg_step_length_by_time14-1.pdf>] <figure/acf_plot14-1.pdf, id=10
-2, 433.62pt x 289.08pt>
+3, 433.62pt x 289.08pt>
 File: figure/acf_plot14-1.pdf Graphic file (type pdf)
 
 <use figure/acf_plot14-1.pdf>
-Package pdftex.def Info: figure/acf_plot14-1.pdf used on input line 151.
+Package pdftex.def Info: figure/acf_plot14-1.pdf used on input line 173.
 (pdftex.def)             Requested size: 345.0pt x 230.01158pt.
  [9 <./figure/acf_plot14-1.pdf>]
-<figure/BICred_plot15-1.pdf, id=115, 433.62pt x 289.08pt>
+<figure/BICred_plot15-1.pdf, id=116, 433.62pt x 289.08pt>
 File: figure/BICred_plot15-1.pdf Graphic file (type pdf)
 
 <use figure/BICred_plot15-1.pdf>
-Package pdftex.def Info: figure/BICred_plot15-1.pdf used on input line 162.
+Package pdftex.def Info: figure/BICred_plot15-1.pdf used on input line 184.
 (pdftex.def)             Requested size: 345.0pt x 230.01158pt.
  [10 <./figure/BICred_plot15-1.pdf>]
-<figure/adj_BIC_comparisons15-1.pdf, id=125, 578.16pt x 289.08pt>
+<figure/adj_BIC_comparisons15-1.pdf, id=126, 578.16pt x 289.08pt>
 File: figure/adj_BIC_comparisons15-1.pdf Graphic file (type pdf)
 
 <use figure/adj_BIC_comparisons15-1.pdf>
 Package pdftex.def Info: figure/adj_BIC_comparisons15-1.pdf used on input line 
-173.
+195.
 (pdftex.def)             Requested size: 345.0pt x 172.49655pt.
  [11 <./figure/adj_BIC_comparisons15-1.pdf>] <figure/avg_step_length_by_time15-
-1.pdf, id=142, 578.16pt x 289.08pt>
+1.pdf, id=143, 578.16pt x 289.08pt>
 File: figure/avg_step_length_by_time15-1.pdf Graphic file (type pdf)
 
 <use figure/avg_step_length_by_time15-1.pdf>
 Package pdftex.def Info: figure/avg_step_length_by_time15-1.pdf used on input l
-ine 183.
+ine 205.
 (pdftex.def)             Requested size: 345.0pt x 172.49655pt.
  [12 <./figure/avg_step_length_by_time15-1.pdf>] <figure/acf_plot15-1.pdf, id=1
-56, 433.62pt x 289.08pt>
+57, 433.62pt x 289.08pt>
 File: figure/acf_plot15-1.pdf Graphic file (type pdf)
 
 <use figure/acf_plot15-1.pdf>
-Package pdftex.def Info: figure/acf_plot15-1.pdf used on input line 193.
+Package pdftex.def Info: figure/acf_plot15-1.pdf used on input line 215.
 (pdftex.def)             Requested size: 345.0pt x 230.01158pt.
- [13 <./figure/acf_plot15-1.pdf>] (./figures.aux) ) 
+ [13 <./figure/acf_plot15-1.pdf>] (./figures.bbl)
+[14
+
+
+
+
+
+
+
+
+
+
+
+
+] (./figures.aux) ) 
 Here is how much of TeX's memory you used:
- 2096 strings out of 493014
- 30097 string characters out of 6133351
- 91140 words of memory out of 5000000
- 5626 multiletter control sequences out of 15000+600000
- 4245 words of font info for 16 fonts, out of 8000000 for 9000
+ 2353 strings out of 493014
+ 33631 string characters out of 6133351
+ 94421 words of memory out of 5000000
+ 5874 multiletter control sequences out of 15000+600000
+ 4853 words of font info for 18 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,6n,35p,441b,256s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2016/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2016/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
-Output written on figures.pdf (13 pages, 115899 bytes).
+ 38i,8n,35p,619b,256s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmbx12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmss8.pfb>
+Output written on figures.pdf (14 pages, 139370 bytes).
 PDF statistics:
- 179 PDF objects out of 1000 (max. 8388607)
- 136 compressed objects within 2 object streams
+ 190 PDF objects out of 1000 (max. 8388607)
+ 144 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  61 words of extra memory for PDF output out of 10000 (max. 10000000)
 
