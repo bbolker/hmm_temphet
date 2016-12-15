@@ -24,6 +24,7 @@ AICdat2 <- AICdat %>% ungroup() %>% select(-c(LL,AIC,BIC,parameters)) %>% group_
 BICdat2 <- BICdat %>% ungroup() %>% select(-c(LL,AIC,BIC,parameters)) %>% group_by(model) %>% count(nstates,model) %>% mutate(IC = "BIC")
 
 ICdat <- rbind(AICdat2,BICdat2)
+saveRDS(ICdat,"ICdat.rds")
 
 g1 <- (ggplot(ICdat,aes(x=nstates,y=n,color=model,group=model))
        + geom_point()
