@@ -7,9 +7,9 @@ library(stats)
 library(dplyr)
 library(plyr)
 
-files <- commandArgs(trailingOnly = TRUE)
-catid <- unlist(strsplit(files[1],split="[.]"))[2]
-dat <- readRDS(files[1])
+# files <- commandArgs(trailingOnly = TRUE)
+catid <- unlist(strsplit(rtargetname,split="[.]"))[2]
+dat <- readRDS(input_files[1])
 
 setClass("vonMises", contains="response")
 ## library(VGAM)  ## this may mess up multinomial()

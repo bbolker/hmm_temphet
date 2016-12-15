@@ -132,17 +132,17 @@ rModels[[3]][[2]] <- vonMises(dat$Turningangle, pstart = c(3, 1))
 
 trstart <- rep(1/3,9)
 transition <- list()
-transition[[1]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 3, data=dat,
+transition[[1]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 3, data=dat,
                              pstart = c(1/3,1/3,1/3,0,1/3,1/3,0,1/3,1/3))
-transition[[2]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 3,data=dat,
+transition[[2]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 3,data=dat,
                              pstart = c(1/3,1/3,1/3,0,1/3,1/3,0,1/3,1/3))
-transition[[3]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 3,data=dat,
+transition[[3]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 3,data=dat,
                              pstart = c(1/3,1/3,1/3,0,1/3,1/3,0,1/3,1/3))
 inMod <- transInit(~ 1, ns = 3, pstart = rep(1/3, 3),
                    data = data.frame(1))
 mod3 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-lnvmhmmsin3s <- fit(mod3, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
+lnvmhmmquad3s <- fit(mod3, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 
 # HMM LNVM 4 states ----
@@ -169,19 +169,19 @@ rModels[[4]][[2]] <- vonMises(dat$Turningangle, pstart = c(3, 1))
 
 trstart <- rep(1/4,16)
 transition <- list()
-transition[[1]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 4, data=dat,
+transition[[1]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 4, data=dat,
                              pstart = c(1/4,1/4,1/4,1/4,
                                         0,1/4,1/4,1/4,
                                         0,1/4,1/4,1/4))
-transition[[2]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 4, data=dat,
+transition[[2]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 4, data=dat,
                              pstart = c(1/4,1/4,1/4,1/4,
                                         0,1/4,1/4,1/4,
                                         0,1/4,1/4,1/4))
-transition[[3]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 4, data=dat,
+transition[[3]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 4, data=dat,
                              pstart = c(1/4,1/4,1/4,1/4,
                                         0,1/4,1/4,1/4,
                                         0,1/4,1/4,1/4))
-transition[[4]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 4, data=dat,
+transition[[4]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 4, data=dat,
                              pstart = c(1/4,1/4,1/4,1/4,
                                         0,1/4,1/4,1/4,
                                         0,1/4,1/4,1/4))
@@ -189,7 +189,7 @@ inMod <- transInit(~ 1, ns = 4, pstart = rep(1/4, 4),
                    data = data.frame(1))
 mod4 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-lnvmhmmsin4s <- fit(mod4, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
+lnvmhmmquad4s <- fit(mod4, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 # HMM LNVM 5 states ----
 
@@ -221,23 +221,23 @@ rModels[[5]][[2]] <- vonMises(dat$Turningangle, pstart = c(4, 1))
 
 trstart <- rep(1/5,25)
 transition <- list()
-transition[[1]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, data=dat,
+transition[[1]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 5, data=dat,
                              pstart = c(1/5,1/5,1/5,1/5,1/5,
                                         0,1/5,1/5,1/5,1/5,
                                         0,1/5,1/5,1/5,1/5))
-transition[[2]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, data=dat,
+transition[[2]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 5, data=dat,
                              pstart = c(1/5,1/5,1/5,1/5,1/5,
                                         0,1/5,1/5,1/5,1/5,
                                         0,1/5,1/5,1/5,1/5))
-transition[[3]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, data=dat,
+transition[[3]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 5, data=dat,
                              pstart = c(1/5,1/5,1/5,1/5,1/5,
                                         0,1/5,1/5,1/5,1/5,
                                         0,1/5,1/5,1/5,1/5))
-transition[[4]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, data=dat,
+transition[[4]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 5, data=dat,
                              pstart = c(1/5,1/5,1/5,1/5,1/5,
                                         0,1/5,1/5,1/5,1/5,
                                         0,1/5,1/5,1/5,1/5))
-transition[[5]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 5, data=dat,
+transition[[5]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 5, data=dat,
                              pstart = c(1/5,1/5,1/5,1/5,1/5,
                                         0,1/5,1/5,1/5,1/5,
                                         0,1/5,1/5,1/5,1/5))
@@ -245,7 +245,7 @@ inMod <- transInit(~ 1, ns = 5, pstart = rep(1/5, 5),
                    data = data.frame(1))
 mod5 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-lnvmhmmsin5s <- fit(mod5, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
+lnvmhmmquad5s <- fit(mod5, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 # HMM LNVM 6 states ----
 
@@ -282,27 +282,27 @@ rModels[[6]][[2]] <- vonMises(dat$Turningangle, pstart = c(5, 1))
 
 trstart <- rep(1/6,36)
 transition <- list()
-transition[[1]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=dat,
+transition[[1]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 6, data=dat,
                              pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
                                         0,1/6,1/6,1/6,1/6,1/6,
                                         0,1/6,1/6,1/6,1/6,1/6))
-transition[[2]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=dat,
+transition[[2]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 6, data=dat,
                              pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
                                         0,1/6,1/6,1/6,1/6,1/6,
                                         0,1/6,1/6,1/6,1/6,1/6))
-transition[[3]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=dat,
+transition[[3]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 6, data=dat,
                              pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
                                         0,1/6,1/6,1/6,1/6,1/6,
                                         0,1/6,1/6,1/6,1/6,1/6))
-transition[[4]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=dat,
+transition[[4]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 6, data=dat,
                              pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
                                         0,1/6,1/6,1/6,1/6,1/6,
                                         0,1/6,1/6,1/6,1/6,1/6))
-transition[[5]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=dat,
+transition[[5]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 6, data=dat,
                              pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
                                         0,1/6,1/6,1/6,1/6,1/6,
                                         0,1/6,1/6,1/6,1/6,1/6))
-transition[[6]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 6, data=dat,
+transition[[6]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 6, data=dat,
                              pstart = c(1/6,1/6,1/6,1/6,1/6,1/6,
                                         0,1/6,1/6,1/6,1/6,1/6,
                                         0,1/6,1/6,1/6,1/6,1/6))
@@ -310,7 +310,7 @@ inMod <- transInit(~ 1, ns = 6, pstart = rep(1/6, 6),
                    data = data.frame(1))
 mod6 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-lnvmhmmsin6s <- fit(mod6, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
+lnvmhmmquad6s <- fit(mod6, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 # HMM LNVM 7 states ----
 
@@ -352,31 +352,31 @@ rModels[[7]][[2]] <- vonMises(dat$Turningangle, pstart = c(6, 1))
 
 trstart <- rep(1/7,49)
 transition <- list()
-transition[[1]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 7, data=dat,
+transition[[1]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 7, data=dat,
                              pstart = c(1/7,1/7,1/7,1/7,1/7,1/7,1/7,
                                         0,1/7,1/7,1/7,1/7,1/7,1/7,
                                         0,1/7,1/7,1/7,1/7,1/7,1/7))
-transition[[2]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 7, data=dat,
+transition[[2]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 7, data=dat,
                              pstart = c(1/7,1/7,1/7,1/7,1/7,1/7,1/7,
                                         0,1/7,1/7,1/7,1/7,1/7,1/7,
                                         0,1/7,1/7,1/7,1/7,1/7,1/7))
-transition[[3]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 7, data=dat,
+transition[[3]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 7, data=dat,
                              pstart = c(1/7,1/7,1/7,1/7,1/7,1/7,1/7,
                                         0,1/7,1/7,1/7,1/7,1/7,1/7,
                                         0,1/7,1/7,1/7,1/7,1/7,1/7))
-transition[[4]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 7, data=dat,
+transition[[4]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 7, data=dat,
                              pstart = c(1/7,1/7,1/7,1/7,1/7,1/7,1/7,
                                         0,1/7,1/7,1/7,1/7,1/7,1/7,
                                         0,1/7,1/7,1/7,1/7,1/7,1/7))
-transition[[5]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 7, data=dat,
+transition[[5]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 7, data=dat,
                              pstart = c(1/7,1/7,1/7,1/7,1/7,1/7,1/7,
                                         0,1/7,1/7,1/7,1/7,1/7,1/7,
                                         0,1/7,1/7,1/7,1/7,1/7,1/7))
-transition[[6]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 7, data=dat,
+transition[[6]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 7, data=dat,
                              pstart = c(1/7,1/7,1/7,1/7,1/7,1/7,1/7,
                                         0,1/7,1/7,1/7,1/7,1/7,1/7,
                                         0,1/7,1/7,1/7,1/7,1/7,1/7))
-transition[[7]] <- transInit(~ cos(2*pi*Time/24)+ sin(2*pi*Time/24), nst = 7, data=dat,
+transition[[7]] <- transInit(~ I(Time/24)+I((Time/24)^2), nst = 7, data=dat,
                              pstart = c(1/7,1/7,1/7,1/7,1/7,1/7,1/7,
                                         0,1/7,1/7,1/7,1/7,1/7,1/7,
                                         0,1/7,1/7,1/7,1/7,1/7,1/7))
@@ -384,25 +384,25 @@ inMod <- transInit(~ 1, ns = 7, pstart = rep(1/7, 7),
                    data = data.frame(1))
 mod7 <- makeDepmix(response = rModels, transition = transition,
                    prior=inMod,homogeneous = FALSE)
-lnvmhmmsin7s <- fit(mod7, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
+lnvmhmmquad7s <- fit(mod7, verbose = TRUE, emc=em.control(rand=FALSE, maxit=460))
 
 
 sumdf <- function(lst){
   BIC <- ldply(lst,BIC)
   nstates <-ldply(lst,nstates)
   para <- ldply(lst,freepars)
-  model <- c('HMM LNVMsin','HMM LNVMsin','HMM LNVMsin','HMM LNVMsin','HMM LNVMsin')
+  model <- c('HMM LNVMquad','HMM LNVMquad','HMM LNVMquad','HMM LNVMquad','HMM LNVMquad')
   type <- c('HMM + TH','HMM + TH','HMM + TH','HMM + TH','HMM + TH')
   temp <- data.frame(BICS=BIC$V1,nstates=nstates$V1,parameters=para$V1,model,type)
   return(temp)
 }
 
-fitlist <- list(lnvmhmmsin3s,lnvmhmmsin4s,lnvmhmmsin5s,lnvmhmmsin6s,lnvmhmmsin7s)
+fitlist <- list(lnvmhmmquad3s,lnvmhmmquad4s,lnvmhmmquad5s,lnvmhmmquad6s,lnvmhmmquad7s)
 
 catsum <- sumdf(fitlist)
 
 
-saveRDS(catsum,file=paste("cat",catid,"lnvmhmmsin","RDS",sep="."))
+saveRDS(catsum,file=paste("cat",catid,"lnvmhmmquad","RDS",sep="."))
 
 
 

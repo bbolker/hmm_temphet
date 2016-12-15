@@ -8,7 +8,7 @@ BICdat <- data.frame()
 for(i in simfiles){
   seednum <-unlist(strsplit(i,split="[.]"))[2]
   tempdat <- readRDS(i)
-  BICdf <- tempdat %>% mutate(seed=seednum) %>% group_by(model) %>% slice(which.min(BIC))
+  BICdf <- tempdat %>% mutate(seed=seednum) %>% group_by(model) %>% slice(which.min(BIC)) %>% ungroup()
   BICdat <- rbind(BICdat,BICdf)
 }
 
@@ -16,7 +16,7 @@ AICdat <- data.frame()
 for(i in simfiles){
   seednum <-unlist(strsplit(i,split="[.]"))[2]
   tempdat <- readRDS(i)
-  AICdf <- tempdat %>% mutate(seed=seednum) %>% group_by(model) %>% slice(which.min(AIC))
+  AICdf <- tempdat %>% mutate(seed=seednum) %>% group_by(model) %>% slice(which.min(AIC)) %>% ungroup()
   AICdat <- rbind(AICdat,AICdf)
 }
 

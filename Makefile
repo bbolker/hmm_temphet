@@ -41,13 +41,10 @@ cat.15.%.Rout: cat.15.df.Rout cat.15.RDS mikesim.R ./models/%.R
 %.weibullVM.Rout: %.df.Rout weibullVM.R
 	$(run-R)
 
-%.LNVM.Rout: %.df.Rout LNVM.R
+%.LNVM.Rout: %.RDS %.df.Rout ./models/LNVM.R
 	$(run-R)
 
 %.Weibull_het.Rout: %.df.Rout Weibull_het.R
-	$(run-R)
-
-%.LNVM_het.Rout: %.df.Rout LNVM_het.R
 	$(run-R)
 
 simtest.Rout: mikesim.R simfunctions.R simtest.R 101.txt
