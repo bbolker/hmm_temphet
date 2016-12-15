@@ -18,12 +18,15 @@ getpars(mod)
 seed = unlist(strsplit(rtargetname,"[.]"))[2]
 set.seed(as.numeric(seed))
 
-randpars <- sample(1:4,length(getpars(mod))-6,replace=TRUE)
-newmod <- setpars(mod,c(0.5,0.5,randpars,0,2,4,2))
+randpars <- sample(-3:3,length(getpars(mod))-6,replace=TRUE)
+newmod <- setpars(mod,c(0.5,0.5,randpars,0,1,2,1))
 newmod
 sim <- simhmm(newmod)
-df <- data.frame(obs= sim@response[[1]][[1]]@y,states=sim@states,time=t)
+err <- rnorm(12000,0,sqrt(2)*log10(8))
+
+df <- data.frame(obs= sim@response[[1]][[1]]@y + err,states=sim@states,time=t)
 hist(df$obs)
+table(df$states)
 
 system.time(hmm2 <- depmix(obs~1
                            , data=df
