@@ -1,4 +1,0 @@
--fix the paper
--make knee plots
-- add kbic to multimoddf
- 
