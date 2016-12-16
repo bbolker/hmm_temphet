@@ -56,6 +56,10 @@ sim.%.Rout: mikesim.R simfunctions.R simtest.R
 simxy.%.Rout: mikesim.R simfunctions.R simxygps.R
 	$(run-R)
 
+simtime.%.Rout: mikesim.R simfunctions.R simtimetest.R
+	$(run-R)
+
+
 plotsimtest.Rout: plotsimtest.R
 	$(run-R)
 
