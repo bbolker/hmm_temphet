@@ -8,7 +8,7 @@ tempdat <- data.frame(y=y,t=t)
 
 system.time(mod <- depmix(y~1
                           , data=tempdat
-                          , transition=~cos((2*pi*t)/24)+ sin((2*pi*t)/24)
+                          , transition=~1 #cos((2*pi*t)/24)+ sin((2*pi*t)/24)
                           , nstate=2
                           , family=gaussian())
 )
@@ -17,12 +17,19 @@ getpars(mod)
 seed = unlist(strsplit(rtargetname,"[.]"))[2]
 set.seed(seed)
 
-randpars <- sample(-3:3,length(getpars(mod))-6,replace=TRUE)
+#randpars <- sample(-3:3,length(getpars(mod))-6,replace=TRUE)
+transprobs <- runif(2,0.001,0.999)
+ranpars <- c(1-transprobs[1],transprobs[1],1-transprobs[2],transprobs[2])
+
 newmod <- setpars(mod,c(0.5,0.5,randpars,0,1,2,1))
 newmod
 sim <- simhmm(newmod)
-df <- data.frame(obs= sim@response[[1]][[1]]@y,states=sim@states,time=t)
-hist(df$obs)
+error <- rnorm(12000,0,5) ## real scale
+oldsl <- sim@response[[1]][[1]]@y
+newsl <- log10(abs(10^oldsl + error)) 
+hist(oldsl)
+hist(newsl)
+df <- data.frame(obs= newsl,states=sim@states,time=t)
 
 system.time(hmm2 <- depmix(obs~1
                            , data=df
@@ -53,14 +60,14 @@ system.time(hmm4s <- fit(hmm4,verbose=FALSE))
 
 
 
-system.time(hmm5 <- depmix(obs~1
-                           , data=df
-                           , transition=~1
-                           , nstate=5
-                           , family=gaussian())
-)
-
-system.time(hmm5s <- fit(hmm5,verbose=FALSE))
+# system.time(hmm5 <- depmix(obs~1
+#                            , data=df
+#                            , transition=~1
+#                            , nstate=5
+#                            , family=gaussian())
+# )
+# 
+# system.time(hmm5s <- fit(hmm5,verbose=FALSE))
 
 system.time(hmmsin2 <- depmix(obs~1
                               , data=df
@@ -91,14 +98,14 @@ system.time(hmmsin4s <- fit(hmmsin4,verbose=FALSE))
 
 
 
-system.time(hmmsin5 <- depmix(obs~1
-                              , data=df
-                              , transition=~1
-                              , nstate=5
-                              , family=gaussian())
-)
-
-system.time(hmmsin5s <- fit(hmmsin5,verbose=FALSE))
+# system.time(hmmsin5 <- depmix(obs~1
+#                               , data=df
+#                               , transition=~1
+#                               , nstate=5
+#                               , family=gaussian())
+# )
+# 
+# system.time(hmmsin5s <- fit(hmmsin5,verbose=FALSE))
 
 sumdf <- function(lst){
   LL <- ldply(lst,logLik)
@@ -106,7 +113,7 @@ sumdf <- function(lst){
   BIC <- ldply(lst,BIC)
   nstates <-ldply(lst,nstates)
   para <- ldply(lst,freepars)
-  model <- c('HMM','HMM','HMM','HMM','HMMsin','HMMsin','HMMsin','HMMsin')
+  model <- c('HMM','HMM','HMM','HMMsin','HMMsin','HMMsin')
   temp <- data.frame(LL=LL$V1
                      ,AIC=AIC$V1
                      ,BIC=BIC$V1
@@ -117,7 +124,7 @@ sumdf <- function(lst){
   return(temp)
 }
 
-fitlist <- list(hmm2s,hmm3s,hmm4s,hmm5s,hmmsin2s,hmmsin3s,hmmsin4s,hmmsin5s)
+fitlist <- list(hmm2s,hmm3s,hmm4s,hmmsin2s,hmmsin3s,hmmsin4s)
 
 dat <- sumdf(fitlist)
 saveRDS(dat, file=paste("sim",seed,"RDS",sep="."))
