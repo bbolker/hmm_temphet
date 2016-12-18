@@ -29,6 +29,9 @@ cat.15.%.Rout: cat.15.df.Rout cat.15.RDS mikesim.R ./models/%.R
 %.summary.Rout: %.fit.Rout summary.R %summary.R
 	$(run-R)
 
+cat.%.lnvm.Rout: cat.%.df.Rout ./lnvm_results/cat.%.lnvmhmm.RDS ./lnvm_results/cat.%.lnvmhmmblock.RDS ./lnvm_results/cat.%.lnvmhmmsin.RDS ./lnvm_results/cat.%.lnvmhmmquad.RDS mikesim.R lnvm_setup.R plotsimfunctions.R lnvmplot.R
+	$(run-R)
+
 %.plot.Rout: %sumdat.RData %.RData plotsimfunctions.R %simplots.R
 	$(run-R)
 
