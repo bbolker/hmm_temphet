@@ -65,6 +65,8 @@ simtime.%.Rout: mikesim.R simfunctions.R simtimetest.R
 simsin.%.Rout: mikesim.R simfunctions.R simsin.R
 	$(run-R)
 
+paperplots.Rout: cat.1.paperdf.RDS cat.2.paperdf.RDS cat.14.paperdf.RDS cat.15.paperdf.RDS plotsimfunctions.R paperplots.R
+	$(run-R)
 
 plotsimtest.Rout: plotsimtest.R
 	$(run-R)
