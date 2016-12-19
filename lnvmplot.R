@@ -20,12 +20,14 @@ simhmmdf <- simlnvm(dat,hmm[[2]])
 simblockdf <- simlnvm(dat,hmmblock[[2]])
 simsindf <- simlnvm(dat,hmmsin[[2]])
 simquaddf <- simlnvm(dat,hmmquad[[2]])
+vithmmdf <- vitsimlnvm(dat,hmm[[3]])
 
 simdat <- data.frame(obs = dat$LogDist
                      , hmm = simhmmdf$steplength
                      , hmmblock = simblockdf$steplength
                      , hmmsin = simsindf$steplength
                      , hmmquad = simquaddf$steplength
+                     , vithmm = vithmmdf$steplength
                      , time = dat$Time)
 
 

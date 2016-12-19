@@ -124,3 +124,10 @@ vitcat5 <- function(catt,mod){
   return(dat)
 }
 
+avgdf <- function(df){
+  simdf <- df %>% dplyr:::select(-obs) %>% group_by(time) %>% summarise_each(funs(mean))
+  obsdf <- df %>% dplyr:::select(c(obs,time)) %>% filter(!is.na(obs)) %>% group_by(time) %>% summarise_each(funs(mean)) %>% dplyr:::select(obs)
+  avgdf <- cbind(simdf,obsdf)
+  avgdf2 <- melt(avgdf,'time')
+  return(avgdf2)
+}

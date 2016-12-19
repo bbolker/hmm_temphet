@@ -138,3 +138,24 @@ simlnvm <- function(dat,fit){
   )
   return(df2)
   }
+
+
+
+vitsimlnvm <- function(dat,fit){
+  tempmodel <- depmix(LogDist~1,
+                      data=dat,
+                      nstate=nstates(fit),
+                      transition=fit@transition[[1]]@formula,
+                      family=gaussian())
+  parindex <- length(getpars(tempmodel))
+  parind <- parindex - 2*nstates(fit) 
+  vit <- viterbi(fit)
+  df <- data.frame(states=vit$state, obs=dat$LogDist,time=dat$Time)
+  df2 <- (df %>% rowwise()
+          %>% dplyr::mutate(
+            steplength=rnorm(1,getpars(fit)[parind+4*(states-1)+1],getpars(fit)[parind+4*(states-1)+2])
+            , angle=rvonmises(1,getpars(fit)[parind+4*(states-1)+3],getpars(fit)[parind+4*(states-1)+4])
+          )
+  )
+  return(df2)
+}
