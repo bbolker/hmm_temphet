@@ -2,6 +2,7 @@
 library(dplyr)
 library(reshape2)
 
+catid <- unlist(strsplit(rtargetname,split="[.]"))[2]
 
 hmm <- readRDS(input_files[1])
 hmmblock <- readRDS(input_files[2])
@@ -33,3 +34,6 @@ simdat <- data.frame(obs = dat$LogDist
 
 print(avgplot(simdat))
 print(acfplot(simdat))
+
+ll <- list(bicdf2,simdat)
+saveRDS(ll,file=paste("cat",catid,"paperdf","RDS",sep="."))
