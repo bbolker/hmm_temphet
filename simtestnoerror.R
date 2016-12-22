@@ -19,7 +19,7 @@ set.seed(seed)
 
 #randpars <- sample(-3:3,length(getpars(mod))-6,replace=TRUE)
 transprobs <- runif(2,0.001,0.999)
-ranpars <- c(1-transprobs[1],transprobs[1],1-transprobs[2],transprobs[2])
+randpars <- c(1-transprobs[1],transprobs[1],1-transprobs[2],transprobs[2])
 
 newmod <- setpars(mod,c(0.5,0.5,randpars,0,1,2,1))
 newmod
