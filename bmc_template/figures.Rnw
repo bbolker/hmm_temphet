@@ -35,25 +35,70 @@ if (!require("ggalt") || length(find("geom_encircle"))==0) {
 }
 @
 
-<<sim_results, warning=FALSE,echo=FALSE,message=FALSE,fig.cap="BIC-optimal state frequency for 2-6 state HMMs with and without covariate transition on 100 two-state hidden Markov models with covariate transitioning simulations.",fig.width=6,fig.height=4,eval=FALSE>>=
-ICdat <- readRDS("../sim_results/ICdat.rds")
-aa <- readRDS("../sim_results/sim.101.RDS")
+<<sim_results, warning=FALSE,echo=FALSE,message=FALSE,fig.cap="BIC-optimal state frequency for 2-6 state HMMs with and without covariate transition on 100 two-state hidden Markov models with covariate transitioning simulations.",eval=TRUE>>=
+ICdat <- readRDS("../simsin_results/ICdat.rds")
 
-ICdat <- mutate(ICdat,
-                model=factor(model,
+ICdat <- (ICdat 
+          %>% ungroup() 
+          %>% mutate(model=factor(model,
                          levels=c("HMM","HMMsin"),
-                         labels=c("Homogeneous","Heterogeneous"))) %>% filter(IC=="BIC")
-simplot <- ggplot(ICdat,aes(x=nstates,y=n,color=model,shape=model))+
+                         labels=c("Homogeneous","Heterogeneous")))
+          %>% filter(IC == "BIC")
+)
+simsin <- (ggplot(ICdat,aes(x=nstates,y=n,color=model,shape=model))+
     geom_line() +
     geom_point(size=3,bg="white") +
     scale_shape_manual(values=c(21,16))+
     scale_colour_brewer(palette="Set1")+
-    labs(y="Counts",x="BIC-optimal number of states")
-# print(simplot)
+    ggtitle("2-state HMM with Time-dependent Transition")+
+    labs(y="Counts",x="BIC-optimal number of states")+
+    theme(legend.position="none"))
+
+
+ICdat <- readRDS("../sim_results/ICdat.rds")
+
+ICdat <- (ICdat 
+          %>% ungroup() 
+          %>% mutate(model=factor(model,
+                         levels=c("HMM","HMMsin"),
+                         labels=c("Homogeneous","Heterogeneous")))
+          %>% filter(IC == "BIC")
+)
+simgps <- (ggplot(ICdat,aes(x=nstates,y=n,color=model,shape=model))+
+    geom_line() +
+    geom_point(size=3,bg="white") +
+    scale_shape_manual(values=c(21,16))+
+    scale_colour_brewer(palette="Set1")+
+    ggtitle("2-state HMM with GPS Error")+
+    labs(y="Counts",x="BIC-optimal number of states")+
+      theme(legend.position="none"))
+
+
+ICdat <- readRDS("../simtime_results/ICdat.rds")
+
+ICdat <- (ICdat 
+          %>% ungroup() 
+          %>% mutate(model=factor(model,
+                         levels=c("HMM","HMMsin"),
+                         labels=c("Homogeneous","Heterogeneous")))
+          %>% filter(IC == "BIC")
+)
+simtimegps <- (ggplot(ICdat,aes(x=nstates,y=n,color=model,shape=model))+
+    geom_line() +
+    geom_point(size=3,bg="white") +
+    scale_shape_manual(values=c(21,16))+
+    scale_colour_brewer(palette="Set1")+
+    ggtitle("2-state HMM with Time-dependent Transition and GPS Error")+
+    labs(y="Counts",x="BIC-optimal number of states")+
+      theme(legend.position="none"))
+
+print(grid.arrange(simsin,simgps,simtimegps,ncol=2))
+    
 
 @
 
-<<BICred_plot,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Adjusted Bayesian information criterion values for 3-7 state HMMs with different step-length distributions, with and without temporal transitions and turning angles.",fig.width=6,fig.height=4,eval=FALSE>>=
+\clearpage
+<<BICred_plot,warning=FALSE,echo=FALSE,message=FALSE,fig.cap="Adjusted Bayesian information criterion values for 3-7 state HMMs with different step-length distributions, with and without temporal transitions and turning angles.",fig.width=6,fig.height=4,eval=TRUE>>=
 allmodsumdf2 <- readRDS("../summary_stats/cat.1.df.RDS")$multimoddf
 df2 <- transform(allmodsumdf2, #change allmodsumdf to allmodsumdf2
             distrib=ifelse(grepl("W",model),"Weibull","log-Normal"),
@@ -75,7 +120,9 @@ slname <- "Step-length\ndistribution"
     + zmargin)
 @
 
-<<adj_BIC_comparisons, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Adjusted BIC by number of free parameters for HMM model types. The left panel shows FMM, temporally heterogeneous FMM with a sinusoidal prior and HMM. The right panel shows HMMs with different temporal transitions.",fig.width=8,eval=FALSE>>=
+\clearpage
+
+<<adj_BIC_comparisons, warning=FALSE, echo=FALSE, message=FALSE,fig.cap="Adjusted BIC by number of free parameters for HMM model types. The left panel shows FMM, temporally heterogeneous FMM with a sinusoidal prior and HMM. The right panel shows HMMs with different temporal transitions.",fig.width=8,eval=TRUE>>=
 #L <- load("cat1sumdat.RData")
 
 linetypev <- c(rep(2,2),rep(1,5))
@@ -83,36 +130,38 @@ sumdat <- transform(readRDS("../summary_stats/cat.1.df.RDS")$HMMsumdf,
                      mod = ifelse(type=="HMM + TH","HMM + TH","FMMs and HMM")
 )
 linetypev <- c(rep(2,2),rep(1,5))
-(adj_BIC_plot <- ggplot(sumdat, aes(x=parameters
+(adj_BIC_plot <- ggplot(sumdat, aes(x=nstates
                                   , y=deltaBIC
                                   , colour=model
                                   , linetype=model
                                   , group=model))
    + facet_wrap(~mod,ncol = 2,scales = "free_x")
    + scale_size_continuous(name="# of states")
-   + scale_x_continuous(breaks=seq(0,300,by=30))
-   + geom_point(aes(shape=factor(nstates),alpha=nstates))
+   # + scale_x_continuous(breaks=seq(0,300,by=30))
+   + geom_point()
    + scale_linetype_manual(values=linetypev, name="Model")
    + scale_colour_brewer(palette="Dark2", name="Model")
-   + scale_shape_discrete(name="Number of states")
+   # + scale_shape_discrete(name="Number of states")
    + scale_alpha_continuous(name="Number of states")
    + labs(y=expression(paste(Delta, "BIC"))
           , x="Number of parameters") 
    + geom_line()
    + zmargin)
 
-# print(adj_BIC_plot)
+#print(adj_BIC_plot)
 @
 
-<<avg_step_length_by_time, message=FALSE, echo=FALSE, warning=FALSE,fig.cap="Average step length by time of day observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states.",fig.width=8,eval=FALSE>>=
+\clearpage
+
+<<avg_step_length_by_time, message=FALSE, echo=FALSE, warning=FALSE,fig.cap="Average step length by time of day observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states.",fig.width=8,eval=TRUE>>=
 
 avgdf <- readRDS("../summary_stats/cat.1.df.RDS")$avgplotdf
 obsdf <- (readRDS("../summary_stats/cat.1.RDS") 
   %>% dplyr::select(c(LogDist,Time)) 
   %>% filter(!is.na(LogDist)) 
   %>% group_by(Time) 
-  %>% summarise_each(funs(mean))
-  %>% transmute(time = Time, variable = "obs", value=LogDist)
+  %>% summarise_each(funs(mean,sd))
+  %>% transmute(time=Time,model="Observed",steplen=mean,smin=mean-2*sd,smax=mean+2*sd)
 )
 vit <- readRDS("../summary_stats/cat.1.vit.RDS")
 vitdf <- (vit %>% dplyr::select(c(viterbi,time))
@@ -132,48 +181,54 @@ mnames2 <- c("FMM-homogeneous  (n=5)"
              , "HMM-hourly (n=3)"
              , "HMM-quadratic (n=5)"
              , "HMM-sin (n=5)"
-             , "observed"
-             , "viterbi homogenous (n=3)")
+             , "Observed"
+             , "viterbi homogenous (n=3)"
+             )
 
-combdf <- (rbind(avgdf,obsdf,vitdf2)
+combdf <- (rbind(avgdf,vitdf2)
            %>% transmute(time=time,model=variable,steplen=value)
            %>% filter(model %in% mnames)
-           %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
+           %>% mutate(model=factor(model,levels=mnames,labels=mnames2)
+                      , smin=steplen,smax=steplen)
 )
-linetypev <- c(rep(c(2,1),c(2,6))
-                ,0
+
+combdf2 <- rbind(combdf,obsdf)
+linetypev <- c(rep(c(2,1),c(2,5))
+                ,1,0
                )
-colvec <- c(c(brewer.pal(7,"Dark2"),"black")
-             ,"black"
+colvec <- c(c(brewer.pal(7,"Dark2"))
+             ,"black","black"
             )
-lwdvec <- c(rep(c(1,4),c(7,1))
-             ,4
+
+lwdvec <- c(rep(c(1),c(7))
+             ,1,4
             )
-alphavec <- c(rep(c(1,0.2),c(7,1))
-               ,1
+alphavec <- c(rep(0,7)
+               ,0.1,0
               )
 
 shapevec <- c(rep(32,8),118)
 
-(avg_plot <- ggplot(combdf,aes(x=time,y=steplen,colour=model,
-                   lwd=model,
-                   alpha=model,linetype=model, shape=model))
-  + geom_point()
-  + geom_line()
-  + xlab("Time of Day") 
-  + scale_shape_manual(values=shapevec, name="Model")
-  + ylab(expression('Mean step length'~(log[10]*m)))
+avg_plot <- ggplot(combdf2,aes(x=time))
+print(avg_plot 
+  + geom_ribbon(aes(ymin=smin,ymax=smax,alpha=model))
+  + geom_line(aes(y=steplen,linetype=model,colour=model))
   + scale_colour_manual(values=colvec, name="Model")
-  + scale_alpha_manual(values=alphavec, name="Model")
   + scale_size_manual(values=lwdvec, name="Model")
   + scale_linetype_manual(values=linetypev, name="Model")
- ) 
+  + scale_alpha_manual(values=alphavec, name="Model")
+  + geom_point(aes(y=steplen,colour=model,shape=model,lwd=model))
+  + scale_shape_manual(values=shapevec,name="Model")
+  + ylab(expression('Mean step length'~(log[10]*m)))
+  + xlab("Time of Day") 
+)
 
 # print(avg_plot)
 @
 
+\clearpage
 
-<<acf_plot, message=FALSE, echo=FALSE, warning=FALSE,fig.cap="Autocorrelation of observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states ",eval=FALSE>>=
+<<acf_plot, message=FALSE, echo=FALSE, warning=FALSE,fig.cap="Autocorrelation of observed (gray highlight), three-state HMM Viterbi predictions (V points), and all transitions type HMMs predictions (out of sample) with their respective BIC-optimal states ",eval=TRUE>>=
 acffun <- function(sim){
   a <- acf(sim,na.action=na.pass,plot=FALSE)
   df <- data.frame(ACF=c(a$acf),lag=a$lag)
@@ -192,6 +247,21 @@ combacfdf <- (rbind(acfdf,vitacf)
            %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
 )
 
+linetypev <- c(rep(c(2,1),c(2,6))
+                ,0
+               )
+colvec <- c(c(brewer.pal(7,"Dark2"),"black")
+             ,"black"
+            )
+lwdvec <- c(rep(c(1,4),c(7,1))
+             ,4
+            )
+alphavec <- c(rep(c(1,0.2),c(7,1))
+               ,1
+              )
+
+shapevec <- c(rep(32,8),118)
+
 (acf_plot <- ggplot(combacfdf,aes(x=lag,y=ACF,colour=model,
                   lwd=model,alpha=model,linetype=model,shape=model))
   + geom_point()
@@ -204,11 +274,12 @@ combacfdf <- (rbind(acfdf,vitacf)
   + scale_size_manual(values=lwdvec, name="Model")
   + scale_linetype_manual(values=linetypev, name="Model")
 ) 
-# print(acf_plot)
+print(acf_plot)
 ## vitacf messes up legend ...
 @
 
-<<r msdlist,message=FALSE, echo=FALSE, fig.cap="State identification plot with log mean and standard deviation of BIC-optimal HMM and HMM with sinusoidal transition.", warning=FALSE,eval=FALSE>>=
+\clearpage
+<<r msdlist,message=FALSE, echo=FALSE, fig.cap="State identification plot with log mean and standard deviation of BIC-optimal HMM and HMM with sinusoidal transition.", warning=FALSE,eval=TRUE>>=
 get_cat_pars2 <- function(catid){
   templist <- readRDS(paste("../summary_stats/cat.",catid,".df.RDS",sep=""))
   moddf <- templist$msdlist
@@ -241,6 +312,9 @@ g0 <- ggplot(all_cat_pars2,
 # print(all_msd_plot)
 @
 
+\clearpage
+
+Everything Below goes into the appendix
 
 <<BICred_plot2,warning=FALSE,echo=FALSE,message=FALSE,fig.width=6,fig.height=4,fig.cap="Adjusted BIC Emission Distribution Comparison for Cat 2">>=
 
@@ -274,14 +348,14 @@ sumdat <- transform(readRDS("../summary_stats/cat.2.df.RDS")$HMMsumdf,
                      mod = ifelse(type=="HMM + TH","HMM + TH","FMMs and HMM")
 )
 linetypev <- c(rep(2,2),rep(1,5))
-(adj_BIC_plot <- ggplot(sumdat, aes(x=parameters
+(adj_BIC_plot <- ggplot(sumdat, aes(x=nstates
                                   , y=deltaBIC
                                   , colour=model
                                   , linetype=model
                                   , group=model))
    + facet_wrap(~mod,ncol = 2,scales = "free_x")
    + scale_size_continuous(name="# of states")
-   + scale_x_continuous(breaks=seq(0,300,by=30))
+   # + scale_x_continuous(breaks=seq(0,300,by=30))
    + geom_point(aes(shape=factor(nstates),alpha=nstates))
    + scale_linetype_manual(values=linetypev, name="Model")
    + scale_colour_brewer(palette="Dark2", name="Model")
@@ -302,9 +376,10 @@ obsdf <- (readRDS("../summary_stats/cat.2.RDS")
   %>% dplyr::select(c(LogDist,Time)) 
   %>% filter(!is.na(LogDist)) 
   %>% group_by(Time) 
-  %>% summarise_each(funs(mean))
-  %>% transmute(time = Time, variable = "obs", value=LogDist)
+  %>% summarise_each(funs(mean,sd))
+  %>% transmute(time=Time,model="Observed",steplen=mean,smin=mean-2*sd,smax=mean+2*sd)
 )
+
 vit <- readRDS("../summary_stats/cat.2.vit.RDS")
 vitdf <- (vit %>% dplyr::select(c(viterbi,time))
   %>% group_by(time)
@@ -316,49 +391,54 @@ vitdf2 <- vitdf %>% transmute(time=time,variable="viterbi",value=viterbi)
 
 mnames <- c("fmm4","fmmsin4","hmm5","hmmblock4","hmmhourly3",
             "hmmquad4","hmmsin4","obs","viterbi")
-mnames2 <- c("fmm-homogeneous  (n=4)"
-             , "fmm-sin (n=4)"
-             , "homogeneous (n=5)"
-             , "block (n=4)"
-             , "hourly (n=3)"
-             , "quadratic (n=4)"
-             , "sin (n=4)"
-             , "observed"
-             , "viterbi homogenous (n=3)")
-
-combdf <- (rbind(avgdf,obsdf,vitdf2)
+mnames2 <- c("Fmm-homogeneous  (n=4)"
+             , "Fmm-sin (n=4)"
+             , "HMM-homogeneous (n=5)"
+             , "HMM-block (n=4)"
+             , "HMM-hourly (n=3)"
+             , "HMM-quadratic (n=4)"
+             , "HMM-sin (n=4)"
+             , "Observed"
+             , "Viterbi homogenous (n=3)")
+combdf <- (rbind(avgdf,vitdf2)
            %>% transmute(time=time,model=variable,steplen=value)
            %>% filter(model %in% mnames)
-           %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
+           %>% mutate(model=factor(model,levels=mnames,labels=mnames2)
+                      , smin=steplen,smax=steplen)
 )
-linetypev <- c(rep(c(2,1),c(2,6))
-                ,0
+
+combdf2 <- rbind(combdf,obsdf)
+linetypev <- c(rep(c(2,1),c(2,5))
+                ,1,0
                )
-colvec <- c(c(brewer.pal(7,"Dark2"),"black")
-             ,"black"
+colvec <- c(c(brewer.pal(7,"Dark2"))
+             ,"black","black"
             )
-lwdvec <- c(rep(c(1,4),c(7,1))
-             ,4
+
+lwdvec <- c(rep(c(1),c(7))
+             ,1,4
             )
-alphavec <- c(rep(c(1,0.2),c(7,1))
-               ,1
+alphavec <- c(rep(0,7)
+               ,0.1,0
               )
 
 shapevec <- c(rep(32,8),118)
 
-(ggplot(combdf,aes(x=time,y=steplen,colour=model,
-                   lwd=model,
-                   alpha=model,linetype=model, shape=model))
-  + geom_point()
-  + geom_line()
-  + xlab("Time of Day") 
-  + scale_shape_manual(values=shapevec, name="Model")
-  + ylab(expression('Mean step length'~(log[10]*m)))
+avg_plot <- ggplot(combdf2,aes(x=time))
+(avg_plot 
+  + geom_ribbon(aes(ymin=smin,ymax=smax,alpha=model))
+  + geom_line(aes(y=steplen,linetype=model,colour=model))
   + scale_colour_manual(values=colvec, name="Model")
-  + scale_alpha_manual(values=alphavec, name="Model")
   + scale_size_manual(values=lwdvec, name="Model")
   + scale_linetype_manual(values=linetypev, name="Model")
- ) 
+  + scale_alpha_manual(values=alphavec, name="Model")
+  + geom_point(aes(y=steplen,colour=model,shape=model,lwd=model))
+  + scale_shape_manual(values=shapevec,name="Model")
+  + ylab(expression('Mean step length'~(log[10]*m)))
+  + xlab("Time of Day") 
+)
+
+
 @
 
 \clearpage
@@ -381,6 +461,23 @@ combacfdf <- (rbind(acfdf,vitacf)
            %>% filter(model %in% mnames)
            %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
 )
+
+
+linetypev <- c(rep(c(2,1),c(2,6))
+                ,0
+               )
+colvec <- c(c(brewer.pal(7,"Dark2"),"black")
+             ,"black"
+            )
+lwdvec <- c(rep(c(1,4),c(7,1))
+             ,4
+            )
+alphavec <- c(rep(c(1,0.2),c(7,1))
+               ,1
+              )
+
+shapevec <- c(rep(32,8),118)
+
 
 (ggplot(combacfdf,aes(x=lag,y=ACF,colour=model,
                   lwd=model,alpha=model,linetype=model,shape=model))
@@ -436,14 +533,14 @@ sumdat <- transform(readRDS("../summary_stats/cat.14.df.RDS")$HMMsumdf,
                      mod = ifelse(type=="HMM + TH","HMM + TH","FMMs and HMM")
 )
 linetypev <- c(rep(2,2),rep(1,5))
-(adj_BIC_plot <- ggplot(sumdat, aes(x=parameters
+(adj_BIC_plot <- ggplot(sumdat, aes(x=nstates
                                   , y=deltaBIC
                                   , colour=model
                                   , linetype=model
                                   , group=model))
    + facet_wrap(~mod,ncol = 2,scales = "free_x")
    + scale_size_continuous(name="# of states")
-   + scale_x_continuous(breaks=seq(0,300,by=30))
+   # + scale_x_continuous(breaks=seq(0,300,by=30))
    + geom_point(aes(shape=factor(nstates),alpha=nstates))
    + scale_linetype_manual(values=linetypev, name="Model")
    + scale_colour_brewer(palette="Dark2", name="Model")
@@ -464,8 +561,8 @@ obsdf <- (readRDS("../summary_stats/cat.14.RDS")
   %>% dplyr::select(c(LogDist,Time)) 
   %>% filter(!is.na(LogDist)) 
   %>% group_by(Time) 
-  %>% summarise_each(funs(mean))
-  %>% transmute(time = Time, variable = "obs", value=LogDist)
+  %>% summarise_each(funs(mean,sd))
+  %>% transmute(time=Time,model="Observed",steplen=mean,smin=mean-2*sd,smax=mean+2*sd)
 )
 vit <- readRDS("../summary_stats/cat.14.vit.RDS")
 vitdf <- (vit %>% dplyr::select(c(viterbi,time))
@@ -478,49 +575,53 @@ vitdf2 <- vitdf %>% transmute(time=time,variable="viterbi",value=viterbi)
 
 mnames <- c("fmm4","fmmsin3","hmm5","hmmblock4","hmmhourly3",
             "hmmquad5","hmmsin4","obs","viterbi")
-mnames2 <- c("fmm-homogeneous  (n=4)"
-             , "fmm-sin (n=3)"
-             , "homogeneous (n=5)"
-             , "block (n=4)"
-             , "hourly (n=3)"
-             , "quadratic (n=5)"
-             , "sin (n=4)"
-             , "observed"
-             , "viterbi homogenous (n=3)")
-
-combdf <- (rbind(avgdf,obsdf,vitdf2)
+mnames2 <- c("Fmm-homogeneous  (n=4)"
+             , "Fmm-sin (n=3)"
+             , "HMM-homogeneous (n=5)"
+             , "HMM-block (n=4)"
+             , "HMM-hourly (n=3)"
+             , "HMM-quadratic (n=5)"
+             , "HMM-sin (n=4)"
+             , "Observed"
+             , "Viterbi homogenous (n=3)")
+combdf <- (rbind(avgdf,vitdf2)
            %>% transmute(time=time,model=variable,steplen=value)
            %>% filter(model %in% mnames)
-           %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
+           %>% mutate(model=factor(model,levels=mnames,labels=mnames2)
+                      , smin=steplen,smax=steplen)
 )
-linetypev <- c(rep(c(2,1),c(2,6))
-                ,0
+
+combdf2 <- rbind(combdf,obsdf)
+linetypev <- c(rep(c(2,1),c(2,5))
+                ,1,0
                )
-colvec <- c(c(brewer.pal(7,"Dark2"),"black")
-             ,"black"
+colvec <- c(c(brewer.pal(7,"Dark2"))
+             ,"black","black"
             )
-lwdvec <- c(rep(c(1,4),c(7,1))
-             ,4
+
+lwdvec <- c(rep(c(1),c(7))
+             ,1,4
             )
-alphavec <- c(rep(c(1,0.2),c(7,1))
-               ,1
+alphavec <- c(rep(0,7)
+               ,0.1,0
               )
 
 shapevec <- c(rep(32,8),118)
 
-(ggplot(combdf,aes(x=time,y=steplen,colour=model,
-                   lwd=model,
-                   alpha=model,linetype=model, shape=model))
-  + geom_point()
-  + geom_line()
-  + xlab("Time of Day") 
-  + scale_shape_manual(values=shapevec, name="Model")
-  + ylab(expression('Mean step length'~(log[10]*m)))
+avg_plot <- ggplot(combdf2,aes(x=time))
+(avg_plot 
+  + geom_ribbon(aes(ymin=smin,ymax=smax,alpha=model))
+  + geom_line(aes(y=steplen,linetype=model,colour=model))
   + scale_colour_manual(values=colvec, name="Model")
-  + scale_alpha_manual(values=alphavec, name="Model")
   + scale_size_manual(values=lwdvec, name="Model")
   + scale_linetype_manual(values=linetypev, name="Model")
- ) 
+  + scale_alpha_manual(values=alphavec, name="Model")
+  + geom_point(aes(y=steplen,colour=model,shape=model,lwd=model))
+  + scale_shape_manual(values=shapevec,name="Model")
+  + ylab(expression('Mean step length'~(log[10]*m)))
+  + xlab("Time of Day") 
+)
+
 @
 
 \clearpage
@@ -543,6 +644,23 @@ combacfdf <- (rbind(acfdf,vitacf)
            %>% filter(model %in% mnames)
            %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
 )
+
+
+linetypev <- c(rep(c(2,1),c(2,6))
+                ,0
+               )
+colvec <- c(c(brewer.pal(7,"Dark2"),"black")
+             ,"black"
+            )
+lwdvec <- c(rep(c(1,4),c(7,1))
+             ,4
+            )
+alphavec <- c(rep(c(1,0.2),c(7,1))
+               ,1
+              )
+
+shapevec <- c(rep(32,8),118)
+
 
 (ggplot(combacfdf,aes(x=lag,y=ACF,colour=model,
                   lwd=model,alpha=model,linetype=model,shape=model))
@@ -597,14 +715,14 @@ sumdat <- transform(readRDS("../summary_stats/cat.15.df.RDS")$HMMsumdf,
                      mod = ifelse(type=="HMM + TH","HMM + TH","FMMs and HMM")
 )
 linetypev <- c(rep(2,2),rep(1,5))
-(adj_BIC_plot <- ggplot(sumdat, aes(x=parameters
+(adj_BIC_plot <- ggplot(sumdat, aes(x=nstates
                                   , y=deltaBIC
                                   , colour=model
                                   , linetype=model
                                   , group=model))
    + facet_wrap(~mod,ncol = 2,scales = "free_x")
    + scale_size_continuous(name="# of states")
-   + scale_x_continuous(breaks=seq(0,300,by=30))
+   # + scale_x_continuous(breaks=seq(0,300,by=30))
    + geom_point(aes(shape=factor(nstates),alpha=nstates))
    + scale_linetype_manual(values=linetypev, name="Model")
    + scale_colour_brewer(palette="Dark2", name="Model")
@@ -625,9 +743,10 @@ obsdf <- (readRDS("../summary_stats/cat.15.RDS")
   %>% dplyr::select(c(LogDist,Time)) 
   %>% filter(!is.na(LogDist)) 
   %>% group_by(Time) 
-  %>% summarise_each(funs(mean))
-  %>% transmute(time = Time, variable = "obs", value=LogDist)
+  %>% summarise_each(funs(mean,sd))
+  %>% transmute(time=Time,model="Observed",steplen=mean,smin=mean-2*sd,smax=mean+2*sd)
 )
+
 vit <- readRDS("../summary_stats/cat.15.vit.RDS")
 vitdf <- (vit %>% dplyr::select(c(viterbi,time))
   %>% group_by(time)
@@ -639,49 +758,54 @@ vitdf2 <- vitdf %>% transmute(time=time,variable="viterbi",value=viterbi)
 
 mnames <- c("fmm3","fmmsin4","hmm6","hmmblock4","hmmhourly3",
             "hmmquad5","hmmsin5","obs","viterbi")
-mnames2 <- c("fmm-homogeneous  (n=3)"
-             , "fmm-sin (n=4)"
-             , "homogeneous (n=5)"
-             , "block (n=4)"
-             , "hourly (n=3)"
-             , "quadratic (n=5)"
-             , "sin (n=5)"
-             , "observed"
-             , "viterbi homogenous (n=3)")
+mnames2 <- c("Fmm-homogeneous  (n=3)"
+             , "Fmm-sin (n=4)"
+             , "HMM-homogeneous (n=5)"
+             , "HMM-block (n=4)"
+             , "HMM-hourly (n=3)"
+             , "HMM-quadratic (n=5)"
+             , "HMM-sin (n=5)"
+             , "Observed"
+             , "Viterbi homogenous (n=3)")
 
-combdf <- (rbind(avgdf,obsdf,vitdf2)
+combdf <- (rbind(avgdf,vitdf2)
            %>% transmute(time=time,model=variable,steplen=value)
            %>% filter(model %in% mnames)
-           %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
+           %>% mutate(model=factor(model,levels=mnames,labels=mnames2)
+                      , smin=steplen,smax=steplen)
 )
-linetypev <- c(rep(c(2,1),c(2,6))
-                ,0
+
+combdf2 <- rbind(combdf,obsdf)
+linetypev <- c(rep(c(2,1),c(2,5))
+                ,1,0
                )
-colvec <- c(c(brewer.pal(7,"Dark2"),"black")
-             ,"black"
+colvec <- c(c(brewer.pal(7,"Dark2"))
+             ,"black","black"
             )
-lwdvec <- c(rep(c(1,4),c(7,1))
-             ,4
+
+lwdvec <- c(rep(c(1),c(7))
+             ,1,4
             )
-alphavec <- c(rep(c(1,0.2),c(7,1))
-               ,1
+alphavec <- c(rep(0,7)
+               ,0.1,0
               )
 
 shapevec <- c(rep(32,8),118)
 
-(ggplot(combdf,aes(x=time,y=steplen,colour=model,
-                   lwd=model,
-                   alpha=model,linetype=model, shape=model))
-  + geom_point()
-  + geom_line()
-  + xlab("Time of Day") 
-  + scale_shape_manual(values=shapevec, name="Model")
-  + ylab(expression('Mean step length'~(log[10]*m)))
+avg_plot <- ggplot(combdf2,aes(x=time))
+(avg_plot 
+  + geom_ribbon(aes(ymin=smin,ymax=smax,alpha=model))
+  + geom_line(aes(y=steplen,linetype=model,colour=model))
   + scale_colour_manual(values=colvec, name="Model")
-  + scale_alpha_manual(values=alphavec, name="Model")
   + scale_size_manual(values=lwdvec, name="Model")
   + scale_linetype_manual(values=linetypev, name="Model")
- ) 
+  + scale_alpha_manual(values=alphavec, name="Model")
+  + geom_point(aes(y=steplen,colour=model,shape=model,lwd=model))
+  + scale_shape_manual(values=shapevec,name="Model")
+  + ylab(expression('Mean step length'~(log[10]*m)))
+  + xlab("Time of Day") 
+)
+
 @
 
 \clearpage
@@ -704,6 +828,28 @@ combacfdf <- (rbind(acfdf,vitacf)
            %>% filter(model %in% mnames)
            %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
 )
+combacfdf <- (rbind(acfdf,vitacf)
+           %>% transmute(lag=lag,model=model,ACF=ACF)
+           %>% filter(model %in% mnames)
+           %>% mutate(model=factor(model,levels=mnames,labels=mnames2))
+)
+
+
+linetypev <- c(rep(c(2,1),c(2,6))
+                ,0
+               )
+colvec <- c(c(brewer.pal(7,"Dark2"),"black")
+             ,"black"
+            )
+lwdvec <- c(rep(c(1,4),c(7,1))
+             ,4
+            )
+alphavec <- c(rep(c(1,0.2),c(7,1))
+               ,1
+              )
+
+shapevec <- c(rep(32,8),118)
+
 
 (ggplot(combacfdf,aes(x=lag,y=ACF,colour=model,
                   lwd=model,alpha=model,linetype=model,shape=model))
